@@ -126,35 +126,35 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none z-20" />
       </div>
 
-      <div className="relative z-30 container min-h-[100dvh] flex flex-col lg:flex-row items-center lg:justify-between pt-64 pb-80 lg:py-0 pointer-events-none">
+      <div className="relative z-30 container min-h-[100dvh] flex flex-col lg:flex-row items-center lg:justify-between pt-32 pb-24 lg:py-0 pointer-events-none">
         
         {/* Left: Identity */}
-        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pointer-events-auto mb-8 lg:mb-0">
+        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pointer-events-auto mb-16 lg:mb-0 mt-32 lg:mt-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-2 lg:space-y-4"
+            className="space-y-4 lg:space-y-6"
           >
-            <span className="text-lg md:text-2xl font-display text-white/50">Hello! I&apos;m</span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight uppercase">
+            <span className="text-xl md:text-2xl font-display text-white/50 tracking-widest uppercase">Hello! I&apos;m</span>
+            <h1 className="text-5xl md:text-6xl lg:text-9xl font-black text-white leading-[0.9] tracking-tighter uppercase">
               Salah<br />
-              <span className="text-white/40">Uddin</span><br />
+              <span className="text-white/20">Uddin</span><br />
               <span className="">Kader</span>
             </h1>
           </motion.div>
         </div>
 
-        {/* Center: (Space for Spline - used for layout spacing on desktop) */}
-        <div className="hidden lg:block w-1/3 h-16 lg:h-auto" />
+        {/* Center: (Space for Spline) */}
+        <div className="hidden lg:block w-1/3" />
 
         {/* Right: Narrative/Creative */}
-        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pointer-events-auto mt-4 lg:mt-0">
+        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pointer-events-auto mt-12 lg:mt-0 pb-32 lg:pb-0">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="flex flex-col gap-6 lg:gap-10"
+            className="flex flex-col gap-10 lg:gap-16"
           >
             <div className="space-y-2 lg:space-y-4">
               <span className="text-sm md:text-2xl font-display text-white/50 tracking-[0.2em] uppercase">A Creative</span>
