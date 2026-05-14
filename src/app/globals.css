@@ -1,68 +1,83 @@
+/* =============================================================================
+   REFINED DESIGN SYSTEM
+   ============================================================================= */
+
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* 
-  =============================================================================
-  1. DESIGN SYSTEM & TOKENS
-  =============================================================================
-*/
 :root {
-  --background:    #000000;
-  --foreground:    #ffffff;
-  --accent:        #e11d48;
-  --accent-dim:    rgba(225, 29, 72, 0.08);
-  --surface:       #0a0a0a;
-  --surface-2:     #111111;
-  --border:        rgba(255, 255, 255, 0.05);
-  --border-bright: rgba(255, 255, 255, 0.1);
-  --muted:         #737373;
-  --muted-bright:  #a3a3a3;
-  
-  --font-display:  var(--font-space-grotesk), sans-serif;
-  --font-body:     var(--font-inter), sans-serif;
-  --font-mono:     var(--font-mono), monospace;
+  --background: #020617;
+  --foreground: #f8fafc;
+
+  --surface: #0f172a;
+  --surface-2: #111827;
+
+  --accent: #dc2626;
+
+  --border: rgba(255,255,255,0.06);
+  --border-bright: rgba(255,255,255,0.12);
+
+  --muted: #94a3b8;
+  --muted-soft: rgba(255,255,255,0.5);
+
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+  --font-mono: var(--font-mono), monospace;
 }
 
 @theme {
   --color-background: var(--background);
-  --color-foreground:  var(--foreground);
-  --color-accent:      var(--accent);
-  --color-surface:     var(--surface);
-  --color-border:      var(--border);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
 }
 
-/* 
-  =============================================================================
-  2. BASE TAG STYLES
-  =============================================================================
-*/
-*, *::before, *::after {
+/* =============================================================================
+   BASE
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  overscroll-behavior: none;
+html {
   scroll-behavior: smooth;
-  background-color: var(--background);
+}
+
+html,
+body {
+  background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
+body {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
+  line-height: 1;
   letter-spacing: -0.04em;
-  line-height: 1.1;
-  font-weight: 800;
-  color: #fff;
+  font-weight: 700;
+  color: white;
 }
 
 p {
-  color: var(--muted-bright);
+  color: var(--muted);
+  line-height: 1.8;
 }
 
 a {
@@ -72,114 +87,150 @@ a {
 }
 
 button {
-  cursor: pointer;
   border: none;
   outline: none;
-  background: none;
+  background: transparent;
+  cursor: pointer;
 }
 
-/* 
-  =============================================================================
-  3. LAYOUT & CONTAINERS
-  =============================================================================
-*/
+/* =============================================================================
+   LAYOUT
+   ============================================================================= */
+
 .container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding: 0 8rem;
+    padding-inline: 4rem;
   }
 }
 
-/* 
-  =============================================================================
-  4. SECTION SYSTEM (Elite Spacing)
-  =============================================================================
-*/
+/* =============================================================================
+   SECTION SYSTEM
+   ============================================================================= */
+
 .section-shell {
-  padding-top: 24rem;
-  padding-bottom: 24rem;
   position: relative;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
 }
 
 @media (max-width: 768px) {
   .section-shell {
-    padding-top: 12rem;
-    padding-bottom: 12rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
   }
 }
 
 .section-kicker {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+
   font-family: var(--font-mono);
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  color: var(--accent);
-  letter-spacing: 0.4em;
+  font-size: 0.72rem;
   font-weight: 700;
-  margin-bottom: 2rem;
-  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+
+  color: var(--accent);
 }
 
 .section-title {
-  font-size: clamp(3.5rem, 8vw, 7.5rem);
-  margin-bottom: 2.5rem;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: 0.95;
+  margin-bottom: 1.5rem;
+  max-width: 12ch;
 }
 
 .section-copy {
-  font-size: 1.25rem;
-  max-width: 700px;
-  line-height: 1.8;
+  max-width: 720px;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--muted);
 }
 
-/* 
-  =============================================================================
-  5. COMPONENT CLASSES
-  =============================================================================
-*/
+/* =============================================================================
+   CARD SYSTEM
+   ============================================================================= */
 
-/* --- Premium Cards --- */
 .premium-card {
-  background: var(--surface);
+  position: relative;
+
+  background: rgba(255,255,255,0.02);
+
   border: 1px solid var(--border);
+
   border-radius: 1.5rem;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
   overflow: hidden;
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
 }
 
 .premium-card:hover {
+  transform: translateY(-4px);
+
   border-color: var(--border-bright);
-  transform: translateY(-8px);
-  background: var(--surface-2);
-  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+
+  background: rgba(255,255,255,0.03);
 }
 
-/* --- Buttons --- */
+.glass {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+.glass-morphism {
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1.25rem 2.5rem;
+
+  padding: 1rem 2rem;
+
   border-radius: 1rem;
+
   background: var(--accent);
-  color: #fff;
+
+  color: white;
+
   font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 800;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  transition: all 0.4s ease;
-  border: 1px solid transparent;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .btn-primary:hover {
-  background: #ff1e56;
-  transform: translateY(-4px);
-  box-shadow: 0 15px 30px -10px rgba(225, 29, 72, 0.5);
+  transform: translateY(-2px);
+
+  background: #ef4444;
 }
 
 .btn-ghost {
@@ -187,83 +238,100 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1.25rem 2.5rem;
+
+  padding: 1rem 2rem;
+
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--muted-bright);
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+
   border: 1px solid var(--border);
-  transition: all 0.4s ease;
+
+  background: rgba(255,255,255,0.02);
+
+  color: rgba(255,255,255,0.7);
+
+  font-family: var(--font-display);
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition: all 0.3s ease;
 }
 
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgba(255,255,255,0.05);
+
   border-color: var(--border-bright);
-  transform: translateY(-4px);
+
+  color: white;
+
+  transform: translateY(-2px);
 }
 
-/* --- Glassmorphism --- */
-.glass {
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
+/* =============================================================================
+   UTILITIES
+   ============================================================================= */
+
+.text-accent {
+  color: var(--accent);
 }
 
-.glass-morphism {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(24px);
-  border: 1px solid var(--border);
+.text-muted {
+  color: var(--muted);
 }
-
-/* 
-  =============================================================================
-  6. UTILITIES & EFFECTS
-  =============================================================================
-*/
-.text-accent { color: var(--accent); }
-.text-muted { color: var(--muted); }
 
 .bg-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+  background-image:
+    radial-gradient(
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
 }
 
 .outline-text {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+  -webkit-text-stroke: 1px rgba(255,255,255,0.08);
   color: transparent;
 }
 
 .typing-cursor::after {
   content: "|";
-  animation: blink 0.8s infinite;
   margin-left: 4px;
+
   color: var(--accent);
+
+  animation: blink 0.8s infinite;
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
-/* 
-  =============================================================================
-  7. RESPONSIVE OVERRIDES
-  =============================================================================
-*/
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+
 @media (max-width: 1024px) {
-  .section-title { font-size: 3rem; }
+  .section-title {
+    font-size: 3rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
