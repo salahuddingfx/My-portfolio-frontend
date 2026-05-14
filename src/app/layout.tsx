@@ -1,42 +1,83 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import {
+  Plus_Jakarta_Sans,
+  Outfit,
+  JetBrains_Mono,
+} from "next/font/google";
+
 import "./globals.css";
+
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { ScrollEffects } from "@/components/providers/ScrollEffects";
+
 import CustomCursor from "@/components/ui/cursor/CustomCursor";
 import Navbar from "@/components/ui/Navbar";
 import SocialSidebar from "@/components/ui/SocialSidebar";
 import Footer from "@/components/ui/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
+/* =============================================================================
+   FONTS
+   ============================================================================= */
+
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
+  variable: "--font-plus-jakarta",
+  display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const outfit = Outfit({
   subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
   subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
 });
+
+/* =============================================================================
+   METADATA
+   ============================================================================= */
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://salahuddin.codes"),
-  title: "Salah Uddin Kader | Full Stack Web Developer",
-  description: "Official portfolio of Salah Uddin Kader. Specializing in high-performance websites and modern web design using Next.js and React.",
+
+  title: "Saka Chowdhury",
+
+  description:
+    "Portfolio of Salah Uddin Kader — focused on modern interfaces, interactive experiences, and thoughtful digital products.",
+
+  keywords: [
+    "Salah Uddin Kader",
+    "Saka Chowdhury",
+    "Next.js Developer",
+    "React Developer",
+    "Frontend Developer",
+    "Portfolio",
+  ],
+
+  authors: [
+    {
+      name: "Salah Uddin Kader",
+    },
+  ],
+
   icons: {
     icon: "/favicon.ico",
   },
-  keywords: ["Web Developer", "React Developer", "Next.js", "Portfolio", "Salah Uddin Kader", "Bangladesh", "Full Stack Developer"],
-  authors: [{ name: "Salah Uddin Kader" }],
+
   openGraph: {
-    title: "Salah Uddin Kader | Web Developer",
-    description: "Building fast, reliable, and beautiful websites for brands worldwide.",
+    title: "Saka Chowdhury",
+
+    description:
+      "Modern portfolio built with Next.js, React, and thoughtful interaction design.",
+
     url: "https://salahuddin.codes",
-    siteName: "Salah Portfolio",
+
+    siteName: "Saka Chowdhury",
+
     images: [
       {
         url: "/og-image.jpg",
@@ -44,16 +85,27 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+
     locale: "en_US",
+
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Salah Uddin Kader | Web Developer",
-    description: "Building fast, reliable, and beautiful websites for brands worldwide.",
+
+    title: "Saka Chowdhury",
+
+    description:
+      "Modern portfolio built with Next.js and React.",
+
     images: ["/og-image.jpg"],
   },
 };
+
+/* =============================================================================
+   ROOT LAYOUT
+   ============================================================================= */
 
 export default function RootLayout({
   children,
@@ -61,21 +113,51 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="dark"
+      suppressHydrationWarning
+    >
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-background text-foreground`}
         suppressHydrationWarning
+        className={`
+          ${plusJakartaSans.variable}
+          ${outfit.variable}
+          ${jetbrainsMono.variable}
+
+          bg-background
+          text-foreground
+          antialiased
+          overflow-x-hidden
+          selection:bg-[#dc2626]
+          selection:text-white
+        `}
       >
+
         <LenisProvider>
+
+          {/* GLOBAL EFFECTS */}
           <ScrollEffects />
+
+          {/* CURSOR */}
           <CustomCursor />
+
+          {/* NAVBAR */}
           <Navbar />
+
+          {/* LEFT SOCIAL SIDEBAR */}
           <SocialSidebar />
-          <div className="min-h-screen">
+
+          {/* PAGE CONTENT */}
+          <main className="relative min-h-screen">
             {children}
-          </div>
+          </main>
+
+          {/* FOOTER */}
           <Footer />
+
         </LenisProvider>
+
       </body>
     </html>
   );

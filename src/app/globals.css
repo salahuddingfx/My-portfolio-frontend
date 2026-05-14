@@ -20,8 +20,8 @@
   --muted: #94a3b8;
   --muted-soft: rgba(255,255,255,0.5);
 
-  --font-display: var(--font-space-grotesk), sans-serif;
-  --font-body: var(--font-inter), sans-serif;
+  --font-display: var(--font-outfit), sans-serif;
+  --font-body: var(--font-plus-jakarta), sans-serif;
   --font-mono: var(--font-mono), monospace;
 }
 
@@ -54,6 +54,7 @@ body {
   overflow-x: hidden;
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   line-height: 1.6;
 }
@@ -69,15 +70,17 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
   font-weight: 700;
   color: white;
+  text-wrap: balance;
 }
 
 p {
   color: var(--muted);
   line-height: 1.8;
+  text-wrap: pretty;
 }
 
 a {
