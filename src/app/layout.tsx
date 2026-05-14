@@ -103,6 +103,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
+
 /* =============================================================================
    ROOT LAYOUT
    ============================================================================= */
@@ -126,6 +128,7 @@ export default function RootLayout({
         <LenisProvider>
 
           {/* GLOBAL EFFECTS */}
+          <ScrollProgress />
           <ScrollEffects />
 
           {/* CURSOR */}
