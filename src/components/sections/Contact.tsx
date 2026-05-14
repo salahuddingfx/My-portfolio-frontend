@@ -2,159 +2,523 @@
 
 import { useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
+
 import PremiumCard from "@/components/ui/PremiumCard";
-import { cn } from "@/utils/cn";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "Web Development Inquiry",
-    message: ""
+    subject: "Web Development",
+    message: "",
   });
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
+
+  const handleSubmit = async (
+    e: React.FormEvent
+  ) => {
     e.preventDefault();
+
     setStatus("sending");
+
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL;
+
       if (!apiUrl) {
-        throw new Error("API URL is not defined in environment variables.");
+        throw new Error("Missing API URL");
       }
-      const res = await fetch(`${apiUrl}/admin/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
+
+      const res = await fetch(
+        `${apiUrl}/admin/contact`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify(formData),
+        }
+      );
+
       if (res.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", subject: "Web Development Inquiry", message: "" });
+
+        setFormData({
+          name: "",
+          email: "",
+          subject: "Web Development",
+          message: "",
+        });
       } else {
         setStatus("error");
       }
     } catch (err) {
-      console.error("Contact form error:", err);
+      console.error(err);
+
       setStatus("error");
     }
   };
 
   return (
-    <section id="contact" className="section-shell relative overflow-hidden bg-black">
+    <section
+      id="contact"
+      className="
+        section-shell
+        relative
+        overflow-hidden
+        bg-black
+      "
+    >
       <div className="container relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-24 md:mb-32 space-y-8">
-          <span className="section-kicker mx-auto">Contact</span>
-          <h2 className="section-title !mb-0">
-            Let&apos;s <span className="text-accent">Connect.</span>
+
+        {/* HEADER */}
+        <div
+          className="
+            text-center
+            max-w-2xl
+            mx-auto
+            mb-20
+            space-y-6
+          "
+        >
+          <span className="section-kicker">
+            Contact
+          </span>
+
+          <h2
+            className="
+              text-[clamp(3rem,6vw,5rem)]
+              tracking-[-0.06em]
+              leading-[0.95]
+              font-bold
+              text-white
+            "
+          >
+            Let&apos;s
+            <span className="text-accent">
+              {" "}
+              Connect.
+            </span>
           </h2>
-          <p className="section-copy mx-auto">
-            Have a project in mind or just want to chat? Feel free to reach 
-            out. I&apos;m always open to discussing new opportunities and 
-            interesting projects.
+
+          <p
+            className="
+              text-white/60
+              leading-8
+              text-[15px]
+            "
+          >
+            Have a project in mind or want
+            to discuss an idea? Feel free
+            to reach out.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-24 lg:gap-32">
-          
-          {/* Contact Info Sidebar */}
-          <div className="lg:col-span-5 space-y-16">
-            <div className="space-y-12">
-              <div className="flex items-center gap-6 group">
-                <div className="w-14 h-14 rounded-2xl border border-white/5 flex items-center justify-center bg-white/[0.02] text-white/20 group-hover:text-accent group-hover:border-accent/20 transition-all duration-500">
-                  <Mail size={24} />
-                </div>
-                <div>
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-white/20 mb-1">Email</p>
-                  <p className="font-display font-bold text-lg text-white group-hover:text-accent transition-colors">salauddinkaderappy@gmail.com</p>
-                </div>
+        {/* GRID */}
+        <div
+          className="
+            grid
+            lg:grid-cols-12
+            gap-16
+            lg:gap-20
+            items-start
+          "
+        >
+
+          {/* LEFT */}
+          <div
+            className="
+              lg:col-span-4
+              space-y-8
+            "
+          >
+
+            {/* EMAIL */}
+            <div
+              className="
+                flex
+                items-center
+                gap-5
+                border
+                border-white/5
+                rounded-2xl
+                p-5
+                bg-white/[0.02]
+              "
+            >
+
+              <div
+                className="
+                  w-12
+                  h-12
+                  rounded-xl
+                  border
+                  border-white/5
+                  flex
+                  items-center
+                  justify-center
+                  text-white/50
+                "
+              >
+                <Mail size={20} />
               </div>
 
-              <div className="flex items-center gap-6 group">
-                <div className="w-14 h-14 rounded-2xl border border-white/5 flex items-center justify-center bg-white/[0.02] text-white/20 group-hover:text-accent group-hover:border-accent/20 transition-all duration-500">
-                  <MapPin size={24} />
-                </div>
-                <div>
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-white/20 mb-1">Location</p>
-                  <p className="font-display font-bold text-lg text-white">Cox&apos;s Bazar, Bangladesh</p>
-                </div>
+              <div>
+                <p
+                  className="
+                    text-[11px]
+                    uppercase
+                    tracking-[0.08em]
+                    text-white/30
+                    mb-1
+                  "
+                >
+                  Email
+                </p>
+
+                <p
+                  className="
+                    text-[15px]
+                    text-white/70
+                    font-medium
+                  "
+                >
+                  salahuddinkadrappy@gmail.com
+                </p>
               </div>
+
             </div>
+
+            {/* LOCATION */}
+            <div
+              className="
+                flex
+                items-center
+                gap-5
+                border
+                border-white/5
+                rounded-2xl
+                p-5
+                bg-white/[0.02]
+              "
+            >
+
+              <div
+                className="
+                  w-12
+                  h-12
+                  rounded-xl
+                  border
+                  border-white/5
+                  flex
+                  items-center
+                  justify-center
+                  text-white/50
+                "
+              >
+                <MapPin size={20} />
+              </div>
+
+              <div>
+                <p
+                  className="
+                    text-[11px]
+                    uppercase
+                    tracking-[0.08em]
+                    text-white/30
+                    mb-1
+                  "
+                >
+                  Location
+                </p>
+
+                <p
+                  className="
+                    text-[15px]
+                    text-white/70
+                    font-medium
+                  "
+                >
+                  Cox&apos;s Bazar, Bangladesh
+                </p>
+              </div>
+
+            </div>
+
           </div>
 
-          {/* Contact Form */}
-          <div className="lg:col-span-7">
-            <PremiumCard className="!p-12 md:!p-16 border-white/5 bg-white/[0.01]">
-              <form onSubmit={handleSubmit} className="space-y-10">
-                <div className="grid md:grid-cols-2 gap-10">
+          {/* FORM */}
+          <div className="lg:col-span-8">
+
+            <PremiumCard
+              className="
+                !p-8
+                md:!p-10
+                border-white/5
+                bg-white/[0.02]
+              "
+            >
+
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-8"
+              >
+
+                {/* INPUTS */}
+                <div
+                  className="
+                    grid
+                    md:grid-cols-2
+                    gap-6
+                  "
+                >
+
                   <div className="space-y-3">
-                    <label className="font-mono text-[10px] uppercase tracking-widest text-white/40 ml-1">Your Name</label>
-                    <input 
-                      type="text" 
-                      placeholder="Name"
+
+                    <label
+                      className="
+                        text-[11px]
+                        uppercase
+                        tracking-[0.08em]
+                        text-white/40
+                      "
+                    >
+                      Name
+                    </label>
+
+                    <input
+                      type="text"
                       required
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-6 py-5 text-white focus:outline-none focus:border-accent/30 transition-colors"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          name: e.target.value,
+                        })
+                      }
+                      className="
+                        w-full
+                        rounded-xl
+                        border
+                        border-white/5
+                        bg-white/[0.03]
+                        px-5
+                        py-4
+                        text-white
+                        outline-none
+                        transition-colors
+                        focus:border-accent/30
+                      "
+                      placeholder="Your Name"
                     />
+
                   </div>
+
                   <div className="space-y-3">
-                    <label className="font-mono text-[10px] uppercase tracking-widest text-white/40 ml-1">Your Email</label>
-                    <input 
-                      type="email" 
-                      placeholder="Email"
+
+                    <label
+                      className="
+                        text-[11px]
+                        uppercase
+                        tracking-[0.08em]
+                        text-white/40
+                      "
+                    >
+                      Email
+                    </label>
+
+                    <input
+                      type="email"
                       required
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-6 py-5 text-white focus:outline-none focus:border-accent/30 transition-colors"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          email: e.target.value,
+                        })
+                      }
+                      className="
+                        w-full
+                        rounded-xl
+                        border
+                        border-white/5
+                        bg-white/[0.03]
+                        px-5
+                        py-4
+                        text-white
+                        outline-none
+                        transition-colors
+                        focus:border-accent/30
+                      "
+                      placeholder="Your Email"
                     />
+
                   </div>
+
                 </div>
 
+                {/* SELECT */}
                 <div className="space-y-3">
-                  <label className="font-mono text-[10px] uppercase tracking-widest text-white/40 ml-1">Inquiry Type</label>
-                  <select 
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-6 py-5 text-white focus:outline-none focus:border-accent/30 transition-colors appearance-none"
+
+                  <label
+                    className="
+                      text-[11px]
+                      uppercase
+                      tracking-[0.08em]
+                      text-white/40
+                    "
                   >
-                    <option>Web Development</option>
-                    <option>UI/UX Design</option>
-                    <option>Full Stack Solution</option>
-                    <option>Other</option>
+                    Inquiry
+                  </label>
+
+                  <select
+                    value={formData.subject}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        subject: e.target.value,
+                      })
+                    }
+                    className="
+                      w-full
+                      rounded-xl
+                      border
+                      border-white/5
+                      bg-white/[0.03]
+                      px-5
+                      py-4
+                      text-white
+                      outline-none
+                      appearance-none
+                      transition-colors
+                      focus:border-accent/30
+                    "
+                  >
+                    <option>
+                      Web Development
+                    </option>
+
+                    <option>
+                      UI Design
+                    </option>
+
+                    <option>
+                      Full Stack Project
+                    </option>
+
+                    <option>
+                      Other
+                    </option>
+
                   </select>
+
                 </div>
 
+                {/* MESSAGE */}
                 <div className="space-y-3">
-                  <label className="font-mono text-[10px] uppercase tracking-widest text-white/40 ml-1">Message</label>
-                  <textarea 
+
+                  <label
+                    className="
+                      text-[11px]
+                      uppercase
+                      tracking-[0.08em]
+                      text-white/40
+                    "
+                  >
+                    Message
+                  </label>
+
+                  <textarea
                     rows={5}
-                    placeholder="Project Details"
                     required
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-6 py-5 text-white focus:outline-none focus:border-accent/30 transition-colors resize-none"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        message: e.target.value,
+                      })
+                    }
+                    className="
+                      w-full
+                      rounded-xl
+                      border
+                      border-white/5
+                      bg-white/[0.03]
+                      px-5
+                      py-4
+                      text-white
+                      outline-none
+                      resize-none
+                      transition-colors
+                      focus:border-accent/30
+                    "
+                    placeholder="Tell me about your project..."
                   />
+
                 </div>
 
-                <button 
+                {/* BUTTON */}
+                <button
                   type="submit"
-                  disabled={status === "sending"}
-                  className="btn-primary w-full py-6 flex items-center justify-center gap-4 disabled:opacity-50"
+                  disabled={
+                    status === "sending"
+                  }
+                  className="
+                    btn-primary
+                    w-full
+                    py-4
+                    disabled:opacity-50
+                  "
                 >
-                  <span className="font-display font-bold text-base uppercase tracking-[0.2em]">
-                    {status === "sending" ? "Sending..." : status === "success" ? "Sent Successfully" : "Send Message"}
+
+                  <span
+                    className="
+                      text-[13px]
+                      font-medium
+                      tracking-[0.06em]
+                    "
+                  >
+                    {status === "sending"
+                      ? "Sending..."
+                      : status === "success"
+                      ? "Message Sent"
+                      : "Send Message"}
                   </span>
-                  <Send size={18} className={cn("transition-transform", status === "idle" && "group-hover:translate-x-1 group-hover:-translate-y-1")} />
+
+                  <Send size={16} />
+
                 </button>
-                {status === "error" && <p className="text-accent text-center text-xs font-mono tracking-widest">ERROR SENDING MESSAGE</p>}
+
+                {/* ERROR */}
+                {status === "error" && (
+                  <p
+                    className="
+                      text-center
+                      text-sm
+                      text-red-400
+                    "
+                  >
+                    Failed to send message.
+                  </p>
+                )}
+
               </form>
+
             </PremiumCard>
+
           </div>
 
         </div>
+
       </div>
     </section>
   );
 };
+
 export default Contact;
