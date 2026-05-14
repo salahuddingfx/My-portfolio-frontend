@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Salahuddin's Portfolio - Frontend
 
-## Getting Started
+A high-end, cinematic portfolio built with Next.js, GSAP, and Three.js. This project showcases a professional creative engineering aesthetic with advanced animations and a sleek dark-themed design.
 
-First, run the development server:
+## 🚀 Features
+
+- **Cinematic UI**: Premium dark mode design with professional typography.
+- **GSAP Animations**: Smooth transitions, scroll-triggered reveals, and interactive elements.
+- **3D Integration**: Interactive 3D scenes and tech sphere visualizations using Three.js and Spline.
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices.
+- **Performance**: Built on Next.js for lightning-fast loading and SEO optimization.
+
+## 🛠️ Getting Started
+
+First, install the dependencies:
+
+```bash
+npm install
+# or
+bun install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 # or
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📜 License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copyright (c) 2026 **Salah Uddin**. All rights reserved.
 
-## Learn More
+This is a personal portfolio. You are **not permitted** to use the identity, name, or branding of the author for your own projects. Cloning this repository and passing it off as your own identity is strictly prohibited. For more details, see the [LICENSE](LICENSE) file.
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Code of Conduct
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+We are committed to providing a welcoming and inspiring community for all. When interacting with this project, please:
+- Be respectful and inclusive of others.
+- Avoid any form of harassment or offensive behavior.
+- Use professional and constructive communication.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛡️ Security
 
-## Deploy on Vercel
+If you discover any security vulnerabilities in this project, please do not open a public issue. Instead, contact the author directly at **salahuddin.codes** or through the contact form on the live site. We take security seriously and will address any issues promptly.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
+Built with ❤️ by [Salah Uddin](https://salahuddin.codes)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
