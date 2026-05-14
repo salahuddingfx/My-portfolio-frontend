@@ -23,11 +23,11 @@ const Gallery = () => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
   return (
-    <section id="gallery" className="section-shell relative bg-black overflow-hidden py-32">
+    <section id="gallery" className="section-shell relative bg-black overflow-hidden">
       <div className="container relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-24">
           <span className="section-kicker">Atmosphere</span>
-          <h2 className="section-title">Visual <span className="text-accent">Archive.</span></h2>
+          <h2 className="section-title mx-auto">Visual <span className="text-accent">Archive.</span></h2>
           <p className="section-copy">A collection of cinematic moments stored in your digital archive.</p>
         </div>
 
