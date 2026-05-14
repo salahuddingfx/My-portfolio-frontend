@@ -1,60 +1,158 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, MessageSquare } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+
 import Link from "next/link";
+
 import Magnetic from "@/components/ui/Magnetic";
 
 const ContactCTA = () => {
   return (
-    <section id="contact" className="section-shell relative overflow-hidden bg-black">
-      {/* Decorative Background Elements */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
-      
-      <div className="container relative z-10 text-center">
+    <section
+      id="contact-cta"
+      className="
+        section-shell
+        relative
+        overflow-hidden
+        bg-black
+      "
+    >
+
+      {/* SOFT BACKGROUND */}
+      <div
+        className="
+          absolute
+          top-1/2
+          left-1/2
+          -translate-x-1/2
+          -translate-y-1/2
+          w-[500px]
+          h-[500px]
+          rounded-full
+          bg-accent/5
+          blur-[90px]
+          pointer-events-none
+        "
+      />
+
+      <div
+        className="
+          container
+          relative
+          z-10
+        "
+      >
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="max-w-4xl mx-auto space-y-12"
+          initial={{
+            opacity: 0,
+            y: 40,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+          }}
+          transition={{
+            duration: 0.8,
+          }}
+          className="
+            max-w-3xl
+            mx-auto
+            text-center
+          "
         >
-          <div className="space-y-6">
-            <span className="section-kicker mx-auto">Work With Me</span>
-            <h2 className="section-title text-5xl md:text-7xl lg:text-8xl !mb-0 font-bold tracking-tight">
-              Have a <span className="text-accent">Business Idea?</span>
-            </h2>
-            <p className="section-copy mx-auto text-xl md:text-2xl text-white/60">
-              Let&apos;s turn your vision into a high-end digital reality. 
-              I&apos;m currently available for new projects and collaborations.
-            </p>
-          </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 pt-8">
+          {/* KICKER */}
+          <span className="section-kicker">
+            Let&apos;s Work Together
+          </span>
+
+          {/* HEADING */}
+          <h2
+            className="
+              text-[clamp(3rem,6vw,5rem)]
+              leading-[0.95]
+              tracking-[-0.06em]
+              font-bold
+              text-white
+              mt-6
+            "
+          >
+            Have an
+            <span className="text-accent">
+              {" "}
+              Idea
+            </span>
+            {" "}in Mind?
+          </h2>
+
+          {/* TEXT */}
+          <p
+            className="
+              mt-8
+              text-[15px]
+              leading-8
+              text-white/60
+              max-w-2xl
+              mx-auto
+            "
+          >
+            I’m currently open to selected
+            projects, collaborations, and
+            thoughtful digital work.
+          </p>
+
+          {/* BUTTONS */}
+          <div
+            className="
+              flex
+              flex-col
+              sm:flex-row
+              items-center
+              justify-center
+              gap-5
+              mt-12
+            "
+          >
+
             <Magnetic>
-              <Link 
-                href="/contact" 
-                className="btn-primary px-12 py-8 text-lg group"
-              >
-                Get In Touch <ArrowRight size={20} className="ml-3 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Magnetic>
-            
-            <div className="flex items-center gap-4 text-white/40 font-mono text-xs uppercase tracking-widest">
-              <div className="w-10 h-[1px] bg-white/10" />
-              <span>Or Email Me Directly</span>
-              <div className="w-10 h-[1px] bg-white/10" />
-            </div>
 
-            <a 
-              href="mailto:salauddinkaderappy@gmail.com" 
-              className="font-display font-bold text-xl text-white hover:text-accent transition-colors flex items-center gap-3"
+              <Link
+                href="/contact"
+                className="
+                  btn-primary
+                  px-8
+                  py-4
+                "
+              >
+                Start a Project
+
+                <ArrowRight size={16} />
+              </Link>
+
+            </Magnetic>
+
+            <a
+              href="mailto:salahuddinkaderappy@gmail.com"
+              className="
+                text-[15px]
+                font-medium
+                text-white/60
+                hover:text-white
+                transition-colors
+              "
             >
-              <MessageSquare size={20} className="text-accent" />
-              salauddinkaderappy@gmail.com
+              salahuddinkaderappy@gmail.com
             </a>
+
           </div>
+
         </motion.div>
+
       </div>
     </section>
   );

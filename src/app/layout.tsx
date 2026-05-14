@@ -115,23 +115,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="dark"
+      className={`dark ${plusJakartaSans.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body
         suppressHydrationWarning
-        className={`
-          ${plusJakartaSans.variable}
-          ${outfit.variable}
-          ${jetbrainsMono.variable}
-
-          bg-background
-          text-foreground
-          antialiased
-          overflow-x-hidden
-          selection:bg-[#dc2626]
-          selection:text-white
-        `}
+        className="bg-background text-foreground antialiased overflow-x-hidden selection:bg-[#dc2626] selection:text-white"
       >
 
         <LenisProvider>
