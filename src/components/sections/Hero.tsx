@@ -105,7 +105,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen flex flex-col justify-center relative overflow-hidden bg-black">
+    <section id="home" className="section-shell min-h-screen flex flex-col justify-center relative overflow-hidden bg-black">
       {/* Decorative Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] z-0 pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] z-0 pointer-events-none" />
