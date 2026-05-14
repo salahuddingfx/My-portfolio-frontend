@@ -83,19 +83,19 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`
         fixed top-0 left-0 w-full z-[100] transition-all duration-500
-        ${scrolled ? "py-6 bg-black/40 backdrop-blur-3xl border-b border-white/5" : "py-16"}
+        ${scrolled ? "py-4 bg-black/60 backdrop-blur-3xl border-b border-white/5" : "py-6 lg:py-16"}
       `}
     >
       <div className="container flex items-center justify-between">
         
         {/* LOGO AREA */}
-        <Link href="/" className="flex items-center gap-6 group">
-          <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-white/10 group-hover:border-accent/50 transition-all duration-500 shadow-2xl">
+        <Link href="/" className="flex items-center gap-3 lg:gap-6 group">
+          <div className="relative w-10 h-10 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 group-hover:border-accent/50 transition-all duration-500 shadow-2xl">
             <Image src="/salah-uddin.webp" alt="Saka" fill className="object-cover" />
           </div>
           <div className="hidden sm:flex flex-col">
-            <span className="text-[18px] font-black tracking-tight text-white uppercase leading-tight">Saka Chowdhury</span>
-            <span className="text-[10px] text-accent font-mono font-bold uppercase tracking-[0.2em] mt-1 opacity-80">Creative Engineer</span>
+            <span className="text-[14px] lg:text-[18px] font-black tracking-tight text-white uppercase leading-tight">Saka Chowdhury</span>
+            <span className="text-[9px] lg:text-[10px] text-accent font-mono font-bold uppercase tracking-[0.2em] mt-1 opacity-80">Creative Engineer</span>
           </div>
         </Link>
 

@@ -151,15 +151,15 @@ const Hero = () => {
         {/* Right: Narrative/Creative */}
         <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pointer-events-auto mt-4 lg:mt-0">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="w-full space-y-6 lg:space-y-12"
+            transition={{ duration: 1, delay: 0.2 }}
+            className="flex flex-col gap-6 lg:gap-10"
           >
-            <div className="space-y-4">
-              <span className="text-lg md:text-2xl font-display text-white/50">A Creative</span>
-              <h2 className="text-3xl md:text-5xl lg:text-7xl font-black text-white leading-tight tracking-tight uppercase min-h-[1.5em] lg:min-h-[1.2em]">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e11d48] to-[#e11d48]/50 outline-text typing-cursor break-words px-4 lg:px-0">
+            <div className="space-y-2 lg:space-y-4">
+              <span className="text-sm md:text-2xl font-display text-white/50 tracking-[0.2em] uppercase">A Creative</span>
+              <h2 className="text-4xl md:text-5xl lg:text-8xl font-black text-white leading-[1.1] tracking-tighter uppercase break-words">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent/50">
                   <span ref={typingRef}></span>
                 </span>
               </h2>
