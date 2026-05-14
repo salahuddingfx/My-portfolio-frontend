@@ -119,14 +119,17 @@ button {
 
 .section-shell {
   position: relative;
-  padding-top: 10rem;
-  padding-bottom: 10rem;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: var(--background);
+  overflow: clip; /* Better than hidden for transforms */
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
   .section-shell {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 }
 
