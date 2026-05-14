@@ -1,0 +1,360 @@
+/* =============================================================================
+   REFINED DESIGN SYSTEM
+   ============================================================================= */
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  --background: #000000;
+  --foreground: #f8fafc;
+
+  --surface: #0f172a;
+  --surface-2: #111827;
+
+  --accent: #dc2626;
+
+  --border: rgba(255,255,255,0.06);
+  --border-bright: rgba(255,255,255,0.12);
+
+  --muted: #94a3b8;
+  --muted-soft: rgba(255,255,255,0.5);
+
+  --font-display: var(--font-outfit);
+  --font-body: var(--font-plus-jakarta);
+  --font-mono-raw: var(--font-mono);
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+}
+
+/* =============================================================================
+   BASE
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), sans-serif;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+  color: white;
+  text-wrap: balance;
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* =============================================================================
+   LAYOUT
+   ============================================================================= */
+
+.container {
+  width: 100%;
+  max-width: 1536px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 4rem;
+  }
+}
+
+/* =============================================================================
+   SECTION SYSTEM
+   ============================================================================= */
+
+.section-shell {
+  position: relative;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background: var(--background);
+  overflow: clip; /* Better than hidden for transforms */
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .section-shell {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+}
+
+.section-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 10vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  margin-bottom: 2rem;
+}
+
+.section-copy {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.4);
+  max-width: 540px;
+  margin-bottom: 2.5rem;
+}
+
+/* =============================================================================
+   CARD SYSTEM
+   ============================================================================= */
+
+.premium-card {
+  position: relative;
+
+  background: rgba(255,255,255,0.02);
+
+  border: 1px solid var(--border);
+
+  border-radius: 1.5rem;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+
+  border-color: var(--border-bright);
+
+  background: rgba(255,255,255,0.03);
+}
+
+.glass {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+.glass-morphism {
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  padding: 1rem 2rem;
+
+  border-radius: 1rem;
+
+  background: var(--accent);
+
+  color: white;
+
+  font-family: var(--font-display), sans-serif;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+
+  background: #ef4444;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  padding: 1rem 2rem;
+
+  border-radius: 1rem;
+
+  border: 1px solid var(--border);
+
+  background: rgba(255,255,255,0.02);
+
+  color: rgba(255,255,255,0.7);
+
+  font-family: var(--font-display), sans-serif;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition: all 0.3s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.05);
+
+  border-color: var(--border-bright);
+
+  color: white;
+
+  transform: translateY(-2px);
+}
+
+/* =============================================================================
+   UTILITIES
+   ============================================================================= */
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.bg-grid {
+  background-image:
+    radial-gradient(
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+}
+
+.outline-text {
+  -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+  color: transparent;
+}
+
+.typing-cursor::after {
+  content: "|";
+  margin-left: 4px;
+
+  color: var(--accent);
+
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%,100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  .section-title {
+    font-size: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
