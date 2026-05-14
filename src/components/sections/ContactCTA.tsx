@@ -45,20 +45,6 @@ const ContactCTA = () => {
       >
 
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 40,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.8,
-          }}
           className="
             max-w-3xl
             mx-auto
@@ -72,16 +58,7 @@ const ContactCTA = () => {
           </span>
 
           {/* HEADING */}
-          <h2
-            className="
-              text-[clamp(3rem,6vw,5rem)]
-              leading-[0.95]
-              tracking-[-0.06em]
-              font-bold
-              text-white
-              mt-6
-            "
-          >
+          <h2 className="section-title mt-6 mx-auto">
             Have an
             <span className="text-accent">
               {" "}
