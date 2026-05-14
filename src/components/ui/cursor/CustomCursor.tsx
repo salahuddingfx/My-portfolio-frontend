@@ -6,14 +6,16 @@ import gsap from "gsap";
 const CustomCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const followerRef = useRef<HTMLDivElement>(null);
+  const raysRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const cursor = cursorRef.current;
     const follower = followerRef.current;
+    const rays = raysRef.current;
 
-    if (!cursor || !follower) return;
+    if (!cursor || !follower || !rays) return;
 
     const moveCursor = (e: MouseEvent) => {
       gsap.to(cursor, {
@@ -33,13 +35,21 @@ const CustomCursor = () => {
       const target = e.target as HTMLElement;
       if (target.closest("button, a, .cursor-pointer")) {
         gsap.to(follower, {
-          scale: 1.8,
+          scale: 1.5,
           duration: 0.3,
         });
         gsap.to(".sharingan-glow", {
           opacity: 1,
-          scale: 1.5,
+          scale: 1.8,
           duration: 0.3,
+        });
+        // REVEAL RAYS
+        gsap.to(".ray", {
+          scaleY: 1,
+          opacity: 0.6,
+          stagger: 0.02,
+          duration: 0.4,
+          ease: "back.out(2)",
         });
       } else {
         gsap.to(follower, {
@@ -49,6 +59,12 @@ const CustomCursor = () => {
         gsap.to(".sharingan-glow", {
           opacity: 0.6,
           scale: 1,
+          duration: 0.3,
+        });
+        // HIDE RAYS
+        gsap.to(".ray", {
+          scaleY: 0,
+          opacity: 0,
           duration: 0.3,
         });
       }
@@ -75,6 +91,14 @@ const CustomCursor = () => {
       ease: "sine.inOut",
     });
 
+    // Constantly rotate the rays slowly
+    gsap.to(rays, {
+      rotation: -360,
+      duration: 15,
+      repeat: -1,
+      ease: "none",
+    });
+
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handlePointerOver);
@@ -94,8 +118,21 @@ const CustomCursor = () => {
         ref={followerRef}
         className="fixed top-0 left-0 w-12 h-12 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 hidden md:block"
       >
+        {/* RADIATING RAYS CONTAINER */}
+        <div ref={raysRef} className="absolute inset-0 flex items-center justify-center">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div
+              key={i}
+              className="ray absolute w-[1px] h-[60px] bg-gradient-to-t from-[#dc2626] to-transparent origin-bottom opacity-0 scale-y-0"
+              style={{
+                transform: `rotate(${i * 30}deg) translateY(-50%)`,
+              }}
+            />
+          ))}
+        </div>
+
         {/* EXTERNAL AURA GLOW */}
-        <div className="sharingan-glow absolute inset-[-20px] rounded-full bg-[#dc2626]/20 blur-[15px] opacity-60 z-[-1]" />
+        <div className="sharingan-glow absolute inset-[-25px] rounded-full bg-[#dc2626]/20 blur-[20px] opacity-60 z-[-1]" />
         
         <div className="relative w-full h-full rounded-full bg-[#dc2626] border border-black/40 overflow-hidden shadow-[inset_0_0_12px_rgba(0,0,0,0.9),0_0_20px_rgba(220,38,38,0.6)]">
           {/* Inner Pattern (EMS) */}
