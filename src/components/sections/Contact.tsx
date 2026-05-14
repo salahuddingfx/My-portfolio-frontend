@@ -91,15 +91,7 @@ const Contact = () => {
             Contact
           </span>
 
-          <h2
-            className="
-              text-[clamp(3rem,6vw,5rem)]
-              tracking-[-0.06em]
-              leading-[0.95]
-              font-bold
-              text-white
-            "
-          >
+          <h2 className="section-title mx-auto">
             Let&apos;s
             <span className="text-accent">
               {" "}
