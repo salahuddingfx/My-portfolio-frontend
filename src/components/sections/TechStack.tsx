@@ -38,7 +38,7 @@ const techCategories = [
 
 const TechStack = () => {
   return (
-    <section id="tech" className="section-shell relative bg-black overflow-hidden py-32">
+    <section id="tech" className="section-shell relative bg-black overflow-hidden">
       <div className="container relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 space-y-8">

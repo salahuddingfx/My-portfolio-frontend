@@ -108,16 +108,7 @@ const About = () => {
               About Me
             </span>
 
-            <h2
-              className="
-                text-[clamp(3rem,6vw,5rem)]
-                leading-[0.95]
-                tracking-[-0.06em]
-                font-bold
-                text-white
-                mb-6
-              "
-            >
+            <h2 className="section-title">
               The Mind Behind
               <span className="text-accent"> The Work.</span>
             </h2>
