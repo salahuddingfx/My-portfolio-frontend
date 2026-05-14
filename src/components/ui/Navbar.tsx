@@ -83,7 +83,7 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`
         fixed top-0 left-0 w-full z-[100] transition-all duration-500
-        ${scrolled ? "py-6 bg-black/80 backdrop-blur-2xl border-b border-white/5" : "py-12"}
+        ${scrolled ? "py-6 bg-black/40 backdrop-blur-3xl border-b border-white/5" : "py-16"}
       `}
     >
       <div className="container flex items-center justify-between">
@@ -95,7 +95,7 @@ const Navbar = () => {
           </div>
           <div className="hidden sm:flex flex-col">
             <span className="text-[18px] font-black tracking-tight text-white uppercase leading-tight">Saka Chowdhury</span>
-            <span className="text-[11px] text-accent font-mono font-bold uppercase tracking-[0.2em] mt-1">Creative Engineer</span>
+            <span className="text-[10px] text-accent font-mono font-bold uppercase tracking-[0.2em] mt-1 opacity-80">Creative Engineer</span>
           </div>
         </Link>
 
@@ -104,7 +104,7 @@ const Navbar = () => {
           <div 
             ref={navRef}
             onMouseLeave={() => handleHover(null)}
-            className="flex items-center gap-4 px-4 py-3 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-3xl shadow-2xl"
+            className="flex items-center gap-2 px-2 py-2 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
           >
             {navLinks.map((link, i) => {
               const active = pathname === link.href;
@@ -116,8 +116,8 @@ const Navbar = () => {
                   className="nav-link-item relative px-8 py-3 transition-all duration-300"
                 >
                   <span className={`
-                    text-[15px] font-bold uppercase tracking-[0.2em]
-                    ${active ? "text-accent" : "text-white/60"}
+                    text-[14px] font-bold uppercase tracking-[0.15em]
+                    ${active ? "text-accent" : "text-white/40"}
                   `}>
                     {link.name}
                   </span>
@@ -125,7 +125,7 @@ const Navbar = () => {
                   {active && (
                     <motion.div 
                       layoutId="nav-active-bg"
-                      className="absolute inset-0 bg-white/10 rounded-full -z-10"
+                      className="absolute inset-0 bg-white/[0.05] rounded-full -z-10"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -139,9 +139,9 @@ const Navbar = () => {
         <div className="flex items-center gap-8">
           <Link 
             href="/contact" 
-            className="hidden md:flex btn-primary !rounded-full px-10 py-4 text-[12px] font-bold tracking-widest border border-accent/20 hover:border-accent transition-all uppercase"
+            className="hidden md:flex btn-primary !rounded-full px-7 py-3 text-[11px] font-bold tracking-widest border border-accent/10 hover:border-accent transition-all uppercase"
           >
-            Let&apos;s Talk <ArrowUpRight size={16} className="ml-3" />
+            Let&apos;s Talk <ArrowUpRight size={14} className="ml-2" />
           </Link>
 
           {/* MOBILE TOGGLE */}

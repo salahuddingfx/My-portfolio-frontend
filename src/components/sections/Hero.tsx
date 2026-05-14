@@ -165,7 +165,7 @@ const Hero = () => {
               </h2>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
+            <div className="flex flex-row gap-4 justify-center lg:justify-end flex-wrap">
               <Magnetic>
                 <a href="#projects" className="btn-primary px-8 py-4 text-xs">
                   View Projects <ArrowRight size={14} className="ml-2" />
