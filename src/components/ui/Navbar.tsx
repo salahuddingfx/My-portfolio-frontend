@@ -83,19 +83,19 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`
         fixed top-0 left-0 w-full z-[100] transition-all duration-500
-        ${scrolled ? "py-4" : "py-8"}
+        ${scrolled ? "py-6 bg-black/80 backdrop-blur-2xl border-b border-white/5" : "py-12"}
       `}
     >
       <div className="container flex items-center justify-between">
         
         {/* LOGO AREA */}
-        <Link href="/" className="flex items-center gap-4 group">
-          <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-white/10 group-hover:border-accent/50 transition-colors duration-500">
+        <Link href="/" className="flex items-center gap-6 group">
+          <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-white/10 group-hover:border-accent/50 transition-all duration-500 shadow-2xl">
             <Image src="/salah-uddin.webp" alt="Saka" fill className="object-cover" />
           </div>
           <div className="hidden sm:flex flex-col">
-            <span className="text-[14px] font-bold tracking-tight text-white uppercase">Saka Chowdhury</span>
-            <span className="text-[9px] text-accent font-mono font-bold uppercase tracking-widest">Digital Architect</span>
+            <span className="text-[18px] font-black tracking-tight text-white uppercase leading-tight">Saka Chowdhury</span>
+            <span className="text-[11px] text-accent font-mono font-bold uppercase tracking-[0.2em] mt-1">Creative Engineer</span>
           </div>
         </Link>
 
@@ -104,7 +104,7 @@ const Navbar = () => {
           <div 
             ref={navRef}
             onMouseLeave={() => handleHover(null)}
-            className="flex items-center gap-2 px-2 py-2 rounded-full border border-white/5 bg-white/[0.03] backdrop-blur-xl"
+            className="flex items-center gap-4 px-4 py-3 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-3xl shadow-2xl"
           >
             {navLinks.map((link, i) => {
               const active = pathname === link.href;
@@ -113,11 +113,11 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onMouseEnter={() => handleHover(i)}
-                  className="nav-link-item relative px-5 py-2 transition-all duration-300"
+                  className="nav-link-item relative px-8 py-3 transition-all duration-300"
                 >
                   <span className={`
-                    text-[12px] font-bold uppercase tracking-[0.15em]
-                    ${active ? "text-accent" : "text-white/50"}
+                    text-[15px] font-bold uppercase tracking-[0.2em]
+                    ${active ? "text-accent" : "text-white/60"}
                   `}>
                     {link.name}
                   </span>
@@ -125,7 +125,7 @@ const Navbar = () => {
                   {active && (
                     <motion.div 
                       layoutId="nav-active-bg"
-                      className="absolute inset-0 bg-white/5 rounded-full -z-10"
+                      className="absolute inset-0 bg-white/10 rounded-full -z-10"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -136,12 +136,12 @@ const Navbar = () => {
         </div>
 
         {/* RIGHT AREA */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-8">
           <Link 
             href="/contact" 
-            className="hidden md:flex btn-primary !rounded-full px-8 py-3 text-[11px] border border-accent/20 hover:border-accent transition-all"
+            className="hidden md:flex btn-primary !rounded-full px-10 py-4 text-[12px] font-bold tracking-widest border border-accent/20 hover:border-accent transition-all uppercase"
           >
-            Start Project <ArrowUpRight size={14} className="ml-2" />
+            Let&apos;s Talk <ArrowUpRight size={16} className="ml-3" />
           </Link>
 
           {/* MOBILE TOGGLE */}
