@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import gsap from "gsap";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -18,340 +19,163 @@ const navLinks = [
 
 const Navbar = () => {
   const pathname = usePathname();
-
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 16);
+      setScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
+  // GSAP Hover Animation Logic
+  const handleHover = (index: number | null) => {
+    setHoveredIndex(index);
+    
+    const links = navRef.current?.querySelectorAll(".nav-link-item");
+    if (!links) return;
+
+    links.forEach((link, i) => {
+      if (index === null) {
+        // Reset
+        gsap.to(link, {
+          opacity: 1,
+          filter: "blur(0px)",
+          scale: 1,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      } else if (i === index) {
+        // Hovered
+        gsap.to(link, {
+          opacity: 1,
+          filter: "blur(0px)",
+          scale: 1.1,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      } else {
+        // Others
+        gsap.to(link, {
+          opacity: 0.3,
+          filter: "blur(4px)",
+          scale: 0.95,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      }
+    });
+  };
+
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -24 }}
+      initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`
-        fixed
-        top-0
-        left-0
-        w-full
-        z-[100]
-        transition-all
-        duration-500
-        ${
-          scrolled
-            ? "bg-black/70 backdrop-blur-md border-b border-white/5 py-4"
-            : "bg-transparent py-6"
-        }
+        fixed top-0 left-0 w-full z-[100] transition-all duration-500
+        ${scrolled ? "py-4" : "py-8"}
       `}
     >
       <div className="container flex items-center justify-between">
-
-        {/* LEFT */}
-        <Link
-          href="/"
-          className="flex items-center gap-4 group"
-          aria-label="Homepage"
-        >
-
-          {/* IMAGE */}
-          <div
-            className="
-              relative
-              w-11
-              h-11
-              rounded-xl
-              overflow-hidden
-              border
-              border-white/5
-              transition-transform
-              duration-300
-              group-hover:scale-[1.03]
-            "
-          >
-            <Image
-              src="/salah-uddin.webp"
-              alt="Salah Uddin Kader"
-              fill
-              priority
-              className="object-cover"
-            />
+        
+        {/* LOGO AREA */}
+        <Link href="/" className="flex items-center gap-4 group">
+          <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-white/10 group-hover:border-accent/50 transition-colors duration-500">
+            <Image src="/salah-uddin.webp" alt="Saka" fill className="object-cover" />
           </div>
-
-          {/* TEXT */}
           <div className="hidden sm:flex flex-col">
-
-            <span
-              className="
-                text-[15px]
-                font-semibold
-                tracking-[-0.02em]
-                text-white
-                leading-none
-              "
-            >
-              Saka Chowdhury
-            </span>
-
-            <span
-              className="
-                text-[11px]
-                text-white/35
-                mt-1
-              "
-            >
-              Salah Uddin Kader
-            </span>
-
+            <span className="text-[14px] font-bold tracking-tight text-white uppercase">Saka Chowdhury</span>
+            <span className="text-[9px] text-accent font-mono font-bold uppercase tracking-widest">Digital Architect</span>
           </div>
         </Link>
 
-        {/* CENTER */}
-        <div className="hidden lg:flex items-center">
-
-          <div
-            className="
-              flex
-              items-center
-              gap-8
-              px-6
-              py-3
-              rounded-full
-              border
-              border-white/5
-              bg-white/[0.02]
-              backdrop-blur-md
-            "
+        {/* CENTER NAVIGATION (GSAP ENHANCED) */}
+        <div className="hidden lg:block">
+          <div 
+            ref={navRef}
+            onMouseLeave={() => handleHover(null)}
+            className="flex items-center gap-2 px-2 py-2 rounded-full border border-white/5 bg-white/[0.03] backdrop-blur-xl"
           >
-
-            {navLinks.map((link) => {
+            {navLinks.map((link, i) => {
               const active = pathname === link.href;
-
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="
-                    relative
-                    group
-                    transition-colors
-                    duration-300
-                  "
+                  onMouseEnter={() => handleHover(i)}
+                  className="nav-link-item relative px-5 py-2 transition-all duration-300"
                 >
-
-                  <span
-                    className={`
-                      text-[13px]
-                      font-medium
-                      tracking-[0.08em]
-                      transition-colors
-                      duration-300
-                      ${
-                        active
-                          ? "text-white"
-                          : "text-white/45 group-hover:text-white"
-                      }
-                    `}
-                  >
+                  <span className={`
+                    text-[12px] font-bold uppercase tracking-[0.15em]
+                    ${active ? "text-accent" : "text-white/50"}
+                  `}>
                     {link.name}
                   </span>
-
-                  {/* ACTIVE LINE */}
+                  
                   {active && (
-                    <motion.div
-                      layoutId="navbar-active"
-                      className="
-                        absolute
-                        left-0
-                        right-0
-                        -bottom-2
-                        h-[2px]
-                        rounded-full
-                        bg-[#dc2626]
-                      "
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 28,
-                      }}
+                    <motion.div 
+                      layoutId="nav-active-bg"
+                      className="absolute inset-0 bg-white/5 rounded-full -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
-
                 </Link>
               );
             })}
-
           </div>
         </div>
 
-        {/* RIGHT */}
-        <div className="hidden md:flex items-center gap-4">
-
-          <a
-            href="mailto:salahuddinkadrappy@gmail.com"
-            className="
-              text-[13px]
-              text-white/40
-              hover:text-white
-              transition-colors
-            "
+        {/* RIGHT AREA */}
+        <div className="flex items-center gap-6">
+          <Link 
+            href="/contact" 
+            className="hidden md:flex btn-primary !rounded-full px-8 py-3 text-[11px] border border-accent/20 hover:border-accent transition-all"
           >
-            Contact
-          </a>
-
-          <Link
-            href="/contact"
-            className="
-              inline-flex
-              items-center
-              gap-2
-              px-5
-              py-3
-              rounded-full
-              bg-[#dc2626]
-              text-white
-              text-[12px]
-              font-medium
-              tracking-[0.08em]
-              transition-all
-              duration-300
-              hover:translate-y-[-2px]
-              hover:bg-[#ef4444]
-            "
-          >
-            Let&apos;s Talk
-
-            <ArrowUpRight size={14} />
+            Start Project <ArrowUpRight size={14} className="ml-2" />
           </Link>
 
+          {/* MOBILE TOGGLE */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all"
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-
-        {/* MOBILE BUTTON */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="
-            md:hidden
-            w-11
-            h-11
-            rounded-full
-            border
-            border-white/10
-            bg-white/[0.02]
-            flex
-            items-center
-            justify-center
-            text-white/60
-            hover:text-white
-            transition-colors
-          "
-          aria-label="Toggle Menu"
-          aria-expanded={isOpen}
-        >
-          {isOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
-
       </div>
 
       {/* MOBILE MENU */}
       <AnimatePresence>
-
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3 }}
-            className="
-              md:hidden
-              absolute
-              top-full
-              left-0
-              w-full
-              border-b
-              border-white/5
-              bg-black/80
-              backdrop-blur-md
-            "
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-black/95 backdrop-blur-2xl border-b border-white/5 overflow-hidden"
           >
-
-            <div className="container py-8 flex flex-col gap-6">
-
-              {navLinks.map((link) => {
-                const active = pathname === link.href;
-
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className={`
-                      text-[22px]
-                      font-semibold
-                      tracking-[-0.03em]
-                      transition-colors
-                      duration-300
-                      ${
-                        active
-                          ? "text-white"
-                          : "text-white/45 hover:text-white"
-                      }
-                    `}
-                  >
-                    {link.name}
-                  </Link>
-                );
-              })}
-
-              {/* MOBILE CTA */}
-              <div className="pt-6">
-
+            <div className="container py-12 flex flex-col gap-8">
+              {navLinks.map((link) => (
                 <Link
-                  href="/contact"
-                  className="
-                    inline-flex
-                    items-center
-                    justify-center
-                    gap-2
-                    w-full
-                    rounded-2xl
-                    bg-[#dc2626]
-                    px-6
-                    py-4
-                    text-white
-                    text-[13px]
-                    font-medium
-                    tracking-[0.08em]
-                    transition-all
-                    duration-300
-                    hover:bg-[#ef4444]
-                  "
+                  key={link.name}
+                  href={link.href}
+                  className="text-4xl font-bold text-white/40 hover:text-white transition-colors"
                 >
-                  Start a Conversation
-
-                  <ArrowUpRight size={16} />
+                  {link.name}
                 </Link>
-
-              </div>
-
+              ))}
             </div>
           </motion.div>
         )}
-
       </AnimatePresence>
     </motion.nav>
   );

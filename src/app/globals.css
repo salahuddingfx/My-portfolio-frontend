@@ -116,7 +116,7 @@ button {
 
 .container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1536px;
   margin-inline: auto;
   padding-inline: 1.5rem;
 }
@@ -133,14 +133,21 @@ button {
 
 .section-shell {
   position: relative;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
   background: var(--background);
   overflow: clip; /* Better than hidden for transforms */
   z-index: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .section-shell {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+@media (max-width: 640px) {
   .section-shell {
     padding-top: 5rem;
     padding-bottom: 5rem;
