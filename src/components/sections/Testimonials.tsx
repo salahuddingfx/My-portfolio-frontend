@@ -58,7 +58,7 @@ const Testimonials = () => {
     <section id="reviews" className="section-shell relative overflow-hidden bg-black">
       <div className="container relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-24 md:mb-32 space-y-8">
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20 space-y-8">
           <span className="section-kicker mx-auto">Testimonials</span>
           <h2 className="section-title !mb-0">
             Client <span className="text-accent">Feedback.</span>
