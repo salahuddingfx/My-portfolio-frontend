@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
+import Magnetic from "@/components/ui/Magnetic";
 
 const TYPING_ROLES = [
   "Creative Developer",
@@ -133,16 +134,20 @@ const Hero = () => {
 
             {/* Actions */}
             <div className="flex flex-wrap items-center gap-6">
-              <a href="#projects" className="btn-primary">
-                Selected Works
-                <ArrowRight size={15} />
-              </a>
-              <Link 
-                href="/contact" 
-                className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-white transition-colors"
-              >
-                Let&apos;s Talk
-              </Link>
+              <Magnetic>
+                <a href="#projects" className="btn-primary">
+                  Selected Works
+                  <ArrowRight size={15} />
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <Link 
+                  href="/contact" 
+                  className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-white transition-colors"
+                >
+                  Let&apos;s Talk
+                </Link>
+              </Magnetic>
             </div>
           </div>
 
