@@ -92,15 +92,15 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-shell pt-32 pb-32 bg-[var(--background)] relative overflow-hidden">
+    <section id="contact" className="section-shell pt-40 pb-40 bg-[var(--background)] relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[var(--accent)]/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4" />
       
-      <div className="container max-w-7xl relative z-10">
+      <div className="container max-w-6xl relative z-10 px-6 sm:px-10">
 
         {/* Header - Editorial Style */}
-        <div className="grid lg:grid-cols-2 gap-12 items-end mb-24">
+        <div className="grid lg:grid-cols-2 gap-16 items-end mb-32">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -108,9 +108,9 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="section-eyebrow text-white/40 mb-6 block">Inquiries</span>
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
               Let&apos;s build <br />
-              <span className="text-stroke group-hover:text-white transition-all duration-500">something</span> <br />
+              <span className="text-stroke">something</span> <br />
               <span className="text-[var(--accent)] italic">legendary.</span>
             </h2>
           </motion.div>
@@ -119,20 +119,20 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-md pb-4"
+            className="max-w-md pb-4 lg:text-right lg:ml-auto"
           >
-            <p className="text-lg text-[var(--muted)] leading-relaxed italic border-l-2 border-[var(--accent)]/30 pl-8">
+            <p className="text-lg text-[var(--muted)] leading-relaxed italic border-l-2 lg:border-l-0 lg:border-r-2 border-[var(--accent)]/30 pl-8 lg:pl-0 lg:pr-8">
               &quot;Design is not just what it looks like and feels like. Design is how it works.&quot; 
               <span className="block mt-4 text-xs font-mono uppercase tracking-widest text-white/30 not-italic">— Steve Jobs</span>
             </p>
           </motion.div>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-stretch">
 
           {/* Contact Details Column */}
-          <div className="lg:col-span-5 flex flex-col justify-between py-4">
-            <div className="space-y-10">
+          <div className="lg:col-span-4 flex flex-col justify-between py-6">
+            <div className="space-y-12">
               {infoCards.map((card, i) => (
                 <motion.div
                   key={card.label}
@@ -140,21 +140,21 @@ const Contact = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="contact-info-item flex items-center gap-8 group"
+                  className="contact-info-item flex items-center gap-6 group"
                 >
-                  <div className="contact-info-icon">
-                    <card.icon size={22} />
+                  <div className="contact-info-icon shrink-0">
+                    <card.icon size={20} />
                   </div>
-                  <div className="space-y-1">
+                  <div className="space-y-1 overflow-hidden">
                     <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted-soft)]">
                       {card.label}
                     </p>
                     {card.href ? (
-                      <a href={card.href} className="text-lg font-bold text-white hover:text-[var(--accent)] transition-all">
+                      <a href={card.href} className="text-base sm:text-lg font-bold text-white hover:text-[var(--accent)] transition-all truncate block">
                         {card.value}
                       </a>
                     ) : (
-                      <p className="text-lg font-bold text-white">{card.value}</p>
+                      <p className="text-base sm:text-lg font-bold text-white truncate">{card.value}</p>
                     )}
                   </div>
                 </motion.div>
@@ -169,9 +169,9 @@ const Contact = () => {
               className="mt-20 pt-10 border-t border-[var(--border)]"
             >
               <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted-soft)] mb-6">Social Networks</p>
-              <div className="flex gap-6">
+              <div className="flex flex-wrap gap-x-8 gap-y-4">
                 {['LinkedIn', 'Github', 'Twitter', 'Instagram'].map(social => (
-                  <a key={social} href="#" className="text-sm font-bold hover:text-[var(--accent)] transition-all uppercase tracking-tighter">
+                  <a key={social} href="#" className="text-xs font-bold hover:text-[var(--accent)] transition-all uppercase tracking-widest text-white/60 hover:text-white">
                     {social}
                   </a>
                 ))}
@@ -181,22 +181,25 @@ const Contact = () => {
 
           {/* Contact Form Column */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-7 h-full"
+            className="lg:col-span-8"
           >
-            <div className="contact-card h-full p-10 md:p-16 flex flex-col">
-              <div className="flex items-center justify-between mb-12">
-                <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
-                <div className="flex gap-1">
-                  {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]/30" />)}
+            <div className="contact-card p-8 md:p-14 lg:p-16 flex flex-col h-full">
+              <div className="flex items-center justify-between mb-16">
+                <div className="space-y-1">
+                  <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
+                  <div className="w-12 h-1 bg-[var(--accent)] rounded-full" />
+                </div>
+                <div className="flex gap-1.5">
+                  {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]/40" />)}
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="flex flex-col gap-12 flex-grow">
-                <div className="grid md:grid-cols-2 gap-x-12 gap-y-12">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-14">
+                <div className="grid md:grid-cols-2 gap-x-12 gap-y-14">
                   <div className="contact-input-group">
                     <input
                       type="text"
@@ -240,24 +243,24 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="contact-input-group flex-grow">
+                <div className="contact-input-group">
                   <textarea
                     placeholder=" "
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="contact-input resize-none min-h-[120px]"
+                    className="contact-input resize-none min-h-[140px]"
                   />
                   <label className="contact-label">Project Details</label>
                 </div>
 
-                <div className="pt-6">
+                <div className="pt-4">
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="contact-btn w-full group flex items-center justify-center gap-4"
+                    className="contact-btn w-full group flex items-center justify-center gap-4 py-5"
                   >
-                    <span>
+                    <span className="text-sm">
                       {status === "sending"
                         ? "Sending..."
                         : status === "success"
@@ -275,11 +278,6 @@ const Contact = () => {
                     >
                       Transmission successful. Response incoming.
                     </motion.p>
-                  )}
-                  {status === "error" && (
-                    <p className="text-center mt-6 text-[10px] font-mono uppercase tracking-widest text-red-500 font-bold">
-                      Transmission failed. Check connection.
-                    </p>
                   )}
                 </div>
               </form>
