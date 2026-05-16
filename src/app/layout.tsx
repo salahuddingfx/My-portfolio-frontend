@@ -128,10 +128,9 @@ export default function RootLayout({
           {/* PAGE CONTENT */}
           <main className="relative min-h-screen">
             {children}
+            {/* FOOTER */}
+            <Footer />
           </main>
-
-          {/* FOOTER */}
-          <Footer />
 
         </LenisProvider>
       </body>

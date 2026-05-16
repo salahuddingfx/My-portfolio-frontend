@@ -9,8 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 export function ScrollEffects() {
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Select all sections within main to apply the overlap effect
-      const sections = gsap.utils.toArray<HTMLElement>("main > section");
+      // Select all sections and the footer within main to apply the overlap effect
+      const sections = gsap.utils.toArray<HTMLElement>("main > section, main > footer");
       
       sections.forEach((section, i) => {
         // Ensure they stack on top of each other correctly
