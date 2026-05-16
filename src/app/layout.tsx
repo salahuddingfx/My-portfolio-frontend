@@ -68,7 +68,7 @@ export const metadata: Metadata = {
 
   authors: [{ name: "Salah Uddin Kader" }],
 
-  icons: { icon: "/favicon.ico" },
+  icons: { icon: "/favicon.png" },
 
   openGraph: {
     title: "Salah Uddin Kader — Full Stack Developer",
