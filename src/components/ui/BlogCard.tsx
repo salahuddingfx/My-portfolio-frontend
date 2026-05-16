@@ -18,57 +18,72 @@ interface BlogProps {
 
 const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index }: BlogProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, delay: index * 0.1 }}
-      className="premium-card group flex flex-col md:flex-row gap-8 p-8 md:p-10 border-white/5 hover:border-accent/20 transition-all duration-700"
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, delay: index * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="card card-hover group"
     >
-      {/* Image Container */}
-      <div className="relative w-full md:w-80 h-56 rounded-2xl overflow-hidden shrink-0 shadow-2xl">
-        <Image 
-          src={image} 
-          alt={title}
-          fill
-          sizes="(max-width: 768px) 100vw, 320px"
-          className="object-cover transition-transform duration-1000 group-hover:scale-110 grayscale-[0.3] group-hover:grayscale-0"
-        />
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-        <div className="absolute top-4 left-4">
-           <span className="px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-white border border-white/10">
+      <Link
+        href={`/blog/${slug}`}
+        className="grid md:grid-cols-[200px_1fr] gap-6 p-5 md:p-6"
+        aria-label={`Read: ${title}`}
+      >
+        {/* Image */}
+        <div className="relative aspect-[16/9] md:aspect-auto md:h-full min-h-[120px] rounded-[var(--radius-md)] overflow-hidden bg-[var(--surface-2)] shrink-0">
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="(max-width: 768px) 100vw, 200px"
+            className="object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
+          />
+          <div className="absolute top-2 left-2">
+            <span className="badge bg-black/60 backdrop-blur-sm text-white/70 border-white/10">
               {category}
-           </span>
-        </div>
-      </div>
-
-      {/* Content Area */}
-      <div className="flex flex-col justify-between py-1">
-        <div className="space-y-5">
-          <div className="flex items-center gap-6 text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">
-            <span className="flex items-center gap-2"><Calendar size={14} className="text-accent" /> {date}</span>
-            <span className="flex items-center gap-2"><Clock size={14} className="text-accent" /> {readTime}</span>
+            </span>
           </div>
-          
-          <h3 className="text-2xl md:text-3xl font-black text-white group-hover:text-accent transition-colors duration-500 leading-tight tracking-tight">
-            {title}
-          </h3>
-          
-          <p className="text-white/50 text-[16px] leading-relaxed line-clamp-2 max-w-2xl font-medium">
-            {excerpt}
-          </p>
         </div>
 
-        <div className="pt-8 border-t border-white/5 mt-auto group-hover:border-white/10 transition-colors">
-          <Link href={`/blog/${slug}`} className="inline-flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all duration-500 group/link">
-            Read Full Story 
-            <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover/link:bg-accent group-hover/link:border-accent transition-all duration-500">
-              <ArrowRight size={14} className="text-white transition-transform group-hover/link:translate-x-0.5" />
+        {/* Content */}
+        <div className="flex flex-col justify-between py-0.5 gap-4">
+          <div className="flex flex-col gap-3">
+            {/* Meta */}
+            <div className="flex items-center gap-4 text-[11px] text-[var(--muted-soft)] font-mono">
+              <span className="flex items-center gap-1.5">
+                <Calendar size={11} /> {date}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Clock size={11} /> {readTime}
+              </span>
             </div>
-          </Link>
+
+            {/* Title */}
+            <h3
+              className="text-lg font-semibold text-white leading-snug group-hover:text-[var(--accent)] transition-colors duration-200"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}
+            >
+              {title}
+            </h3>
+
+            {/* Excerpt */}
+            <p className="text-sm text-[var(--muted)] leading-relaxed line-clamp-2">
+              {excerpt}
+            </p>
+          </div>
+
+          {/* Read link */}
+          <div className="flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] group-hover:text-white transition-colors duration-200">
+            Read article
+            <ArrowRight
+              size={13}
+              className="group-hover:translate-x-0.5 transition-transform duration-200"
+            />
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </Link>
+    </motion.article>
   );
 };
 
