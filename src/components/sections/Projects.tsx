@@ -47,7 +47,17 @@ const Projects = () => {
         const res = await fetch(`${apiUrl}/admin/projects`);
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) setProjects(data);
+        if (Array.isArray(data) && data.length > 0) {
+          setProjects(data);
+          // Refresh GSAP ScrollTrigger after layout updates with new data
+          setTimeout(() => {
+            if (typeof window !== "undefined") {
+              import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+                ScrollTrigger.refresh();
+              });
+            }
+          }, 100);
+        }
       } catch {
         /* use fallback */
       } finally {
@@ -56,8 +66,6 @@ const Projects = () => {
     };
     fetch_();
   }, []);
-
-  if (loading) return null;
 
   return (
     <section id="projects" className="section-shell bg-[var(--surface)] border-y border-[var(--border)]">

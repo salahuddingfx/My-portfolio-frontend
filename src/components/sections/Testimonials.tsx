@@ -53,7 +53,17 @@ const Testimonials = () => {
         const res = await fetch(`${apiUrl}/admin/reviews`);
         if (!res.ok) throw new Error();
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) setReviews(data);
+        if (Array.isArray(data) && data.length > 0) {
+          setReviews(data);
+          // Refresh GSAP ScrollTrigger after layout updates with new data
+          setTimeout(() => {
+            if (typeof window !== "undefined") {
+              import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+                ScrollTrigger.refresh();
+              });
+            }
+          }, 100);
+        }
       } catch {
         /* use fallback */
       } finally {
@@ -62,8 +72,6 @@ const Testimonials = () => {
     };
     fetch_();
   }, []);
-
-  if (loading) return null;
 
   return (
     <section id="reviews" className="section-shell bg-[var(--background)]">
