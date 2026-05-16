@@ -1,57 +1,57 @@
 "use client";
 
-import { Cpu, Globe, Layout, Shield, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 const services = [
   {
     title: "Web Development",
-    desc: "I build fast, reliable websites using modern technologies that help your business grow and reach more people.",
-    icon: Globe,
+    desc: "Architecting high-performance digital infrastructure. Building fast, reliable systems using raw code and modern logic.",
     index: "01",
-    tech: ["Next.js", "React", "TypeScript"],
+    tech: ["NEXT.JS", "REACT", "TYPESCRIPT"],
   },
   {
-    title: "Design & Experience",
-    desc: "Creating beautiful and easy-to-use interfaces that give your users a great experience every time they visit.",
-    icon: Layout,
+    title: "Digital Experience",
+    desc: "Designing stark, beautiful, and highly interactive interfaces that command attention and drive engagement.",
     index: "02",
-    tech: ["Framer Motion", "GSAP", "Tailwind CSS"],
+    tech: ["FRAMER", "GSAP", "TAILWIND"],
   },
   {
-    title: "Backend & APIs",
-    desc: "Developing strong and secure backend systems to handle your data and power your web applications.",
-    icon: Cpu,
+    title: "Systems Engineering",
+    desc: "Developing brutalist backend architectures that handle complex data streams with absolute precision.",
     index: "03",
-    tech: ["Node.js", "Express", "MongoDB"],
+    tech: ["NODE.JS", "EXPRESS", "DATABASE"],
   },
   {
-    title: "Security & Auth",
-    desc: "Implementing modern security standards and authentication to keep your user data safe and protected.",
-    icon: Shield,
+    title: "Security Protocols",
+    desc: "Implementing military-grade auth and data protection standards to secure the perimeter.",
     index: "04",
-    tech: ["JWT", "OAuth", "SSL/TLS"],
+    tech: ["JWT", "OAUTH", "ENCRYPTION"],
   },
 ];
 
 const Services = () => {
   return (
-    <section id="services" className="section-shell relative overflow-hidden bg-black">
+    <section id="services" className="section-shell relative overflow-hidden bg-background">
       <div className="container relative z-10">
+        
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 lg:mb-32 space-y-6">
-          <span className="section-kicker mx-auto">Expertise</span>
-          <h2 className="section-title !mb-0 leading-[0.9]">
-            Premium <span className="text-accent">Services.</span>
-          </h2>
-          <p className="text-lg text-white/50 max-w-2xl mx-auto font-medium tracking-tight mt-8">
-            Specializing in high-performance digital solutions that bridge the gap between complex engineering and human-centric design.
+        <div className="mb-24 lg:mb-32 flex flex-col md:flex-row md:items-end justify-between gap-12">
+          <div className="space-y-6">
+            <span className="kicker block">[ CAPABILITIES ]</span>
+            <h2 className="text-[12vw] lg:text-[8vw] font-black uppercase leading-[0.85] tracking-tighter text-white">
+              SYSTEM<br/>
+              <span className="text-accent">MODULES</span>
+            </h2>
+          </div>
+          <p className="text-xl text-white/50 max-w-md font-bold tracking-tight uppercase">
+            Specializing in high-performance digital solutions that bridge the gap between complex engineering and structural design.
           </p>
         </div>
 
-        {/* Service Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+        {/* Service Grid - Raw & Structural */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {services.map((service, i) => (
             <motion.div
               key={i}
@@ -59,52 +59,48 @@ const Services = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="premium-card group flex flex-col h-full p-10 lg:p-16"
+              className="solid-card group flex flex-col h-full"
             >
-              <div className="inner-glow" />
-              
               {/* Header row */}
-              <div className="flex items-start justify-between mb-16">
-                <div className="w-20 h-20 rounded-[2.5rem] bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-accent transition-all duration-700 shadow-2xl relative">
-                  <service.icon size={36} strokeWidth={1} />
-                </div>
-                <span className="font-display font-black text-6xl lg:text-9xl text-white/[0.02] group-hover:text-white/[0.06] transition-all duration-700 select-none tracking-tighter leading-none translate-x-6">
+              <div className="flex items-start justify-between mb-16 border-b-2 border-white/10 pb-8">
+                <span className="kicker text-accent">
+                  [ MOD_{service.index} ]
+                </span>
+                <span className="font-display font-black text-6xl lg:text-8xl text-white/10 group-hover:text-white/20 transition-colors duration-500 select-none tracking-tighter leading-none">
                   {service.index}
                 </span>
               </div>
 
               {/* Content */}
-              <div className="space-y-6 flex-grow">
-                <h3 className="font-display font-black text-4xl lg:text-5xl text-white leading-none tracking-tighter group-hover:text-accent transition-colors duration-500 uppercase">
+              <div className="space-y-6 flex-grow mb-16">
+                <h3 className="font-display font-black text-4xl lg:text-5xl text-white leading-[0.9] tracking-tighter group-hover:text-accent transition-colors duration-500 uppercase">
                   {service.title}
                 </h3>
-                <p className="text-xl leading-relaxed text-white/40 group-hover:text-white/70 transition-colors duration-500 font-medium tracking-tight">
+                <p className="text-xl leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-500 font-bold tracking-tight">
                   {service.desc}
                 </p>
               </div>
 
               {/* Tech tags */}
-              <div className="mt-16 flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-4 mb-16">
                 {service.tech.map((t) => (
                   <span
                     key={t}
-                    className="font-mono text-[9px] font-bold text-white/20 bg-white/[0.02] border border-white/5 px-6 py-3 rounded-full uppercase tracking-[0.2em] group-hover:text-white group-hover:bg-accent/20 group-hover:border-accent/30 transition-all duration-500"
+                    className="kicker text-white/30 group-hover:text-white transition-colors duration-500"
                   >
-                    {t}
+                    [{t}]
                   </span>
                 ))}
               </div>
 
               {/* Action */}
-              <div className="mt-16 pt-12 border-t border-white/5 flex items-center justify-between">
+              <div className="pt-8 border-t-2 border-white/10">
                 <Link
                   href="/services"
-                  className="flex items-center gap-8 group/link"
+                  className="flex items-center justify-between group/link hover:text-accent transition-colors"
                 >
-                  <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:bg-accent transition-all duration-700 shadow-xl group-hover:scale-110">
-                    <ArrowUpRight size={22} className="text-white/40 group-hover:text-white transition-colors" />
-                  </div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.5em] font-bold text-white/20 group-hover:text-white transition-colors">Explore Solution</span>
+                  <span className="kicker text-white group-hover/link:text-accent transition-colors">INITIALIZE_MOD</span>
+                  <ArrowUpRight size={24} className="text-white group-hover/link:text-accent transition-colors transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
                 </Link>
               </div>
             </motion.div>
