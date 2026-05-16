@@ -1,94 +1,117 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-const STATS = [
-  { value: "50+", label: "Projects completed" },
-  { value: "4+", label: "Years of experience" },
-];
+import { useSettings } from "@/context/SettingsContext";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-50px" },
 };
 
 const About = () => {
+  const { settings } = useSettings();
+
+  const stats = [
+    { value: settings?.projectsCompleted || "50+", label: "Projects completed" },
+    { value: settings?.experienceYears || "4+", label: "Years of experience" },
+  ];
+
   return (
-    <section id="about" className="section-shell bg-[var(--background)]">
+    <section id="about" className="section-shell bg-[var(--background)] py-32">
       <div className="container">
 
         {/* Centered Header */}
-        <div className="text-center max-w-2xl mx-auto mb-20">
-          <span className="section-eyebrow">About me</span>
-          <h2 className="section-heading mt-1">
-            I craft digital<br />
-            <span style={{ color: "var(--muted)" }}>experiences.</span>
+        <motion.div 
+          {...fadeUp}
+          className="text-center max-w-3xl mx-auto mb-24"
+        >
+          <span className="section-eyebrow mb-4 block">About me</span>
+          <h2 className="section-heading text-5xl md:text-7xl mt-2 leading-tight">
+            {settings?.aboutTitle || "I craft digital experiences."}
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-center">
           {/* Text content */}
           <motion.div
             {...fadeUp}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="lg:col-span-7 flex flex-col gap-8"
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="lg:col-span-7 flex flex-col gap-10"
           >
 
-            <p className="text-[var(--muted)] text-base leading-relaxed max-w-lg">
-              I&apos;m Salah Uddin Kader, a Full Stack Developer based in Cox&apos;s
-              Bazar, Bangladesh. I specialize in building modern web applications
-              with a focus on performance, accessibility, and clean code.
-            </p>
-            <p className="text-[var(--muted)] text-base leading-relaxed max-w-lg">
-              I care about the details — from the architecture of a system to the
-              feel of an interaction. Good software should be reliable,
-              understandable, and a pleasure to use.
-            </p>
+            <div className="space-y-6">
+              <p className="text-white text-xl md:text-2xl font-medium leading-relaxed opacity-90">
+                {settings?.bio || "I'm Salah Uddin Kader, a Full Stack Developer based in Cox's Bazar, Bangladesh."}
+              </p>
+              <p className="text-[var(--muted)] text-lg leading-relaxed max-w-2xl">
+                {settings?.aboutText || "I care about the details — from the architecture of a system to the feel of an interaction. Good software should be reliable, understandable, and a pleasure to use."}
+              </p>
+            </div>
 
             {/* Stats */}
-            <div className="flex gap-10 py-6 border-y border-[var(--border)]">
-              {STATS.map((stat) => (
-                <div key={stat.label} className="flex flex-col gap-1">
+            <div className="grid grid-cols-2 gap-8 py-10 border-y border-[var(--border)]">
+              {stats.map((stat) => (
+                <div key={stat.label} className="flex flex-col gap-2">
                   <span
-                    className="text-3xl font-semibold text-white"
+                    className="text-5xl font-black text-white italic tracking-tighter"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
                   >
                     {stat.value}
                   </span>
-                  <span className="text-xs text-[var(--muted)]">
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--muted)]">
                     {stat.label}
                   </span>
                 </div>
               ))}
             </div>
 
-            <Link href="/about" className="btn-outline w-fit">
-              Read my story
-              <ArrowRight size={15} />
-            </Link>
+            <div className="flex flex-wrap gap-6 pt-4">
+              <Link href="/about" className="btn-primary px-10 py-5 rounded-2xl group">
+                <span>Read my story</span>
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              {settings?.cvUrl && (
+                <a 
+                  href={settings.cvUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-10 py-5 bg-white/5 border border-[var(--border)] text-white font-bold uppercase tracking-tighter rounded-2xl hover:bg-white/10 hover:border-[var(--accent)]/50 transition-all group"
+                >
+                  <Download size={18} className="text-[var(--accent)] group-hover:translate-y-0.5 transition-transform" />
+                  <span>Download CV</span>
+                </a>
+              )}
+            </div>
           </motion.div>
 
           {/* Portrait */}
           <motion.div
             {...fadeUp}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5"
           >
-            <div className="relative aspect-[4/5] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--surface)] border border-[var(--border)] group">
+            <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[var(--surface)] border border-[var(--border)] group shadow-2xl">
               <Image
                 src="/mine-photo.png"
                 alt="Salah Uddin Kader"
                 fill
-                sizes="(max-width: 1024px) 100vw, 400px"
-                className="object-cover img-portrait group-hover:grayscale-0 grayscale-[10%]"
+                sizes="(max-width: 1024px) 100vw, 500px"
+                className="object-cover img-portrait grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
               />
-              {/* Subtle corner accents */}
-              <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-white/20 rounded-tl-sm" />
-              <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-white/20 rounded-br-sm" />
+              {/* Brutalist accents */}
+              <div className="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-[var(--accent)] opacity-40" />
+              <div className="absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-[var(--accent)] opacity-40" />
+              
+              {/* Badge overlay */}
+              <div className="absolute bottom-8 left-8 bg-black/60 backdrop-blur-xl border border-white/10 p-5 rounded-2xl flex items-center gap-4 shadow-2xl">
+                <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+                <span className="text-[10px] uppercase tracking-widest font-bold">Based in BD</span>
+              </div>
             </div>
           </motion.div>
 
