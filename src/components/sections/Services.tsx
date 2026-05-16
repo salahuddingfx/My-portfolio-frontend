@@ -2,7 +2,7 @@
 
 import { Cpu, Globe, Layout, Shield, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import PremiumCard from "@/components/ui/PremiumCard";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -40,10 +40,10 @@ const Services = () => {
     <section id="services" className="section-shell relative overflow-hidden bg-black">
       <div className="container relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-24 space-y-8">
-          <span className="section-kicker mx-auto">Expertise</span>
+        <div className="text-center max-w-3xl mx-auto mb-20 lg:mb-32 space-y-6">
+          <span className="section-kicker mx-auto">What I Do</span>
           <h2 className="section-title !mb-0">
-            Digital <span className="text-accent">Services.</span>
+            Premium <span className="text-accent">Services.</span>
           </h2>
           <p className="section-copy mx-auto">
             I offer a comprehensive range of services to help you build a 
@@ -52,39 +52,42 @@ const Services = () => {
         </div>
 
         {/* Service Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {services.map((service, i) => (
-            <PremiumCard
+            <motion.div
               key={i}
-              delay={i * 0.1}
-              className="group flex flex-col h-full !p-12 border-white/5 hover:border-white/10"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.1 }}
+              className="premium-card group flex flex-col h-full p-8 lg:p-12"
             >
               {/* Header row */}
-              <div className="flex items-start justify-between mb-12">
-                <div className="w-14 h-14 rounded-2xl border border-white/10 flex items-center justify-center text-white/30 group-hover:text-accent group-hover:border-accent/20 transition-all duration-500">
-                  <service.icon size={24} strokeWidth={1.5} />
+              <div className="flex items-start justify-between mb-10">
+                <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 group-hover:text-accent group-hover:border-accent/30 transition-all duration-500 shadow-xl">
+                  <service.icon size={28} strokeWidth={1.5} />
                 </div>
-                <span className="font-mono font-bold text-4xl text-white/5 group-hover:text-white/10 transition-colors duration-700 select-none tracking-tight">
+                <span className="font-display font-black text-5xl text-white/[0.03] group-hover:text-white/[0.08] transition-colors duration-700 select-none tracking-tighter">
                   {service.index}
                 </span>
               </div>
 
               {/* Content */}
-              <div className="space-y-6 flex-grow">
-                <h3 className="font-display font-bold text-2xl text-white leading-tight">
+              <div className="space-y-4 flex-grow">
+                <h3 className="font-display font-bold text-3xl text-white leading-tight group-hover:text-accent transition-colors duration-500">
                   {service.title}
                 </h3>
-                <p className="section-copy !text-base leading-relaxed text-white/40 group-hover:text-white/60 transition-colors duration-500">
+                <p className="text-[17px] leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-500">
                   {service.desc}
                 </p>
               </div>
 
               {/* Tech tags */}
-              <div className="mt-10 flex flex-wrap gap-3">
+              <div className="mt-10 flex flex-wrap gap-2.5">
                 {service.tech.map((t) => (
                   <span
                     key={t}
-                    className="font-mono text-[9px] font-bold text-white/20 border border-white/5 px-3 py-1.5 rounded uppercase tracking-widest group-hover:text-white/40 transition-colors duration-500"
+                    className="font-mono text-[10px] font-bold text-white/30 bg-white/[0.03] border border-white/5 px-4 py-2 rounded-full uppercase tracking-widest group-hover:text-white/60 group-hover:bg-white/[0.06] transition-all duration-500"
                   >
                     {t}
                   </span>
@@ -92,16 +95,18 @@ const Services = () => {
               </div>
 
               {/* Action */}
-              <div className="mt-10 pt-10 border-t border-white/5">
+              <div className="mt-12 pt-10 border-t border-white/5 flex items-center justify-between group-hover:border-white/10 transition-colors">
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-3 text-white/20 group-hover:text-white transition-all duration-300"
+                  className="inline-flex items-center gap-4 text-white/40 group-hover:text-white transition-all duration-500"
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] font-bold">Details</span>
-                  <ArrowUpRight size={14} className="text-accent opacity-0 group-hover:opacity-100 transition-all" />
+                  <span className="font-mono text-[11px] uppercase tracking-[0.4em] font-black">Learn More</span>
+                  <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-500">
+                    <ArrowUpRight size={16} className="text-white" />
+                  </div>
                 </Link>
               </div>
-            </PremiumCard>
+            </motion.div>
           ))}
         </div>
       </div>
