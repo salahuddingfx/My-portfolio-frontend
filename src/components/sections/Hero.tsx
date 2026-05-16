@@ -10,10 +10,10 @@ import { Spotlight } from "@/components/ui/spotlight";
 import Magnetic from "@/components/ui/Magnetic";
 
 const STATS = [
-  { label: "Projects Shipped",   value: "50+" },
-  { label: "Lines of Code",      value: "250K" },
-  { label: "Years Experience",   value: "4"   },
-  { label: "Client Satisfaction",value: "100%" },
+  { label: "Projects Shipped", value: "50+" },
+  { label: "Lines of Code", value: "250K" },
+  { label: "Years Experience", value: "4" },
+  { label: "Client Satisfaction", value: "100%" },
 ];
 
 const Hero = () => {
@@ -32,7 +32,7 @@ const Hero = () => {
     const typeRole = () => {
       const role = roles[currentRoleIndex];
       const chars = role.split("");
-      
+
       if (typingRef.current) {
         typingRef.current.innerText = "";
         const charElements = chars.map(char => {
@@ -82,22 +82,22 @@ const Hero = () => {
           className="-top-40 left-0 md:left-60 md:-top-20"
           fill="white"
         />
-        
+
         {/* Glows */}
         <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] pointer-events-none" />
-        
+
         {/* Spline Background */}
         <div className="absolute inset-0 z-10 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] min-w-[300px] min-h-[300px] bg-[#e11d48]/20 rounded-full blur-[120px] opacity-50" />
-          
+
           <div className="w-full h-full scale-110 lg:scale-125 transform-gpu pointer-events-auto relative">
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
               className="w-full h-full opacity-40 lg:opacity-80 transition-opacity duration-1000"
             />
           </div>
-          
+
           {/* Overlays for depth */}
           <div className="absolute inset-0 bg-black/40 lg:bg-transparent lg:hidden" />
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
@@ -105,7 +105,7 @@ const Hero = () => {
       </div>
 
       <div className="relative z-30 container min-h-[100dvh] flex flex-col lg:flex-row items-center lg:justify-between pt-32 pb-24 lg:py-0 pointer-events-none">
-        
+
         {/* Left: Identity */}
         <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pointer-events-auto mb-16 lg:mb-0 mt-32 lg:mt-0">
           <motion.div
@@ -142,7 +142,7 @@ const Hero = () => {
                 </span>
               </h2>
             </div>
-            
+
             <div className="flex flex-row gap-4 justify-center lg:justify-end flex-wrap">
               <Magnetic>
                 <a href="#projects" className="btn-primary group">
@@ -173,7 +173,7 @@ const Hero = () => {
               <span className="text-2xl lg:text-5xl font-display font-black text-white tracking-tighter">{stat.value}</span>
             </div>
           ))}
-          
+
           {/* Scroll Indicator */}
           <div className="hidden lg:flex flex-col items-center gap-4 text-white/10">
             <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] rotate-90 translate-y-8">Scroll</span>
