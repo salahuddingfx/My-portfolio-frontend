@@ -141,13 +141,16 @@ const Footer = () => {
     new Date().getFullYear();
 
   return (
-    <footer
-      className="
-        relative
-        overflow-hidden
-        bg-[#080808]
-      "
-    >
+<footer
+  className="
+    relative
+    mt-24
+    overflow-hidden
+    border-t
+    border-white/[0.05]
+    bg-[#080808]
+  "
+>
 
       {/* ================================================================
          TOP ACCENT LINE
@@ -190,7 +193,7 @@ const Footer = () => {
          CONTAINER
       ================================================================= */}
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 max-w-7xl">
 
         {/* ================================================================
            TOP SECTION
@@ -203,9 +206,9 @@ const Footer = () => {
             gap-14
             border-b
             border-white/[0.06]
-            pt-20
+            pt-32
             pb-14
-            lg:grid-cols-12
+            lg:grid-cols-[1.2fr_0.7fr_0.7fr_0.9fr]
             lg:gap-16
           "
         >
@@ -219,7 +222,6 @@ const Footer = () => {
               flex
               flex-col
               gap-8
-              lg:col-span-5
             "
           >
 
@@ -309,7 +311,7 @@ const Footer = () => {
             {/* DESCRIPTION */}
             <p
               className="
-                max-w-[320px]
+                max-w-[420px]
                 text-sm
                 leading-relaxed
                 text-[var(--muted)]
@@ -466,10 +468,10 @@ const Footer = () => {
           <div
             className="
               grid
-              grid-cols-2
-              gap-10
-              sm:grid-cols-3
-              lg:col-span-7
+              grid-cols-1
+              gap-12
+              sm:grid-cols-2
+              lg:grid-cols-3
             "
           >
 
@@ -497,6 +499,7 @@ const Footer = () => {
                   flex
                   flex-col
                   gap-3
+                  items-start
                 "
               >
 
@@ -548,6 +551,7 @@ const Footer = () => {
                   flex
                   flex-col
                   gap-3
+                  items-start
                 "
               >
 
@@ -602,9 +606,8 @@ const Footer = () => {
 
             <div
               className="
-                hidden
+                flex
                 flex-col
-                sm:flex
               "
             >
 
@@ -697,7 +700,9 @@ const Footer = () => {
             justify-between
             gap-5
             py-7
+            text-center
             sm:flex-row
+            sm:text-left
           "
         >
 
