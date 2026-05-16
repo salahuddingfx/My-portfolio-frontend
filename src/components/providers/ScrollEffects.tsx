@@ -20,14 +20,10 @@ export function ScrollEffects() {
         if (i !== sections.length - 1) {
           ScrollTrigger.create({
             trigger: section,
-            start: () => {
-              // If the section is taller than the viewport, pin it when its bottom reaches the bottom of the viewport.
-              // Otherwise, pin it when its top reaches the top.
-              return section.offsetHeight > window.innerHeight ? "bottom bottom" : "top top";
-            },
+            start: "top top",
             pin: true,
             pinSpacing: false,
-            invalidateOnRefresh: true, // Recalculate on resize
+            invalidateOnRefresh: true,
           });
         }
 

@@ -616,6 +616,180 @@ video {
 }
 
 /* =============================================================================
+   PREMIUM CUSTOM UTILITIES
+   ============================================================================= */
+
+/* Text Stroke Effect */
+.text-stroke {
+  -webkit-text-stroke: 1px var(--muted-soft);
+  color: transparent;
+  transition: -webkit-text-stroke var(--duration-base) var(--ease-out);
+}
+
+.group:hover .text-stroke {
+  -webkit-text-stroke: 1px var(--foreground);
+}
+
+/* Glassmorphism Variants */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* Premium Gradient Text */
+.text-gradient {
+  background: linear-gradient(135deg, #fff 0%, var(--muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated Glow Background */
+.glow-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-bg::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, var(--accent-soft) 0%, transparent 70%);
+  animation: rotate-glow 20s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes rotate-glow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* =============================================================================
+   CONTACT PAGE CREATIVE STYLES
+   ============================================================================= */
+
+.contact-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  overflow: hidden;
+  transition: all var(--duration-slow) var(--ease-out);
+}
+
+.contact-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.contact-card:hover::before {
+  transform: translateX(100%);
+}
+
+.contact-input-group {
+  position: relative;
+  width: 100%;
+}
+
+.contact-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+  color: white;
+  font-size: 0.95rem;
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+
+.contact-input:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.contact-label {
+  position: absolute;
+  top: 1.5rem;
+  left: 0.5rem;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  color: var(--muted);
+  pointer-events: none;
+  transition: all var(--duration-base) var(--ease-out);
+}
+
+.contact-input:focus + .contact-label,
+.contact-input:not(:placeholder-shown) + .contact-label {
+  top: 0;
+  font-size: 9px;
+  color: var(--accent);
+}
+
+.contact-btn {
+  position: relative;
+  padding: 1.25rem 2.5rem;
+  background: white;
+  color: black;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all var(--duration-base) var(--ease-out);
+}
+
+.contact-btn:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+}
+
+.contact-info-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-base) var(--ease-out);
+}
+
+.contact-info-item:hover .contact-info-icon {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  transform: rotate(-5deg) scale(1.1);
+}
+
+/* Brutalist Noise Overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* =============================================================================
    REDUCED MOTION
    ============================================================================= */
 

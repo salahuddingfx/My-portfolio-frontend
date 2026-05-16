@@ -114,6 +114,7 @@ export default function RootLayout({
         <LenisProvider>
           <SettingsProvider>
             <VisitorTracker />
+            <div className="noise-overlay" />
 
           {/* GLOBAL EFFECTS */}
           <ScrollProgress />

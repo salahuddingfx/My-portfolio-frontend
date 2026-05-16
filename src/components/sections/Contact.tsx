@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Send, MessageSquare, Phone } from "lucide-react";
+import { Mail, MapPin, Send, MessageSquare, Phone, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useSettings } from "@/context/SettingsContext";
 
@@ -64,15 +64,6 @@ const Contact = () => {
     }
   };
 
-  const inputClass = (name: string) => `
-    w-full bg-white/[0.03] border ${errors[name] ? 'border-red-500/50' : 'border-[var(--border)]'}
-    rounded-xl px-4 py-3
-    text-sm text-white placeholder:text-[var(--muted-soft)]
-    focus:border-[var(--accent)]/60 focus:bg-white/[0.06]
-    focus:outline-none
-    transition-all duration-300
-  `;
-
   const infoCards = [
     {
       icon: Mail,
@@ -101,164 +92,196 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-shell pt-32 pb-32 bg-[var(--background)]">
-      <div className="container max-w-6xl">
+    <section id="contact" className="section-shell pt-32 pb-32 bg-[var(--background)] relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[var(--accent)]/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4" />
+      
+      <div className="container max-w-7xl relative z-10">
 
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center max-w-2xl mx-auto mb-16"
-        >
-          <span className="section-eyebrow mb-3 block">Get in touch</span>
-          <h2 className="section-heading text-4xl md:text-5xl mt-1 mb-5">
-            Let&apos;s build something <span className="text-[var(--accent)] italic">legendary.</span>
-          </h2>
-          <p className="section-subtext text-base mx-auto opacity-70">
-            Have a project in mind? Reach out via the form or my direct channels.
-          </p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
-
-          {/* Info Cards */}
+        {/* Header - Editorial Style */}
+        <div className="grid lg:grid-cols-2 gap-12 items-end mb-24">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-4 flex flex-col gap-4"
+            transition={{ duration: 0.8 }}
           >
-            {infoCards.map((card) => (
-              <div key={card.label} className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-xl flex items-center gap-4 hover:border-[var(--accent)]/30 transition-all group flex-1">
-                <div className="w-10 h-10 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center shrink-0 border border-[var(--accent)]/20">
-                  <card.icon size={18} className="text-[var(--accent)]" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-[0.1em] font-bold text-[var(--muted)] mb-0.5">
-                    {card.label}
-                  </p>
-                  {card.href ? (
-                    <a
-                      href={card.href}
-                      className="text-sm font-bold text-white hover:text-[var(--accent)] transition-colors truncate block"
-                    >
-                      {card.value}
-                    </a>
-                  ) : (
-                    <p className="text-sm font-bold text-white truncate">{card.value}</p>
-                  )}
+            <span className="section-eyebrow text-white/40 mb-6 block">Inquiries</span>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
+              Let&apos;s build <br />
+              <span className="text-stroke group-hover:text-white transition-all duration-500">something</span> <br />
+              <span className="text-[var(--accent)] italic">legendary.</span>
+            </h2>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="max-w-md pb-4"
+          >
+            <p className="text-lg text-[var(--muted)] leading-relaxed italic border-l-2 border-[var(--accent)]/30 pl-8">
+              &quot;Design is not just what it looks like and feels like. Design is how it works.&quot; 
+              <span className="block mt-4 text-xs font-mono uppercase tracking-widest text-white/30 not-italic">— Steve Jobs</span>
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
+
+          {/* Contact Details Column */}
+          <div className="lg:col-span-5 flex flex-col justify-between py-4">
+            <div className="space-y-10">
+              {infoCards.map((card, i) => (
+                <motion.div
+                  key={card.label}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="contact-info-item flex items-center gap-8 group"
+                >
+                  <div className="contact-info-icon">
+                    <card.icon size={22} />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted-soft)]">
+                      {card.label}
+                    </p>
+                    {card.href ? (
+                      <a href={card.href} className="text-lg font-bold text-white hover:text-[var(--accent)] transition-all">
+                        {card.value}
+                      </a>
+                    ) : (
+                      <p className="text-lg font-bold text-white">{card.value}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+              className="mt-20 pt-10 border-t border-[var(--border)]"
+            >
+              <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted-soft)] mb-6">Social Networks</p>
+              <div className="flex gap-6">
+                {['LinkedIn', 'Github', 'Twitter', 'Instagram'].map(social => (
+                  <a key={social} href="#" className="text-sm font-bold hover:text-[var(--accent)] transition-all uppercase tracking-tighter">
+                    {social}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Contact Form Column */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-7 h-full"
+          >
+            <div className="contact-card h-full p-10 md:p-16 flex flex-col">
+              <div className="flex items-center justify-between mb-12">
+                <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
+                <div className="flex gap-1">
+                  {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]/30" />)}
                 </div>
               </div>
-            ))}
-          </motion.div>
 
-          {/* Form Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-8"
-          >
-            <div className="bg-[var(--surface)] border border-[var(--border)] p-7 md:p-10 rounded-2xl shadow-xl h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[var(--accent)]/5 blur-[80px] rounded-full pointer-events-none" />
-              
-              <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-5">
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-bold ml-1">
-                      Full Name
-                    </label>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-12 flex-grow">
+                <div className="grid md:grid-cols-2 gap-x-12 gap-y-12">
+                  <div className="contact-input-group">
                     <input
                       type="text"
+                      placeholder=" "
+                      required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={inputClass('name')}
-                      placeholder="Salah Uddin"
+                      className="contact-input"
                     />
-                    {errors.name && <span className="text-[9px] text-red-500 ml-1 font-bold uppercase">{errors.name}</span>}
+                    <label className="contact-label">Your Full Name</label>
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-bold ml-1">
-                      Email Address
-                    </label>
+
+                  <div className="contact-input-group">
                     <input
                       type="email"
+                      placeholder=" "
+                      required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className={inputClass('email')}
-                      placeholder="hello@example.com"
+                      className="contact-input"
                     />
-                    {errors.email && <span className="text-[9px] text-red-500 ml-1 font-bold uppercase">{errors.email}</span>}
+                    <label className="contact-label">Email Address</label>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-bold ml-1">
-                    Service Required
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className={`${inputClass('subject')} appearance-none cursor-pointer pr-10`}
-                    >
-                      {SUBJECTS.map((s) => (
-                        <option key={s} value={s} className="bg-[#111] p-4 text-white">
-                          {s}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--muted)]">
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                        <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                      </svg>
-                    </div>
+                <div className="contact-input-group">
+                  <select
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    className="contact-input appearance-none cursor-pointer"
+                  >
+                    {SUBJECTS.map((s) => (
+                      <option key={s} value={s} className="bg-[#111] p-4">
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                  <label className="contact-label">Inquiry Subject</label>
+                  <div className="absolute right-0 bottom-2 pointer-events-none text-[var(--muted-soft)]">
+                    <ArrowRight size={16} className="rotate-90" />
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-bold ml-1">
-                    Message Details
-                  </label>
+                <div className="contact-input-group flex-grow">
                   <textarea
-                    rows={4}
+                    placeholder=" "
+                    required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={`${inputClass('message')} resize-none min-h-[100px]`}
-                    placeholder="Tell me about your vision..."
+                    className="contact-input resize-none min-h-[120px]"
                   />
-                  {errors.message && <span className="text-[9px] text-red-500 ml-1 font-bold uppercase">{errors.message}</span>}
+                  <label className="contact-label">Project Details</label>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="bg-white text-black py-3.5 rounded-lg font-bold uppercase tracking-tighter text-sm flex items-center justify-center gap-2 hover:bg-[var(--accent)] hover:text-white transition-all group disabled:opacity-50 mt-2"
-                >
-                  <span>
-                    {status === "sending"
-                      ? "Transmitting..."
-                      : status === "success"
-                      ? "Success!"
-                      : "Send Message"}
-                  </span>
-                  <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </button>
-
-                {status === "error" && (
-                  <p className="text-[10px] font-bold text-red-500 text-center uppercase tracking-widest">
-                    Transmission failed. Please retry.
-                  </p>
-                )}
-                {status === "success" && (
-                  <p className="text-[10px] font-bold text-emerald-500 text-center uppercase tracking-widest">
-                    Message received. I&apos;ll be in touch.
-                  </p>
-                )}
+                <div className="pt-6">
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="contact-btn w-full group flex items-center justify-center gap-4"
+                  >
+                    <span>
+                      {status === "sending"
+                        ? "Sending..."
+                        : status === "success"
+                        ? "Message Delivered"
+                        : "Initialize Transmission"}
+                    </span>
+                    <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </button>
+                  
+                  {status === "success" && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-center mt-6 text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold"
+                    >
+                      Transmission successful. Response incoming.
+                    </motion.p>
+                  )}
+                  {status === "error" && (
+                    <p className="text-center mt-6 text-[10px] font-mono uppercase tracking-widest text-red-500 font-bold">
+                      Transmission failed. Check connection.
+                    </p>
+                  )}
+                </div>
               </form>
             </div>
           </motion.div>
