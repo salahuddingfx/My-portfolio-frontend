@@ -61,63 +61,62 @@ const Testimonials = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 lg:mb-32 space-y-6">
           <span className="section-kicker mx-auto">Client Love</span>
-          <h2 className="section-title !mb-0">
+          <h2 className="section-title !mb-0 leading-[0.9]">
             Trusted <span className="text-accent">Feedback.</span>
           </h2>
-          <p className="section-copy mx-auto">
-            Real stories from clients and partners who have experienced 
-            the intersection of design and high-end engineering.
+          <p className="text-lg text-white/50 max-w-2xl mx-auto font-medium tracking-tight mt-8">
+            Insights from partners and clients who have collaborated on high-performance digital architectures and creative solutions.
           </p>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
           {reviews.map((review, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.1 }}
-              className="premium-card group flex flex-col h-full p-10 lg:p-12"
+              transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="premium-card group flex flex-col h-full p-10 lg:p-14"
             >
+              <div className="inner-glow" />
+              
               {/* Stars */}
-              <div className="flex gap-1.5 mb-10">
+              <div className="flex gap-2 mb-12">
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star
                     key={j}
                     size={14}
-                    className="fill-accent text-accent animate-pulse"
+                    className="fill-accent text-accent shadow-[0_0_10px_rgba(244,63,94,0.4)]"
                   />
                 ))}
               </div>
 
               {/* Quote */}
               <div className="flex-grow relative">
-                 {/* Decorative large quote mark */}
-                <div className="absolute -top-6 -left-4 text-[120px] font-black text-white/[0.03] pointer-events-none select-none italic leading-none">
+                <div className="absolute -top-10 -left-6 text-[140px] font-black text-white/[0.02] pointer-events-none select-none italic leading-none">
                   &ldquo;
                 </div>
-                <p className="text-white/80 group-hover:text-white transition-colors duration-500 text-[19px] lg:text-[21px] leading-relaxed font-bold italic relative z-10">
-                  &ldquo;{review.text}&rdquo;
+                <p className="text-white/60 group-hover:text-white/90 transition-all duration-500 text-xl lg:text-2xl leading-relaxed font-bold italic relative z-10 tracking-tight">
+                  {review.text}
                 </p>
               </div>
 
               {/* Author */}
-              <div className="mt-12 pt-10 border-t border-white/10 flex items-center gap-6">
-                <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-accent/50 transition-all duration-700 shadow-2xl bg-white/[0.03]">
+              <div className="mt-16 pt-12 border-t border-white/5 flex items-center gap-6">
+                <div className="relative w-16 h-16 rounded-full overflow-hidden border border-white/10 group-hover:border-accent/40 transition-all duration-700 shadow-2xl bg-white/[0.02]">
                   <Image
                     src={review.avatar}
                     alt={review.name}
                     fill
                     sizes="64px"
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
+                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
                   />
                 </div>
-                <div className="space-y-2">
-                  <p className="font-display font-black text-[19px] text-white tracking-tight leading-none">{review.name}</p>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent/80 font-black flex items-center gap-2">
-                    <span className="w-4 h-px bg-accent/40" />
+                <div className="space-y-1">
+                  <p className="font-display font-black text-xl text-white tracking-tighter leading-none">{review.name}</p>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-accent font-bold">
                     {review.role}
                   </p>
                 </div>

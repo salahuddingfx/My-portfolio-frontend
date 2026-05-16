@@ -13,6 +13,7 @@ import { ScrollEffects } from "@/components/providers/ScrollEffects";
 import CustomCursor from "@/components/ui/cursor/CustomCursor";
 import Navbar from "@/components/ui/Navbar";
 import SocialSidebar from "@/components/ui/SocialSidebar";
+import EmailSidebar from "@/components/ui/EmailSidebar";
 import Footer from "@/components/ui/Footer";
 
 /* =============================================================================
@@ -137,8 +138,9 @@ export default function RootLayout({
           {/* NAVBAR */}
           <Navbar />
 
-          {/* LEFT SOCIAL SIDEBAR */}
+          {/* SIDEBARS */}
           <SocialSidebar />
+          <EmailSidebar />
 
           {/* PAGE CONTENT */}
           <main className="relative min-h-screen">
