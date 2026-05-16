@@ -157,7 +157,7 @@ const Navbar = () => {
               {/* CTA BUTTON */}
               <Link
                 href="/contact"
-                className="nav-cta group ml-3 inline-flex h-11 items-center justify-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-6 text-[13px] font-medium leading-none text-white transition-all duration-300 hover:border-white/[0.14] hover:bg-white/[0.06] hover:-translate-y-[1px]"
+                className="nav-cta gap-2 group ml-3 inline-flex h-11 items-center justify-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-6 text-[13px] font-medium leading-none text-white transition-all duration-300 hover:border-white/[0.14] hover:bg-white/[0.06] hover:-translate-y-[1px]"
               >
                 <span className="relative top-[0.5px]">Let&apos;s Talk</span>
                 <ArrowUpRight size={15} strokeWidth={2} className="shrink-0 transition-transform duration-300 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
