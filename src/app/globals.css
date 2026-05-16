@@ -7,46 +7,58 @@
 
 :root {
   /* ── Colors ─────────────────────────────────────────────────── */
-  --background:   #080808;
-  --surface:      #111111;
-  --surface-2:    #181818;
-  --foreground:   #f2f2f2;
-  --muted:        #888888;
-  --muted-soft:   #555555;
-  --accent:       #dc2626;
-  --accent-soft:  rgba(220, 38, 38, 0.12);
+  --background: #080808;
+  --surface: #111111;
+  --surface-2: #181818;
+  --foreground: #f2f2f2;
+  --muted: #888888;
+  --muted-soft: #555555;
+  --accent: #dc2626;
+  --accent-soft: rgba(220, 38, 38, 0.12);
 
-  --border:       rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.07);
   --border-hover: rgba(255, 255, 255, 0.14);
 
   /* ── Fonts ───────────────────────────────────────────────────── */
   --font-display: var(--font-space-grotesk);
-  --font-body:    var(--font-inter);
-  --font-mono:    var(--font-jetbrains-mono);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
 
   /* ── Spacing Scale ───────────────────────────────────────────── */
-  --space-1:  0.25rem;   /* 4px  */
-  --space-2:  0.5rem;    /* 8px  */
-  --space-3:  0.75rem;   /* 12px */
-  --space-4:  1rem;      /* 16px */
-  --space-5:  1.25rem;   /* 20px */
-  --space-6:  1.5rem;    /* 24px */
-  --space-8:  2rem;      /* 32px */
-  --space-10: 2.5rem;    /* 40px */
-  --space-12: 3rem;      /* 48px */
-  --space-16: 4rem;      /* 64px */
-  --space-20: 5rem;      /* 80px */
-  --space-24: 6rem;      /* 96px */
+  --space-1: 0.25rem;
+  /* 4px  */
+  --space-2: 0.5rem;
+  /* 8px  */
+  --space-3: 0.75rem;
+  /* 12px */
+  --space-4: 1rem;
+  /* 16px */
+  --space-5: 1.25rem;
+  /* 20px */
+  --space-6: 1.5rem;
+  /* 24px */
+  --space-8: 2rem;
+  /* 32px */
+  --space-10: 2.5rem;
+  /* 40px */
+  --space-12: 3rem;
+  /* 48px */
+  --space-16: 4rem;
+  /* 64px */
+  --space-20: 5rem;
+  /* 80px */
+  --space-24: 6rem;
+  /* 96px */
 
   /* ── Typography Scale ────────────────────────────────────────── */
-  --text-xs:   0.75rem;
-  --text-sm:   0.875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg:   1.125rem;
-  --text-xl:   1.25rem;
-  --text-2xl:  1.5rem;
-  --text-3xl:  1.875rem;
-  --text-4xl:  2.25rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
   --text-display: clamp(2.25rem, 5vw, 4rem);
 
   /* ── Border Radius ───────────────────────────────────────────── */
@@ -56,28 +68,28 @@
   --radius-xl: 1rem;
 
   /* ── Shadows ─────────────────────────────────────────────────── */
-  --shadow-sm:  0 1px 4px rgba(0, 0, 0, 0.5);
-  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg:  0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 
   /* ── Transitions ─────────────────────────────────────────────── */
-  --ease-out:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-fast:  150ms;
-  --duration-base:  250ms;
-  --duration-slow:  500ms;
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 500ms;
 
   /* ── Z-Index Hierarchy ───────────────────────────────────────── */
-  --z-base:    1;
-  --z-card:    10;
-  --z-sticky:  50;
-  --z-navbar:  100;
+  --z-base: 1;
+  --z-card: 10;
+  --z-sticky: 50;
+  --z-navbar: 100;
   --z-sidebar: 100;
   --z-overlay: 200;
-  --z-cursor:  9999;
+  --z-cursor: 9999;
 
   /* ── Container ───────────────────────────────────────────────── */
-  --container-max: 1440px;
+  --container-max: 1200px;
   --container-pad: 1.5rem;
 }
 
@@ -88,10 +100,10 @@
   --color-surface: var(--surface);
   --color-muted: var(--muted);
 
-  --breakpoint-sm:  640px;
-  --breakpoint-md:  768px;
-  --breakpoint-lg:  1024px;
-  --breakpoint-xl:  1280px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
 }
 
@@ -134,7 +146,12 @@ body {
    TYPOGRAPHY BASE
    ============================================================================= */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display), system-ui, sans-serif;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -162,12 +179,15 @@ button {
   font-family: inherit;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: var(--text-sm);
 }
 
-img, video {
+img,
+video {
   display: block;
   max-width: 100%;
 }
@@ -226,33 +246,21 @@ img, video {
 
 @media (min-width: 768px) {
   .container {
-    padding-inline: 3rem;
+    padding-inline: 2.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding-inline: 5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    padding-inline: 6rem;
+    padding-inline: 3.5rem;
   }
 }
 
 .section-shell {
   position: relative;
-  padding-block: var(--space-24);
+  padding-block: var(--space-20);
   overflow: hidden;
   z-index: var(--z-base);
-}
-
-@media (max-width: 1023px) {
-  .section-shell {
-    padding-block: var(--space-20);
-  }
 }
 
 @media (max-width: 767px) {
@@ -420,7 +428,7 @@ img, video {
   padding: 0.2rem 0.55rem;
   white-space: nowrap;
   transition: color var(--duration-fast) var(--ease-out),
-              border-color var(--duration-fast) var(--ease-out);
+    border-color var(--duration-fast) var(--ease-out);
 }
 
 /* =============================================================================
@@ -432,7 +440,7 @@ img, video {
   object-fit: cover;
   filter: grayscale(20%);
   transition: filter var(--duration-slow) var(--ease-out),
-              transform var(--duration-slow) var(--ease-out);
+    transform var(--duration-slow) var(--ease-out);
 }
 
 .img-project:hover,
@@ -460,8 +468,15 @@ img, video {
 }
 
 @keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* =============================================================================
@@ -479,6 +494,7 @@ img, video {
    ============================================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

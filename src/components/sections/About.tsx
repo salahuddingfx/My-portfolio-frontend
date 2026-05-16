@@ -6,14 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 const STATS = [
-  { value: "50+",  label: "Projects completed" },
-  { value: "4+",   label: "Years of experience" },
+  { value: "50+", label: "Projects completed" },
+  { value: "4+", label: "Years of experience" },
 ];
 
 const fadeUp = {
-  initial:   { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
-  viewport:  { once: true, margin: "-50px" },
+  viewport: { once: true, margin: "-50px" },
 };
 
 const About = () => {
@@ -21,13 +21,13 @@ const About = () => {
     <section id="about" className="section-shell bg-[var(--background)]">
       <div className="container">
 
-        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
           {/* Text content */}
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="flex flex-col gap-8"
+            className="lg:col-span-7 flex flex-col gap-8"
           >
             <div>
               <span className="section-eyebrow">About me</span>
