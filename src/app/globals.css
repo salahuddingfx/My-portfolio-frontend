@@ -257,20 +257,10 @@ video {
 }
 
 .section-shell {
-  position: sticky;
-  top: 0;
+  position: relative;
   padding-block: var(--space-20);
   overflow: hidden;
   z-index: var(--z-base);
-  background-color: var(--background); /* Ensure it covers previous sections */
-  border-top: 1px solid var(--border); /* Add subtle separation */
-}
-
-/* Make sure the hero section is also sticky */
-#home {
-  position: sticky;
-  top: 0;
-  z-index: 0;
 }
 
 @media (max-width: 767px) {
