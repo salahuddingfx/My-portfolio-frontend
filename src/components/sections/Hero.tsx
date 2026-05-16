@@ -104,19 +104,19 @@ const Hero = () => {
               </span>
             </div>
 
-            <span className="text-[var(--accent)] font-mono text-sm sm:text-base mb-2 tracking-widest">
+            <span className="text-white/80 font-mono text-sm sm:text-base mb-2 tracking-widest uppercase">
               Hello! I&apos;m
             </span>
             <h1
-              className="text-5xl sm:text-7xl lg:text-[5.5vw] font-bold text-white leading-[0.9] tracking-tighter uppercase"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1] tracking-tighter uppercase"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Salah Uddin
-              <span className="block">Kader</span>
+              <span className="block text-[var(--muted)]">Kader</span>
             </h1>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mt-8 mb-8">
+            <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mt-6 mb-8">
               I engineer robust digital experiences with a focus on modern web
               technologies and structural, minimalist design.
             </p>
@@ -129,7 +129,7 @@ const Hero = () => {
               </a>
               <Link 
                 href="/contact" 
-                className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+                className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-white transition-colors"
               >
                 Let&apos;s Talk
               </Link>
@@ -138,12 +138,12 @@ const Hero = () => {
 
           {/* Right Side: Role */}
           <div className="flex flex-col z-20 pointer-events-auto text-left md:text-right w-full md:w-5/12 items-start md:items-end justify-center">
-            <span className="text-[var(--muted)] font-mono text-sm sm:text-base mb-2 tracking-widest">
+            <span className="text-white font-mono text-base sm:text-lg mb-2 tracking-widest uppercase">
               A Creative
             </span>
-            <div className="h-[3em] flex flex-col justify-start md:justify-end items-start md:items-end">
+            <div className="min-h-[60px] md:min-h-[80px] flex flex-col justify-start md:justify-end items-start md:items-end w-full">
               <span 
-                className="text-4xl sm:text-6xl lg:text-[5vw] text-[var(--foreground)] font-bold uppercase tracking-tighter leading-[0.9]" 
+                className="text-3xl sm:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tighter leading-[1]" 
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 <span ref={typingRef} />
