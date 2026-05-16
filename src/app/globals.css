@@ -158,6 +158,81 @@
     transform var(--duration-base) var(--ease-out);
 }
 
+/* =========================================================
+   FOOTER SYSTEM
+========================================================= */
+
+.footer-link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  width: fit-content;
+
+  color: var(--muted);
+
+  transition:
+    color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.footer-link:hover {
+  color: var(--foreground);
+}
+
+.footer-link::before {
+  content: "";
+
+  width: 0;
+  height: 1px;
+
+  border-radius: 999px;
+
+  background: var(--accent);
+
+  transition:
+    width var(--duration-base) var(--ease-out);
+}
+
+.footer-link:hover::before {
+  width: 10px;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+
+  border-radius: 0.9rem;
+
+  color: var(--muted-soft);
+
+  background: rgba(255,255,255,0.02);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  transition:
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.footer-social:hover {
+  color: white;
+
+  background: rgba(255,255,255,0.05);
+
+  border-color: rgba(255,255,255,0.12);
+
+  transform: translateY(-2px);
+}
+
 /* =============================================================================
    BASE RESET
    ============================================================================= */
