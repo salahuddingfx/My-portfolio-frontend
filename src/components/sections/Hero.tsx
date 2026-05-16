@@ -13,11 +13,7 @@ const TYPING_ROLES = [
   "UI & Interaction Designer",
 ];
 
-const STATS = [
-  { value: "50+",  label: "Projects" },
-  { value: "4+",   label: "Years exp." },
-  { value: "250K", label: "Lines of code" },
-];
+
 
 const Hero = () => {
   const typingRef = useRef<HTMLSpanElement>(null);
@@ -96,64 +92,51 @@ const Hero = () => {
 
       {/* Content layer */}
       <div className="relative z-10 container min-h-screen flex flex-col justify-center pt-24 pb-16">
-        <div className="max-w-xl">
+        <div className="max-w-3xl">
 
-          {/* Status badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.05] border border-[var(--border)] mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs text-[var(--muted)] font-mono">Open to new projects</span>
+          {/* Status */}
+          <div className="flex items-center gap-3 mb-8">
+            <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse" />
+            <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest">
+              Available for work
+            </span>
           </div>
 
           {/* Name */}
           <h1
-            className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.05] tracking-tight mb-4"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
+            className="text-6xl sm:text-8xl lg:text-[8vw] font-bold text-[var(--foreground)] leading-[0.9] tracking-tighter mb-6 uppercase"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Salah Uddin
-            <br />
-            <span className="text-[var(--muted)]">Kader</span>
+            <span className="block text-[var(--muted)]">Kader</span>
           </h1>
 
           {/* Typing role */}
-          <div className="flex items-center gap-2 mb-6 h-8">
-            <span className="text-lg text-[var(--muted)] font-mono">
-              <span ref={typingRef} className="text-white" />
+          <div className="flex items-center gap-2 mb-8 h-8">
+            <span className="text-xl sm:text-2xl text-[var(--foreground)] font-mono uppercase tracking-tight">
+              <span ref={typingRef} />
               <span className="typing-cursor" />
             </span>
           </div>
 
           {/* Description */}
-          <p className="text-sm text-[var(--muted)] leading-relaxed max-w-sm mb-10">
-            I build fast, accessible web applications with clean code and
-            thoughtful design. Focused on great user experiences.
+          <p className="text-base sm:text-lg text-[var(--muted)] leading-relaxed max-w-lg mb-12">
+            I engineer robust digital experiences with a focus on modern web
+            technologies and structural, minimalist design.
           </p>
 
           {/* Actions */}
-          <div className="flex flex-wrap gap-3 mb-12">
+          <div className="flex flex-wrap items-center gap-6">
             <a href="#projects" className="btn-primary">
-              View My Work
+              Selected Works
               <ArrowRight size={15} />
             </a>
-            <Link href="/contact" className="btn-outline">
-              Let&apos;s Talk
+            <Link 
+              href="/contact" 
+              className="group flex items-center gap-2 text-sm font-mono uppercase tracking-wider text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+            >
+              Start a project
             </Link>
-          </div>
-
-          {/* Stats */}
-          <div className="flex gap-8 pt-8 border-t border-[var(--border)]">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="flex flex-col">
-                <span
-                  className="text-2xl font-semibold text-white leading-none"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  {stat.value}
-                </span>
-                <span className="text-xs text-[var(--muted)] mt-1">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </div>
