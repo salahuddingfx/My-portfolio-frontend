@@ -108,7 +108,7 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="section-eyebrow text-white/40 mb-6 block">Inquiries</span>
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
               Let&apos;s build <br />
               <span className="text-stroke">something</span> <br />
               <span className="text-[var(--accent)] italic">legendary.</span>
@@ -185,7 +185,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-8"
+            className="lg:col-span-8 w-full min-w-0"
           >
             <div className="contact-card p-8 md:p-14 lg:p-16 flex flex-col h-full">
               <div className="flex items-center justify-between mb-16">
