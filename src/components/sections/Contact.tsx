@@ -92,10 +92,10 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-shell pt-40 pb-40 bg-[var(--background)] relative overflow-hidden">
+    <section id="contact" className="section-shell pt-40 pb-40 bg-(--background) relative overflow-hidden">
       {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[var(--accent)]/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4" />
+      <div className="absolute top-0 right-0 w-200 h-200 bg-(--accent)/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute bottom-0 left-0 w-150 h-150 bg-(--accent)/5 blur-[120px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4" />
       
       <div className="container max-w-6xl relative z-10 px-6 sm:px-10">
 
@@ -111,7 +111,7 @@ const Contact = () => {
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
               Let&apos;s build <br />
               <span className="text-stroke">something</span> <br />
-              <span className="text-[var(--accent)] italic">legendary.</span>
+              <span className="text-(--accent) italic">legendary.</span>
             </h2>
           </motion.div>
           <motion.div
@@ -121,7 +121,7 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="max-w-md pb-4 lg:text-right lg:ml-auto"
           >
-            <p className="text-lg text-[var(--muted)] leading-relaxed italic border-l-2 lg:border-l-0 lg:border-r-2 border-[var(--accent)]/30 pl-8 lg:pl-0 lg:pr-8">
+            <p className="text-lg text-(--muted) leading-relaxed italic border-l-2 lg:border-l-0 lg:border-r-2 border-(--accent)/30 pl-8 lg:pl-0 lg:pr-8">
               &quot;Design is not just what it looks like and feels like. Design is how it works.&quot; 
               <span className="block mt-4 text-xs font-mono uppercase tracking-widest text-white/30 not-italic">— Steve Jobs</span>
             </p>
@@ -146,7 +146,7 @@ const Contact = () => {
                     <card.icon size={20} />
                   </div>
                   <div className="space-y-1 overflow-hidden">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted-soft)]">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-(--muted-soft)">
                       {card.label}
                     </p>
                     {card.href ? (
@@ -166,12 +166,12 @@ const Contact = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.8 }}
-              className="mt-20 pt-10 border-t border-[var(--border)]"
+              className="mt-20 pt-10 border-t border-(--border)"
             >
-              <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted-soft)] mb-6">Social Networks</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-6">Social Networks</p>
               <div className="flex flex-wrap gap-x-8 gap-y-4">
                 {['LinkedIn', 'Github', 'Twitter', 'Instagram'].map(social => (
-                  <a key={social} href="#" className="text-xs font-bold hover:text-[var(--accent)] transition-all uppercase tracking-widest text-white/60 hover:text-white">
+                  <a key={social} href="#" className="text-xs font-bold hover:text-(--accent) transition-all uppercase tracking-widest text-white/60">
                     {social}
                   </a>
                 ))}
@@ -191,10 +191,10 @@ const Contact = () => {
               <div className="flex items-center justify-between mb-16">
                 <div className="space-y-1">
                   <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
-                  <div className="w-12 h-1 bg-[var(--accent)] rounded-full" />
+                  <div className="w-12 h-1 bg-(--accent) rounded-full" />
                 </div>
                 <div className="flex gap-1.5">
-                  {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]/40" />)}
+                  {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-(--accent)/40" />)}
                 </div>
               </div>
 
@@ -238,7 +238,7 @@ const Contact = () => {
                     ))}
                   </select>
                   <label className="contact-label">Inquiry Subject</label>
-                  <div className="absolute right-0 bottom-2 pointer-events-none text-[var(--muted-soft)]">
+                  <div className="absolute right-0 bottom-2 pointer-events-none text-(--muted-soft)">
                     <ArrowRight size={16} className="rotate-90" />
                   </div>
                 </div>
@@ -249,7 +249,7 @@ const Contact = () => {
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="contact-input resize-none min-h-[140px]"
+                    className="contact-input resize-none min-h-35"
                   />
                   <label className="contact-label">Project Details</label>
                 </div>

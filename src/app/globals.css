@@ -723,6 +723,15 @@ video {
   transition: border-color var(--duration-base) var(--ease-out);
 }
 
+.contact-input:-webkit-autofill,
+.contact-input:-webkit-autofill:hover, 
+.contact-input:-webkit-autofill:focus, 
+.contact-input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .contact-input:focus {
   outline: none;
   border-bottom-color: var(--accent);
@@ -741,8 +750,15 @@ video {
   transition: all var(--duration-base) var(--ease-out);
 }
 
-.contact-input:not(select):focus + .contact-label,
-.contact-input:not(select):not(:placeholder-shown) + .contact-label {
+.contact-input:focus ~ .contact-label,
+.contact-input:not(:placeholder-shown) ~ .contact-label,
+.contact-input:valid ~ .contact-label {
+  top: 0;
+  font-size: 9px;
+  color: var(--accent);
+}
+
+.contact-input-group select.contact-input ~ .contact-label {
   top: 0;
   font-size: 9px;
   color: var(--accent);
@@ -775,6 +791,10 @@ video {
   letter-spacing: 0.1em;
   border-radius: 1rem;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
   transition: all var(--duration-base) var(--ease-out);
 }
 
@@ -782,6 +802,7 @@ video {
   background: var(--accent);
   color: white;
   transform: translateY(-2px);
+  border-color: var(--accent);
   box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
 }
 
