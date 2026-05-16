@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import gsap from "gsap";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -21,9 +19,6 @@ const Navbar = () => {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  
-  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,42 +32,6 @@ const Navbar = () => {
     setIsOpen(false);
   }, [pathname]);
 
-  // GSAP Hover Animation Logic
-  const handleHover = (index: number | null) => {
-    setHoveredIndex(index);
-    
-    const links = navRef.current?.querySelectorAll(".nav-link-item");
-    if (!links) return;
-
-    links.forEach((link, i) => {
-      if (index === null) {
-        gsap.to(link, {
-          opacity: 1,
-          filter: "blur(0px)",
-          scale: 1,
-          duration: 0.4,
-          ease: "power2.out"
-        });
-      } else if (i === index) {
-        gsap.to(link, {
-          opacity: 1,
-          filter: "blur(0px)",
-          scale: 1.05,
-          duration: 0.4,
-          ease: "power2.out"
-        });
-      } else {
-        gsap.to(link, {
-          opacity: 0.25,
-          filter: "blur(2px)",
-          scale: 0.98,
-          duration: 0.4,
-          ease: "power2.out"
-        });
-      }
-    });
-  };
-
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
@@ -80,66 +39,61 @@ const Navbar = () => {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className={`
         fixed top-0 left-0 w-full z-[100] transition-all duration-700
-        ${scrolled ? "py-4 bg-black/50 backdrop-blur-3xl border-b border-white/5 shadow-2xl" : "py-10 lg:py-16"}
+        ${scrolled ? "py-6 bg-black/80 backdrop-blur-3xl border-b border-white/5" : "py-12 lg:py-20 bg-transparent"}
       `}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container flex items-center justify-between lg:grid lg:grid-cols-3">
         
-        {/* LOGO AREA */}
-        <Link href="/" className="flex items-center gap-3 lg:gap-5 group relative z-10">
-          <div className="relative w-10 h-10 lg:w-12 lg:h-12 rounded-xl overflow-hidden border border-white/10 group-hover:border-accent/50 transition-all duration-500 shadow-2xl">
-            <Image src="/salah-uddin.webp" alt="Saka" fill className="object-cover" />
-          </div>
-          <div className="hidden sm:flex flex-col">
-            <span className="text-[13px] lg:text-[15px] font-black tracking-tight text-white uppercase leading-tight">Saka Chowdhury</span>
-            <span className="text-[8px] lg:text-[9px] text-accent font-mono font-bold uppercase tracking-[0.2em] mt-0.5 opacity-70">Creative Engineer</span>
-          </div>
-        </Link>
+        {/* LEFT: LOGO */}
+        <div className="flex items-center">
+          <Link href="/" className="group flex flex-col">
+            <span className="text-[14px] lg:text-[16px] font-black tracking-tighter text-white uppercase leading-none">
+              Saka.dev
+            </span>
+            <span className="text-[9px] text-accent font-mono font-bold uppercase tracking-[0.2em] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              Creative Engineer
+            </span>
+          </Link>
+        </div>
 
-        {/* CENTER NAVIGATION */}
-        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2">
-          <div 
-            ref={navRef}
-            onMouseLeave={() => handleHover(null)}
-            className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-2xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] ring-1 ring-white/5"
+        {/* CENTER: EMAIL (Desktop Only) */}
+        <div className="hidden lg:flex justify-center items-center">
+          <a 
+            href="mailto:connect@salahuddin.dev" 
+            className="text-[11px] font-bold text-white/40 hover:text-white transition-colors tracking-[0.1em]"
           >
-            {navLinks.map((link, i) => {
+            connect@salahuddin.dev
+          </a>
+        </div>
+
+        {/* RIGHT: LINKS & TOGGLE */}
+        <div className="flex items-center justify-end gap-10">
+          {/* Desktop Links */}
+          <div className="hidden lg:flex items-center gap-10">
+            {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  onMouseEnter={() => handleHover(i)}
-                  className="nav-link-item relative px-8 py-3 transition-all duration-300 group"
+                  className="relative group"
                 >
                   <span className={`
-                    text-[12px] font-black uppercase tracking-[0.25em]
-                    ${active ? "text-white" : "text-white/40 group-hover:text-white/80"}
+                    text-[11px] font-black uppercase tracking-[0.25em] transition-all duration-300
+                    ${active ? "text-white" : "text-white/30 group-hover:text-white"}
                   `}>
                     {link.name}
                   </span>
-                  
                   {active && (
                     <motion.div 
-                      layoutId="nav-active-bg"
-                      className="absolute inset-0 bg-white/[0.08] rounded-full -z-10 shadow-inner"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      layoutId="nav-underline"
+                      className="absolute -bottom-2 left-0 w-full h-px bg-accent"
                     />
                   )}
                 </Link>
               );
             })}
           </div>
-        </div>
-
-        {/* RIGHT AREA */}
-        <div className="flex items-center gap-4 lg:gap-8 relative z-10">
-          <Link 
-            href="/contact" 
-            className="hidden lg:flex btn-primary !py-3 !px-6 !text-[10px] !tracking-[0.2em]"
-          >
-            Let&apos;s Talk <ArrowUpRight size={14} className="ml-2" />
-          </Link>
 
           {/* MOBILE TOGGLE */}
           <button
@@ -155,10 +109,11 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 top-0 left-0 w-full h-screen bg-black/95 backdrop-blur-3xl z-[90] lg:hidden flex flex-col justify-center items-center"
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 top-0 left-0 w-full h-screen bg-black z-[90] lg:hidden flex flex-col justify-center items-center px-6"
           >
             <div className="flex flex-col gap-8 text-center">
               {navLinks.map((link, i) => (
@@ -170,7 +125,7 @@ const Navbar = () => {
                 >
                   <Link
                     href={link.href}
-                    className="text-4xl md:text-6xl font-black text-white/20 hover:text-white transition-all duration-500 uppercase tracking-tighter"
+                    className="text-5xl font-black text-white/20 hover:text-white transition-all duration-500 uppercase tracking-tighter"
                   >
                     {link.name}
                   </Link>
@@ -180,11 +135,11 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.1 }}
-                className="mt-8"
+                className="mt-12 flex flex-col gap-4"
               >
-                <Link href="/contact" className="btn-primary">
-                  Start a Project
-                </Link>
+                <a href="mailto:connect@salahuddin.dev" className="text-sm font-mono text-white/40">
+                  connect@salahuddin.dev
+                </a>
               </motion.div>
             </div>
           </motion.div>
