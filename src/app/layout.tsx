@@ -9,6 +9,7 @@ import "./globals.css";
 
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { ScrollEffects } from "@/components/providers/ScrollEffects";
+import { SettingsProvider } from "@/context/SettingsContext";
 
 import CustomCursor from "@/components/ui/cursor/CustomCursor";
 import Navbar from "@/components/ui/Navbar";
@@ -133,6 +134,7 @@ export default function RootLayout({
             <Footer />
           </main>
 
+          </SettingsProvider>
         </LenisProvider>
       </body>
     </html>
