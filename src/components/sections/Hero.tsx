@@ -8,10 +8,14 @@ import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
 
 const TYPING_ROLES = [
-  "Software Engineer",
-  "Full Stack Developer",
   "Creative Developer",
-  "UI & Interaction Designer",
+  "Frontend Engineer",
+  "Interactive Web Designer",
+  "Full Stack Developer",
+  "Digital Experience Builder",
+  "Modern UI Designer",
+  "Web Interface Engineer",
+  "Motion & Interaction Designer",
 ];
 
 const RoleTyper = () => {
