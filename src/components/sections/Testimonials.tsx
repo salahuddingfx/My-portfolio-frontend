@@ -7,112 +7,109 @@ import Image from "next/image";
 const FALLBACK_REVIEWS = [
   {
     name: "Alex Rivera",
-    role: "CTO @ TechFlow",
-    text: "Salah is a visionary developer. He didn't just build our platform — he engineered an experience that boosted our conversion by 40%. The attention to interaction detail was extraordinary.",
+    role: "CTO at TechFlow",
+    text: "Salah didn't just build our platform — he genuinely understood the problem. The attention to interaction detail was extraordinary, and the result boosted our conversion by 40%.",
     avatar: "https://i.pravatar.cc/150?u=alex",
   },
   {
     name: "Sarah Chen",
-    role: "Product Manager @ Nexus",
-    text: "The level of craft Salah puts into his code and 3D interactions is simply unmatched. A true 'Digital Architect' in every sense of the word. I'll work with him again without hesitation.",
+    role: "Product Manager at Nexus",
+    text: "The level of craft Salah brings to his work is rare. He asks the right questions, communicates clearly, and delivers something that actually exceeds expectations. I'd work with him again without hesitation.",
     avatar: "https://i.pravatar.cc/150?u=sarah",
   },
   {
     name: "Marcus Thorne",
-    role: "Founder @ S-Corp",
-    text: "Reliable, strategic, and technically brilliant. Salah's ability to simplify complex engineering problems while keeping the UI absolutely premium is rare. An invaluable partner.",
+    role: "Founder at S-Corp",
+    text: "Reliable, strategic, and technically brilliant. Salah's ability to simplify complex problems while keeping the UI clean and premium is genuinely rare. An invaluable partner.",
     avatar: "https://i.pravatar.cc/150?u=marcus",
-  }
+  },
 ];
 
+const Stars = () => (
+  <div className="flex gap-0.5" aria-label="5 out of 5 stars">
+    {[...Array(5)].map((_, i) => (
+      <svg key={i} className="w-3.5 h-3.5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+      </svg>
+    ))}
+  </div>
+);
+
+const fadeUp = {
+  initial:     { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport:    { once: true, margin: "-50px" },
+};
+
 const Testimonials = () => {
-  const [reviews, setReviews] = useState<any[]>(FALLBACK_REVIEWS);
+  const [reviews, setReviews] = useState<typeof FALLBACK_REVIEWS>(FALLBACK_REVIEWS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchReviews = async () => {
+    const fetch_ = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (!apiUrl) {
-          setLoading(false);
-          return;
-        }
+        if (!apiUrl) { setLoading(false); return; }
         const res = await fetch(`${apiUrl}/admin/reviews`);
-        if (!res.ok) throw new Error("Failed to fetch");
+        if (!res.ok) throw new Error();
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setReviews(data);
-        }
-      } catch (error) {
-        console.warn("Using fallback reviews due to API error:", error);
+        if (Array.isArray(data) && data.length > 0) setReviews(data);
+      } catch {
+        /* use fallback */
       } finally {
         setLoading(false);
       }
     };
-    fetchReviews();
+    fetch_();
   }, []);
 
   if (loading) return null;
 
   return (
-    <section id="reviews" className="section-shell relative overflow-hidden bg-background">
-      <div className="container relative z-10">
-        
+    <section id="reviews" className="section-shell bg-[var(--background)]">
+      <div className="container">
+
         {/* Header */}
-        <div className="mb-24 lg:mb-32 flex flex-col md:flex-row md:items-end justify-between gap-12 border-b-2 border-white/10 pb-16">
-          <div className="space-y-6">
-            <span className="kicker block">[ COMMUNIQUÉ ]</span>
-            <h2 className="text-[12vw] lg:text-[8vw] font-black uppercase leading-[0.85] tracking-tighter text-white">
-              CLIENT<br/>
-              <span className="text-accent">LOGS</span>
-            </h2>
-          </div>
-          <p className="text-xl text-white/50 max-w-md font-bold tracking-tight uppercase">
-            Data streams and feedback from operational partners across the network.
-          </p>
+        <div className="text-center max-w-lg mx-auto mb-14">
+          <span className="section-eyebrow">Kind words</span>
+          <h2 className="section-heading mt-1">
+            What clients say.
+          </h2>
         </div>
 
-        {/* Grid - Brutalist Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {reviews.map((review, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="solid-card flex flex-col h-full group"
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="card card-hover group flex flex-col h-full p-7"
             >
-              
-              {/* Rating representation - Raw Data block */}
-              <div className="flex gap-2 mb-12 border-l-2 border-accent pl-4">
-                <span className="kicker text-accent">[ AUTH: VALID ]</span>
-                <span className="kicker text-white/30">[ RATING: MAX ]</span>
-              </div>
+              {/* Stars */}
+              <Stars />
 
               {/* Quote */}
-              <div className="flex-grow mb-16">
-                <p className="text-white/70 group-hover:text-white transition-all duration-500 text-xl lg:text-2xl leading-relaxed font-bold uppercase tracking-tight">
-                  "{review.text}"
+              <blockquote className="flex-grow mt-5 mb-6">
+                <p className="text-sm text-[var(--muted)] leading-relaxed group-hover:text-white/70 transition-colors duration-300">
+                  &ldquo;{review.text}&rdquo;
                 </p>
-              </div>
+              </blockquote>
 
               {/* Author */}
-              <div className="pt-8 border-t-2 border-white/10 flex items-center gap-6">
-                <div className="relative w-16 h-16 border-2 border-white/10 group-hover:border-accent transition-colors duration-500 overflow-hidden bg-surface">
+              <div className="flex items-center gap-3 pt-5 border-t border-[var(--border)]">
+                <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shrink-0">
                   <Image
                     src={review.avatar}
                     alt={review.name}
                     fill
-                    sizes="64px"
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                    sizes="36px"
+                    className="object-cover"
                   />
                 </div>
-                <div className="space-y-1 flex flex-col">
-                  <span className="text-2xl font-black text-white uppercase tracking-tighter leading-none">{review.name}</span>
-                  <span className="kicker text-accent">
-                    [{review.role}]
-                  </span>
+                <div>
+                  <p className="text-sm font-medium text-white leading-none">{review.name}</p>
+                  <p className="text-xs text-[var(--muted)] mt-1">{review.role}</p>
                 </div>
               </div>
             </motion.div>

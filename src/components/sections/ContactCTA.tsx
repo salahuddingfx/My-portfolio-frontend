@@ -2,134 +2,45 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-
 import Link from "next/link";
-
-import Magnetic from "@/components/ui/Magnetic";
 
 const ContactCTA = () => {
   return (
     <section
       id="contact-cta"
-      className="
-        section-shell
-        relative
-        overflow-hidden
-        bg-black
-      "
+      className="section-shell bg-[var(--surface)] border-t border-[var(--border)]"
     >
-
-      {/* SOFT BACKGROUND */}
-      <div
-        className="
-          absolute
-          top-1/2
-          left-1/2
-          -translate-x-1/2
-          -translate-y-1/2
-          w-[500px]
-          h-[500px]
-          rounded-full
-          bg-accent/5
-          blur-[90px]
-          pointer-events-none
-        "
-      />
-
-      <div
-        className="
-          container
-          relative
-          z-10
-        "
-      >
-
+      <div className="container">
         <motion.div
-          className="
-            max-w-3xl
-            mx-auto
-            text-center
-          "
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="max-w-2xl"
         >
-
-          {/* KICKER */}
-          <span className="section-kicker">
-            Let&apos;s Work Together
-          </span>
-
-          {/* HEADING */}
-          <h2 className="section-title mt-6 mx-auto">
-            Have an
-            <span className="text-accent">
-              {" "}
-              Idea
-            </span>
-            {" "}in Mind?
+          <span className="section-eyebrow">Let&apos;s work together</span>
+          <h2 className="section-heading mt-1 mb-4">
+            Got a project in mind?
           </h2>
-
-          {/* TEXT */}
-          <p
-            className="
-              mt-8
-              text-[15px]
-              leading-8
-              text-white/60
-              max-w-2xl
-              mx-auto
-            "
-          >
-            I’m currently open to selected
-            projects, collaborations, and
-            thoughtful digital work.
+          <p className="text-sm text-[var(--muted)] leading-relaxed max-w-md mb-10">
+            I&apos;m currently open to selected projects, collaborations, and
+            interesting opportunities. If you have something in mind, I&apos;d
+            love to hear about it.
           </p>
 
-          {/* BUTTONS */}
-          <div
-            className="
-              flex
-              flex-col
-              sm:flex-row
-              items-center
-              justify-center
-              gap-5
-              mt-12
-            "
-          >
-
-            <Magnetic>
-
-              <Link
-                href="/contact"
-                className="
-                  btn-primary
-                  px-8
-                  py-4
-                "
-              >
-                Start a Project
-
-                <ArrowRight size={16} />
-              </Link>
-
-            </Magnetic>
-
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="/contact" className="btn-primary">
+              Start a project
+              <ArrowRight size={15} />
+            </Link>
             <a
               href="mailto:salahuddinkaderappy@gmail.com"
-              className="
-                text-[15px]
-                font-medium
-                text-white/60
-                hover:text-white
-                transition-colors
-              "
+              className="text-sm text-[var(--muted)] hover:text-white transition-colors duration-200"
             >
               salahuddinkaderappy@gmail.com
             </a>
-
           </div>
-
         </motion.div>
-
       </div>
     </section>
   );
