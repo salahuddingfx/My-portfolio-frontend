@@ -16,8 +16,9 @@ export function ScrollEffects() {
         // Ensure they stack on top of each other correctly
         gsap.set(section, { zIndex: i });
 
-        // Don't pin the last section, otherwise it sticks and doesn't scroll naturally at the end
-        if (i !== sections.length - 1) {
+        // Only pin sections if they are NOT the last two (Section before Footer and Footer itself)
+        // This allows a natural scroll into the footer at the end of the page.
+        if (i < sections.length - 2) {
           ScrollTrigger.create({
             trigger: section,
             start: "top top",
