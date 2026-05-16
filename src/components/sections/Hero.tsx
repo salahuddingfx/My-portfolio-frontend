@@ -91,53 +91,67 @@ const Hero = () => {
       </div>
 
       {/* Content layer */}
-      <div className="relative z-10 container min-h-screen flex flex-col justify-center pt-24 pb-16">
-        <div className="max-w-3xl">
+      <div className="relative z-10 container min-h-screen flex flex-col justify-center pt-24 pb-16 pointer-events-none">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full gap-16 md:gap-4 mt-10 md:mt-0">
+          
+          {/* Left Side: Name & Info */}
+          <div className="flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12">
+            {/* Status */}
+            <div className="flex items-center gap-3 mb-6 md:mb-10">
+              <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse" />
+              <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest">
+                Available for work
+              </span>
+            </div>
 
-          {/* Status */}
-          <div className="flex items-center gap-3 mb-8">
-            <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse" />
-            <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest">
-              Available for work
+            <span className="text-[var(--accent)] font-mono text-sm sm:text-base mb-2 tracking-widest">
+              Hello! I&apos;m
             </span>
-          </div>
-
-          {/* Name */}
-          <h1
-            className="text-6xl sm:text-8xl lg:text-[8vw] font-bold text-[var(--foreground)] leading-[0.9] tracking-tighter mb-6 uppercase"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Salah Uddin
-            <span className="block text-[var(--muted)]">Kader</span>
-          </h1>
-
-          {/* Typing role */}
-          <div className="flex items-center gap-2 mb-8 h-8">
-            <span className="text-xl sm:text-2xl text-[var(--foreground)] font-mono uppercase tracking-tight">
-              <span ref={typingRef} />
-              <span className="typing-cursor" />
-            </span>
-          </div>
-
-          {/* Description */}
-          <p className="text-base sm:text-lg text-[var(--muted)] leading-relaxed max-w-lg mb-12">
-            I engineer robust digital experiences with a focus on modern web
-            technologies and structural, minimalist design.
-          </p>
-
-          {/* Actions */}
-          <div className="flex flex-wrap items-center gap-6">
-            <a href="#projects" className="btn-primary">
-              Selected Works
-              <ArrowRight size={15} />
-            </a>
-            <Link 
-              href="/contact" 
-              className="group flex items-center gap-2 text-sm font-mono uppercase tracking-wider text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+            <h1
+              className="text-5xl sm:text-7xl lg:text-[5.5vw] font-bold text-white leading-[0.9] tracking-tighter uppercase"
+              style={{ fontFamily: "var(--font-display)" }}
             >
-              Start a project
-            </Link>
+              Salah Uddin
+              <span className="block">Kader</span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mt-8 mb-8">
+              I engineer robust digital experiences with a focus on modern web
+              technologies and structural, minimalist design.
+            </p>
+
+            {/* Actions */}
+            <div className="flex flex-wrap items-center gap-6">
+              <a href="#projects" className="btn-primary">
+                Selected Works
+                <ArrowRight size={15} />
+              </a>
+              <Link 
+                href="/contact" 
+                className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+              >
+                Let&apos;s Talk
+              </Link>
+            </div>
           </div>
+
+          {/* Right Side: Role */}
+          <div className="flex flex-col z-20 pointer-events-auto text-left md:text-right w-full md:w-5/12 items-start md:items-end justify-center">
+            <span className="text-[var(--muted)] font-mono text-sm sm:text-base mb-2 tracking-widest">
+              A Creative
+            </span>
+            <div className="h-[3em] flex flex-col justify-start md:justify-end items-start md:items-end">
+              <span 
+                className="text-4xl sm:text-6xl lg:text-[5vw] text-[var(--foreground)] font-bold uppercase tracking-tighter leading-[0.9]" 
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                <span ref={typingRef} />
+                <span className="typing-cursor" />
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
 
