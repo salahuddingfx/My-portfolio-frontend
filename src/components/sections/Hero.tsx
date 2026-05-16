@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
+import { Spotlight } from "@/components/ui/spotlight";
 
 const TYPING_ROLES = [
   "Software Engineer",
@@ -70,16 +71,29 @@ const Hero = () => {
       className="relative min-h-screen w-full overflow-hidden bg-[var(--background)]"
     >
       {/* 3D Robot — background, full section */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="w-full h-full pointer-events-auto">
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+        
+        {/* Acernity Spotlight */}
+        <Spotlight
+          className="-top-40 left-0 md:left-[20%] md:-top-20 z-0"
+          fill="rgba(255, 255, 255, 0.4)"
+        />
+
+        {/* Purple/Accent Glow behind the robot (like the image) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[600px] aspect-square bg-[#7e22ce]/20 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0" />
+
+        <div className="absolute inset-0 w-full h-full pointer-events-auto z-10 flex items-center justify-center">
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full opacity-55 transition-opacity duration-1000"
+            className="w-full h-full opacity-100 transition-opacity duration-1000 scale-[1.2] md:scale-100"
           />
         </div>
-        {/* Gradient vignette */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-[var(--background)]/70" />
+
+        {/* Radial vignette so the center stays clear but edges fade to background */}
+        <div className="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_20%,var(--background)_90%)]" />
+        
+        {/* Bottom grounding gradient */}
+        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-t from-[var(--background)] via-transparent to-[var(--background)]/20" />
       </div>
 
       {/* Content layer */}
