@@ -21,21 +21,22 @@ const About = () => {
     <section id="about" className="section-shell bg-[var(--background)]">
       <div className="container">
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        {/* Centered Header */}
+        <div className="text-center max-w-2xl mx-auto mb-20">
+          <span className="section-eyebrow">About me</span>
+          <h2 className="section-heading mt-1">
+            I craft digital<br />
+            <span style={{ color: "var(--muted)" }}>experiences.</span>
+          </h2>
+        </div>
 
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Text content */}
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="lg:col-span-7 flex flex-col gap-8"
           >
-            <div>
-              <span className="section-eyebrow">About me</span>
-              <h2 className="section-heading mt-1">
-                I craft digital<br />
-                <span style={{ color: "var(--muted)" }}>experiences.</span>
-              </h2>
-            </div>
 
             <p className="text-[var(--muted)] text-base leading-relaxed max-w-lg">
               I&apos;m Salah Uddin Kader, a Full Stack Developer based in Cox&apos;s

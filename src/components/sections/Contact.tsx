@@ -80,18 +80,18 @@ const Contact = () => {
     <section id="contact" className="section-shell pt-32 bg-[var(--background)]">
       <div className="container">
 
-        {/* Page header */}
+        {/* Page header - Centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-14"
+          className="text-center max-w-2xl mx-auto mb-16"
         >
           <span className="section-eyebrow">Get in touch</span>
           <h1 className="section-heading mt-1 mb-3">
             Let&apos;s connect.
           </h1>
-          <p className="section-subtext text-sm">
+          <p className="section-subtext mx-auto text-center">
             Have a project in mind or want to discuss an idea? I&apos;m always open
             to new opportunities and conversations.
           </p>

@@ -46,15 +46,13 @@ const Services = () => {
     <section id="services" className="section-shell bg-[var(--background)]">
       <div className="container">
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-          <div>
-            <span className="section-eyebrow">Services</span>
-            <h2 className="section-heading mt-1">
-              What I do best.
-            </h2>
-          </div>
-          <p className="section-subtext text-sm max-w-xs md:text-right">
+        {/* Header - Centered */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="section-eyebrow">Services</span>
+          <h2 className="section-heading mt-1">
+            What I do best.
+          </h2>
+          <p className="section-subtext mx-auto mt-4 text-center">
             Specialized in full-stack development — from idea to shipped product.
           </p>
         </div>
