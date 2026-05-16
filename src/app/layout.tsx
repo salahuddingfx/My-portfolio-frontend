@@ -110,6 +110,7 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
       >
         <LenisProvider>
+          <SettingsProvider>
 
           {/* GLOBAL EFFECTS */}
           <ScrollProgress />
