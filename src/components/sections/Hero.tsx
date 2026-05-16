@@ -130,10 +130,15 @@ const Hero = () => {
               <span className="block text-[var(--muted)]">Kader</span>
             </h1>
 
+import { useSettings } from "@/context/SettingsContext";
+
+// ... (inside Hero component)
+  const { settings } = useSettings();
+
+  // ... (inside return)
             {/* Description */}
             <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mt-6 mb-12">
-              I engineer robust digital experiences with a focus on modern web
-              technologies and structural, minimalist design.
+              {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design."}
             </p>
 
             {/* Actions */}
