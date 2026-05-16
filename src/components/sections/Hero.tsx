@@ -127,7 +127,7 @@ const Hero = () => {
             </h1>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mt-6 mb-8">
+            <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mt-6 mb-12">
               I engineer robust digital experiences with a focus on modern web
               technologies and structural, minimalist design.
             </p>
