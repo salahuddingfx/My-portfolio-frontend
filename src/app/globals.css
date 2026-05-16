@@ -93,6 +93,31 @@
   --container-pad: 1.5rem;
 }
 
+/* NAVBAR HEIGHT SYSTEM */
+
+:root {
+  --navbar-height: 84px;
+  --navbar-height-scrolled: 72px;
+}
+
+.nav-link {
+  height: 44px;
+  padding-inline: 1.25rem;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  transition:
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
+}
+
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -105,6 +130,32 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
+}
+
+.nav-cta {
+  min-width: 138px;
+}
+
+/* MOBILE NAV LINK */
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 54px;
+
+  padding-inline: 1rem;
+
+  border-radius: 18px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  transition:
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
 }
 
 /* =============================================================================
