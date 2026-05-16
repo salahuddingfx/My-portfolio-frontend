@@ -76,7 +76,7 @@ export const metadata: Metadata = {
       "Modern portfolio built with Next.js, React, and thoughtful interaction design.",
     url: "https://salahuddin.codes",
     siteName: "Salah Uddin Kader",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
   },
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Salah Uddin Kader — Full Stack Developer",
     description: "Modern portfolio built with Next.js and React.",
-    images: ["/og-image.jpg"],
+    images: ["/mine-photo.png"],
   },
 };
 

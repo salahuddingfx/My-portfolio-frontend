@@ -123,7 +123,7 @@ const CustomCursor = () => {
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={i}
-              className="ray absolute w-[1px] h-[60px] bg-gradient-to-t from-[#dc2626] to-transparent origin-bottom opacity-0 scale-y-0"
+              className="ray absolute w-[1px] h-[60px] bg-gradient-to-t from-[#9333ea] to-transparent origin-bottom opacity-0 scale-y-0"
               style={{
                 transform: `rotate(${i * 30}deg) translateY(-50%)`,
               }}
@@ -132,9 +132,9 @@ const CustomCursor = () => {
         </div>
 
         {/* EXTERNAL AURA GLOW */}
-        <div className="sharingan-glow absolute inset-[-25px] rounded-full bg-[#dc2626]/20 blur-[20px] opacity-60 z-[-1]" />
+        <div className="sharingan-glow absolute inset-[-25px] rounded-full bg-[#9333ea]/20 blur-[20px] opacity-60 z-[-1]" />
         
-        <div className="relative w-full h-full rounded-full bg-[#dc2626] border border-black/40 overflow-hidden shadow-[inset_0_0_12px_rgba(0,0,0,0.9),0_0_20px_rgba(220,38,38,0.6)]">
+        <div className="relative w-full h-full rounded-full bg-[#9333ea] border border-black/40 overflow-hidden shadow-[inset_0_0_12px_rgba(0,0,0,0.9),0_0_20px_rgba(147,51,234,0.6)]">
           {/* Inner Pattern (EMS) */}
           <div className="sharingan-inner absolute inset-0 flex items-center justify-center">
             <svg viewBox="0 0 100 100" className="w-full h-full p-1 fill-black">
