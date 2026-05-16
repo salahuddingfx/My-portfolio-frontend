@@ -79,7 +79,7 @@ const Testimonials = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: i * 0.1 }}
-              className="premium-card group flex flex-col h-full p-8 lg:p-10 border-white/5 bg-white/[0.01]"
+              className="premium-card group flex flex-col h-full p-10 lg:p-12"
             >
               {/* Stars */}
               <div className="flex gap-1.5 mb-10">
@@ -87,32 +87,37 @@ const Testimonials = () => {
                   <Star
                     key={j}
                     size={14}
-                    className="fill-accent text-accent"
+                    className="fill-accent text-accent animate-pulse"
                   />
                 ))}
               </div>
 
               {/* Quote */}
-              <div className="flex-grow">
-                <p className="text-white/60 group-hover:text-white/80 transition-colors duration-500 text-[18px] leading-relaxed font-medium italic">
+              <div className="flex-grow relative">
+                 {/* Decorative large quote mark */}
+                <div className="absolute -top-6 -left-4 text-[120px] font-black text-white/[0.03] pointer-events-none select-none italic leading-none">
+                  &ldquo;
+                </div>
+                <p className="text-white/80 group-hover:text-white transition-colors duration-500 text-[19px] lg:text-[21px] leading-relaxed font-bold italic relative z-10">
                   &ldquo;{review.text}&rdquo;
                 </p>
               </div>
 
               {/* Author */}
-              <div className="mt-12 pt-10 border-t border-white/5 flex items-center gap-6">
-                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white/5 group-hover:border-accent/30 transition-all duration-700 shadow-xl bg-white/[0.03]">
+              <div className="mt-12 pt-10 border-t border-white/10 flex items-center gap-6">
+                <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-accent/50 transition-all duration-700 shadow-2xl bg-white/[0.03]">
                   <Image
                     src={review.avatar}
                     alt={review.name}
                     fill
-                    sizes="56px"
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                    sizes="64px"
+                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <p className="font-display font-black text-[17px] text-white tracking-tight">{review.name}</p>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-accent font-black">
+                <div className="space-y-2">
+                  <p className="font-display font-black text-[19px] text-white tracking-tight leading-none">{review.name}</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent/80 font-black flex items-center gap-2">
+                    <span className="w-4 h-px bg-accent/40" />
                     {review.role}
                   </p>
                 </div>

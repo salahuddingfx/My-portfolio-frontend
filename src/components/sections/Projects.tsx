@@ -94,49 +94,49 @@ const Projects = () => {
               </div>
 
               {/* Folder Body */}
-              <div className="premium-card p-0 flex flex-col border border-white/10 group-hover:border-accent/40 bg-white/[0.01] transition-all duration-700 overflow-hidden shadow-2xl">
+              <div className="premium-card p-0 flex flex-col border border-white/10 group-hover:border-accent/40 bg-white/[0.02] transition-all duration-700 overflow-hidden shadow-2xl">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-1000 grayscale-[0.5] group-hover:grayscale-0"
+                    className="object-cover group-hover:scale-110 transition-transform duration-1000 grayscale-[0.3] group-hover:grayscale-0"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90" />
                   
                   {/* Floating Tech Tags on Image */}
-                  <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
-                    {project.tags.slice(0, 2).map((tag: string) => (
-                      <span key={tag} className="text-[8px] font-mono font-bold uppercase tracking-widest text-white/90 bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/10">
+                  <div className="absolute bottom-6 left-6 flex flex-wrap gap-2.5">
+                    {project.tags.slice(0, 3).map((tag: string) => (
+                      <span key={tag} className="text-[9px] font-black uppercase tracking-widest text-white bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 shadow-2xl">
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="p-8 space-y-6 flex-1 flex flex-col">
+                <div className="p-10 lg:p-12 space-y-8 flex-1 flex flex-col">
                   <div className="space-y-4 flex-1">
-                    <h3 className="text-2xl font-black font-display tracking-tight text-white group-hover:text-accent transition-colors duration-500">
+                    <h3 className="text-3xl font-black font-display tracking-tight text-white group-hover:text-accent transition-colors duration-500 uppercase">
                       {project.title}
                     </h3>
-                    <p className="text-white/50 text-[15px] leading-relaxed line-clamp-3 font-medium">
+                    <p className="text-white/60 group-hover:text-white/90 text-[16px] lg:text-[18px] leading-relaxed line-clamp-3 font-medium transition-colors duration-500">
                       {project.desc}
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                  <div className="flex items-center justify-between pt-8 border-t border-white/10">
                     <a 
                       href={project.links?.live} 
-                      className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-all duration-500"
+                      className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.3em] text-white/60 hover:text-accent transition-all duration-500"
                     >
-                      <ExternalLink size={14} className="text-accent" /> Live View
+                      <ExternalLink size={16} className="text-accent" /> Live View
                     </a>
                     <a 
                       href={project.links?.source} 
-                      className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-all duration-500"
+                      className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.3em] text-white/60 hover:text-white transition-all duration-500"
                     >
-                      <Code2 size={14} className="text-white/20 group-hover:text-white transition-colors" /> Code
+                      <Code2 size={16} className="text-white/40 group-hover:text-white transition-colors" /> Code
                     </a>
                   </div>
                 </div>

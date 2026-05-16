@@ -60,34 +60,35 @@ const Services = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: i * 0.1 }}
-              className="premium-card group flex flex-col h-full p-8 lg:p-12"
+              className="premium-card group flex flex-col h-full p-10 lg:p-14"
             >
               {/* Header row */}
-              <div className="flex items-start justify-between mb-10">
-                <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 group-hover:text-accent group-hover:border-accent/30 transition-all duration-500 shadow-xl">
-                  <service.icon size={28} strokeWidth={1.5} />
+              <div className="flex items-start justify-between mb-12">
+                <div className="w-20 h-20 rounded-[2rem] bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/50 group-hover:text-accent group-hover:border-accent/40 group-hover:bg-accent/10 transition-all duration-700 shadow-2xl relative">
+                  <service.icon size={32} strokeWidth={1.5} />
+                  <div className="absolute inset-0 rounded-[2rem] bg-accent/20 blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-700" />
                 </div>
-                <span className="font-display font-black text-5xl text-white/[0.03] group-hover:text-white/[0.08] transition-colors duration-700 select-none tracking-tighter">
+                <span className="font-display font-black text-6xl lg:text-8xl text-white/[0.04] group-hover:text-white/[0.1] transition-all duration-700 select-none tracking-tighter leading-none translate-x-4">
                   {service.index}
                 </span>
               </div>
 
               {/* Content */}
-              <div className="space-y-4 flex-grow">
-                <h3 className="font-display font-bold text-3xl text-white leading-tight group-hover:text-accent transition-colors duration-500">
+              <div className="space-y-6 flex-grow">
+                <h3 className="font-display font-black text-4xl text-white leading-none tracking-tight group-hover:text-accent transition-colors duration-500 uppercase">
                   {service.title}
                 </h3>
-                <p className="text-[17px] leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-500">
+                <p className="text-[18px] lg:text-[20px] leading-relaxed text-white/60 group-hover:text-white transition-colors duration-500 font-medium">
                   {service.desc}
                 </p>
               </div>
 
               {/* Tech tags */}
-              <div className="mt-10 flex flex-wrap gap-2.5">
+              <div className="mt-12 flex flex-wrap gap-3">
                 {service.tech.map((t) => (
                   <span
                     key={t}
-                    className="font-mono text-[10px] font-bold text-white/30 bg-white/[0.03] border border-white/5 px-4 py-2 rounded-full uppercase tracking-widest group-hover:text-white/60 group-hover:bg-white/[0.06] transition-all duration-500"
+                    className="font-mono text-[10px] font-black text-white/40 bg-white/[0.04] border border-white/10 px-5 py-2.5 rounded-full uppercase tracking-widest group-hover:text-white group-hover:bg-accent/20 group-hover:border-accent/40 transition-all duration-500"
                   >
                     {t}
                   </span>
@@ -95,14 +96,14 @@ const Services = () => {
               </div>
 
               {/* Action */}
-              <div className="mt-12 pt-10 border-t border-white/5 flex items-center justify-between group-hover:border-white/10 transition-colors">
+              <div className="mt-14 pt-10 border-t border-white/10 flex items-center justify-between transition-colors">
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-4 text-white/40 group-hover:text-white transition-all duration-500"
+                  className="inline-flex items-center gap-6 text-white/50 group-hover:text-white transition-all duration-500"
                 >
                   <span className="font-mono text-[11px] uppercase tracking-[0.4em] font-black">Learn More</span>
-                  <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-500">
-                    <ArrowUpRight size={16} className="text-white" />
+                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-700 shadow-xl group-hover:scale-110">
+                    <ArrowUpRight size={18} className="text-white" />
                   </div>
                 </Link>
               </div>

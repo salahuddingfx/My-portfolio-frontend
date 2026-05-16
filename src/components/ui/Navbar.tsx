@@ -80,7 +80,7 @@ const Navbar = () => {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className={`
         fixed top-0 left-0 w-full z-[100] transition-all duration-700
-        ${scrolled ? "py-3 bg-black/40 backdrop-blur-2xl border-b border-white/5" : "py-6 lg:py-12"}
+        ${scrolled ? "py-4 bg-black/50 backdrop-blur-3xl border-b border-white/5 shadow-2xl" : "py-10 lg:py-16"}
       `}
     >
       <div className="container flex items-center justify-between">
@@ -101,7 +101,7 @@ const Navbar = () => {
           <div 
             ref={navRef}
             onMouseLeave={() => handleHover(null)}
-            className="flex items-center gap-1 px-1.5 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-2xl"
+            className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-2xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] ring-1 ring-white/5"
           >
             {navLinks.map((link, i) => {
               const active = pathname === link.href;
@@ -110,11 +110,11 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onMouseEnter={() => handleHover(i)}
-                  className="nav-link-item relative px-6 py-2.5 transition-all duration-300"
+                  className="nav-link-item relative px-8 py-3 transition-all duration-300 group"
                 >
                   <span className={`
-                    text-[11px] font-bold uppercase tracking-[0.2em]
-                    ${active ? "text-white" : "text-white/30 group-hover:text-white/60"}
+                    text-[12px] font-black uppercase tracking-[0.25em]
+                    ${active ? "text-white" : "text-white/40 group-hover:text-white/80"}
                   `}>
                     {link.name}
                   </span>
@@ -122,7 +122,7 @@ const Navbar = () => {
                   {active && (
                     <motion.div 
                       layoutId="nav-active-bg"
-                      className="absolute inset-0 bg-white/[0.06] rounded-full -z-10"
+                      className="absolute inset-0 bg-white/[0.08] rounded-full -z-10 shadow-inner"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}

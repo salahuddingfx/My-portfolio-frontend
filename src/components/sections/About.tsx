@@ -73,15 +73,15 @@ const About = () => {
               {stats.map((stat, i) => (
                 <div
                   key={i}
-                  className="premium-card p-8 bg-white/[0.01] border-white/5 group"
+                  className="premium-card p-10 bg-white/[0.03] border-white/10 group shadow-xl"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-accent mb-6 group-hover:scale-110 transition-transform duration-500">
-                    <stat.icon size={20} />
+                  <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-accent mb-8 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                    <stat.icon size={24} />
                   </div>
-                  <h4 className="text-3xl font-black tracking-tighter text-white">
+                  <h4 className="text-4xl font-black tracking-tighter text-white">
                     {stat.value}
                   </h4>
-                  <p className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-white/30 mt-2">
+                  <p className="text-[11px] font-mono font-black uppercase tracking-[0.3em] text-white/50 mt-4">
                     {stat.label}
                   </p>
                 </div>
