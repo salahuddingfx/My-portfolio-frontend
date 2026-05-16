@@ -190,7 +190,7 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       {/* ── MOBILE DRAWER ── */}
       <AnimatePresence>
