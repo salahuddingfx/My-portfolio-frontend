@@ -35,60 +35,71 @@ const posts = [
 
 export default function BlogPage() {
   return (
-    <main className="min-h-screen bg-background pt-32 pb-20 overflow-hidden">
-      {/* Dynamic Background Elements */}
+    <main className="min-h-screen bg-black pt-40 pb-20 overflow-hidden">
+      {/* Background Decorative Glows */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[20%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[20%] left-[-5%] w-[30%] h-[30%] bg-accent/5 blur-[120px] rounded-full" />
+        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-accent/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[20%] left-[-10%] w-[40%] h-[40%] bg-accent/5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mb-20">
+      <div className="container relative z-10">
+        <div className="max-w-4xl mb-24 lg:mb-32">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
+            transition={{ duration: 1 }}
+            className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 text-xs font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/[0.03] border border-white/10 text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               Insights & Intelligence
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter leading-none">
-              Thoughts on <span className="text-gradient">Technology.</span>
+            <h1 className="text-5xl md:text-8xl lg:text-[10rem] font-black text-white tracking-tighter leading-[0.85] uppercase drop-shadow-2xl">
+              Neural<br />
+              <span className="text-white/10">Thoughts.</span>
             </h1>
-            <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl">
+            <p className="text-white/50 text-[18px] md:text-[20px] leading-relaxed max-w-2xl font-medium">
               Sharing architectural insights, design philosophies, and engineering 
-              breakthroughs from the front lines of software development.
+              breakthroughs from the front lines of high-end software development.
             </p>
           </motion.div>
         </div>
 
         {/* Blog Feed */}
-        <div className="space-y-8 max-w-5xl">
+        <div className="space-y-8 lg:space-y-12 max-w-5xl">
           {posts.map((post, index) => (
             <BlogCard key={index} {...post} index={index} />
           ))}
         </div>
 
         {/* Newsletter Subscription */}
-        <div className="mt-32 p-12 md:p-20 rounded-[4rem] border border-white/5 bg-slate-900/30 backdrop-blur-xl relative overflow-hidden">
-           <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-4">
-                 <h2 className="text-3xl md:text-5xl font-black text-white">Stay in the loop.</h2>
-                 <p className="text-slate-400 text-lg">Get the latest engineering insights delivered directly to your inbox.</p>
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-32 lg:mt-48 premium-card p-12 lg:p-24 bg-white/[0.01] border-white/5 overflow-hidden"
+        >
+           <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-6">
+                 <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight uppercase leading-none">Stay In<br/><span className="text-accent">The Loop.</span></h2>
+                 <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-md font-medium">Get the latest engineering insights delivered directly to your inbox. No noise, just signal.</p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
                  <input 
                    type="email" 
-                   placeholder="Enter your neural email..." 
-                   className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-accent/50 transition-colors"
+                   placeholder="Enter your email address..." 
+                   className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-8 py-5 text-white focus:outline-none focus:border-accent/40 focus:bg-white/[0.05] transition-all duration-500 placeholder:text-white/10"
                  />
-                 <button className="px-8 py-4 bg-white text-slate-950 font-bold rounded-2xl hover:bg-accent transition-colors">
-                    Subscribe
+                 <button className="btn-primary w-full sm:w-auto px-10 py-5">
+                    <span className="text-[11px] font-black tracking-[0.4em] uppercase">Subscribe</span>
                  </button>
               </div>
            </div>
-        </div>
+           {/* Decorative background logo */}
+           <div className="absolute -right-20 -bottom-20 text-[250px] font-black text-white/[0.02] pointer-events-none select-none uppercase tracking-tighter leading-none">
+             Saka
+           </div>
+        </motion.div>
       </div>
     </main>
   );
