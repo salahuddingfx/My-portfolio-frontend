@@ -206,9 +206,10 @@ const Footer = () => {
             gap-14
             border-b
             border-white/[0.06]
-            pt-32
+            pt-20
             pb-14
-            lg:grid-cols-[1.2fr_0.7fr_0.7fr_0.9fr]
+            md:grid-cols-2
+            lg:grid-cols-4
             lg:gap-16
           "
         >
@@ -222,6 +223,7 @@ const Footer = () => {
               flex
               flex-col
               gap-8
+              lg:pr-10
             "
           >
 
@@ -311,7 +313,7 @@ const Footer = () => {
             {/* DESCRIPTION */}
             <p
               className="
-                max-w-[420px]
+                max-w-[440px]
                 text-sm
                 leading-relaxed
                 text-[var(--muted)]
@@ -472,6 +474,7 @@ const Footer = () => {
               gap-12
               sm:grid-cols-2
               lg:grid-cols-3
+              lg:col-span-3
             "
           >
 
