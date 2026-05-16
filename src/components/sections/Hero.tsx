@@ -75,7 +75,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="section-shell min-h-screen flex flex-col justify-center relative overflow-hidden bg-black">
+    <section id="home" className="relative min-h-screen flex items-center pt-24 lg:pt-0 overflow-hidden bg-black">
       {/* BACKGROUND ELEMENTS */}
       <div className="absolute inset-0 z-0">
         <Spotlight
@@ -83,75 +83,78 @@ const Hero = () => {
           fill="white"
         />
 
-        {/* Glows */}
-        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] pointer-events-none" />
+        {/* Dynamic Glows */}
+        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-accent/10 rounded-full blur-[140px] pointer-events-none opacity-60" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-accent/5 rounded-full blur-[140px] pointer-events-none opacity-40" />
 
-        {/* Spline Background */}
+        {/* Spline Container */}
         <div className="absolute inset-0 z-10 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] min-w-[300px] min-h-[300px] bg-[#e11d48]/20 rounded-full blur-[120px] opacity-50" />
-
-          <div className="w-full h-full scale-110 lg:scale-125 transform-gpu pointer-events-auto relative">
+          <div className="w-full h-full scale-110 lg:scale-115 transform-gpu pointer-events-auto relative">
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full opacity-40 lg:opacity-80 transition-opacity duration-1000"
+              className="w-full h-full opacity-40 lg:opacity-70 transition-opacity duration-1000"
             />
           </div>
 
           {/* Overlays for depth */}
-          <div className="absolute inset-0 bg-black/40 lg:bg-transparent lg:hidden" />
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
         </div>
       </div>
 
-      <div className="relative z-30 container min-h-screen flex flex-col lg:flex-row items-center lg:justify-between pt-80 pb-24 lg:pt-[450px] lg:pb-0 pointer-events-none">
+      <div className="relative z-30 container flex flex-col lg:flex-row items-center lg:justify-between pointer-events-none py-20 lg:py-0">
 
         {/* Left: Identity */}
-        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pointer-events-auto mb-16 lg:mb-0 mt-64 lg:mt-0">
+        <div className="w-full lg:w-[45%] flex flex-col justify-center items-center lg:items-start text-center lg:text-left pointer-events-auto mt-20 lg:mt-0">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="space-y-4 lg:space-y-6"
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6 lg:space-y-8"
           >
-            <span className="text-lg md:text-xl font-display text-white/40 tracking-[0.3em] uppercase">Digital Architect</span>
-            <h1 className="text-5xl md:text-7xl lg:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase drop-shadow-2xl">
+            <div className="flex items-center gap-4 justify-center lg:justify-start">
+              <span className="w-8 h-px bg-accent/50" />
+              <span className="text-xs md:text-sm font-mono text-accent tracking-[0.4em] uppercase font-bold">Available for Work</span>
+            </div>
+            
+            <h1 className="text-6xl md:text-8xl lg:text-[11rem] font-black text-white leading-[0.8] tracking-tighter uppercase drop-shadow-2xl">
               Salah<br />
-              <span className="text-white/10">Uddin</span><br />
+              <span className="text-white/10 outline-text">Uddin</span><br />
               <span className="text-white">Kader</span>
             </h1>
+            
+            <p className="text-lg md:text-xl text-white/40 max-w-md font-medium tracking-tight">
+              Designing and building digital experiences that merge <span className="text-white">technical precision</span> with <span className="text-white">creative vision</span>.
+            </p>
           </motion.div>
         </div>
 
-        {/* Center: (Space for Spline) */}
-        <div className="hidden lg:block w-1/3" />
-
         {/* Right: Narrative/Creative */}
-        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pointer-events-auto mt-12 lg:mt-0 pb-32 lg:pb-0">
+        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-end text-center lg:text-right pointer-events-auto mt-16 lg:mt-0">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="flex flex-col gap-10 lg:gap-16"
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col gap-12 lg:gap-20"
           >
-            <div className="space-y-2 lg:space-y-4">
-              <span className="text-sm md:text-xl font-display text-white/40 tracking-[0.3em] uppercase">A Creative</span>
-              <h2 className="text-3xl md:text-5xl lg:text-7xl font-black text-white leading-[1.1] tracking-tighter uppercase">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent/50 whitespace-nowrap">
+            <div className="space-y-3 lg:space-y-4">
+              <span className="text-[10px] md:text-xs font-mono text-white/30 tracking-[0.5em] uppercase font-bold">Expertise In</span>
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1] tracking-tighter uppercase">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/20 whitespace-nowrap">
                   <span ref={typingRef}></span>
                 </span>
               </h2>
             </div>
 
-            <div className="flex flex-row gap-4 justify-center lg:justify-end flex-wrap">
+            <div className="flex flex-row gap-6 justify-center lg:justify-end">
               <Magnetic>
-                <a href="#projects" className="btn-primary group">
-                  View Projects <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <a href="#projects" className="btn-primary px-10">
+                  Projects <ArrowRight size={18} className="ml-2" />
                 </a>
               </Magnetic>
               <Magnetic>
-                <Link href="/contact" className="btn-ghost">
-                  Contact Me
+                <Link href="/contact" className="btn-ghost px-10">
+                  Hire Me
                 </Link>
               </Magnetic>
             </div>
@@ -160,24 +163,31 @@ const Hero = () => {
       </div>
 
       {/* Bottom Stats Card */}
-      <div className="absolute bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 z-40 w-[92%] lg:w-[94%] max-w-7xl">
+      <div className="absolute bottom-6 lg:bottom-12 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-7xl">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="premium-card p-6 lg:p-12 grid grid-cols-2 lg:flex lg:justify-between items-center gap-8 lg:gap-12"
+          transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="premium-card p-8 lg:p-14 flex flex-col lg:flex-row lg:justify-between items-center gap-10 lg:gap-0"
         >
-          {STATS.map((stat, i) => (
-            <div key={stat.label} className="flex flex-col items-center lg:items-start space-y-2">
-              <span className="text-[10px] font-mono font-bold text-white/20 uppercase tracking-widest">{stat.label}</span>
-              <span className="text-2xl lg:text-5xl font-display font-black text-white tracking-tighter">{stat.value}</span>
-            </div>
-          ))}
+          <div className="inner-glow" />
+          
+          <div className="grid grid-cols-2 lg:flex lg:gap-20 gap-x-12 gap-y-8 w-full lg:w-auto">
+            {STATS.map((stat, i) => (
+              <div key={stat.label} className="flex flex-col items-center lg:items-start space-y-1 group">
+                <span className="text-[9px] font-mono font-bold text-white/20 uppercase tracking-[0.3em] group-hover:text-accent/50 transition-colors">{stat.label}</span>
+                <span className="text-3xl lg:text-6xl font-display font-black text-white tracking-tighter">{stat.value}</span>
+              </div>
+            ))}
+          </div>
 
           {/* Scroll Indicator */}
-          <div className="hidden lg:flex flex-col items-center gap-4 text-white/10">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] rotate-90 translate-y-8">Scroll</span>
-            <div className="w-px h-20 bg-gradient-to-b from-white/10 to-transparent" />
+          <div className="hidden lg:flex items-center gap-6 text-white/10 group cursor-pointer">
+            <div className="flex flex-col items-end gap-1">
+              <span className="text-[9px] font-mono font-bold uppercase tracking-[0.4em] group-hover:text-white/30 transition-colors">Discover</span>
+              <span className="text-[9px] font-mono font-bold uppercase tracking-[0.4em] group-hover:text-accent transition-colors">Portfolio</span>
+            </div>
+            <div className="w-px h-16 bg-gradient-to-b from-white/20 to-transparent group-hover:h-20 transition-all duration-700" />
           </div>
         </motion.div>
       </div>

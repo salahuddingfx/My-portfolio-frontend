@@ -41,54 +41,54 @@ const Services = () => {
       <div className="container relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 lg:mb-32 space-y-6">
-          <span className="section-kicker mx-auto">What I Do</span>
-          <h2 className="section-title !mb-0">
+          <span className="section-kicker mx-auto">Expertise</span>
+          <h2 className="section-title !mb-0 leading-[0.9]">
             Premium <span className="text-accent">Services.</span>
           </h2>
-          <p className="section-copy mx-auto">
-            I offer a comprehensive range of services to help you build a 
-            powerful digital presence, from initial design to final deployment.
+          <p className="text-lg text-white/50 max-w-2xl mx-auto font-medium tracking-tight mt-8">
+            Specializing in high-performance digital solutions that bridge the gap between complex engineering and human-centric design.
           </p>
         </div>
 
         {/* Service Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
           {services.map((service, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.1 }}
-              className="premium-card group flex flex-col h-full p-10 lg:p-14"
+              transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="premium-card group flex flex-col h-full p-10 lg:p-16"
             >
+              <div className="inner-glow" />
+              
               {/* Header row */}
-              <div className="flex items-start justify-between mb-12">
-                <div className="w-20 h-20 rounded-[2rem] bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/50 group-hover:text-accent group-hover:border-accent/40 group-hover:bg-accent/10 transition-all duration-700 shadow-2xl relative">
-                  <service.icon size={32} strokeWidth={1.5} />
-                  <div className="absolute inset-0 rounded-[2rem] bg-accent/20 blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-700" />
+              <div className="flex items-start justify-between mb-16">
+                <div className="w-20 h-20 rounded-[2.5rem] bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-accent transition-all duration-700 shadow-2xl relative">
+                  <service.icon size={36} strokeWidth={1} />
                 </div>
-                <span className="font-display font-black text-6xl lg:text-8xl text-white/[0.04] group-hover:text-white/[0.1] transition-all duration-700 select-none tracking-tighter leading-none translate-x-4">
+                <span className="font-display font-black text-6xl lg:text-9xl text-white/[0.02] group-hover:text-white/[0.06] transition-all duration-700 select-none tracking-tighter leading-none translate-x-6">
                   {service.index}
                 </span>
               </div>
 
               {/* Content */}
               <div className="space-y-6 flex-grow">
-                <h3 className="font-display font-black text-4xl text-white leading-none tracking-tight group-hover:text-accent transition-colors duration-500 uppercase">
+                <h3 className="font-display font-black text-4xl lg:text-5xl text-white leading-none tracking-tighter group-hover:text-accent transition-colors duration-500 uppercase">
                   {service.title}
                 </h3>
-                <p className="text-[18px] lg:text-[20px] leading-relaxed text-white/60 group-hover:text-white transition-colors duration-500 font-medium">
+                <p className="text-xl leading-relaxed text-white/40 group-hover:text-white/70 transition-colors duration-500 font-medium tracking-tight">
                   {service.desc}
                 </p>
               </div>
 
               {/* Tech tags */}
-              <div className="mt-12 flex flex-wrap gap-3">
+              <div className="mt-16 flex flex-wrap gap-3">
                 {service.tech.map((t) => (
                   <span
                     key={t}
-                    className="font-mono text-[10px] font-black text-white/40 bg-white/[0.04] border border-white/10 px-5 py-2.5 rounded-full uppercase tracking-widest group-hover:text-white group-hover:bg-accent/20 group-hover:border-accent/40 transition-all duration-500"
+                    className="font-mono text-[9px] font-bold text-white/20 bg-white/[0.02] border border-white/5 px-6 py-3 rounded-full uppercase tracking-[0.2em] group-hover:text-white group-hover:bg-accent/20 group-hover:border-accent/30 transition-all duration-500"
                   >
                     {t}
                   </span>
@@ -96,15 +96,15 @@ const Services = () => {
               </div>
 
               {/* Action */}
-              <div className="mt-14 pt-10 border-t border-white/10 flex items-center justify-between transition-colors">
+              <div className="mt-16 pt-12 border-t border-white/5 flex items-center justify-between">
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-6 text-white/50 group-hover:text-white transition-all duration-500"
+                  className="flex items-center gap-8 group/link"
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.4em] font-black">Learn More</span>
-                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-700 shadow-xl group-hover:scale-110">
-                    <ArrowUpRight size={18} className="text-white" />
+                  <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center group-hover:border-accent group-hover:bg-accent transition-all duration-700 shadow-xl group-hover:scale-110">
+                    <ArrowUpRight size={22} className="text-white/40 group-hover:text-white transition-colors" />
                   </div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.5em] font-bold text-white/20 group-hover:text-white transition-colors">Explore Solution</span>
                 </Link>
               </div>
             </motion.div>
