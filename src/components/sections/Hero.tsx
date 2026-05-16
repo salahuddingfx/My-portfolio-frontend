@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { SplineScene } from "@/components/ui/splite";
+import { Spotlight } from "@/components/ui/spotlight";
 import Magnetic from "@/components/ui/Magnetic";
 
 const STATS = [
@@ -75,26 +76,32 @@ const Hero = () => {
 
   return (
     <section id="home" className="section-shell min-h-screen flex flex-col justify-center relative overflow-hidden bg-black">
-      {/* Decorative Glows */}
-      <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] z-0 pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] z-0 pointer-events-none" />
-
-      {/* Full Background Spline Scene */}
+      {/* BACKGROUND ELEMENTS */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] min-w-[300px] min-h-[300px] bg-[#e11d48]/20 rounded-full blur-[120px] pointer-events-none" />
+        <Spotlight
+          className="-top-40 left-0 md:left-60 md:-top-20"
+          fill="white"
+        />
         
-        <div className="w-full h-full scale-110 lg:scale-125 transform-gpu pointer-events-auto relative z-10">
-          <SplineScene
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full opacity-60 lg:opacity-90"
-          />
+        {/* Glows */}
+        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#e11d48]/10 rounded-full blur-[120px] pointer-events-none" />
+        
+        {/* Spline Background */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] min-w-[300px] min-h-[300px] bg-[#e11d48]/20 rounded-full blur-[120px] opacity-50" />
+          
+          <div className="w-full h-full scale-110 lg:scale-125 transform-gpu pointer-events-auto relative">
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full opacity-40 lg:opacity-80 transition-opacity duration-1000"
+            />
+          </div>
+          
+          {/* Overlays for depth */}
+          <div className="absolute inset-0 bg-black/40 lg:bg-transparent lg:hidden" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
         </div>
-        
-        {/* Mobile Overlay for Contrast */}
-        <div className="absolute inset-0 bg-black/40 lg:bg-transparent pointer-events-none z-15 lg:hidden" />
-        
-        {/* Gradient Transition */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none z-20" />
       </div>
 
       <div className="relative z-30 container min-h-[100dvh] flex flex-col lg:flex-row items-center lg:justify-between pt-32 pb-24 lg:py-0 pointer-events-none">
@@ -107,7 +114,7 @@ const Hero = () => {
             transition={{ duration: 1 }}
             className="space-y-4 lg:space-y-6"
           >
-            <span className="text-lg md:text-xl font-display text-white/40 tracking-[0.3em] uppercase">Hello! I&apos;m</span>
+            <span className="text-lg md:text-xl font-display text-white/40 tracking-[0.3em] uppercase">Digital Architect</span>
             <h1 className="text-5xl md:text-7xl lg:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase drop-shadow-2xl">
               Salah<br />
               <span className="text-white/10">Uddin</span><br />
@@ -138,8 +145,8 @@ const Hero = () => {
             
             <div className="flex flex-row gap-4 justify-center lg:justify-end flex-wrap">
               <Magnetic>
-                <a href="#projects" className="btn-primary">
-                  View Projects <ArrowRight size={16} className="ml-2" />
+                <a href="#projects" className="btn-primary group">
+                  View Projects <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Magnetic>
               <Magnetic>
