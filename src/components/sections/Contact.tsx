@@ -1,29 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Clock, Send } from "lucide-react";
+import { Mail, MapPin, Clock, Send, MessageSquare, Phone } from "lucide-react";
 import { motion } from "framer-motion";
-
-const INFO_CARDS = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "salahuddinkaderappy@gmail.com",
-    href: "mailto:salahuddinkaderappy@gmail.com",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Cox's Bazar, Bangladesh",
-    href: null,
-  },
-  {
-    icon: Clock,
-    label: "Availability",
-    value: "Open to new projects",
-    href: null,
-  },
-];
+import { useSettings } from "@/context/SettingsContext";
 
 const SUBJECTS = [
   "Web Development",
@@ -33,6 +13,8 @@ const SUBJECTS = [
 ];
 
 const Contact = () => {
+  const { settings } = useSettings();
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,16 +22,31 @@ const Contact = () => {
     message: "",
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (formData.message.length < 10) newErrors.message = "Message must be at least 10 characters";
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) return;
+    
     setStatus("sending");
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) throw new Error("Missing API URL");
-
       const res = await fetch(`${apiUrl}/admin/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,173 +64,201 @@ const Contact = () => {
     }
   };
 
-  const inputClass = `
-    w-full bg-white/[0.03] border border-[var(--border)]
-    rounded-[var(--radius-md)] px-4 py-3
-    text-sm text-white placeholder:text-[var(--muted-soft)]
-    focus:border-[var(--accent)]/40 focus:bg-white/[0.05]
+  const inputClass = (name: string) => `
+    w-full bg-white/[0.03] border ${errors[name] ? 'border-red-500/50' : 'border-[var(--border)]'}
+    rounded-2xl px-6 py-4
+    text-base text-white placeholder:text-[var(--muted-soft)]
+    focus:border-[var(--accent)]/60 focus:bg-white/[0.06]
     focus:outline-none
-    transition-colors duration-200
+    transition-all duration-300
   `;
 
-  return (
-    <section id="contact" className="section-shell pt-32 bg-[var(--background)]">
-      <div className="container">
+  const infoCards = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: settings?.email || "salahuddinkaderappy@gmail.com",
+      href: `mailto:${settings?.email || "salahuddinkaderappy@gmail.com"}`,
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: settings?.location || "Cox's Bazar, Bangladesh",
+      href: null,
+    },
+    {
+      icon: MessageSquare,
+      label: "WhatsApp",
+      value: settings?.whatsapp || "Contact on WhatsApp",
+      href: settings?.whatsapp ? `https://wa.me/${settings.whatsapp.replace(/\D/g, '')}` : "#",
+    },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: settings?.phone || "Open for calls",
+      href: settings?.phone ? `tel:${settings.phone}` : "#",
+    },
+  ];
 
-        {/* Page header - Centered */}
+  return (
+    <section id="contact" className="section-shell pt-40 pb-40 bg-[var(--background)]">
+      <div className="container max-w-6xl">
+
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-center max-w-3xl mx-auto mb-24"
         >
-          <span className="section-eyebrow">Get in touch</span>
-          <h1 className="section-heading mt-1 mb-3">
-            Let&apos;s connect.
-          </h1>
-          <p className="section-subtext mx-auto text-center">
-            Have a project in mind or want to discuss an idea? I&apos;m always open
-            to new opportunities and conversations.
+          <span className="section-eyebrow mb-4 block">Get in touch</span>
+          <h2 className="section-heading text-5xl md:text-7xl mt-2 mb-6">
+            Let&apos;s build something <span className="text-[var(--accent)] italic">legendary.</span>
+          </h2>
+          <p className="section-subtext text-lg max-w-2xl mx-auto opacity-60">
+            Have a game-changing idea? I&apos;m ready to bring it to life. 
+            Reach out via the form or through my direct contact channels.
           </p>
         </motion.div>
 
-        {/* Grid */}
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="grid lg:grid-cols-12 gap-16 items-start">
 
-          {/* Left: Info */}
+          {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="lg:col-span-4 flex flex-col gap-3"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-5 flex flex-col gap-4"
           >
-            {INFO_CARDS.map((card) => (
-              <div key={card.label} className="card flex items-start gap-4 p-5">
-                <div className="w-9 h-9 rounded-[var(--radius-md)] bg-white/[0.04] border border-[var(--border)] flex items-center justify-center shrink-0">
-                  <card.icon size={16} className="text-[var(--accent)]" />
+            {infoCards.map((card, idx) => (
+              <div key={card.label} className="bg-[var(--surface)] border border-[var(--border)] p-8 rounded-[2rem] flex items-start gap-6 hover:border-[var(--accent)]/30 transition-all group">
+                <div className="w-14 h-14 rounded-2xl bg-[var(--accent)]/10 flex items-center justify-center shrink-0 border border-[var(--accent)]/20 group-hover:scale-110 transition-transform">
+                  <card.icon size={24} className="text-[var(--accent)]" />
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider font-medium text-[var(--muted-soft)] mb-0.5">
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--muted)] mb-2">
                     {card.label}
                   </p>
                   {card.href ? (
                     <a
                       href={card.href}
-                      className="text-sm text-white hover:text-[var(--accent)] transition-colors duration-200 break-all"
+                      className="text-lg font-bold text-white hover:text-[var(--accent)] transition-colors duration-200"
                     >
                       {card.value}
                     </a>
                   ) : (
-                    <p className="text-sm text-white">{card.value}</p>
+                    <p className="text-lg font-bold text-white">{card.value}</p>
                   )}
                 </div>
               </div>
             ))}
           </motion.div>
 
-          {/* Right: Form */}
+          {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.18 }}
-            className="lg:col-span-8"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-7"
           >
-            <div className="card p-7 md:p-9">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-
-                {/* Name + Email row */}
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
-                      Your name
+            <div className="bg-[var(--surface)] border border-[var(--border)] p-10 md:p-14 rounded-[3rem] shadow-2xl relative overflow-hidden">
+              {/* Subtle background glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none" />
+              
+              <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="flex flex-col gap-3">
+                    <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-black ml-2">
+                      Full Name
                     </label>
                     <input
                       type="text"
-                      required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={inputClass}
-                      placeholder="John Doe"
+                      className={inputClass('name')}
+                      placeholder="Salah Uddin"
                     />
+                    {errors.name && <span className="text-[10px] text-red-500 ml-2 font-bold uppercase">{errors.name}</span>}
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
-                      Email address
+                  <div className="flex flex-col gap-3">
+                    <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-black ml-2">
+                      Email Address
                     </label>
                     <input
                       type="email"
-                      required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className={inputClass}
-                      placeholder="john@example.com"
+                      className={inputClass('email')}
+                      placeholder="hello@example.com"
                     />
+                    {errors.email && <span className="text-[10px] text-red-500 ml-2 font-bold uppercase">{errors.email}</span>}
                   </div>
                 </div>
 
-                {/* Subject */}
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
-                    Interested in
+                <div className="flex flex-col gap-3">
+                  <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-black ml-2">
+                    Service Required
                   </label>
                   <div className="relative">
                     <select
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className={`${inputClass} appearance-none cursor-pointer`}
+                      className={`${inputClass('subject')} appearance-none cursor-pointer pr-12`}
                     >
                       {SUBJECTS.map((s) => (
-                        <option key={s} className="bg-[#111]">{s}</option>
+                        <option key={s} value={s} className="bg-[#111] p-4 text-white">
+                          {s}
+                        </option>
                       ))}
                     </select>
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--muted)]">
-                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                        <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--muted)]">
+                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                        <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                       </svg>
                     </div>
                   </div>
                 </div>
 
-                {/* Message */}
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
-                    Message
+                <div className="flex flex-col gap-3">
+                  <label className="text-[10px] uppercase tracking-widest text-[var(--muted)] font-black ml-2">
+                    Message Details
                   </label>
                   <textarea
                     rows={5}
-                    required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={`${inputClass} resize-none`}
-                    placeholder="Tell me about your project or idea..."
+                    className={`${inputClass('message')} resize-none`}
+                    placeholder="Tell me about your vision..."
                   />
+                  {errors.message && <span className="text-[10px] text-red-500 ml-2 font-bold uppercase">{errors.message}</span>}
                 </div>
 
-                {/* Submit */}
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="btn-primary w-full justify-center py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-white text-black py-6 rounded-2xl font-black uppercase tracking-tighter text-lg flex items-center justify-center gap-4 hover:bg-[var(--accent)] transition-all shadow-[0_20px_40px_rgba(0,0,0,0.3)] group disabled:opacity-50"
                 >
                   <span>
                     {status === "sending"
-                      ? "Sending..."
+                      ? "Transmitting..."
                       : status === "success"
-                      ? "Message sent!"
-                      : "Send message"}
+                      ? "Success!"
+                      : "Launch Message"}
                   </span>
-                  <Send size={15} />
+                  <Send size={20} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" />
                 </button>
 
-                {/* Status messages */}
                 {status === "error" && (
-                  <p role="alert" className="text-sm text-[var(--accent)] text-center">
-                    Something went wrong. Please try again.
+                  <p className="text-xs font-bold text-red-500 text-center uppercase tracking-widest">
+                    Transmission failed. Please retry.
                   </p>
                 )}
                 {status === "success" && (
-                  <p role="status" className="text-sm text-emerald-400 text-center">
-                    Thanks! I&apos;ll get back to you soon.
+                  <p className="text-xs font-bold text-emerald-500 text-center uppercase tracking-widest">
+                    Message received. I&apos;ll be in touch.
                   </p>
                 )}
               </form>
