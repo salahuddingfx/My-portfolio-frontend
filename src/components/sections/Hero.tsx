@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
@@ -13,65 +13,57 @@ const TYPING_ROLES = [
   "UI & Interaction Designer",
 ];
 
+const RoleTyper = () => {
+  const [index, setIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
 
+  return (
+    <span className="inline-flex items-center">
+      <AnimatePresence 
+        mode="wait" 
+        onExitComplete={() => {
+          setIndex((prev) => (prev + 1) % TYPING_ROLES.length);
+          setIsVisible(true);
+        }}
+      >
+        {isVisible && (
+          <motion.span
+            key={index}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.045 } },
+              exit: { transition: { staggerChildren: 0.02, staggerDirection: -1 } }
+            }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onAnimationComplete={(variant) => {
+              if (variant === "visible") {
+                setTimeout(() => setIsVisible(false), 2200);
+              }
+            }}
+          >
+            {TYPING_ROLES[index].split("").map((char, i) => (
+              <motion.span
+                key={i}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1 },
+                  exit: { opacity: 0 }
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+          </motion.span>
+        )}
+      </AnimatePresence>
+      <span className="typing-cursor ml-1 inline-block" />
+    </span>
+  );
+};
 
 const Hero = () => {
-  const typingRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    let currentIndex = 0;
-    let isMounted = true;
-    const ctx = gsap.context(() => {});
-
-    const typeRole = () => {
-      if (!isMounted || !typingRef.current) return;
-
-      const role = TYPING_ROLES[currentIndex];
-      typingRef.current.innerHTML = "";
-
-      const chars = role.split("").map((char) => {
-        const span = document.createElement("span");
-        span.textContent = char === " " ? "\u00A0" : char;
-        span.style.opacity = "0";
-        span.style.display = "inline-block";
-        typingRef.current?.appendChild(span);
-        return span;
-      });
-
-      gsap.to(chars, {
-        opacity: 1,
-        duration: 0.025,
-        stagger: 0.045,
-        ease: "none",
-        onComplete: () => {
-          if (!isMounted) return;
-          gsap.delayedCall(2.2, () => {
-            if (!isMounted) return;
-            gsap.to(chars, {
-              opacity: 0,
-              duration: 0.02,
-              stagger: 0.02,
-              ease: "none",
-              onComplete: () => {
-                if (!isMounted) return;
-                currentIndex = (currentIndex + 1) % TYPING_ROLES.length;
-                typeRole();
-              },
-            });
-          });
-        },
-      });
-    };
-
-    typeRole();
-
-    return () => {
-      isMounted = false;
-      ctx.revert();
-      gsap.killTweensOf(typingRef.current?.children ?? []);
-    };
-  }, []);
-
   return (
     <section
       id="home"
@@ -146,8 +138,7 @@ const Hero = () => {
                 className="text-3xl sm:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tighter leading-[1]" 
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                <span ref={typingRef} />
-                <span className="typing-cursor" />
+                <RoleTyper />
               </span>
             </div>
           </div>
