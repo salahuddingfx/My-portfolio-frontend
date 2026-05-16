@@ -164,7 +164,7 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
       <sphereGeometry args={[0.85, 32, 32]} />
       {/* Creative Frosted Glass Material */}
       <meshPhysicalMaterial
-        color={hovered ? "#e8192c" : "#ffffff"}
+        color={hovered ? "#9333ea" : "#ffffff"}
         transmission={0.95}
         thickness={0.5}
         roughness={0.08}
@@ -175,7 +175,7 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
         ior={1.5}
         attenuationColor="#ffffff"
         attenuationDistance={0.5}
-        emissive={hovered ? "#e8192c" : "#000000"}
+        emissive={hovered ? "#9333ea" : "#000000"}
         emissiveIntensity={hovered ? 0.6 : 0}
       />
       
@@ -228,7 +228,7 @@ const TechSphere = () => {
 
         <ambientLight intensity={0.5} />
         <pointLight position={[-10, 10,  12]} intensity={2} color="#ffffff" />
-        <pointLight position={[ 10, -6,  10]} intensity={1.5} color="#e8192c" />
+        <pointLight position={[ 10, -6,  10]} intensity={1.5} color="#9333ea" />
         <spotLight position={[0, 15, 10]} angle={0.2} penumbra={1} intensity={3} castShadow />
         
         <Suspense fallback={null}>
