@@ -1,8 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Clock, Send } from "lucide-react";
 import { motion } from "framer-motion";
+
+const INFO_CARDS = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "salahuddinkaderappy@gmail.com",
+    href: "mailto:salahuddinkaderappy@gmail.com",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Cox's Bazar, Bangladesh",
+    href: null,
+  },
+  {
+    icon: Clock,
+    label: "Availability",
+    value: "Open to new projects",
+    href: null,
+  },
+];
+
+const SUBJECTS = [
+  "Web Development",
+  "UI/UX Design",
+  "Full Stack Application",
+  "Other Collaboration",
+];
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -30,158 +58,187 @@ const Contact = () => {
 
       if (res.ok) {
         setStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          subject: "Web Development",
-          message: "",
-        });
+        setFormData({ name: "", email: "", subject: "Web Development", message: "" });
       } else {
         setStatus("error");
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
       setStatus("error");
     }
   };
 
+  const inputClass = `
+    w-full bg-white/[0.03] border border-[var(--border)]
+    rounded-[var(--radius-md)] px-4 py-3
+    text-sm text-white placeholder:text-[var(--muted-soft)]
+    focus:border-[var(--accent)]/40 focus:bg-white/[0.05]
+    focus:outline-none
+    transition-colors duration-200
+  `;
+
   return (
-    <section id="contact" className="section-shell relative overflow-hidden bg-black">
-      <div className="container relative z-10">
-        {/* HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-20 lg:mb-32 space-y-6">
-          <span className="section-kicker mx-auto">Get In Touch</span>
-          <h2 className="section-title !mb-0">
-            Let&apos;s <span className="text-accent">Connect.</span>
-          </h2>
-          <p className="section-copy mx-auto">
-            Have a project in mind or want to discuss an idea? 
-            I&apos;m always open to new opportunities and collaborations.
+    <section id="contact" className="section-shell pt-32 bg-[var(--background)]">
+      <div className="container">
+
+        {/* Page header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mb-14"
+        >
+          <span className="section-eyebrow">Get in touch</span>
+          <h1 className="section-heading mt-1 mb-3">
+            Let&apos;s connect.
+          </h1>
+          <p className="section-subtext text-sm">
+            Have a project in mind or want to discuss an idea? I&apos;m always open
+            to new opportunities and conversations.
           </p>
-        </div>
+        </motion.div>
 
-        {/* GRID */}
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-          
-          {/* LEFT: INFO */}
-          <div className="lg:col-span-4 space-y-6 lg:space-y-8">
-            <div className="premium-card p-8 flex items-center gap-6 border-white/5 bg-white/[0.01]">
-              <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-accent">
-                <Mail size={24} />
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] font-black text-white/30 mb-1.5">Email</p>
-                <p className="text-[15px] text-white/80 font-bold break-all">salahuddinkadrappy@gmail.com</p>
-              </div>
-            </div>
+        {/* Grid */}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
 
-            <div className="premium-card p-8 flex items-center gap-6 border-white/5 bg-white/[0.01]">
-              <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-accent">
-                <MapPin size={24} />
+          {/* Left: Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="lg:col-span-4 flex flex-col gap-3"
+          >
+            {INFO_CARDS.map((card) => (
+              <div key={card.label} className="card flex items-start gap-4 p-5">
+                <div className="w-9 h-9 rounded-[var(--radius-md)] bg-white/[0.04] border border-[var(--border)] flex items-center justify-center shrink-0">
+                  <card.icon size={16} className="text-[var(--accent)]" />
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider font-medium text-[var(--muted-soft)] mb-0.5">
+                    {card.label}
+                  </p>
+                  {card.href ? (
+                    <a
+                      href={card.href}
+                      className="text-sm text-white hover:text-[var(--accent)] transition-colors duration-200 break-all"
+                    >
+                      {card.value}
+                    </a>
+                  ) : (
+                    <p className="text-sm text-white">{card.value}</p>
+                  )}
+                </div>
               </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] font-black text-white/30 mb-1.5">Location</p>
-                <p className="text-[15px] text-white/80 font-bold">Cox&apos;s Bazar, Bangladesh</p>
-              </div>
-            </div>
-          </div>
+            ))}
+          </motion.div>
 
-          {/* RIGHT: FORM */}
-          <div className="lg:col-span-8">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="premium-card p-8 md:p-12 border-white/10 bg-white/[0.02]"
-            >
-              <form onSubmit={handleSubmit} className="space-y-10">
-                {/* INPUTS ROW */}
-                <div className="grid md:grid-cols-2 gap-10">
-                  <div className="space-y-3">
-                    <label className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40 ml-1">Your Name</label>
+          {/* Right: Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.18 }}
+            className="lg:col-span-8"
+          >
+            <div className="card p-7 md:p-9">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+
+                {/* Name + Email row */}
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
+                      Your name
+                    </label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-white placeholder:text-white/10 focus:border-accent/40 focus:bg-white/[0.05] outline-none transition-all duration-500"
+                      className={inputClass}
                       placeholder="John Doe"
                     />
                   </div>
-                  <div className="space-y-3">
-                    <label className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40 ml-1">Email Address</label>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
+                      Email address
+                    </label>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-white placeholder:text-white/10 focus:border-accent/40 focus:bg-white/[0.05] outline-none transition-all duration-500"
+                      className={inputClass}
                       placeholder="john@example.com"
                     />
                   </div>
                 </div>
 
-                {/* SUBJECT SELECT */}
-                <div className="space-y-3">
-                  <label className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40 ml-1">Interested In</label>
+                {/* Subject */}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
+                    Interested in
+                  </label>
                   <div className="relative">
                     <select
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-white appearance-none focus:border-accent/40 focus:bg-white/[0.05] outline-none transition-all duration-500 cursor-pointer"
+                      className={`${inputClass} appearance-none cursor-pointer`}
                     >
-                      <option className="bg-[#111]">Web Development</option>
-                      <option className="bg-[#111]">UI/UX Design</option>
-                      <option className="bg-[#111]">Full Stack Application</option>
-                      <option className="bg-[#111]">Other Collaboration</option>
+                      {SUBJECTS.map((s) => (
+                        <option key={s} className="bg-[#111]">{s}</option>
+                      ))}
                     </select>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
-                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--muted)]">
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                        <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
                     </div>
                   </div>
                 </div>
 
-                {/* MESSAGE */}
-                <div className="space-y-3">
-                  <label className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40 ml-1">Message</label>
+                {/* Message */}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs uppercase tracking-wider text-[var(--muted-soft)] font-medium">
+                    Message
+                  </label>
                   <textarea
-                    rows={6}
+                    rows={5}
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-white placeholder:text-white/10 focus:border-accent/40 focus:bg-white/[0.05] outline-none transition-all duration-500 resize-none"
-                    placeholder="Tell me more about your goals..."
+                    className={`${inputClass} resize-none`}
+                    placeholder="Tell me about your project or idea..."
                   />
                 </div>
 
-                {/* SUBMIT */}
-                <div className="pt-4">
-                  <button
-                    type="submit"
-                    disabled={status === "sending"}
-                    className="btn-primary w-full group py-5 disabled:opacity-50"
-                  >
-                    <span className="text-[11px] font-black tracking-[0.4em] uppercase">
-                      {status === "sending" ? "Dispatching..." : status === "success" ? "Message Dispatched" : "Dispatch Message"}
-                    </span>
-                    <Send size={18} className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </button>
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="btn-primary w-full justify-center py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span>
+                    {status === "sending"
+                      ? "Sending..."
+                      : status === "success"
+                      ? "Message sent!"
+                      : "Send message"}
+                  </span>
+                  <Send size={15} />
+                </button>
 
-                  {status === "error" && (
-                    <p className="mt-6 text-center text-sm font-bold text-accent/80 uppercase tracking-widest animate-pulse">
-                      Connection Failed. Please try again.
-                    </p>
-                  )}
-                  {status === "success" && (
-                    <p className="mt-6 text-center text-sm font-bold text-green-400 uppercase tracking-widest">
-                      Message Received. I&apos;ll be in touch soon.
-                    </p>
-                  )}
-                </div>
+                {/* Status messages */}
+                {status === "error" && (
+                  <p role="alert" className="text-sm text-[var(--accent)] text-center">
+                    Something went wrong. Please try again.
+                  </p>
+                )}
+                {status === "success" && (
+                  <p role="status" className="text-sm text-emerald-400 text-center">
+                    Thanks! I&apos;ll get back to you soon.
+                  </p>
+                )}
               </form>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
