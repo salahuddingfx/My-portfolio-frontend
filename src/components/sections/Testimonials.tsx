@@ -1,8 +1,9 @@
 "use client";
 
 import { Star } from "lucide-react";
-import PremiumCard from "@/components/ui/PremiumCard";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 const FALLBACK_REVIEWS = [
   {
@@ -58,31 +59,34 @@ const Testimonials = () => {
     <section id="reviews" className="section-shell relative overflow-hidden bg-black">
       <div className="container relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20 space-y-8">
-          <span className="section-kicker mx-auto">Testimonials</span>
+        <div className="text-center max-w-3xl mx-auto mb-20 lg:mb-32 space-y-6">
+          <span className="section-kicker mx-auto">Client Love</span>
           <h2 className="section-title !mb-0">
-            Client <span className="text-accent">Feedback.</span>
+            Trusted <span className="text-accent">Feedback.</span>
           </h2>
           <p className="section-copy mx-auto">
-            Kind words from clients and partners I&apos;ve collaborated with on 
-            various projects.
+            Real stories from clients and partners who have experienced 
+            the intersection of design and high-end engineering.
           </p>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {reviews.map((review, i) => (
-            <PremiumCard
+            <motion.div
               key={i}
-              delay={i * 0.1}
-              className="flex flex-col h-full !p-10 border-white/5"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.1 }}
+              className="premium-card group flex flex-col h-full p-8 lg:p-10 border-white/5 bg-white/[0.01]"
             >
               {/* Stars */}
-              <div className="flex gap-1.5 mb-8">
+              <div className="flex gap-1.5 mb-10">
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star
                     key={j}
-                    size={12}
+                    size={14}
                     className="fill-accent text-accent"
                   />
                 ))}
@@ -90,28 +94,30 @@ const Testimonials = () => {
 
               {/* Quote */}
               <div className="flex-grow">
-                <p className="text-white/60 group-hover:text-white/80 transition-colors duration-500 text-lg leading-relaxed font-medium">
+                <p className="text-white/60 group-hover:text-white/80 transition-colors duration-500 text-[18px] leading-relaxed font-medium italic">
                   &ldquo;{review.text}&rdquo;
                 </p>
               </div>
 
               {/* Author */}
-              <div className="mt-10 pt-10 border-t border-white/5 flex items-center gap-5">
-                <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 bg-neutral-900">
-                  <img
+              <div className="mt-12 pt-10 border-t border-white/5 flex items-center gap-6">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white/5 group-hover:border-accent/30 transition-all duration-700 shadow-xl bg-white/[0.03]">
+                  <Image
                     src={review.avatar}
                     alt={review.name}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                    fill
+                    sizes="56px"
+                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
                   />
                 </div>
-                <div className="space-y-1">
-                  <p className="font-display font-bold text-base text-white tracking-tight">{review.name}</p>
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-accent font-bold">
+                <div className="space-y-1.5">
+                  <p className="font-display font-black text-[17px] text-white tracking-tight">{review.name}</p>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-accent font-black">
                     {review.role}
                   </p>
                 </div>
               </div>
-            </PremiumCard>
+            </motion.div>
           ))}
         </div>
       </div>
