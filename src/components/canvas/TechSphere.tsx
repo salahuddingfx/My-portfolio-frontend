@@ -96,7 +96,7 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
     mass: 1,
     position: targetPos,
     args: [0.85],
-    linearDamping: 0.98,
+    linearDamping: 0.99,
     angularDamping: 0.95,
     allowSleep: false,
     ...props,
@@ -132,8 +132,8 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
         const mouseDiff = new THREE.Vector3().subVectors(currentPos, mousePos);
         const mouseDist = mouseDiff.length();
         
-        if (mouseDist < 5.0) {
-          const repelForce = 240 / (mouseDist + 0.1); 
+        if (mouseDist < 4.5) {
+          const repelForce = 120 / (mouseDist + 0.2); 
           api.applyForce(mouseDiff.normalize().multiplyScalar(repelForce).toArray(), [0, 0, 0]);
         }
       }
@@ -142,7 +142,7 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
       const dist = diff.length();
       
       if (dist > 0.1) {
-        const pullStrength = mouseActive ? 15 : 120;
+        const pullStrength = mouseActive ? 80 : 250;
         api.applyForce(diff.normalize().multiplyScalar(dist * pullStrength).toArray(), [0, 0, 0]);
       } else if (!mouseActive && dist < 0.3) {
         api.velocity.set(0, 0, 0);
