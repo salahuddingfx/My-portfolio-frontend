@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import {
-  Plus_Jakarta_Sans,
-  Outfit,
+  Space_Grotesk,
+  Inter,
   JetBrains_Mono,
 } from "next/font/google";
 
@@ -15,27 +15,30 @@ import Navbar from "@/components/ui/Navbar";
 import SocialSidebar from "@/components/ui/SocialSidebar";
 import EmailSidebar from "@/components/ui/EmailSidebar";
 import Footer from "@/components/ui/Footer";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 
 /* =============================================================================
    FONTS
    ============================================================================= */
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-space-grotesk",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-inter",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-jetbrains-mono",
   display: "swap",
+  weight: ["400", "500"],
 });
 
 /* =============================================================================
@@ -45,66 +48,46 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://salahuddin.codes"),
 
-  title: "Saka Chowdhury",
+  title: {
+    default: "Salah Uddin Kader — Full Stack Developer",
+    template: "%s | Salah Uddin Kader",
+  },
 
   description:
-    "Portfolio of Salah Uddin Kader — focused on modern interfaces, interactive experiences, and thoughtful digital products.",
+    "Portfolio of Salah Uddin Kader — Full Stack Developer focused on modern interfaces, interactive experiences, and thoughtful digital products.",
 
   keywords: [
     "Salah Uddin Kader",
-    "Saka Chowdhury",
+    "Full Stack Developer",
     "Next.js Developer",
     "React Developer",
     "Frontend Developer",
     "Portfolio",
+    "Bangladesh",
   ],
 
-  authors: [
-    {
-      name: "Salah Uddin Kader",
-    },
-  ],
+  authors: [{ name: "Salah Uddin Kader" }],
 
-  icons: {
-    icon: "/favicon.ico",
-  },
+  icons: { icon: "/favicon.ico" },
 
   openGraph: {
-    title: "Saka Chowdhury",
-
+    title: "Salah Uddin Kader — Full Stack Developer",
     description:
       "Modern portfolio built with Next.js, React, and thoughtful interaction design.",
-
     url: "https://salahuddin.codes",
-
-    siteName: "Saka Chowdhury",
-
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-      },
-    ],
-
+    siteName: "Salah Uddin Kader",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
     locale: "en_US",
-
     type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
-
-    title: "Saka Chowdhury",
-
-    description:
-      "Modern portfolio built with Next.js and React.",
-
+    title: "Salah Uddin Kader — Full Stack Developer",
+    description: "Modern portfolio built with Next.js and React.",
     images: ["/og-image.jpg"],
   },
 };
-
-import { ScrollProgress } from "@/components/ui/ScrollProgress";
 
 /* =============================================================================
    ROOT LAYOUT
@@ -118,14 +101,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${plusJakartaSans.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
+      className={`dark ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body
         suppressHydrationWarning
-        className="bg-background text-foreground antialiased overflow-x-hidden selection:bg-[#dc2626] selection:text-white"
+        className="bg-background text-foreground antialiased overflow-x-hidden"
+        style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
       >
-
         <LenisProvider>
 
           {/* GLOBAL EFFECTS */}
@@ -151,7 +134,6 @@ export default function RootLayout({
           <Footer />
 
         </LenisProvider>
-
       </body>
     </html>
   );

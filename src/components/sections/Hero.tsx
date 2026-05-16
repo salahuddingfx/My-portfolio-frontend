@@ -2,168 +2,169 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { motion } from "framer-motion";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
 
+const TYPING_ROLES = [
+  "Software Engineer",
+  "Full Stack Developer",
+  "Creative Developer",
+  "UI & Interaction Designer",
+];
+
 const STATS = [
-  { label: "Projects Shipped", value: "50+" },
-  { label: "Lines of Code", value: "250K" },
-  { label: "Years Experience", value: "4" },
+  { value: "50+",  label: "Projects" },
+  { value: "4+",   label: "Years exp." },
+  { value: "250K", label: "Lines of code" },
 ];
 
 const Hero = () => {
   const typingRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const roles = [
-      "Software Engineer",
-      "Creative Developer",
-      "Digital Architect"
-    ];
-    let currentRoleIndex = 0;
+    let currentIndex = 0;
+    let isMounted = true;
+    const ctx = gsap.context(() => {});
 
     const typeRole = () => {
-      const role = roles[currentRoleIndex];
-      const chars = role.split("");
+      if (!isMounted || !typingRef.current) return;
 
-      if (typingRef.current) {
-        typingRef.current.innerText = "";
-        const charElements = chars.map(char => {
-          const span = document.createElement("span");
-          span.innerText = char === " " ? "\u00A0" : char;
-          span.style.opacity = "0";
-          span.style.display = "inline-block";
-          typingRef.current?.appendChild(span);
-          return span;
-        });
+      const role = TYPING_ROLES[currentIndex];
+      typingRef.current.innerHTML = "";
 
-        gsap.to(charElements, {
-          opacity: 1,
-          duration: 0.02,
-          stagger: 0.05,
-          ease: "none",
-          onComplete: () => {
-            gsap.delayedCall(2, () => {
-              gsap.to(charElements, {
-                opacity: 0,
-                duration: 0.02,
-                stagger: 0.02,
-                ease: "none",
-                onComplete: () => {
-                  currentRoleIndex = (currentRoleIndex + 1) % roles.length;
-                  typeRole();
-                }
-              });
+      const chars = role.split("").map((char) => {
+        const span = document.createElement("span");
+        span.textContent = char === " " ? "\u00A0" : char;
+        span.style.opacity = "0";
+        span.style.display = "inline-block";
+        typingRef.current?.appendChild(span);
+        return span;
+      });
+
+      gsap.to(chars, {
+        opacity: 1,
+        duration: 0.025,
+        stagger: 0.045,
+        ease: "none",
+        onComplete: () => {
+          if (!isMounted) return;
+          gsap.delayedCall(2.2, () => {
+            if (!isMounted) return;
+            gsap.to(chars, {
+              opacity: 0,
+              duration: 0.02,
+              stagger: 0.02,
+              ease: "none",
+              onComplete: () => {
+                if (!isMounted) return;
+                currentIndex = (currentIndex + 1) % TYPING_ROLES.length;
+                typeRole();
+              },
             });
-          }
-        });
-      }
+          });
+        },
+      });
     };
 
     typeRole();
 
     return () => {
-      gsap.killTweensOf(".nav-link-item");
+      isMounted = false;
+      ctx.revert();
+      gsap.killTweensOf(typingRef.current?.children ?? []);
     };
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen w-full overflow-hidden bg-background">
-      
-      {/* 3D Scene - Moved back in z-index but scaling large */}
+    <section
+      id="home"
+      className="relative min-h-screen w-full overflow-hidden bg-[var(--background)]"
+    >
+      {/* 3D Robot — background, full section */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="w-full h-full scale-[1.2] lg:scale-[1.4] transform-gpu pointer-events-auto relative origin-center">
+        <div className="w-full h-full pointer-events-auto">
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full opacity-60 transition-opacity duration-1000 grayscale-[0.5]"
+            className="w-full h-full opacity-55 transition-opacity duration-1000"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+        {/* Gradient vignette */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-[var(--background)]/70" />
       </div>
 
-      {/* Massive Typography Overlay */}
-      <div className="relative z-10 w-full min-h-screen flex flex-col justify-between pt-32 pb-12 px-6 lg:px-12 pointer-events-none">
-        
-        {/* Top Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mt-10 md:mt-0 gap-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="pointer-events-auto"
-          >
-            <span className="kicker block mb-4">[ STATUS ]</span>
-            <div className="flex items-center gap-4 border-2 border-accent px-6 py-3 bg-background">
-              <div className="w-2 h-2 bg-accent animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-[0.3em] text-white">Accepting Missions</span>
-            </div>
-          </motion.div>
+      {/* Content layer */}
+      <div className="relative z-10 container min-h-screen flex flex-col justify-center pt-24 pb-16">
+        <div className="max-w-xl">
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="max-w-xs md:text-right pointer-events-auto"
-          >
-            <p className="text-white/60 font-medium text-lg leading-tight uppercase tracking-tighter">
-              Engineering <span className="text-white">high-performance</span> digital spaces. <br/>Form follows function.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Center/Giant Name */}
-        <div className="flex flex-col justify-center flex-grow py-12 pointer-events-auto">
-          <motion.h1 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[15vw] lg:text-[18vw] font-black uppercase leading-[0.75] tracking-tighter mix-blend-difference"
-          >
-            <span className="text-white block">SALAH</span>
-            <span className="outline-text block ml-[10vw]">UDDIN</span>
-            <span className="text-accent block ml-[5vw] drop-shadow-[0_0_30px_rgba(255,0,51,0.4)]">KADER</span>
-          </motion.h1>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-12 pointer-events-auto">
-          
-          {/* Roles */}
-          <div className="w-full md:w-auto">
-            <span className="kicker block mb-4">[ ROLE ]</span>
-            <h2 className="text-3xl sm:text-5xl lg:text-7xl font-black text-white uppercase tracking-tighter">
-              <span className="text-transparent outline-text-accent whitespace-nowrap">
-                <span ref={typingRef}></span>
-              </span>
-            </h2>
+          {/* Status badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.05] border border-[var(--border)] mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs text-[var(--muted)] font-mono">Open to new projects</span>
           </div>
 
-          {/* Stats & Actions */}
-          <div className="flex flex-col items-start md:items-end gap-8 w-full md:w-auto">
-            <div className="flex gap-10 border-b-2 border-white/10 pb-8 w-full md:w-auto justify-between md:justify-end">
-              {STATS.map((stat, i) => (
-                <div key={stat.label} className="flex flex-col md:items-end">
-                  <span className="text-[10px] font-mono font-bold text-white/30 uppercase tracking-[0.2em] mb-1">{stat.label}</span>
-                  <span className="text-3xl lg:text-5xl font-black text-white tracking-tighter leading-none">{stat.value}</span>
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex gap-4 w-full md:w-auto">
-              <a href="#projects" className="btn-raw w-full md:w-auto text-sm">
-                VIEW LOGS
-              </a>
-              <Link href="/contact" className="btn-outline w-full md:w-auto text-sm">
-                INITIATE
-              </Link>
-            </div>
+          {/* Name */}
+          <h1
+            className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.05] tracking-tight mb-4"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
+            Salah Uddin
+            <br />
+            <span className="text-[var(--muted)]">Kader</span>
+          </h1>
+
+          {/* Typing role */}
+          <div className="flex items-center gap-2 mb-6 h-8">
+            <span className="text-lg text-[var(--muted)] font-mono">
+              <span ref={typingRef} className="text-white" />
+              <span className="typing-cursor" />
+            </span>
           </div>
 
-        </div>
+          {/* Description */}
+          <p className="text-sm text-[var(--muted)] leading-relaxed max-w-sm mb-10">
+            I build fast, accessible web applications with clean code and
+            thoughtful design. Focused on great user experiences.
+          </p>
 
+          {/* Actions */}
+          <div className="flex flex-wrap gap-3 mb-12">
+            <a href="#projects" className="btn-primary">
+              View My Work
+              <ArrowRight size={15} />
+            </a>
+            <Link href="/contact" className="btn-outline">
+              Let&apos;s Talk
+            </Link>
+          </div>
+
+          {/* Stats */}
+          <div className="flex gap-8 pt-8 border-t border-[var(--border)]">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="flex flex-col">
+                <span
+                  className="text-2xl font-semibold text-white leading-none"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
+                  {stat.value}
+                </span>
+                <span className="text-xs text-[var(--muted)] mt-1">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
+      {/* Bottom scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-2">
+        <span className="text-[10px] text-[var(--muted-soft)] font-mono tracking-widest uppercase">
+          Scroll
+        </span>
+        <div className="w-px h-10 bg-gradient-to-b from-[var(--muted-soft)] to-transparent" />
+      </div>
     </section>
   );
 };

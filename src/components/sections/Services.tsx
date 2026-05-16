@@ -6,101 +6,106 @@ import { motion } from "framer-motion";
 
 const services = [
   {
-    title: "Web Development",
-    desc: "Architecting high-performance digital infrastructure. Building fast, reliable systems using raw code and modern logic.",
     index: "01",
-    tech: ["NEXT.JS", "REACT", "TYPESCRIPT"],
+    title: "Web Development",
+    desc: "Building fast, reliable web applications using modern frameworks and best practices. From landing pages to complex full-stack products.",
+    tech: ["Next.js", "React", "TypeScript"],
+    href: "/services",
   },
   {
-    title: "Digital Experience",
-    desc: "Designing stark, beautiful, and highly interactive interfaces that command attention and drive engagement.",
     index: "02",
-    tech: ["FRAMER", "GSAP", "TAILWIND"],
+    title: "UI & Experience Design",
+    desc: "Designing clean, functional interfaces that are a pleasure to use. Focused on clarity, accessibility, and thoughtful interaction.",
+    tech: ["Framer Motion", "GSAP", "Figma"],
+    href: "/services",
   },
   {
-    title: "Systems Engineering",
-    desc: "Developing brutalist backend architectures that handle complex data streams with absolute precision.",
     index: "03",
-    tech: ["NODE.JS", "EXPRESS", "DATABASE"],
+    title: "Backend & APIs",
+    desc: "Building robust server-side systems, RESTful APIs, and database architectures that scale reliably under real-world conditions.",
+    tech: ["Node.js", "Express", "MySQL"],
+    href: "/services",
   },
   {
-    title: "Security Protocols",
-    desc: "Implementing military-grade auth and data protection standards to secure the perimeter.",
     index: "04",
-    tech: ["JWT", "OAUTH", "ENCRYPTION"],
+    title: "Auth & Security",
+    desc: "Implementing secure authentication, authorization, and data protection systems across web applications of all sizes.",
+    tech: ["JWT", "OAuth", "Encryption"],
+    href: "/services",
   },
 ];
 
+const fadeUp = {
+  initial:     { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport:    { once: true, margin: "-50px" },
+};
+
 const Services = () => {
   return (
-    <section id="services" className="section-shell relative overflow-hidden bg-background">
-      <div className="container relative z-10">
-        
-        {/* Section Header */}
-        <div className="mb-24 lg:mb-32 flex flex-col md:flex-row md:items-end justify-between gap-12">
-          <div className="space-y-6">
-            <span className="kicker block">[ CAPABILITIES ]</span>
-            <h2 className="text-[12vw] lg:text-[8vw] font-black uppercase leading-[0.85] tracking-tighter text-white">
-              SYSTEM<br/>
-              <span className="text-accent">MODULES</span>
+    <section id="services" className="section-shell bg-[var(--background)]">
+      <div className="container">
+
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+          <div>
+            <span className="section-eyebrow">Services</span>
+            <h2 className="section-heading mt-1">
+              What I do best.
             </h2>
           </div>
-          <p className="text-xl text-white/50 max-w-md font-bold tracking-tight uppercase">
-            Specializing in high-performance digital solutions that bridge the gap between complex engineering and structural design.
+          <p className="section-subtext text-sm max-w-xs md:text-right">
+            Specialized in full-stack development — from idea to shipped product.
           </p>
         </div>
 
-        {/* Service Grid - Raw & Structural */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        {/* Service cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
           {services.map((service, i) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="solid-card group flex flex-col h-full"
+              key={service.index}
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="card card-hover group flex flex-col h-full p-7"
             >
-              {/* Header row */}
-              <div className="flex items-start justify-between mb-16 border-b-2 border-white/10 pb-8">
-                <span className="kicker text-accent">
-                  [ MOD_{service.index} ]
-                </span>
-                <span className="font-display font-black text-6xl lg:text-8xl text-white/10 group-hover:text-white/20 transition-colors duration-500 select-none tracking-tighter leading-none">
-                  {service.index}
-                </span>
-              </div>
+              {/* Number */}
+              <span className="text-xs font-mono text-[var(--muted-soft)] mb-5">
+                {service.index}
+              </span>
 
-              {/* Content */}
-              <div className="space-y-6 flex-grow mb-16">
-                <h3 className="font-display font-black text-4xl lg:text-5xl text-white leading-[0.9] tracking-tighter group-hover:text-accent transition-colors duration-500 uppercase">
-                  {service.title}
-                </h3>
-                <p className="text-xl leading-relaxed text-white/50 group-hover:text-white/70 transition-colors duration-500 font-bold tracking-tight">
-                  {service.desc}
-                </p>
-              </div>
+              {/* Title */}
+              <h3
+                className="text-xl font-semibold text-white mb-3 group-hover:text-[var(--foreground)] transition-colors duration-200"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                {service.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-sm text-[var(--muted)] leading-relaxed flex-grow mb-5">
+                {service.desc}
+              </p>
 
               {/* Tech tags */}
-              <div className="flex flex-wrap gap-4 mb-16">
+              <div className="flex flex-wrap gap-1.5 mb-6">
                 {service.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="kicker text-white/30 group-hover:text-white transition-colors duration-500"
-                  >
-                    [{t}]
+                  <span key={t} className="badge group-hover:border-[var(--border-hover)] group-hover:text-white/60 transition-colors duration-200">
+                    {t}
                   </span>
                 ))}
               </div>
 
-              {/* Action */}
-              <div className="pt-8 border-t-2 border-white/10">
+              {/* Link */}
+              <div className="border-t border-[var(--border)] pt-5">
                 <Link
-                  href="/services"
-                  className="flex items-center justify-between group/link hover:text-accent transition-colors"
+                  href={service.href}
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200 group/link"
                 >
-                  <span className="kicker text-white group-hover/link:text-accent transition-colors">INITIALIZE_MOD</span>
-                  <ArrowUpRight size={24} className="text-white group-hover/link:text-accent transition-colors transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
+                  Learn more
+                  <ArrowUpRight
+                    size={13}
+                    className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200"
+                  />
                 </Link>
               </div>
             </motion.div>
