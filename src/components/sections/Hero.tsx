@@ -139,7 +139,7 @@ const Hero = () => {
             </p>
 
             {/* Actions */}
-            <div className="flex flex-wrap items-center gap-6">
+            <div className="flex flex-wrap items-center gap-6 mt-10">
               <Magnetic>
                 <a href="#projects" className="btn-primary">
                   Selected Works
