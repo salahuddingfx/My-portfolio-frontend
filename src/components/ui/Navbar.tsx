@@ -5,6 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X, Menu, ArrowUpRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const navLinks = [
   { name: "Home",     href: "/" },
@@ -21,11 +25,35 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen]     = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    let ctx = gsap.context(() => {
+      const showAnim = gsap.from(headerRef.current, { 
+        yPercent: -100,
+        paused: true,
+        duration: 0.3,
+        ease: "power2.out"
+      }).progress(1);
+      
+      ScrollTrigger.create({
+        start: "top top",
+        end: 99999,
+        onUpdate: (self) => {
+          // Set scrolled state for styling
+          setScrolled(self.scroll() > 32);
+          
+          // Hide on scroll down, show on scroll up
+          if (self.direction === -1 || self.scroll() <= 0) {
+            showAnim.play();
+          } else {
+            showAnim.reverse();
+          }
+        }
+      });
+    });
+
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => { setIsOpen(false); }, [pathname]);
@@ -48,13 +76,11 @@ const Navbar = () => {
 
   return (
     <>
-      <motion.header
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+      <header
+        ref={headerRef}
         className={`
           fixed top-0 left-0 right-0 z-[100]
-          transition-all duration-500
+          transition-all duration-300
           ${scrolled
             ? "py-3 bg-[rgba(8,8,8,0.92)] border-b border-white/[0.07] shadow-[0_1px_40px_rgba(0,0,0,0.4)]"
             : "py-5 bg-transparent"
