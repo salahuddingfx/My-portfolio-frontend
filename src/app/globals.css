@@ -77,7 +77,7 @@
   --z-cursor:  9999;
 
   /* ── Container ───────────────────────────────────────────────── */
-  --container-max: 1200px;
+  --container-max: 1440px;
   --container-pad: 1.5rem;
 }
 
@@ -226,21 +226,33 @@ img, video {
 
 @media (min-width: 768px) {
   .container {
-    padding-inline: 2.5rem;
+    padding-inline: 3rem;
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding-inline: 3.5rem;
+    padding-inline: 5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-inline: 6rem;
   }
 }
 
 .section-shell {
   position: relative;
-  padding-block: var(--space-20);
+  padding-block: var(--space-24);
   overflow: hidden;
   z-index: var(--z-base);
+}
+
+@media (max-width: 1023px) {
+  .section-shell {
+    padding-block: var(--space-20);
+  }
 }
 
 @media (max-width: 767px) {
