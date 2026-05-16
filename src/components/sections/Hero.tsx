@@ -84,8 +84,12 @@ const Hero = () => {
           fill="rgba(255, 255, 255, 0.4)"
         />
 
-        {/* Purple/Accent Glow behind the robot (like the image) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[600px] aspect-square bg-[#7e22ce]/20 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0" />
+        {/* Decorative Spots */}
+        <div className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] bg-[var(--accent)]/15 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0" />
+        <div className="absolute -bottom-[10%] -right-[10%] w-[50vw] h-[50vw] bg-[var(--accent)]/15 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0" />
+
+        {/* Background Glow behind the robot */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[600px] aspect-square bg-[var(--accent)]/20 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0" />
 
         <div className="absolute inset-0 w-full h-full pointer-events-auto z-10 flex items-center justify-center">
           <SplineScene

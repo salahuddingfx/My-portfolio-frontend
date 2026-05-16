@@ -13,8 +13,8 @@
   --foreground: #f2f2f2;
   --muted: #888888;
   --muted-soft: #555555;
-  --accent: #dc2626;
-  --accent-soft: rgba(220, 38, 38, 0.12);
+  --accent: #9333ea;
+  --accent-soft: rgba(147, 51, 234, 0.12);
 
   --border: rgba(255, 255, 255, 0.07);
   --border-hover: rgba(255, 255, 255, 0.14);
