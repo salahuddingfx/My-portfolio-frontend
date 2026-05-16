@@ -104,10 +104,10 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="relative z-30 container min-h-[100dvh] flex flex-col lg:flex-row items-center lg:justify-between pt-32 pb-24 lg:py-0 pointer-events-none">
+      <div className="relative z-30 container min-h-screen flex flex-col lg:flex-row items-center lg:justify-between pt-80 pb-24 lg:pt-[450px] lg:pb-0 pointer-events-none">
 
         {/* Left: Identity */}
-        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pointer-events-auto mb-16 lg:mb-0 mt-32 lg:mt-0">
+        <div className="w-full lg:w-1/3 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pointer-events-auto mb-16 lg:mb-0 mt-64 lg:mt-0">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

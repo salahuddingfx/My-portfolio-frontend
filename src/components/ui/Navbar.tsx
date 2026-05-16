@@ -39,10 +39,10 @@ const Navbar = () => {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className={`
         fixed top-0 left-0 w-full z-[100] transition-all duration-700
-        ${scrolled ? "py-8 bg-black/80 backdrop-blur-3xl border-b border-white/5" : "py-20 lg:py-32 bg-transparent"}
+        ${scrolled ? "py-10 bg-black/90 backdrop-blur-3xl border-b border-white/5 shadow-2xl" : "py-24 lg:py-48 bg-transparent"}
       `}
     >
-      <div className="container flex items-center justify-between lg:grid lg:grid-cols-3">
+      <div className="container px-8 lg:px-16 flex items-center justify-between lg:grid lg:grid-cols-3">
         
         {/* LEFT: LOGO */}
         <div className="flex items-center">
