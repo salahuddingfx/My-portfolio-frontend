@@ -146,8 +146,6 @@ const Footer = () => {
     relative
     mt-24
     overflow-hidden
-    border-t
-    border-white/[0.05]
     bg-[#080808]
   "
 >
@@ -156,16 +154,7 @@ const Footer = () => {
          TOP ACCENT LINE
       ================================================================= */}
 
-      <div
-        className="
-          h-px
-          w-full
-          bg-gradient-to-r
-          from-transparent
-          via-[var(--accent)]/40
-          to-transparent
-        "
-      />
+      <div className="border-t border-white/[0.05]" />
 
       {/* ================================================================
          BACKGROUND GLOW
