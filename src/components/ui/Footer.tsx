@@ -118,7 +118,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:col-span-3">
             {/* Pages */}
             <div>
-              <h4 className="mb-5 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+              <h4 className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]" style={{ marginBottom: '1.25rem' }}>
                 Pages
               </h4>
               <ul className="grid grid-cols-2 gap-x-6 gap-y-3 items-start" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '0.75rem 1.5rem' }}>
@@ -134,7 +134,7 @@ const Footer = () => {
 
             {/* Socials */}
             <div>
-              <h4 className="mb-5 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+              <h4 className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]" style={{ marginBottom: '1.25rem' }}>
                 Social
               </h4>
               <ul className="flex flex-col gap-3 items-start">
@@ -151,7 +151,7 @@ const Footer = () => {
 
             {/* CTA Card */}
             <div className="flex flex-col">
-              <h4 className="mb-5 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+              <h4 className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]" style={{ marginBottom: '1.25rem' }}>
                 Hire Me
               </h4>
               <div 
