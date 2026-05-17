@@ -289,10 +289,10 @@ export default function AboutPage() {
 
                     {/* Responsive Alternating Card Content */}
                     <div 
-                      className={`timeline-content flex flex-col gap-1 transition-all duration-500 transform-gpu opacity-20 blur-[0.5px] pl-14 lg:pl-0 
+                      className={`timeline-content flex flex-col gap-1 transition-all duration-500 transform-gpu opacity-30 pl-14 lg:pl-0 lg:col-span-1 
                         ${isEven 
-                          ? 'lg:col-start-1 lg:pr-16 lg:text-right lg:items-end' 
-                          : 'lg:col-start-2 lg:pl-16 lg:text-left lg:items-start'
+                          ? 'lg:col-start-1 lg:pr-24 lg:text-right lg:items-end' 
+                          : 'lg:col-start-2 lg:pl-24 lg:text-left lg:items-start'
                         }`}
                     >
                       <span className="text-xs font-mono text-[var(--muted-soft)]">
