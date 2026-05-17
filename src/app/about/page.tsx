@@ -113,12 +113,10 @@ export default function AboutPage() {
 
         if (!badge || !icon || !content) return;
 
-        // FADE IN TWEEN (As item enters from bottom)
-        gsap.fromTo([content, badge, icon], 
-          {
-            opacity: (el) => el === content ? 0.25 : 0.6,
-            scale: (el) => el === content ? 0.96 : 0.95,
-          },
+        // 1. CONTENT FOCUS ANIMATIONS
+        // Fade in content on enter
+        gsap.fromTo(content, 
+          { opacity: 0.25, scale: 0.96 },
           {
             opacity: 1,
             scale: 1,
@@ -132,35 +130,10 @@ export default function AboutPage() {
           }
         );
 
-        // Badge border glow on enter
-        gsap.to(badge, {
-          borderColor: "var(--accent)",
-          backgroundColor: "var(--surface)",
-          boxShadow: "0 0 15px rgba(168, 85, 247, 0.45)",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 78%",
-            end: "top 55%",
-            scrub: 0.5,
-          }
-        });
-
-        // Icon purple activation on enter
-        gsap.to(icon, {
-          color: "var(--accent)",
-          scale: 1.12,
-          scrollTrigger: {
-            trigger: item,
-            start: "top 78%",
-            end: "top 55%",
-            scrub: 0.5,
-          }
-        });
-
-        // FADE OUT TWEEN (As item leaves towards top)
-        gsap.to([content, badge, icon], {
-          opacity: (el) => el === content ? 0.25 : 0.6,
-          scale: (el) => el === content ? 0.96 : 0.95,
+        // Fade out content on exit
+        gsap.to(content, {
+          opacity: 0.25,
+          scale: 0.96,
           ease: "power1.in",
           scrollTrigger: {
             trigger: item,
@@ -170,11 +143,34 @@ export default function AboutPage() {
           }
         });
 
+        // 2. BADGE SCROLL ANIMATIONS
+        // Badge border glow on enter
+        gsap.fromTo(badge,
+          { opacity: 0.6, scale: 0.95 },
+          {
+            opacity: 1,
+            scale: 1,
+            borderColor: "var(--accent)",
+            backgroundColor: "var(--surface)",
+            boxShadow: "0 0 15px rgba(168, 85, 247, 0.45)",
+            ease: "power1.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 78%",
+              end: "top 55%",
+              scrub: 0.5,
+            }
+          }
+        );
+
         // Badge border dim back on leave
         gsap.to(badge, {
+          opacity: 0.6,
+          scale: 0.95,
           borderColor: "var(--border)",
           backgroundColor: "var(--surface-2)",
           boxShadow: "none",
+          ease: "power1.in",
           scrollTrigger: {
             trigger: item,
             start: "bottom 45%",
@@ -183,10 +179,30 @@ export default function AboutPage() {
           }
         });
 
+        // 3. ICON SCROLL ANIMATIONS
+        // Icon purple activation on enter
+        gsap.fromTo(icon,
+          { opacity: 0.6, scale: 0.95 },
+          {
+            opacity: 1,
+            color: "var(--accent)",
+            scale: 1.12,
+            ease: "power1.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 78%",
+              end: "top 55%",
+              scrub: 0.5,
+            }
+          }
+        );
+
         // Icon color reset on leave
         gsap.to(icon, {
+          opacity: 0.6,
           color: "var(--muted)",
           scale: 1,
+          ease: "power1.in",
           scrollTrigger: {
             trigger: item,
             start: "bottom 45%",
