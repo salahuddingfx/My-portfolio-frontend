@@ -43,7 +43,13 @@ const fadeUp = {
 
 const TechStack = () => {
   return (
-    <section id="tech" className="section-shell bg-[var(--surface)] border-y border-[var(--border)]">
+    <section 
+      id="tech" 
+      className="section-shell border-y border-[var(--border)]"
+      style={{ 
+        background: 'radial-gradient(circle at center, rgba(147, 51, 234, 0.05) 0%, var(--surface) 100%)' 
+      }}
+    >
       <div className="container">
 
         {/* Section header */}
@@ -59,7 +65,7 @@ const TechStack = () => {
         </div>
 
         {/* 3D Sphere — completely preserved */}
-        <div className="w-full h-[420px] lg:h-[580px] relative z-20 pointer-events-auto cursor-grab active:cursor-grabbing mb-14">
+        <div className="w-full h-[280px] lg:h-[380px] relative z-20 pointer-events-auto cursor-grab active:cursor-grabbing mb-14">
           <TechSphere />
         </div>
 
