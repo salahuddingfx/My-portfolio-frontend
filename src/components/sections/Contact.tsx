@@ -165,8 +165,8 @@ const Contact = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.8 }}
-              className="mt-12 pt-8 border-t border-(--border)"
+              className="border-t border-(--border)"
+              style={{ marginTop: '3rem', paddingTop: '2rem' }}
             >
               <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-6">Social Networks</p>
               <div className="flex flex-wrap gap-x-8 gap-y-4">
@@ -187,7 +187,10 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-8 w-full min-w-0"
           >
-            <div className="contact-card !p-8 md:!p-12 lg:!p-16 flex flex-col h-full">
+            <div 
+              className="contact-card flex flex-col h-full"
+              style={{ padding: 'clamp(2rem, 5vw, 4rem)' }}
+            >
               <div className="flex items-center justify-between mb-12">
                 <div className="flex flex-col gap-1">
                   <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
