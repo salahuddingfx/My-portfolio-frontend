@@ -25,7 +25,7 @@ export default function Home() {
       <About />
       <TechStack />
       <Services />
-      <Projects />
+      <Projects layout="horizontal" />
       <Testimonials />
       <ContactCTA />
     </main>

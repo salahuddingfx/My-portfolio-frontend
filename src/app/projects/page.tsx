@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height, 120px)' }}>
-      <Projects />
+      <Projects layout="stacked" />
     </main>
   );
 }
