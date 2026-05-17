@@ -93,11 +93,11 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
   const currentScale = useRef(1);
 
   const [ref, api] = useSphere(() => ({
-    mass: 1,
+    mass: 1.2,
     position: targetPos,
     args: [0.85],
-    linearDamping: 0.99,
-    angularDamping: 0.95,
+    linearDamping: 0.75, // Slidability like a pool ball sliding
+    angularDamping: 0.8,
     allowSleep: false,
     ...props,
   }));
@@ -110,45 +110,48 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
     const t = state.clock.getElapsedTime();
 
     // 1. Hover Scale
-    const targetScale = hovered ? 1.4 : 1;
+    const targetScale = hovered ? 1.3 : 1;
     currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, 0.15);
     ref.current.scale.setScalar(currentScale.current);
 
-    // 2. Fluid Return Force
+    // 2. Liquid Floating animation around home position (independent drift per ball)
+    const seed = targetPos[0] * 100 + targetPos[1];
     const floatOffset = new THREE.Vector3(
-      Math.sin(t * 0.25 + targetPos[0]) * 0.15,
-      Math.cos(t * 0.25 + targetPos[1]) * 0.15,
-      Math.sin(t * 0.25 + targetPos[2]) * 0.1
+      Math.sin(t * 0.45 + seed) * 0.25,
+      Math.cos(t * 0.4 + seed) * 0.25,
+      Math.sin(t * 0.5 + seed) * 0.15
     );
-    const target = new THREE.Vector3(...targetPos).add(floatOffset);
+    const homePos = new THREE.Vector3(...targetPos).add(floatOffset);
 
     if (isDragging) {
       const mp = new THREE.Vector3((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 0);
       api.position.set(mp.x, mp.y, 0);
       api.velocity.set(0, 0, 0);
     } else {
+      // 3. Continuous gentle pull back to home position (Spring Force)
+      const diff = new THREE.Vector3().subVectors(homePos, currentPos);
+      const dist = diff.length();
+
+      if (dist > 0.05) {
+        const k = mouseActive ? 12 : 28;
+        const pull = diff.clone().normalize().multiplyScalar(dist * k);
+        api.applyForce(pull.toArray(), [0, 0, 0]);
+      }
+
+      // 4. Subtle magnetic repel if mouse gets close
       if (mouseActive) {
         const mousePos = new THREE.Vector3((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 0);
         const mouseDiff = new THREE.Vector3().subVectors(currentPos, mousePos);
         const mouseDist = mouseDiff.length();
         
-        if (mouseDist < 4.5) {
-          const repelForce = 120 / (mouseDist + 0.2); 
+        if (mouseDist < 2.2) {
+          const repelForce = 35 / (mouseDist + 0.1); 
           api.applyForce(mouseDiff.normalize().multiplyScalar(repelForce).toArray(), [0, 0, 0]);
         }
       }
-
-      const diff = new THREE.Vector3().subVectors(target, currentPos);
-      const dist = diff.length();
-      
-      if (dist > 0.1) {
-        const pullStrength = mouseActive ? 80 : 250;
-        api.applyForce(diff.normalize().multiplyScalar(dist * pullStrength).toArray(), [0, 0, 0]);
-      } else if (!mouseActive && dist < 0.3) {
-        api.velocity.set(0, 0, 0);
-      }
     }
 
+    // Keep it rotationally locked
     api.rotation.set(0, 0, 0);
   });
 
@@ -158,7 +161,18 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
       castShadow
       onPointerDown={(e) => { e.stopPropagation(); setIsDragging(true); dragStart.current.set(e.point.x, e.point.y, 0); }}
       onPointerUp={() => setIsDragging(false)}
-      onPointerOver={() => setHovered(true)}
+      onPointerOver={() => {
+        setHovered(true);
+        // 8-ball pool shot break scatter! Explode away from cursor in random/outward directions
+        if (ref.current) {
+          const forceDirection = new THREE.Vector3(
+            (Math.random() - 0.5) * 22,
+            (Math.random() - 0.5) * 22,
+            (Math.random() - 0.5) * 6
+          );
+          api.velocity.set(forceDirection.x, forceDirection.y, forceDirection.z);
+        }
+      }}
       onPointerOut={()  => setHovered(false)}
     >
       <sphereGeometry args={[0.85, 32, 32]} />
@@ -198,19 +212,21 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
 const TechSphere = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
 
-  const ballPositions = useMemo<[number, number, number][]>(() =>
-    technologies.map((_, i) => {
-      const phi   = Math.acos(-1 + (2 * i) / technologies.length);
-      const theta = Math.sqrt(technologies.length * Math.PI) * phi;
-      const r     = 3.4;
+  const ballPositions = useMemo<[number, number, number][]>(() => {
+    // 23 items. Let's arrange them in a beautiful, loose grid of 4 rows and 6 columns.
+    const cols = 6;
+    return technologies.map((_, i) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
       
-      const x = r * Math.cos(theta) * Math.sin(phi) + (Math.random() - 0.5) * 0.4;
-      const y = r * Math.sin(theta) * Math.sin(phi) + (Math.random() - 0.5) * 0.4;
-      const z = r * Math.cos(phi) + (Math.random() - 0.5) * 0.2;
+      // Compute standard grid coordinates with offsets to center them perfectly
+      const x = (col - 2.5) * 2.8 + (Math.random() - 0.5) * 0.6;
+      const y = -(row - 1.5) * 2.0 + (Math.random() - 0.5) * 0.6;
+      const z = (Math.random() - 0.5) * 1.5;
 
       return [x, y, z];
-    }),
-  []);
+    });
+  }, []);
 
   return (
     <div 
