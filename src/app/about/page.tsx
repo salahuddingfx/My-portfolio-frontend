@@ -207,22 +207,28 @@ export default function AboutPage() {
       <section className="section-shell pt-32">
         <div className="container">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
             <motion.div
               {...fadeUp}
               transition={{ duration: 0.7 }}
-              className="lg:col-span-7"
+              className="lg:col-span-7 flex flex-col gap-6"
             >
-              <span className="section-eyebrow">About me</span>
-              <h1 className="section-heading mt-1 mb-6">
-                Full Stack Developer,<br />
-                <span style={{ color: "var(--muted)" }}>based in Bangladesh.</span>
+              <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                Salah Uddin<br />Kader
               </h1>
-              <p className="text-base text-[var(--muted)] leading-relaxed max-w-lg">
-                I build web applications that are fast, accessible, and
-                genuinely good to use. I care as much about the code underneath
-                as the experience on top.
+              <p className="text-lg lg:text-xl text-[var(--muted)] leading-relaxed max-w-xl">
+                I am a full stack web developer based in Chittagong, Bangladesh.
+                I build clean, highly interactive digital products with a strong
+                focus on UX craft and technical detail.
               </p>
+              <div className="flex gap-4 items-center">
+                <Link href="/contact" className="btn-primary">
+                  Get in touch
+                  <ArrowRight size={15} />
+                </Link>
+                <Link href="/projects" className="btn-secondary">
+                  View my work
+                </Link>
+              </div>
             </motion.div>
 
             <motion.div
