@@ -119,11 +119,31 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-md pb-4 lg:text-right lg:ml-auto"
+            className="max-w-md lg:text-right lg:ml-auto"
+            style={{ marginBottom: '4rem' }}
           >
-            <p className="text-lg text-(--muted) leading-relaxed italic border-l-2 lg:border-l-0 lg:border-r-2 border-(--accent)/30 pl-8 lg:pl-0 lg:pr-8">
-              &quot;Design is not just what it looks like and feels like. Design is how it works.&quot; 
-              <span className="block mt-4 text-xs font-mono uppercase tracking-widest text-white/30 not-italic">— Steve Jobs</span>
+            <p className="text-lg text-[var(--muted)] leading-relaxed italic border-l-2 lg:border-l-0 lg:border-r-2 border-[var(--accent)]/30 pl-8 lg:pl-0 lg:pr-8">
+              {'"Design is not just what it looks like and feels like. Design is how it works."'.split(' ').map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
+                  whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.4 + i * 0.06 }}
+                  style={{ display: 'inline-block', marginRight: '0.25em' }}
+                >
+                  {word}
+                </motion.span>
+              ))}
+              <motion.span 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 1.2 }}
+                className="block mt-4 text-xs font-mono uppercase tracking-widest text-white/30 not-italic"
+              >
+                — Steve Jobs
+              </motion.span>
             </p>
           </motion.div>
         </div>
