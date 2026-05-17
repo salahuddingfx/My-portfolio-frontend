@@ -1,34 +1,35 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const TIMELINE = [
   {
-    year: "2024",
-    role: "Senior Frontend Developer",
-    company: "Freelance",
-    desc: "Building high-quality web applications for international clients, focusing on performance and design.",
+    year: "Late 2025 - Present",
+    role: "Freelance Frontend Engineer",
+    company: "Remote & Open Source",
+    desc: "Building premium spatial editorial web experiences, focusing on performance, custom 3D mechanics, and GSAP motion frameworks for global clients.",
   },
   {
-    year: "2023",
-    role: "Full Stack Developer",
-    company: "Tech Startup",
-    desc: "Led development of a SaaS platform serving thousands of users. Managed the full stack from database design to UI.",
+    year: "Early 2025",
+    role: "Full Stack Web Developer",
+    company: "SaaS & Interactive Apps",
+    desc: "Mastered building robust database schemas and high-fidelity frontends, shipping complete applications with seamless backend API integrations.",
   },
   {
-    year: "2022",
-    role: "Frontend Developer",
-    company: "Digital Agency",
-    desc: "Created interactive web experiences for a variety of clients using React, GSAP, and modern CSS.",
-  },
-  {
-    year: "2020",
-    role: "Started coding",
-    company: "Self-taught",
-    desc: "Began learning web development out of curiosity. Built my first projects and never looked back.",
+    year: "Late 2024",
+    role: "Began My Developer Journey",
+    company: "Passion-Driven Learning",
+    desc: "Started learning coding out of curiosity. Focused on modern React, styling systems, and interactive UI animations. Fell in love with craft and design.",
   },
 ];
 
@@ -62,6 +63,64 @@ const fadeUp = {
 };
 
 export default function AboutPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || !lineRef.current || !glowRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 60%",
+          end: "bottom 60%",
+          scrub: 0.5,
+        }
+      });
+
+      // Animate line height to 100%
+      tl.to(lineRef.current, {
+        height: "100%",
+        ease: "none"
+      }, 0);
+
+      // Animate glowing comet tip to 100% and fade in
+      tl.to(glowRef.current, {
+        top: "100%",
+        opacity: 1,
+        ease: "none"
+      }, 0);
+
+      const dots = containerRef.current.querySelectorAll(".timeline-dot");
+      const contents = containerRef.current.querySelectorAll(".timeline-content");
+
+      dots.forEach((dot, index) => {
+        const progress = index / Math.max(dots.length - 1, 1);
+        
+        // Light up the dots exactly as the line scrolls past them
+        tl.to(dot, {
+          backgroundColor: "var(--accent)",
+          borderColor: "var(--accent)",
+          scale: 1.3,
+          boxShadow: "0 0 10px var(--accent), 0 0 20px var(--accent)",
+          duration: 0.05,
+        }, progress * 0.95);
+
+        // Fade in and clarify the blurry content blocks
+        tl.to(contents[index], {
+          opacity: 1,
+          filter: "blur(0px)",
+          x: 0,
+          duration: 0.15,
+        }, progress * 0.95);
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <main className="bg-[var(--background)]">
 
@@ -124,13 +183,13 @@ export default function AboutPage() {
               className="lg:col-span-8 flex flex-col gap-5"
             >
               <p className="text-base text-[var(--muted)] leading-relaxed">
-                I started writing code in 2020, initially just to understand how
+                I started writing code in late 2024, initially just to understand how
                 websites work. Within a few months, I was building my own
                 projects — and I haven&apos;t stopped since. What began as
                 curiosity became a craft I care deeply about.
               </p>
               <p className="text-base text-[var(--muted)] leading-relaxed">
-                Over the past four years, I&apos;ve worked across the full stack —
+                Over the past 1.5 years, I&apos;ve worked across the full stack —
                 from designing database schemas to crafting pixel-perfect
                 interfaces. I&apos;ve shipped products for startups, agencies, and
                 individual clients, and every project has taught me something
@@ -158,35 +217,50 @@ export default function AboutPage() {
               </h2>
             </div>
             <div className="lg:col-span-8">
-              <div className="relative flex flex-col gap-0">
-                {/* Timeline line */}
-                <div className="absolute left-0 top-2 bottom-2 w-px bg-[var(--border)]" />
+              <div ref={containerRef} className="relative flex flex-col gap-0 select-none">
+                {/* Base track line */}
+                <div className="absolute left-[4px] top-2 bottom-2 w-px bg-[var(--border)]" />
+                
+                {/* Active growing line */}
+                <div 
+                  ref={lineRef} 
+                  className="absolute left-[4px] top-2 w-[2px] bg-[var(--accent)] origin-top transform-gpu -translate-x-[50%]" 
+                  style={{ height: '0%' }} 
+                />
+
+                {/* Glowing comet tip */}
+                <div 
+                  ref={glowRef} 
+                  className="absolute left-[4px] top-2 w-[8px] h-[8px] rounded-full bg-white pointer-events-none opacity-0 z-20"
+                  style={{
+                    boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                />
 
                 {TIMELINE.map((item, i) => (
-                  <motion.div
+                  <div
                     key={i}
-                    {...fadeUp}
-                    transition={{ duration: 0.6, delay: i * 0.08 }}
-                    className="relative pl-8 pb-10 last:pb-0"
+                    className="relative pl-8 pb-12 last:pb-0"
                   >
                     {/* Dot */}
-                    <div className="absolute left-[-4px] top-1.5 w-2 h-2 rounded-full bg-[var(--surface)] border border-[var(--border)]" />
+                    <div className="timeline-dot absolute left-[4px] top-[10px] w-[8px] h-[8px] rounded-full bg-[var(--surface)] border border-[var(--border)] -translate-x-[50%] -translate-y-[50%] transition-transform duration-300 transform-gpu z-10" />
 
-                    <div className="flex flex-col gap-1">
+                    <div className="timeline-content flex flex-col gap-1 opacity-20 blur-[0.5px] translate-x-2 transition-all duration-500 transform-gpu">
                       <span className="text-xs font-mono text-[var(--muted-soft)]">
                         {item.year}
                       </span>
                       <h3 className="text-base font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                         {item.role}
                       </h3>
-                      <span className="text-xs text-[var(--accent)]">
+                      <span className="text-xs text-[var(--accent)] font-medium">
                         {item.company}
                       </span>
                       <p className="text-sm text-[var(--muted)] leading-relaxed mt-1">
                         {item.desc}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
