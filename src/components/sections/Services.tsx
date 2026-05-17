@@ -47,7 +47,7 @@ const Services = () => {
       <div className="container">
 
         {/* Header - Centered */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto" style={{ marginBottom: '4rem' }}>
           <span className="section-eyebrow">Services</span>
           <h2 className="section-heading mt-1">
             What I do best.
@@ -58,7 +58,7 @@ const Services = () => {
         </div>
 
         {/* Service cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '1.25rem' }}>
           {services.map((service, i) => (
             <motion.div
               key={service.index}

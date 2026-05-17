@@ -44,7 +44,7 @@ export default function BlogPage() {
     : posts.filter((p) => p.category === activeCategory);
 
   return (
-    <main className="min-h-screen bg-[var(--background)] pt-32 pb-20">
+    <main className="min-h-screen bg-[var(--background)]" style={{ paddingTop: 'var(--navbar-height, 120px)', paddingBottom: '5rem' }}>
       <div className="container">
 
         {/* Page header */}
@@ -52,10 +52,11 @@ export default function BlogPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-14 max-w-2xl"
+          className="max-w-2xl"
+          style={{ marginBottom: '3.5rem' }}
         >
           <span className="section-eyebrow">Writing</span>
-          <h1 className="section-heading mt-1 mb-4">
+          <h1 className="section-heading mt-1" style={{ marginBottom: '1rem' }}>
             Thoughts & insights.
           </h1>
           <p className="section-subtext text-sm">
@@ -64,7 +65,7 @@ export default function BlogPage() {
         </motion.div>
 
         {/* Category filters */}
-        <div className="flex flex-wrap gap-2 mb-10">
+        <div className="flex flex-wrap" style={{ gap: '0.5rem', marginBottom: '2.5rem' }}>
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
@@ -84,7 +85,7 @@ export default function BlogPage() {
         </div>
 
         {/* Post list */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col" style={{ gap: '1rem' }}>
           {filtered.map((post, i) => (
             <BlogCard key={post.slug} {...post} index={i} />
           ))}
@@ -96,7 +97,8 @@ export default function BlogPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7 }}
-          className="mt-20 card p-8 md:p-10"
+          className="card p-8 md:p-10"
+          style={{ marginTop: '5rem', marginBottom: '5rem' }}
         >
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>

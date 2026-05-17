@@ -78,7 +78,7 @@ const Testimonials = () => {
       <div className="container">
 
         {/* Header */}
-        <div className="text-center max-w-lg mx-auto mb-14">
+        <div className="text-center max-w-lg mx-auto" style={{ marginBottom: '3.5rem' }}>
           <span className="section-eyebrow">Kind words</span>
           <h2 className="section-heading mt-1">
             What clients say.
@@ -86,7 +86,7 @@ const Testimonials = () => {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: '1.25rem' }}>
           {reviews.map((review, i) => (
             <motion.div
               key={i}

@@ -2,7 +2,7 @@ import Testimonials from "@/components/sections/Testimonials";
 
 export default function ReviewsPage() {
   return (
-    <main>
+    <main style={{ paddingTop: 'var(--navbar-height, 120px)' }}>
       <Testimonials />
     </main>
   );

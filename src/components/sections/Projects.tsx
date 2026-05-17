@@ -100,7 +100,7 @@ const Projects = () => {
       <div className="pt-24 pb-12">
         <div className="container">
           {/* Centered Header */}
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto" style={{ marginBottom: '4rem' }}>
             <span className="section-eyebrow">Selected work</span>
             <h2 className="section-heading mt-1">
               Recent projects.
