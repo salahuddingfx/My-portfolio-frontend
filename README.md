@@ -1,18 +1,19 @@
-# Salahuddin's Portfolio - Frontend
+# Salahuddin's Portfolio — Frontend
 
-A high-end, cinematic portfolio built with Next.js, GSAP, and Three.js. This project showcases a professional creative engineering aesthetic with advanced animations and a sleek dark-themed design.
+A high-end, cinematic portfolio built with **Next.js 15**, **React 19**, **GSAP**, and **Three.js**. Features advanced animations, 3D visuals, and a sleek dark-themed design.
 
-## 🚀 Features
+**Live:** [salahuddin.codes](https://salahuddin.codes)
 
-- **Cinematic UI**: Premium dark mode design with professional typography.
-- **GSAP Animations**: Smooth transitions, scroll-triggered reveals, and interactive elements.
-- **3D Integration**: Interactive 3D scenes and tech sphere visualizations using Three.js and Spline.
-- **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices.
-- **Performance**: Built on Next.js for lightning-fast loading and SEO optimization.
+## Tech Stack
 
-## 🛠️ Getting Started
+- **Framework:** Next.js 15 (App Router) with TypeScript
+- **UI:** React 19, Tailwind CSS v4, DaisyUI 5
+- **Animations:** GSAP 3 (ScrollTrigger), Framer Motion 12
+- **3D:** Three.js, @react-three/fiber, @react-three/drei, Spline
+- **Scroll:** Lenis (smooth scroll)
+- **Icons:** Lucide React
 
-First, install the dependencies:
+## Getting Started
 
 ```bash
 npm install
@@ -20,33 +21,39 @@ npm install
 bun install
 ```
 
-Then, run the development server:
-
 ```bash
 npm run dev
 # or
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-## 📜 License
+## Build
 
-Copyright (c) 2026 **Salah Uddin**. All rights reserved.
+```bash
+npm run build
+npm start
+```
 
-This is a personal portfolio. You are **not permitted** to use the identity, name, or branding of the author for your own projects. Cloning this repository and passing it off as your own identity is strictly prohibited. For more details, see the [LICENSE](LICENSE) file.
+## Project Structure
 
-## 🤝 Code of Conduct
+```
+src/
+├── app/          # Next.js App Router pages + metadata
+├── components/
+│   ├── sections/ # Page sections (Hero, About, Projects, etc.)
+│   └── ui/       # Reusable UI components
+├── context/      # Settings context provider
+└── lib/          # Utility functions
+```
 
-We are committed to providing a welcoming and inspiring community for all. When interacting with this project, please:
-- Be respectful and inclusive of others.
-- Avoid any form of harassment or offensive behavior.
-- Use professional and constructive communication.
+## Environment Variables
 
-## 🛡️ Security
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_API_URL` | Backend API base URL |
 
-If you discover any security vulnerabilities in this project, please do not open a public issue. Instead, contact the author directly at **salahuddin.codes** or through the contact form on the live site. We take security seriously and will address any issues promptly.
+## License
 
----
-Built with ❤️ by [Salah Uddin](https://salahuddin.codes)
-
+MIT — see [LICENSE](LICENSE).
