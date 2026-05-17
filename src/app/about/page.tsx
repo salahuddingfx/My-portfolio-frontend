@@ -116,10 +116,12 @@ export default function AboutPage() {
         // 1. CONTENT FOCUS ANIMATIONS
         // Fade in content on enter
         gsap.fromTo(content, 
-          { opacity: 0.25, scale: 0.96 },
+          { opacity: 0.55, scale: 0.98, filter: "blur(1px)" },
           {
             opacity: 1,
             scale: 1,
+            filter: "blur(0px)",
+            boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(168,85,247,0.12)",
             ease: "power1.out",
             scrollTrigger: {
               trigger: item,
@@ -132,8 +134,10 @@ export default function AboutPage() {
 
         // Fade out content on exit
         gsap.to(content, {
-          opacity: 0.25,
-          scale: 0.96,
+          opacity: 0.55,
+          scale: 0.98,
+          filter: "blur(1px)",
+          boxShadow: "none",
           ease: "power1.in",
           scrollTrigger: {
             trigger: item,
@@ -305,7 +309,7 @@ export default function AboutPage() {
       <section className="section-shell bg-[var(--background)]">
         <div className="container">
           {/* Centered Section Header */}
-          <div className="text-center max-w-xl mx-auto mb-16">
+          <div className="text-center max-w-xl mx-auto mb-20">
             <span className="section-eyebrow">Experience</span>
             <h2 className="section-heading mt-1">
               Where I&apos;ve worked.
@@ -317,7 +321,7 @@ export default function AboutPage() {
             <div ref={containerRef} className="relative w-full flex flex-col gap-0 select-none">
               
               {/* DESKTOP TRACKS (Centered) */}
-              <div className="absolute left-1/2 top-2 bottom-2 w-px bg-[var(--border)] -translate-x-1/2 hidden lg:block" />
+              <div className="absolute left-1/2 top-2 bottom-2 w-[2px] bg-white/[0.08] -translate-x-1/2 hidden lg:block" />
               <div 
                 ref={lineRef} 
                 className="absolute left-1/2 top-2 w-[2px] bg-[var(--accent)] origin-top transform-gpu -translate-x-1/2 hidden lg:block" 
@@ -325,7 +329,7 @@ export default function AboutPage() {
               />
               <div 
                 ref={glowRef} 
-                className="absolute left-1/2 top-2 w-[8px] h-[8px] rounded-full bg-white pointer-events-none opacity-0 z-20"
+                className="absolute left-1/2 top-2 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20"
                 style={{
                   boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
                   transform: 'translate(-50%, -50%)'
@@ -333,7 +337,7 @@ export default function AboutPage() {
               />
 
               {/* MOBILE TRACKS (Left Aligned) */}
-              <div className="absolute left-5 top-2 bottom-2 w-px bg-[var(--border)] lg:hidden" />
+              <div className="absolute left-5 top-2 bottom-2 w-[2px] bg-white/[0.08] lg:hidden" />
               <div 
                 ref={lineMobileRef} 
                 className="absolute left-5 top-2 w-[2px] bg-[var(--accent)] origin-top lg:hidden" 
@@ -341,7 +345,7 @@ export default function AboutPage() {
               />
               <div 
                 ref={glowMobileRef} 
-                className="absolute left-5 top-2 w-[8px] h-[8px] rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
+                className="absolute left-5 top-2 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
                 style={{
                   boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
                   transform: 'translate(-50%, -50%)'
@@ -354,33 +358,33 @@ export default function AboutPage() {
                 return (
                   <div 
                     key={i} 
-                    className="timeline-item relative w-full min-h-[140px] grid grid-cols-1 lg:grid-cols-2 mb-28 lg:mb-36 last:mb-0"
+                    className="timeline-item relative w-full min-h-[140px] grid grid-cols-1 lg:grid-cols-2 mb-20 lg:mb-24 last:mb-0"
                   >
                     {/* Center / Left Rounded Square Badge */}
                     <div 
-                      className="timeline-badge absolute left-5 lg:left-1/2 top-[24px] w-12 h-12 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
+                      className="timeline-badge absolute left-5 lg:left-1/2 top-[24px] w-14 h-14 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
                     >
                       <Icon size={18} className="timeline-icon transition-colors" />
                     </div>
 
                     {/* Responsive Alternating Card Content */}
                     <div 
-                      className={`timeline-content flex flex-col gap-1.5 transition-all duration-500 transform-gpu opacity-25 pl-14 lg:pl-0 lg:col-span-1 
+                      className={`timeline-content flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-6 transition-all duration-500 transform-gpu pl-16 lg:pl-0 lg:col-span-1 opacity-70 
                         ${isEven 
                           ? 'lg:col-start-1 lg:pr-24 lg:text-right lg:items-end' 
                           : 'lg:col-start-2 lg:pl-24 lg:text-left lg:items-start'
                         }`}
                     >
-                      <span className="text-xs font-mono text-[var(--muted-soft)]">
+                      <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
                         {item.year}
                       </span>
-                      <h3 className="text-base font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                      <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                         {item.role}
                       </h3>
                       <span className="text-xs text-[var(--accent)] font-medium">
                         {item.company}
                       </span>
-                      <p className="text-sm text-[var(--muted)] leading-relaxed mt-2 max-w-md">
+                      <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2 max-w-[460px]">
                         {item.desc}
                       </p>
                     </div>
