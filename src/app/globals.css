@@ -212,9 +212,9 @@
 
   color: var(--muted-soft);
 
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 
   transition:
     background var(--duration-base) var(--ease-out),
@@ -226,16 +226,14 @@
 .footer-social:hover {
   color: white;
 
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 
-  border-color: rgba(255,255,255,0.12);
+  border-color: rgba(255, 255, 255, 0.12);
 
   transform: translateY(-2px);
 }
 
-/* =============================================================================
-   CUSTOM SCROLLBAR
-   ============================================================================= */
+/*============================================================================*/
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -688,8 +686,13 @@ video {
 }
 
 @keyframes rotate-glow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* =============================================================================
@@ -703,7 +706,7 @@ video {
   border-radius: 2rem;
   overflow: visible;
   backdrop-filter: blur(20px);
-  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
   transition: all var(--duration-slow) var(--ease-out);
 }
 
@@ -732,8 +735,8 @@ video {
 }
 
 .contact-input:-webkit-autofill,
-.contact-input:-webkit-autofill:hover, 
-.contact-input:-webkit-autofill:focus, 
+.contact-input:-webkit-autofill:hover,
+.contact-input:-webkit-autofill:focus,
 .contact-input:-webkit-autofill:active {
   -webkit-background-clip: text;
   -webkit-text-fill-color: white;
@@ -753,20 +756,20 @@ video {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 700;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
   pointer-events: none;
   transition: all var(--duration-base) var(--ease-out);
 }
 
-.contact-input:focus ~ .contact-label,
-.contact-input:not(:placeholder-shown) ~ .contact-label,
-.contact-input:valid ~ .contact-label {
+.contact-input:focus~.contact-label,
+.contact-input:not(:placeholder-shown)~.contact-label,
+.contact-input:valid~.contact-label {
   top: 0;
   font-size: 9px;
   color: var(--accent);
 }
 
-.contact-input-group select.contact-input ~ .contact-label {
+.contact-input-group select.contact-input~.contact-label {
   top: 0;
   font-size: 9px;
   color: var(--accent);
@@ -782,7 +785,7 @@ video {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(168,85,247,0.4), transparent, rgba(168,85,247,0.2));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), transparent, rgba(168, 85, 247, 0.2));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
