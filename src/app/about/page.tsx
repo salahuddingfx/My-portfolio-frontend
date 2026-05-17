@@ -68,12 +68,16 @@ export default function AboutPage() {
   const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !lineRef.current || !glowRef.current) return;
+    const container = containerRef.current;
+    const line = lineRef.current;
+    const glow = glowRef.current;
+
+    if (!container || !line || !glow) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: container,
           start: "top 60%",
           end: "bottom 60%",
           scrub: 0.5,
@@ -81,20 +85,20 @@ export default function AboutPage() {
       });
 
       // Animate line height to 100%
-      tl.to(lineRef.current, {
+      tl.to(line, {
         height: "100%",
         ease: "none"
       }, 0);
 
       // Animate glowing comet tip to 100% and fade in
-      tl.to(glowRef.current, {
+      tl.to(glow, {
         top: "100%",
         opacity: 1,
         ease: "none"
       }, 0);
 
-      const dots = containerRef.current.querySelectorAll(".timeline-dot");
-      const contents = containerRef.current.querySelectorAll(".timeline-content");
+      const dots = container.querySelectorAll(".timeline-dot");
+      const contents = container.querySelectorAll(".timeline-content");
 
       dots.forEach((dot, index) => {
         const progress = index / Math.max(dots.length - 1, 1);
@@ -116,7 +120,7 @@ export default function AboutPage() {
           duration: 0.15,
         }, progress * 0.95);
       });
-    }, containerRef);
+    }, container);
 
     return () => ctx.revert();
   }, []);
