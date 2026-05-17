@@ -358,35 +358,40 @@ export default function AboutPage() {
                 return (
                   <div 
                     key={i} 
-                    className="timeline-item relative w-full min-h-[140px] grid grid-cols-1 lg:grid-cols-2 mb-20 lg:mb-24 last:mb-0"
+                    className="timeline-item relative w-full grid grid-cols-1 lg:grid-cols-2 items-center mb-20 lg:mb-24 last:mb-0 px-4 sm:px-6 lg:px-0"
                   >
                     {/* Center / Left Rounded Square Badge */}
                     <div 
-                      className="timeline-badge absolute left-5 lg:left-1/2 top-[24px] w-14 h-14 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
+                      className="timeline-badge absolute left-5 lg:left-1/2 top-1/2 w-14 h-14 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
                     >
                       <Icon size={18} className="timeline-icon transition-colors" />
                     </div>
 
-                    {/* Responsive Alternating Card Content */}
+                    {/* Responsive Alternating Card Content Wrapper (to handle floating margins/padding) */}
                     <div 
-                      className={`timeline-content flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-6 transition-all duration-500 transform-gpu pl-16 lg:pl-0 lg:col-span-1 opacity-70 
+                      className={`w-full flex lg:col-span-1 
                         ${isEven 
-                          ? 'lg:col-start-1 lg:pr-24 lg:text-right lg:items-end' 
-                          : 'lg:col-start-2 lg:pl-24 lg:text-left lg:items-start'
+                          ? 'lg:col-start-1 lg:justify-end lg:pr-12 pl-14 lg:pl-0' 
+                          : 'lg:col-start-2 lg:justify-start lg:pl-12 pl-14'
                         }`}
                     >
-                      <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
-                        {item.year}
-                      </span>
-                      <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                        {item.role}
-                      </h3>
-                      <span className="text-xs text-[var(--accent)] font-medium">
-                        {item.company}
-                      </span>
-                      <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2 max-w-[460px]">
-                        {item.desc}
-                      </p>
+                      <div 
+                        className={`timeline-content w-full max-w-[460px] flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-6 transition-all duration-500 transform-gpu opacity-70 
+                          ${isEven ? 'lg:text-right lg:items-end' : 'lg:text-left lg:items-start'}`}
+                      >
+                        <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+                          {item.year}
+                        </span>
+                        <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                          {item.role}
+                        </h3>
+                        <span className="text-xs text-[var(--accent)] font-medium">
+                          {item.company}
+                        </span>
+                        <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2 max-w-[460px]">
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );
