@@ -145,7 +145,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
               {displayProjects.map((project, i) => (
                 <div
                   key={project._id || i}
-                  className="relative w-[280px] sm:w-[420px] md:w-[500px] shrink-0 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group flex flex-col justify-between"
+                  className="relative w-[280px] sm:w-[420px] md:w-[500px] shrink-0 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group flex flex-col justify-between p-3 sm:p-5"
                 >
                   <Link
                     href={`/projects/${project._id}`}
@@ -154,7 +154,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                   />
 
                   {/* Image container */}
-                  <div className="relative aspect-[16/10] overflow-hidden w-full shrink-0">
+                  <div className="relative aspect-[16/10] overflow-hidden w-full shrink-0 rounded-xl">
                     <Image
                       src={project.image}
                       alt={project.title}
@@ -165,7 +165,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                   </div>
 
                   {/* Content container */}
-                  <div className="p-6 sm:p-8 flex flex-col gap-4 flex-grow justify-between">
+                  <div className="pt-5 sm:pt-6 flex flex-col gap-4 flex-grow justify-between">
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
                         <span className="text-xs font-mono text-[var(--muted-soft)]">
@@ -280,7 +280,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                   }}
                 >
                   <div
-                    className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group"
+                    className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group p-3 sm:p-5"
                   >
                     <Link
                       href={`/projects/${project._id}`}
@@ -288,8 +288,8 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                       aria-label={`View details for ${project.title}`}
                     />
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                      <div className="lg:col-span-7 relative aspect-[16/10] overflow-hidden">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+                      <div className="lg:col-span-7 relative aspect-[16/10] overflow-hidden rounded-xl">
                         <Image
                           src={project.image}
                           alt={project.title}
@@ -299,7 +299,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                         />
                       </div>
 
-                      <div className="lg:col-span-5 flex flex-col gap-4 p-8">
+                      <div className="lg:col-span-5 flex flex-col justify-center gap-4 py-4 lg:py-8 lg:pr-8">
                         <div className="flex items-center gap-3">
                           <span className="text-xs font-mono text-[var(--muted-soft)]">
                             {String(i + 1).padStart(2, "0")}
