@@ -113,107 +113,87 @@ export default function AboutPage() {
 
         if (!badge || !icon || !content) return;
 
-        // 1. CONTENT FOCUS ANIMATIONS
-        // Fade in content on enter
-        gsap.fromTo(content, 
-          { opacity: 0.55, scale: 0.98, filter: "blur(1px)" },
-          {
-            opacity: 1,
-            scale: 1,
-            filter: "blur(0px)",
-            boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(168,85,247,0.12)",
-            ease: "power1.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 78%",
-              end: "top 55%",
-              scrub: 0.5,
-            }
-          }
-        );
-
-        // Fade out content on exit
-        gsap.to(content, {
-          opacity: 0.55,
-          scale: 0.98,
-          filter: "blur(1px)",
-          boxShadow: "none",
-          ease: "power1.in",
+        // A single, cohesive scroll-bound GSAP timeline per card
+        // This guarantees zero timeline conflicts or visual jumps on scroll!
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: item,
-            start: "bottom 45%",
-            end: "bottom 18%",
+            start: "top 95%",   // Starts animating when entering bottom viewport
+            end: "bottom 5%",   // Completes when leaving top viewport
             scrub: 0.5,
           }
         });
 
-        // 2. BADGE SCROLL ANIMATIONS
-        // Badge border glow on enter
-        gsap.fromTo(badge,
-          { opacity: 0.6, scale: 0.95 },
-          {
-            opacity: 1,
-            scale: 1,
-            borderColor: "var(--accent)",
-            backgroundColor: "var(--surface)",
-            boxShadow: "0 0 15px rgba(168, 85, 247, 0.45)",
-            ease: "power1.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 78%",
-              end: "top 55%",
-              scrub: 0.5,
-            }
-          }
+        // PHASE 1: ENTER & FOCUS REVEAL (Progress 0.0 -> 0.3)
+        tl.fromTo(content, 
+          { opacity: 0.55, scale: 0.98, filter: "blur(1px)", boxShadow: "none" },
+          { 
+            opacity: 1, 
+            scale: 1, 
+            filter: "blur(0px)", 
+            boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(168,85,247,0.12)",
+            duration: 0.3,
+            ease: "power1.out"
+          },
+          0
         );
 
-        // Badge border dim back on leave
-        gsap.to(badge, {
+        tl.fromTo(badge,
+          { opacity: 0.6, scale: 0.95, borderColor: "var(--border)", backgroundColor: "var(--surface-2)", boxShadow: "none" },
+          { 
+            opacity: 1, 
+            scale: 1.1, 
+            borderColor: "var(--accent)", 
+            backgroundColor: "var(--surface)", 
+            boxShadow: "0 0 15px rgba(168, 85, 247, 0.45)",
+            duration: 0.3,
+            ease: "power1.out"
+          },
+          0
+        );
+
+        tl.fromTo(icon,
+          { opacity: 0.6, scale: 0.95, color: "var(--muted)" },
+          { 
+            opacity: 1, 
+            color: "var(--accent)", 
+            scale: 1.12,
+            duration: 0.3,
+            ease: "power1.out"
+          },
+          0
+        );
+
+        // PHASE 2: FOCUS HOLD (Progress 0.3 -> 0.7)
+        // Keep elements fully visible & focused in viewport center region. No tweens needed.
+
+        // PHASE 3: EXIT & DIM OUT (Progress 0.7 -> 1.0)
+        tl.to(content, {
+          opacity: 0.55,
+          scale: 0.98,
+          filter: "blur(1px)",
+          boxShadow: "none",
+          duration: 0.3,
+          ease: "power1.in"
+        }, 0.7);
+
+        tl.to(badge, {
           opacity: 0.6,
           scale: 0.95,
           borderColor: "var(--border)",
           backgroundColor: "var(--surface-2)",
           boxShadow: "none",
-          ease: "power1.in",
-          scrollTrigger: {
-            trigger: item,
-            start: "bottom 45%",
-            end: "bottom 18%",
-            scrub: 0.5,
-          }
-        });
+          duration: 0.3,
+          ease: "power1.in"
+        }, 0.7);
 
-        // 3. ICON SCROLL ANIMATIONS
-        // Icon purple activation on enter
-        gsap.fromTo(icon,
-          { opacity: 0.6, scale: 0.95 },
-          {
-            opacity: 1,
-            color: "var(--accent)",
-            scale: 1.12,
-            ease: "power1.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 78%",
-              end: "top 55%",
-              scrub: 0.5,
-            }
-          }
-        );
-
-        // Icon color reset on leave
-        gsap.to(icon, {
+        tl.to(icon, {
           opacity: 0.6,
           color: "var(--muted)",
           scale: 1,
-          ease: "power1.in",
-          scrollTrigger: {
-            trigger: item,
-            start: "bottom 45%",
-            end: "bottom 18%",
-            scrub: 0.5,
-          }
-        });
+          duration: 0.3,
+          ease: "power1.in"
+        }, 0.7);
       });
     }, container);
 
