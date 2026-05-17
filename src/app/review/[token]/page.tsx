@@ -18,6 +18,8 @@ const ReviewFormPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -58,6 +60,7 @@ const ReviewFormPage = () => {
 
     setSubmitting(true);
     setMessage('');
+    setErrors({});
     try {
       const res = await fetch(`${apiUrl}/admin/reviews/submit`, {
         method: 'POST',
@@ -67,12 +70,13 @@ const ReviewFormPage = () => {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
         throw new Error(data?.message || 'Submission failed');
       }
 
-      setMessage('Thanks for sharing your feedback.');
-      setValid(false);
-      setTimeout(() => router.push('/'), 1500);
+      setSubmitted(true);
     } catch (err: any) {
       setMessage(err.message || 'Submission failed');
     } finally {
@@ -112,7 +116,7 @@ const ReviewFormPage = () => {
   if (loading) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <p className="text-sm text-[var(--muted)]">Validating link...</p>
+        <p className="text-sm font-mono uppercase tracking-widest text-[var(--muted)] animate-pulse">Validating invite token...</p>
       </main>
     );
   }
@@ -120,7 +124,61 @@ const ReviewFormPage = () => {
   if (!valid) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <p className="text-sm text-[var(--muted)]">{message}</p>
+        <div className="text-center p-8 bg-[var(--surface)] border border-[var(--border)] rounded-[2rem] max-w-md mx-6 shadow-2xl">
+          <p className="text-sm font-mono uppercase tracking-widest text-rose-400 mb-4">Verification Error</p>
+          <p className="text-base text-[var(--muted)]">{message}</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (submitted) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-[var(--background)] px-6 relative overflow-hidden">
+        {/* Spatial floating particles background */}
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse"
+              style={{
+                left: `${10 + Math.random() * 80}%`,
+                top: `${10 + Math.random() * 80}%`,
+                animationDelay: `${i * 0.3}s`,
+                animationDuration: `${3 + Math.random() * 4}s`
+              }}
+            />
+          ))}
+        </div>
+
+        <div 
+          className="contact-card flex flex-col items-center text-center max-w-xl w-full border border-[var(--border)] bg-[var(--surface)] p-10 md:p-14 rounded-[2.5rem] shadow-2xl relative z-10"
+          style={{
+            animation: 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both'
+          }}
+        >
+          {/* Spatial brutalist success icon */}
+          <div className="w-20 h-20 bg-[var(--accent)]/10 border-2 border-[var(--accent)] text-[var(--accent)] rounded-full flex items-center justify-center mb-8 relative">
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <div className="absolute inset-0 rounded-full border border-[var(--accent)]/30 animate-ping" style={{ animationDuration: '2s' }} />
+          </div>
+
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic mb-3">Transmission Successful.</h1>
+          <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-8">Testimonial Cataloged</p>
+
+          <p className="text-sm text-[var(--muted)] leading-relaxed mb-10">
+            Thank you! Your feedback has been safely captured. It is currently queued for Salah&apos;s digital display board, where it will serve as an endorsement of our successful collaboration.
+          </p>
+
+          <button
+            onClick={() => router.push('/')}
+            className="contact-btn w-full py-5 flex items-center justify-center gap-3"
+          >
+            <span>Return to Portfolio</span>
+          </button>
+        </div>
       </main>
     );
   }
@@ -131,7 +189,7 @@ const ReviewFormPage = () => {
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <div className="contact-card flex flex-col" style={{ padding: 'clamp(2rem, 5vw, 4rem)' }}>
-              <div className="flex items-center justify-between mb-10">
+              <div className="flex items-center justify-between mb-12">
                 <div className="flex flex-col gap-1">
                   <h1 className="text-3xl font-black uppercase tracking-tighter italic">Share a Review.</h1>
                   <p className="text-sm text-[var(--muted)]">Help me showcase the impact of our collaboration.</p>
@@ -146,10 +204,16 @@ const ReviewFormPage = () => {
                       placeholder=" "
                       required
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="contact-input"
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value });
+                        if (errors.name) setErrors((prev) => { const c = { ...prev }; delete c.name; return c; });
+                      }}
+                      className={`contact-input ${errors.name ? '!border-red-500/50' : ''}`}
                     />
                     <label className="contact-label">Your Name</label>
+                    {errors.name && (
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.name}</p>
+                    )}
                   </div>
 
                   <div className="contact-input-group">
@@ -158,10 +222,16 @@ const ReviewFormPage = () => {
                       placeholder=" "
                       required
                       value={formData.role}
-                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      className="contact-input"
+                      onChange={(e) => {
+                        setFormData({ ...formData, role: e.target.value });
+                        if (errors.role) setErrors((prev) => { const c = { ...prev }; delete c.role; return c; });
+                      }}
+                      className={`contact-input ${errors.role ? '!border-red-500/50' : ''}`}
                     />
                     <label className="contact-label">Role / Position</label>
+                    {errors.role && (
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.role}</p>
+                    )}
                   </div>
 
                   <div className="contact-input-group">
@@ -169,10 +239,16 @@ const ReviewFormPage = () => {
                       type="text"
                       placeholder=" "
                       value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="contact-input"
+                      onChange={(e) => {
+                        setFormData({ ...formData, company: e.target.value });
+                        if (errors.company) setErrors((prev) => { const c = { ...prev }; delete c.company; return c; });
+                      }}
+                      className={`contact-input ${errors.company ? '!border-red-500/50' : ''}`}
                     />
                     <label className="contact-label">Company (optional)</label>
+                    {errors.company && (
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.company}</p>
+                    )}
                   </div>
 
                   <div className="space-y-3">
@@ -214,15 +290,18 @@ const ReviewFormPage = () => {
                         <input
                           type="url"
                           placeholder=" "
-                          value={formData.avatar}
-                          onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
-                          className="contact-input"
+                          value={formData.avatar || ''}
+                          onChange={(e) => {
+                            setFormData({ ...formData, avatar: e.target.value });
+                            if (errors.avatar) setErrors((prev) => { const c = { ...prev }; delete c.avatar; return c; });
+                          }}
+                          className={`contact-input ${errors.avatar ? '!border-red-500/50' : ''}`}
                         />
                         <label className="contact-label">Or paste avatar URL</label>
                       </div>
 
-                      {uploadError && (
-                        <p className="text-xs text-red-400">{uploadError}</p>
+                      {(uploadError || errors.avatar) && (
+                        <p className="text-[10px] font-mono uppercase tracking-widest text-red-400">{uploadError || errors.avatar}</p>
                       )}
                     </div>
                   </div>
@@ -235,17 +314,23 @@ const ReviewFormPage = () => {
                       <button
                         key={num}
                         type="button"
-                        onClick={() => setFormData({ ...formData, rating: num })}
+                        onClick={() => {
+                          setFormData({ ...formData, rating: num });
+                          if (errors.rating) setErrors((prev) => { const c = { ...prev }; delete c.rating; return c; });
+                        }}
                         className={`flex items-center justify-center w-12 h-12 rounded-xl border transition-all ${
                           formData.rating >= num
-                            ? 'border-[var(--accent)] text-[var(--accent)]'
-                            : 'border-[var(--border)] text-[var(--muted)]'
+                            ? 'border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/5'
+                            : 'border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)]/40'
                         }`}
                       >
                         <Star size={16} className={formData.rating >= num ? 'fill-[var(--accent)]' : ''} />
                       </button>
                     ))}
                   </div>
+                  {errors.rating && (
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.rating}</p>
+                  )}
                 </div>
 
                 <div className="contact-input-group">
@@ -254,22 +339,28 @@ const ReviewFormPage = () => {
                     required
                     rows={5}
                     value={formData.text}
-                    onChange={(e) => setFormData({ ...formData, text: e.target.value })}
-                    className="contact-input resize-none"
+                    onChange={(e) => {
+                      setFormData({ ...formData, text: e.target.value });
+                      if (errors.text) setErrors((prev) => { const c = { ...prev }; delete c.text; return c; });
+                    }}
+                    className={`contact-input resize-none ${errors.text ? '!border-red-500/50' : ''}`}
                   />
                   <label className="contact-label">Your Review</label>
+                  {errors.text && (
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.text}</p>
+                  )}
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="contact-btn w-full"
+                    className="contact-btn w-full flex items-center justify-center gap-3"
                   >
-                    {submitting ? 'Submitting...' : 'Submit Review'}
+                    <span>{submitting ? 'Transmitting...' : 'Submit Review'}</span>
                   </button>
-                  {message && (
-                    <p className="text-center mt-6 text-xs font-mono uppercase tracking-widest text-[var(--muted)]">
+                  {message && !submitted && (
+                    <p className="text-center mt-6 text-xs font-mono uppercase tracking-widest text-rose-400">
                       {message}
                     </p>
                   )}
