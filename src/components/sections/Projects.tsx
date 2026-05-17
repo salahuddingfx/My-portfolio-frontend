@@ -281,9 +281,9 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                   key={project._id || i}
                   className="sticky block"
                   style={{
-                    top: `${100 + i * 60}px`,
-                    zIndex: displayProjects.length - i,
-                    marginBottom: i < displayProjects.length - 1 ? "-100px" : "0",
+                    top: `${100 + i * 40}px`,
+                    zIndex: i + 1,
+                    marginBottom: i < displayProjects.length - 1 ? "10vh" : "0",
                   }}
                 >
                   <div
