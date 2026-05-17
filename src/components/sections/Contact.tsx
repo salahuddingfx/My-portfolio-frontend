@@ -92,7 +92,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-shell pt-40 pb-40 bg-(--background) relative overflow-hidden">
+    <section id="contact" className="section-shell pt-24 pb-20 bg-(--background) relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-200 h-200 bg-(--accent)/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4" />
       <div className="absolute bottom-0 left-0 w-150 h-150 bg-(--accent)/5 blur-[120px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4" />
@@ -166,7 +166,7 @@ const Contact = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.8 }}
-              className="mt-20 pt-10 border-t border-(--border)"
+              className="mt-12 pt-8 border-t border-(--border)"
             >
               <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-6">Social Networks</p>
               <div className="flex flex-wrap gap-x-8 gap-y-4">
@@ -187,7 +187,7 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-8 w-full min-w-0"
           >
-            <div className="contact-card p-8 md:p-14 lg:p-16 flex flex-col h-full">
+            <div className="contact-card p-6 md:p-10 lg:p-12 flex flex-col h-full">
               <div className="flex items-center justify-between mb-16">
                 <div className="space-y-1">
                   <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>

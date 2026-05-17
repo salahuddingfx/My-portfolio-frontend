@@ -205,10 +205,10 @@
   align-items: center;
   justify-content: center;
 
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
 
-  border-radius: 0.9rem;
+  border-radius: 50%;
 
   color: var(--muted-soft);
 
@@ -745,7 +745,7 @@ video {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 700;
-  color: var(--muted);
+  color: rgba(255,255,255,0.6);
   pointer-events: none;
   transition: all var(--duration-base) var(--ease-out);
 }
