@@ -97,7 +97,7 @@ const Projects = () => {
       id="projects" 
       className="relative min-h-screen bg-[var(--background)] border-y border-[var(--border)] overflow-hidden"
     >
-      <div className="pt-24 pb-12">
+      <div className="pb-12" style={{ paddingTop: '130px' }}>
         <div className="container">
           {/* Centered Header */}
           <div className="text-center max-w-2xl mx-auto" style={{ marginBottom: '4rem' }}>
