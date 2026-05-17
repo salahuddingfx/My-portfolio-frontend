@@ -407,7 +407,7 @@ video {
 
 .section-shell {
   position: relative;
-  padding-top: 130px;
+  padding-top: 95px;
   padding-bottom: var(--space-20);
   overflow: hidden;
   z-index: var(--z-base);
@@ -415,7 +415,7 @@ video {
 
 @media (max-width: 767px) {
   .section-shell {
-    padding-top: 100px;
+    padding-top: 75px;
     padding-bottom: var(--space-16);
   }
 }
