@@ -22,6 +22,11 @@ export function ScrollEffects() {
         // Ensure they stack on top of each other correctly
         gsap.set(section, { zIndex: i });
 
+        // Add a subtle 5px margin-top to home page sections (except Hero) to create a premium stacked gap
+        if (i > 0) {
+          gsap.set(section, { marginTop: "5px" });
+        }
+
         // Only pin sections if they are NOT the last two (Section before Footer and Footer itself)
         // This allows a natural scroll into the footer at the end of the page.
         if (i < sections.length - 2) {
