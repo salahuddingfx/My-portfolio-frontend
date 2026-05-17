@@ -316,16 +316,16 @@ export default function AboutPage() {
                 }}
               />
 
-              {/* MOBILE TRACKS (Left Aligned) */}
-              <div className="absolute left-5 top-2 bottom-2 w-[2px] bg-white/[0.08] lg:hidden" />
+              {/* MOBILE TRACKS (Left Aligned - Perfectly matching left-8) */}
+              <div className="absolute left-8 top-2 bottom-2 w-[2px] bg-white/[0.08] lg:hidden" />
               <div 
                 ref={lineMobileRef} 
-                className="absolute left-5 top-2 w-[2px] bg-[var(--accent)] origin-top lg:hidden" 
+                className="absolute left-8 top-2 w-[2px] bg-[var(--accent)] origin-top lg:hidden" 
                 style={{ height: '0%' }} 
               />
               <div 
                 ref={glowMobileRef} 
-                className="absolute left-5 top-2 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
+                className="absolute left-8 top-2 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
                 style={{
                   boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
                   transform: 'translate(-50%, -50%)'
@@ -338,40 +338,35 @@ export default function AboutPage() {
                 return (
                   <div 
                     key={i} 
-                    className="timeline-item relative w-full grid grid-cols-1 lg:grid-cols-2 items-center mb-20 lg:mb-24 last:mb-0 px-4 sm:px-6 lg:px-0"
+                    className="timeline-item relative w-full grid grid-cols-1 lg:grid-cols-2 items-center mb-20 lg:mb-24 last:mb-0 px-0"
                   >
-                    {/* Center / Left Rounded Square Badge */}
+                    {/* Center / Left Rounded Square Badge (Aligned at left-8 on mobile, left-1/2 on desktop) */}
                     <div 
-                      className="timeline-badge absolute left-5 lg:left-1/2 top-1/2 w-14 h-14 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
+                      className="timeline-badge absolute left-8 lg:left-1/2 top-1/2 w-14 h-14 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
                     >
                       <Icon size={18} className="timeline-icon transition-colors" />
                     </div>
 
-                    {/* Responsive Alternating Card Content Wrapper (to handle floating margins/padding) */}
+                    {/* Alternating Card Content with precise Margins & Internal Padding */}
                     <div 
-                      className={`w-full flex lg:col-span-1 
+                      className={`timeline-content w-full max-w-[460px] flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-8 transition-all duration-500 transform-gpu opacity-70 
                         ${isEven 
-                          ? 'lg:col-start-1 lg:justify-end lg:pr-12 pl-14 lg:pl-0' 
-                          : 'lg:col-start-2 lg:justify-start lg:pl-12 pl-14'
+                          ? 'lg:col-start-1 lg:ml-auto lg:mr-12 lg:text-right lg:items-end ml-20 mr-4' 
+                          : 'lg:col-start-2 lg:mr-auto lg:ml-12 lg:text-left lg:items-start ml-20 mr-4'
                         }`}
                     >
-                      <div 
-                        className={`timeline-content w-full max-w-[460px] flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-6 transition-all duration-500 transform-gpu opacity-70 
-                          ${isEven ? 'lg:text-right lg:items-end' : 'lg:text-left lg:items-start'}`}
-                      >
-                        <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
-                          {item.year}
-                        </span>
-                        <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                          {item.role}
-                        </h3>
-                        <span className="text-xs text-[var(--accent)] font-medium">
-                          {item.company}
-                        </span>
-                        <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2 max-w-[460px]">
-                          {item.desc}
-                        </p>
-                      </div>
+                      <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+                        {item.year}
+                      </span>
+                      <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                        {item.role}
+                      </h3>
+                      <span className="text-xs text-[var(--accent)] font-medium">
+                        {item.company}
+                      </span>
+                      <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2 max-w-[460px]">
+                        {item.desc}
+                      </p>
                     </div>
                   </div>
                 );
