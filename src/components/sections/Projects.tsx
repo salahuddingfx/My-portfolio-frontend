@@ -62,6 +62,13 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
         setProjects(FALLBACK_PROJECTS);
       } finally {
         setLoading(false);
+        setTimeout(() => {
+          if (typeof window !== "undefined") {
+            import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+              ScrollTrigger.refresh();
+            });
+          }
+        }, 100);
       }
     };
     fetchProjects();

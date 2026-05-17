@@ -37,9 +37,15 @@ const Services = () => {
           setServices(data.sort((a: ServiceItem, b: ServiceItem) => a.order - b.order));
         }
       } catch {
-        // keep empty
       } finally {
         setLoading(false);
+        setTimeout(() => {
+          if (typeof window !== "undefined") {
+            import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+              ScrollTrigger.refresh();
+            });
+          }
+        }, 100);
       }
     };
     fetchServices();

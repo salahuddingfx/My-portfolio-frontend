@@ -55,19 +55,18 @@ const Testimonials = () => {
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
           setReviews(data);
-          // Refresh GSAP ScrollTrigger after layout updates with new data
-          setTimeout(() => {
-            if (typeof window !== "undefined") {
-              import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-                ScrollTrigger.refresh();
-              });
-            }
-          }, 100);
         }
       } catch {
         /* use fallback */
       } finally {
         setLoading(false);
+        setTimeout(() => {
+          if (typeof window !== "undefined") {
+            import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+              ScrollTrigger.refresh();
+            });
+          }
+        }, 100);
       }
     };
     fetch_();
