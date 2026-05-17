@@ -152,7 +152,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
               {displayProjects.map((project, i) => (
                 <div
                   key={project._id || i}
-                  className="relative w-[280px] sm:w-[420px] md:w-[500px] shrink-0 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group flex flex-col justify-between p-3 sm:p-5"
+                  className="relative w-[280px] sm:w-[420px] md:w-[500px] shrink-0 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group flex flex-col justify-between p-5 sm:p-7"
                 >
                   <Link
                     href={`/projects/${project._id}`}
@@ -172,7 +172,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                   </div>
 
                   {/* Content container */}
-                  <div className="pt-5 sm:pt-6 flex flex-col gap-4 flex-grow justify-between">
+                  <div className="pt-6 sm:pt-8 flex flex-col gap-4 flex-grow justify-between px-1">
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
                         <span className="text-xs font-mono text-[var(--muted-soft)]">
@@ -287,7 +287,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                   }}
                 >
                   <div
-                    className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group p-3 sm:p-5"
+                    className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group p-5 sm:p-7 lg:p-8"
                   >
                     <Link
                       href={`/projects/${project._id}`}
@@ -306,7 +306,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
                         />
                       </div>
 
-                      <div className="lg:col-span-5 flex flex-col justify-center gap-4 py-4 lg:py-8 lg:pr-8">
+                      <div className="lg:col-span-5 flex flex-col justify-center gap-4 py-4 lg:py-6 lg:px-6">
                         <div className="flex items-center gap-3">
                           <span className="text-xs font-mono text-[var(--muted-soft)]">
                             {String(i + 1).padStart(2, "0")}
