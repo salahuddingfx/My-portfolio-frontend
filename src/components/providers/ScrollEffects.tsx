@@ -4,10 +4,16 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { usePathname } from "next/navigation";
+
 gsap.registerPlugin(ScrollTrigger);
 
 export function ScrollEffects() {
+  const pathname = usePathname();
+
   useEffect(() => {
+    if (pathname !== "/") return;
+
     const ctx = gsap.context(() => {
       // Select all sections and the footer within main to apply the overlap effect
       const sections = gsap.utils.toArray<HTMLElement>("main > section, main > footer");
@@ -49,7 +55,7 @@ export function ScrollEffects() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [pathname]);
 
   return null;
 }
