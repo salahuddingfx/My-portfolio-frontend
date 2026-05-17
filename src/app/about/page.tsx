@@ -338,18 +338,18 @@ export default function AboutPage() {
                 return (
                   <div 
                     key={i} 
-                    className="relative w-full min-h-[100px] grid grid-cols-1 lg:grid-cols-2 mb-16 last:mb-0"
+                    className="timeline-item relative w-full min-h-[140px] grid grid-cols-1 lg:grid-cols-2 mb-28 lg:mb-36 last:mb-0"
                   >
                     {/* Center / Left Rounded Square Badge */}
                     <div 
-                      className="timeline-badge absolute left-5 lg:left-1/2 top-[24px] w-10 h-10 rounded-lg bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
+                      className="timeline-badge absolute left-5 lg:left-1/2 top-[24px] w-12 h-12 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
                     >
-                      <Icon size={16} className="timeline-icon transition-colors" />
+                      <Icon size={18} className="timeline-icon transition-colors" />
                     </div>
 
                     {/* Responsive Alternating Card Content */}
                     <div 
-                      className={`timeline-content flex flex-col gap-1 transition-all duration-500 transform-gpu opacity-30 pl-14 lg:pl-0 lg:col-span-1 
+                      className={`timeline-content flex flex-col gap-1.5 transition-all duration-500 transform-gpu opacity-25 pl-14 lg:pl-0 lg:col-span-1 
                         ${isEven 
                           ? 'lg:col-start-1 lg:pr-24 lg:text-right lg:items-end' 
                           : 'lg:col-start-2 lg:pl-24 lg:text-left lg:items-start'
