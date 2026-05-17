@@ -82,28 +82,50 @@ export default function AboutPage() {
     if (!container || !line || !lineMobile || !glow || !glowMobile) return;
 
     const ctx = gsap.context(() => {
-      // 1. Continuous center line growth & comet glide
-      const trackTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: "top 60%",
-          end: "bottom 60%",
-          scrub: 0.5,
-        }
+      // ── Fix #5: Glow comet position fix ──
+      // Instead of animating `top` to "100%", we animate a CSS variable
+      // so the glow tracks the tip of the growing line correctly.
+      // We use a proxy object and update the transform in onUpdate.
+
+      const trackProxy = { progress: 0 };
+
+      const updateGlowPosition = (glowEl: HTMLElement, lineEl: HTMLElement, progress: number) => {
+        const lineHeight = lineEl.offsetHeight;
+        // "progress" here is the ScrollTrigger progress (0→1).
+        // But we want the glow at the *tip* of the line, which tracks
+        // scrub progress too. We read lineEl's current scaleY via getBoundingClientRect.
+        const rect = lineEl.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const tipY = rect.top - containerRect.top + rect.height;
+        glowEl.style.transform = `translate(-50%, 0) translateY(${tipY}px)`;
+      };
+
+      ScrollTrigger.create({
+        trigger: container,
+        start: "top 60%",
+        end: "bottom 60%",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const p = self.progress;
+
+          // Grow the lines
+          gsap.set([line, lineMobile], { height: `${p * 100}%` });
+
+          // ── Fix #5 resolved: glow tracks line tip via height% ──
+          // Position glow at the tip of the line using percentage-based top
+          gsap.set(glow, {
+            top: `calc(${p * 100}% + 2px)`,
+            opacity: p > 0.01 ? 1 : 0,
+          });
+          gsap.set(glowMobile, {
+            top: `calc(${p * 100}% + 2px)`,
+            opacity: p > 0.01 ? 1 : 0,
+          });
+        },
       });
 
-      trackTl.to([line, lineMobile], {
-        height: "100%",
-        ease: "none"
-      }, 0);
-
-      trackTl.to([glow, glowMobile], {
-        top: "100%",
-        opacity: 1,
-        ease: "none"
-      }, 0);
-
-      // 2. Individual card scroll-in (enter from bottom) and scroll-out (exit to top)
+      // ── Fix #4: Per-card scroll animation with better timing ──
+      // ── Fix #6: Set GSAP initial state BEFORE Tailwind class renders ──
       const items = container.querySelectorAll(".timeline-item");
 
       items.forEach((item) => {
@@ -113,69 +135,61 @@ export default function AboutPage() {
 
         if (!badge || !icon || !content) return;
 
-        // A single, cohesive scroll-bound GSAP timeline per card
-        // This guarantees zero timeline conflicts or visual jumps on scroll!
+        // ── Fix #6: Set initial opacity via GSAP immediately to prevent Tailwind flash ──
+        gsap.set(content, { opacity: 0.55, scale: 0.98, filter: "blur(1px)" });
+        gsap.set(badge,   { opacity: 0.6, scale: 0.95 });
+        gsap.set(icon,    { opacity: 0.6, scale: 0.95 });
+
+        // ── Fix #4: Use longer scrub range to prevent fast-scroll skip ──
+        // start early (80%), end late (20%) = more time in viewport = reliable phasing
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: item,
-            start: "top 95%",   // Starts animating when entering bottom viewport
-            end: "bottom 5%",   // Completes when leaving top viewport
-            scrub: 0.5,
+            start: "top 85%",    // earlier entry
+            end:   "bottom 15%", // later exit
+            scrub: 1,            // slightly more lag = smoother
           }
         });
 
-        // PHASE 1: ENTER & FOCUS REVEAL (Progress 0.0 -> 0.3)
-        tl.fromTo(content, 
-          { opacity: 0.55, scale: 0.98, filter: "blur(1px)", boxShadow: "none" },
-          { 
-            opacity: 1, 
-            scale: 1, 
-            filter: "blur(0px)", 
-            boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(168,85,247,0.12)",
-            duration: 0.3,
-            ease: "power1.out"
-          },
-          0
-        );
+        // PHASE 1: ENTER (0.0 → 0.25)
+        tl.to(content, {
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(168,85,247,0.12)",
+          duration: 0.25,
+          ease: "power1.out",
+        }, 0);
 
-        tl.fromTo(badge,
-          { opacity: 0.6, scale: 0.95, borderColor: "var(--border)", backgroundColor: "var(--surface-2)", boxShadow: "none" },
-          { 
-            opacity: 1, 
-            scale: 1.1, 
-            borderColor: "var(--accent)", 
-            backgroundColor: "var(--surface)", 
-            boxShadow: "0 0 15px rgba(168, 85, 247, 0.45)",
-            duration: 0.3,
-            ease: "power1.out"
-          },
-          0
-        );
+        tl.to(badge, {
+          opacity: 1,
+          scale: 1.08,
+          borderColor: "var(--accent)",
+          backgroundColor: "var(--surface)",
+          boxShadow: "0 0 15px rgba(168, 85, 247, 0.45)",
+          duration: 0.25,
+          ease: "power1.out",
+        }, 0);
 
-        tl.fromTo(icon,
-          { opacity: 0.6, scale: 0.95, color: "var(--muted)" },
-          { 
-            opacity: 1, 
-            color: "var(--accent)", 
-            scale: 1.12,
-            duration: 0.3,
-            ease: "power1.out"
-          },
-          0
-        );
+        tl.to(icon, {
+          opacity: 1,
+          color: "var(--accent)",
+          scale: 1.12,
+          duration: 0.25,
+          ease: "power1.out",
+        }, 0);
 
-        // PHASE 2: FOCUS HOLD (Progress 0.3 -> 0.7)
-        // Keep elements fully visible & focused in viewport center region. No tweens needed.
+        // PHASE 2: HOLD (0.25 → 0.75) — no tweens, items stay highlighted
 
-        // PHASE 3: EXIT & DIM OUT (Progress 0.7 -> 1.0)
+        // PHASE 3: EXIT (0.75 → 1.0)
         tl.to(content, {
           opacity: 0.55,
           scale: 0.98,
           filter: "blur(1px)",
           boxShadow: "none",
-          duration: 0.3,
-          ease: "power1.in"
-        }, 0.7);
+          duration: 0.25,
+          ease: "power1.in",
+        }, 0.75);
 
         tl.to(badge, {
           opacity: 0.6,
@@ -183,17 +197,17 @@ export default function AboutPage() {
           borderColor: "var(--border)",
           backgroundColor: "var(--surface-2)",
           boxShadow: "none",
-          duration: 0.3,
-          ease: "power1.in"
-        }, 0.7);
+          duration: 0.25,
+          ease: "power1.in",
+        }, 0.75);
 
         tl.to(icon, {
           opacity: 0.6,
           color: "var(--muted)",
           scale: 1,
-          duration: 0.3,
-          ease: "power1.in"
-        }, 0.7);
+          duration: 0.25,
+          ease: "power1.in",
+        }, 0.75);
       });
     }, container);
 
@@ -305,36 +319,37 @@ export default function AboutPage() {
           {/* Center-Split Timeline Container */}
           <div className="w-full max-w-4xl mx-auto relative">
             <div ref={containerRef} className="relative w-full flex flex-col gap-0 select-none">
-              
-              {/* DESKTOP TRACKS (Centered) */}
-              <div className="absolute left-1/2 top-2 bottom-2 w-[2px] bg-white/[0.08] -translate-x-1/2 hidden lg:block" />
-              <div 
-                ref={lineRef} 
-                className="absolute left-1/2 top-2 w-[2px] bg-[var(--accent)] origin-top transform-gpu -translate-x-1/2 hidden lg:block" 
-                style={{ height: '0%' }} 
+
+              {/* ── DESKTOP TRACK (Centered) ── */}
+              <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-white/[0.07] -translate-x-1/2 hidden lg:block" />
+              <div
+                ref={lineRef}
+                className="absolute left-1/2 top-0 w-[2px] bg-[var(--accent)] origin-top -translate-x-1/2 hidden lg:block"
+                style={{ height: "0%" }}
               />
-              <div 
-                ref={glowRef} 
-                className="absolute left-1/2 top-2 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20"
+              {/* ── Fix #5: glow positioned at top-0, translateY driven by GSAP ── */}
+              <div
+                ref={glowRef}
+                className="absolute left-1/2 top-0 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20 hidden lg:block"
                 style={{
-                  boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
-                  transform: 'translate(-50%, -50%)'
+                  boxShadow: "0 0 8px var(--accent), 0 0 18px var(--accent), 0 0 28px var(--accent)",
+                  transform: "translate(-50%, -50%)",
                 }}
               />
 
-              {/* MOBILE TRACKS (Left Aligned - Perfectly matching left-8) */}
-              <div className="absolute left-8 top-2 bottom-2 w-[2px] bg-white/[0.08] lg:hidden" />
-              <div 
-                ref={lineMobileRef} 
-                className="absolute left-8 top-2 w-[2px] bg-[var(--accent)] origin-top lg:hidden" 
-                style={{ height: '0%' }} 
+              {/* ── MOBILE TRACK (Left Aligned) ── */}
+              <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-white/[0.07] lg:hidden" />
+              <div
+                ref={lineMobileRef}
+                className="absolute left-8 top-0 w-[2px] bg-[var(--accent)] origin-top lg:hidden"
+                style={{ height: "0%" }}
               />
-              <div 
-                ref={glowMobileRef} 
-                className="absolute left-8 top-2 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
+              <div
+                ref={glowMobileRef}
+                className="absolute left-8 top-0 w-[12px] h-[12px] rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
                 style={{
-                  boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
-                  transform: 'translate(-50%, -50%)'
+                  boxShadow: "0 0 8px var(--accent), 0 0 18px var(--accent), 0 0 28px var(--accent)",
+                  transform: "translate(-50%, -50%)",
                 }}
               />
 
@@ -342,37 +357,91 @@ export default function AboutPage() {
                 const Icon = item.icon;
                 const isEven = i % 2 === 0;
                 return (
-                  <div 
-                    key={i} 
-                    className="timeline-item relative w-full grid grid-cols-1 lg:grid-cols-2 items-center mb-20 lg:mb-24 last:mb-0 px-0"
+                  <div
+                    key={i}
+                    className="timeline-item relative w-full mb-16 lg:mb-24 last:mb-0"
                   >
-                    {/* Center / Left Rounded Square Badge (Aligned at left-8 on mobile, left-1/2 on desktop) */}
-                    <div 
-                      className="timeline-badge absolute left-8 lg:left-1/2 top-1/2 w-14 h-14 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
-                    >
-                      <Icon size={18} className="timeline-icon transition-colors" />
+                    {/* ── Fix #1 & #2: Separate mobile and desktop layouts ── */}
+
+                    {/* MOBILE LAYOUT: simple left-offset card, badge on the left rail */}
+                    <div className="lg:hidden flex items-start gap-0">
+                      {/* Spacer for the left rail (badge sits on top via absolute) */}
+                      <div className="w-16 shrink-0" />
+                      {/* Card: full width, clear of the badge */}
+                      <div className="timeline-content flex-1 min-w-0 flex flex-col gap-2 rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-5 mr-2">
+                        <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+                          {item.year}
+                        </span>
+                        <h3 className="text-[18px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                          {item.role}
+                        </h3>
+                        <span className="text-xs text-[var(--accent)] font-medium">
+                          {item.company}
+                        </span>
+                        <p className="text-[14px] text-[var(--muted)] leading-[1.75] mt-1">
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
 
-                    {/* Alternating Card Content with precise Margins & Internal Padding */}
-                    <div 
-                      className={`timeline-content w-full max-w-[460px] flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-8 transition-all duration-500 transform-gpu opacity-70 
-                        ${isEven 
-                          ? 'lg:col-start-1 lg:ml-auto lg:mr-12 lg:text-right lg:items-end ml-20 mr-4' 
-                          : 'lg:col-start-2 lg:mr-auto lg:ml-12 lg:text-left lg:items-start ml-20 mr-4'
-                        }`}
+                    {/* DESKTOP LAYOUT: two-column alternating */}
+                    <div className="hidden lg:grid lg:grid-cols-2 items-center min-h-[160px]">
+                      {isEven ? (
+                        <>
+                          {/* Card on LEFT */}
+                          <div className="timeline-content flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-8 mr-12 text-right items-end">
+                            <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+                              {item.year}
+                            </span>
+                            <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                              {item.role}
+                            </h3>
+                            <span className="text-xs text-[var(--accent)] font-medium">
+                              {item.company}
+                            </span>
+                            <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2">
+                              {item.desc}
+                            </p>
+                          </div>
+                          {/* Empty right col (badge is absolute center) */}
+                          <div />
+                        </>
+                      ) : (
+                        <>
+                          {/* Empty left col */}
+                          <div />
+                          {/* Card on RIGHT */}
+                          <div className="timeline-content flex flex-col gap-2 rounded-[28px] border border-white/[0.06] bg-white/[0.03] backdrop-blur-md p-8 ml-12 text-left items-start">
+                            <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
+                              {item.year}
+                            </span>
+                            <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                              {item.role}
+                            </h3>
+                            <span className="text-xs text-[var(--accent)] font-medium">
+                              {item.company}
+                            </span>
+                            <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </>
+                      )}
+                    </div>
+
+                    {/* ── Fix #2: Badge — absolute center on desktop, absolute left-rail on mobile ── */}
+                    {/* Desktop badge: centered on the vertical axis between the two cols */}
+                    <div
+                      className="timeline-badge absolute left-1/2 top-1/2 w-14 h-14 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transform-gpu hidden lg:flex"
                     >
-                      <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
-                        {item.year}
-                      </span>
-                      <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                        {item.role}
-                      </h3>
-                      <span className="text-xs text-[var(--accent)] font-medium">
-                        {item.company}
-                      </span>
-                      <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2 max-w-[460px]">
-                        {item.desc}
-                      </p>
+                      <Icon size={18} className="timeline-icon" />
+                    </div>
+
+                    {/* Mobile badge: sits on the left rail track at the top of the card */}
+                    <div
+                      className="timeline-badge absolute left-8 top-[1.25rem] w-10 h-10 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 transform-gpu flex lg:hidden"
+                    >
+                      <Icon size={14} className="timeline-icon" />
                     </div>
                   </div>
                 );
