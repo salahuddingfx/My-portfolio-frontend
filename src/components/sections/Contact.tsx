@@ -342,11 +342,7 @@ const Contact = () => {
                         className="contact-btn w-full group flex items-center justify-center gap-4 py-5"
                       >
                         <span className="text-sm">
-                          {status === "sending"
-                            ? "Sending..."
-                            : status === "success"
-                            ? "Message Delivered"
-                            : "Initialize Transmission"}
+                          {status === "sending" ? "Sending..." : "Initialize Transmission"}
                         </span>
                         <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </button>
