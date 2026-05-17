@@ -16,6 +16,8 @@ const ReviewFormPage = () => {
   const [valid, setValid] = useState(false);
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -75,6 +77,35 @@ const ReviewFormPage = () => {
       setMessage(err.message || 'Submission failed');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleAvatarUpload = async (file: File) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) return;
+
+    setUploading(true);
+    setUploadError('');
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const res = await fetch(`${apiUrl}/admin/reviews/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.message || 'Upload failed');
+      }
+
+      const data = await res.json();
+      setFormData((prev) => ({ ...prev, avatar: data.url || '' }));
+    } catch (err: any) {
+      setUploadError(err.message || 'Upload failed');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -144,15 +175,56 @@ const ReviewFormPage = () => {
                     <label className="contact-label">Company (optional)</label>
                   </div>
 
-                  <div className="contact-input-group">
-                    <input
-                      type="url"
-                      placeholder=" "
-                      value={formData.avatar}
-                      onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
-                      className="contact-input"
-                    />
-                    <label className="contact-label">Avatar URL (optional)</label>
+                  <div className="space-y-3">
+                    <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Avatar (optional)</p>
+                    <div className="flex flex-col gap-3">
+                      {formData.avatar ? (
+                        <div className="flex items-center gap-4">
+                          <img
+                            src={formData.avatar}
+                            alt="Avatar preview"
+                            className="h-16 w-16 rounded-2xl object-cover border border-[var(--border)]"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, avatar: '' })}
+                            className="text-xs text-[var(--muted)] hover:text-white transition"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl border border-[var(--border)] text-xs text-[var(--muted)] hover:text-white hover:border-[var(--accent)]/60 transition cursor-pointer w-fit">
+                          {uploading ? 'Uploading...' : 'Upload avatar'}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            disabled={uploading}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) handleAvatarUpload(file);
+                              e.currentTarget.value = '';
+                            }}
+                          />
+                        </label>
+                      )}
+
+                      <div className="contact-input-group">
+                        <input
+                          type="url"
+                          placeholder=" "
+                          value={formData.avatar}
+                          onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
+                          className="contact-input"
+                        />
+                        <label className="contact-label">Or paste avatar URL</label>
+                      </div>
+
+                      {uploadError && (
+                        <p className="text-xs text-red-400">{uploadError}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
 
