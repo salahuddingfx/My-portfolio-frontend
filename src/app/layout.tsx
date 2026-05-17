@@ -60,13 +60,24 @@ export const metadata: Metadata = {
     "Portfolio of Salah Uddin Kader — Full Stack Developer focused on modern interfaces, interactive experiences, and thoughtful digital products.",
 
   keywords: [
+    "salahuddingfx",
     "Salah Uddin Kader",
     "Full Stack Developer",
     "Next.js Developer",
     "React Developer",
     "Frontend Developer",
-    "Portfolio",
+    "MERN Stack Developer",
+    "Cox's Bazar",
+    "Cox's Bazar web developer",
+    "Chittagong",
+    "Chittagong web developer",
     "Bangladesh",
+    "Bangladeshi web developer",
+    "Web Developer",
+    "TypeScript Developer",
+    "Three.js Developer",
+    "Portfolio",
+    "Web Development",
   ],
 
   authors: [{ name: "Salah Uddin Kader" }],
@@ -118,6 +129,50 @@ export default function RootLayout({
           <SettingsProvider>
             <VisitorTracker />
             <div className="noise-overlay" />
+
+          {/* JSON-LD Structured Data */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "Salah Uddin Kader",
+                alternateName: "salahuddingfx",
+                url: "https://salahuddin.codes",
+                image: "https://salahuddin.codes/mine-photo.png",
+                jobTitle: "Full Stack Developer",
+                knowsAbout: [
+                  "React", "Next.js", "TypeScript", "Node.js",
+                  "MongoDB", "Express", "Three.js", "Web Development",
+                ],
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: "Cox's Bazar",
+                  addressRegion: "Chittagong",
+                  addressCountry: "Bangladesh",
+                },
+                sameAs: [
+                  "https://github.com/salahuddingfx",
+                  "https://linkedin.com/in/salahuddingfx",
+                ],
+              }),
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: "Salah Uddin Kader",
+                alternateName: "salahuddingfx",
+                url: "https://salahuddin.codes",
+                description:
+                  "Portfolio of Salah Uddin Kader — Full Stack Developer from Cox's Bazar, Bangladesh.",
+              }),
+            }}
+          />
 
           {/* GLOBAL EFFECTS */}
           <ScrollProgress />

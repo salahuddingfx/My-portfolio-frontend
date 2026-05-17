@@ -1,39 +1,19 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Tag } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
-const services = [
-  {
-    index: "01",
-    title: "Web Development",
-    desc: "Building fast, reliable web applications using modern frameworks and best practices. From landing pages to complex full-stack products.",
-    tech: ["Next.js", "React", "TypeScript"],
-    href: "/services",
-  },
-  {
-    index: "02",
-    title: "UI & Experience Design",
-    desc: "Designing clean, functional interfaces that are a pleasure to use. Focused on clarity, accessibility, and thoughtful interaction.",
-    tech: ["Framer Motion", "GSAP", "Figma"],
-    href: "/services",
-  },
-  {
-    index: "03",
-    title: "Backend & APIs",
-    desc: "Building robust server-side systems, RESTful APIs, and database architectures that scale reliably under real-world conditions.",
-    tech: ["Node.js", "Express", "MySQL"],
-    href: "/services",
-  },
-  {
-    index: "04",
-    title: "Auth & Security",
-    desc: "Implementing secure authentication, authorization, and data protection systems across web applications of all sizes.",
-    tech: ["JWT", "OAuth", "Encryption"],
-    href: "/services",
-  },
-];
+interface ServiceItem {
+  _id: string;
+  title: string;
+  description: string;
+  price: string;
+  icon: string;
+  tags: string[];
+  order: number;
+}
 
 const fadeUp = {
   initial:     { opacity: 0, y: 20 },
@@ -42,6 +22,29 @@ const fadeUp = {
 };
 
 const Services = () => {
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        if (!apiUrl) return;
+        const res = await fetch(`${apiUrl}/admin/services`);
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setServices(data.sort((a: ServiceItem, b: ServiceItem) => a.order - b.order));
+        }
+      } catch {
+        // keep empty
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
   return (
     <section id="services" className="section-shell bg-[var(--background)]">
       <div className="container">
@@ -58,57 +61,75 @@ const Services = () => {
         </div>
 
         {/* Service cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '1.25rem' }}>
-          {services.map((service, i) => (
-            <motion.div
-              key={service.index}
-              {...fadeUp}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="card card-hover group flex flex-col h-full p-7"
-            >
-              {/* Number */}
-              <span className="text-xs font-mono text-[var(--muted-soft)] mb-5">
-                {service.index}
-              </span>
-
-              {/* Title */}
-              <h3
-                className="text-xl font-semibold text-white mb-3 group-hover:text-[var(--foreground)] transition-colors duration-200"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
+        {loading ? (
+          <div className="py-16 text-center">
+            <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading services...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '1.25rem' }}>
+            {services.map((service, i) => (
+              <motion.div
+                key={service._id}
+                {...fadeUp}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="card card-hover group flex flex-col h-full p-7"
               >
-                {service.title}
-              </h3>
+                {/* Number + Icon */}
+                <span className="text-xs font-mono text-[var(--muted-soft)] mb-5 flex items-center gap-3">
+                  {String(i + 1).padStart(2, "0")}
+                  {service.icon && (
+                    <span className="text-lg">{service.icon}</span>
+                  )}
+                </span>
 
-              {/* Description */}
-              <p className="text-sm text-[var(--muted)] leading-relaxed flex-grow mb-5">
-                {service.desc}
-              </p>
-
-              {/* Tech tags */}
-              <div className="flex flex-wrap gap-1.5 mb-6">
-                {service.tech.map((t) => (
-                  <span key={t} className="badge group-hover:border-[var(--border-hover)] group-hover:text-white/60 transition-colors duration-200">
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {/* Link */}
-              <div className="border-t border-[var(--border)] pt-5">
-                <Link
-                  href={service.href}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200 group/link"
+                {/* Title */}
+                <h3
+                  className="text-xl font-semibold text-white mb-3 group-hover:text-[var(--foreground)] transition-colors duration-200"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
-                  Learn more
-                  <ArrowUpRight
-                    size={13}
-                    className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200"
-                  />
-                </Link>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  {service.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-sm text-[var(--muted)] leading-relaxed flex-grow mb-5">
+                  {service.description}
+                </p>
+
+                {/* Price */}
+                {service.price && (
+                  <div className="text-xs font-mono text-[var(--accent)] mb-4 uppercase tracking-widest">
+                    {service.price}
+                  </div>
+                )}
+
+                {/* Tags */}
+                {service.tags && service.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {service.tags.map((t) => (
+                      <span key={t} className="badge group-hover:border-[var(--border-hover)] group-hover:text-white/60 transition-colors duration-200">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Link */}
+                <div className="border-t border-[var(--border)] pt-5">
+                  <Link
+                    href="/services"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200 group/link"
+                  >
+                    Learn more
+                    <ArrowUpRight
+                      size={13}
+                      className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200"
+                    />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

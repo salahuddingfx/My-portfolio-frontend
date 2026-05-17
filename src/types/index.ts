@@ -1,11 +1,13 @@
 import { LucideIcon } from "lucide-react";
 
 export interface Service {
-  index: string;
+  _id: string;
   title: string;
-  icon: LucideIcon;
-  desc: string;
-  tech: string[];
+  description: string;
+  price: string;
+  icon: string;
+  tags: string[];
+  order: number;
 }
 
 export interface Project {
