@@ -68,7 +68,7 @@ const Footer = () => {
 
       <div className="container relative z-10 max-w-7xl">
         {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14 border-b border-white/[0.06] pt-12 pb-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14 border-b border-white/[0.06] lg:gap-16" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
           
           {/* Brand Column */}
           <div className="flex flex-col lg:pr-10" style={{ gap: '2rem' }}>
