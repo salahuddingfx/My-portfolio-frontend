@@ -38,6 +38,8 @@ const posts = [
 
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [email, setEmail] = useState("");
+  const [emailFocused, setEmailFocused] = useState(false);
 
   const filtered = activeCategory === "All"
     ? posts
@@ -98,7 +100,7 @@ export default function BlogPage() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7 }}
           className="card p-8 md:p-10"
-          style={{ marginTop: '5rem', marginBottom: '5rem' }}
+          style={{ marginTop: '3.5rem', marginBottom: '3.5rem' }}
         >
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
@@ -111,12 +113,36 @@ export default function BlogPage() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 bg-white/[0.03] border border-[var(--border)] rounded-[var(--radius-md)] px-4 py-2.5 text-sm text-white placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)]/40 transition-colors duration-200"
-              />
-              <button className="btn-primary whitespace-nowrap">
+              <div className="relative flex-1">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => setEmailFocused(false)}
+                  className="w-full bg-white/[0.02] border rounded-[var(--radius-md)] px-4 pt-5 pb-1.5 text-sm text-white focus:outline-none transition-all duration-200"
+                  style={{ 
+                    borderColor: emailFocused ? 'var(--accent)' : 'var(--border)',
+                    height: '50px'
+                  }}
+                />
+                <span
+                  className="absolute left-4 pointer-events-none transition-all duration-200"
+                  style={{
+                    top: (emailFocused || email) ? '6px' : '15px',
+                    fontSize: (emailFocused || email) ? '10px' : '14px',
+                    color: emailFocused 
+                      ? 'var(--accent)' 
+                      : (email ? 'var(--muted)' : 'rgba(255, 255, 255, 0.45)'),
+                    fontFamily: 'var(--font-mono)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  your@email.com
+                </span>
+              </div>
+              <button className="btn-primary whitespace-nowrap" style={{ height: '50px' }}>
                 Subscribe
               </button>
             </div>
