@@ -48,8 +48,8 @@ const technologies = [
   // UI & Design
   { name: "Tailwind",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
   { name: "Bootstrap",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" },
-  { name: "Framer",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framer/framer-original.svg" },
-  { name: "GSAP",       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/greensock/greensock-original.svg" },
+  { name: "Framer",     icon: "https://cdn.simpleicons.org/framer/white" },
+  { name: "GSAP",       icon: "https://cdn.simpleicons.org/greensock/white" },
   
   // Frontend
   { name: "HTML5",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
