@@ -54,7 +54,7 @@ export default function GalleryPage() {
   const [selected, setSelected] = useState<{ src: string; alt: string } | null>(null);
 
   return (
-    <main className="min-h-screen bg-[var(--background)] pt-32 pb-20">
+    <main className="min-h-screen bg-[var(--background)]" style={{ paddingTop: 'var(--navbar-height, 120px)', paddingBottom: '5rem' }}>
       <div className="container">
 
         {/* Page header */}
@@ -62,10 +62,11 @@ export default function GalleryPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mb-14 max-w-xl"
+          className="max-w-xl"
+          style={{ marginBottom: '3.5rem' }}
         >
           <span className="section-eyebrow">Gallery</span>
-          <h1 className="section-heading mt-1 mb-4">
+          <h1 className="section-heading mt-1" style={{ marginBottom: '1rem' }}>
             Visual archive.
           </h1>
           <p className="section-subtext text-sm">
@@ -74,7 +75,7 @@ export default function GalleryPage() {
         </motion.div>
 
         {/* Image grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: '1rem' }}>
           {GALLERY_IMAGES.map((img, i) => (
             <motion.div
               key={i}
