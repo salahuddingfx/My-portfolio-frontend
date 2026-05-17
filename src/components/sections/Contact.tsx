@@ -132,7 +132,7 @@ const Contact = () => {
 
           {/* Contact Details Column */}
           <div className="lg:col-span-4 flex flex-col justify-between py-6">
-            <div className="space-y-12">
+            <div className="flex flex-col gap-8">
               {infoCards.map((card, i) => (
                 <motion.div
                   key={card.label}
@@ -145,7 +145,7 @@ const Contact = () => {
                   <div className="contact-info-icon shrink-0">
                     <card.icon size={20} />
                   </div>
-                  <div className="space-y-1 overflow-hidden">
+                  <div className="flex flex-col gap-1 overflow-hidden">
                     <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-(--muted-soft)">
                       {card.label}
                     </p>
@@ -187,9 +187,9 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-8 w-full min-w-0"
           >
-            <div className="contact-card p-6 md:p-10 lg:p-12 flex flex-col h-full">
-              <div className="flex items-center justify-between mb-16">
-                <div className="space-y-1">
+            <div className="contact-card !p-8 md:!p-12 lg:!p-16 flex flex-col h-full">
+              <div className="flex items-center justify-between mb-12">
+                <div className="flex flex-col gap-1">
                   <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
                   <div className="w-12 h-1 bg-(--accent) rounded-full" />
                 </div>
