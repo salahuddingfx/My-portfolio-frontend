@@ -71,7 +71,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14 border-b border-white/[0.06] pt-12 pb-12 lg:gap-16">
           
           {/* Brand Column */}
-          <div className="flex flex-col gap-8 lg:pr-10">
+          <div className="flex flex-col lg:pr-10" style={{ gap: '2rem' }}>
             {/* Logo */}
             <Link href="/" aria-label="Home" className="group flex w-fit items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent)]">
@@ -121,7 +121,7 @@ const Footer = () => {
               <h4 className="mb-5 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]">
                 Pages
               </h4>
-              <ul className="flex flex-col gap-3 items-start">
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-3 items-start" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '0.75rem 1.5rem' }}>
                 {NAV_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link href={link.href} className="footer-link text-[13px]">
@@ -154,11 +154,14 @@ const Footer = () => {
               <h4 className="mb-5 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]">
                 Hire Me
               </h4>
-              <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5">
+              <div 
+                className="flex flex-col rounded-2xl border border-white/[0.07] bg-white/[0.03]"
+                style={{ padding: '1.5rem', gap: '1rem' }}
+              >
                 <p className="text-[13px] leading-relaxed text-[var(--muted)]">
                   Available for freelance projects, collaborations, and creative web work.
                 </p>
-                <Link href="/contact" className="group/cta inline-flex items-center gap-1.5 text-[13px] font-medium text-white transition-colors duration-200 hover:text-[var(--accent)]">
+                <Link href="/contact" className="group/cta inline-flex items-center gap-1.5 text-[13px] font-medium text-white transition-colors duration-200 hover:text-[var(--accent)]" style={{ gap: '0.375rem' }}>
                   Start a project
                   <ArrowUpRight size={13} className="transition-transform duration-200 group-hover/cta:translate-x-[1px] group-hover/cta:-translate-y-[1px]" />
                 </Link>
