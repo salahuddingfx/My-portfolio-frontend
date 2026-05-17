@@ -44,6 +44,7 @@ const Contact = () => {
     if (!validate()) return;
     
     setStatus("sending");
+    setErrors({});
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -57,6 +58,10 @@ const Contact = () => {
         setStatus("success");
         setFormData({ name: "", email: "", subject: "Web Development", message: "" });
       } else {
+        const data = await res.json().catch(() => ({}));
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
         setStatus("error");
       }
     } catch {
@@ -211,99 +216,150 @@ const Contact = () => {
               className="contact-card flex flex-col h-full"
               style={{ padding: 'clamp(2rem, 5vw, 4rem)' }}
             >
-              <div className="flex items-center justify-between mb-12">
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
-                  <div className="w-12 h-1 bg-(--accent) rounded-full" />
-                </div>
-                <div className="flex gap-1.5">
-                  {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-(--accent)/40" />)}
-                </div>
-              </div>
-
-              <form onSubmit={handleSubmit} className="flex flex-col gap-14">
-                <div className="grid md:grid-cols-2 gap-x-12 gap-y-14">
-                  <div className="contact-input-group">
-                    <input
-                      type="text"
-                      placeholder=" "
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="contact-input"
-                    />
-                    <label className="contact-label">Your Full Name</label>
+              {status === "success" ? (
+                <div 
+                  className="flex flex-col items-center justify-center text-center my-auto py-10"
+                  style={{ animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                >
+                  {/* Spatial Brutalist Success Icon */}
+                  <div className="w-20 h-20 bg-emerald-500/10 border-2 border-emerald-500 text-emerald-400 rounded-full flex items-center justify-center mb-8 relative">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <div className="absolute inset-0 rounded-full border border-emerald-500/30 animate-ping" style={{ animationDuration: '2s' }} />
                   </div>
 
-                  <div className="contact-input-group">
-                    <input
-                      type="email"
-                      placeholder=" "
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="contact-input"
-                    />
-                    <label className="contact-label">Email Address</label>
-                  </div>
-                </div>
+                  <h3 className="text-3xl font-black uppercase tracking-tighter italic mb-3">Delivered.</h3>
+                  <p className="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-8">Transmission Complete</p>
 
-                <div className="contact-input-group">
-                  <select
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="contact-input appearance-none cursor-pointer"
-                  >
-                    {SUBJECTS.map((s) => (
-                      <option key={s} value={s} className="bg-[#111] p-4">
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                  <label className="contact-label">Inquiry Subject</label>
-                  <div className="absolute right-0 bottom-2 pointer-events-none text-(--muted-soft)">
-                    <ArrowRight size={16} className="rotate-90" />
-                  </div>
-                </div>
+                  <p className="text-sm text-[var(--muted)] leading-relaxed max-w-sm mb-10">
+                    Salah has received your request. The response sequence has been queued and will initialize shortly.
+                  </p>
 
-                <div className="contact-input-group">
-                  <textarea
-                    placeholder=" "
-                    required
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="contact-input resize-none min-h-35"
-                  />
-                  <label className="contact-label">Project Details</label>
-                </div>
-
-                <div className="pt-4">
                   <button
-                    type="submit"
-                    disabled={status === "sending"}
-                    className="contact-btn w-full group flex items-center justify-center gap-4 py-5"
+                    onClick={() => setStatus("idle")}
+                    className="contact-btn w-full py-5 flex items-center justify-center gap-3"
                   >
-                    <span className="text-sm">
-                      {status === "sending"
-                        ? "Sending..."
-                        : status === "success"
-                        ? "Message Delivered"
-                        : "Initialize Transmission"}
-                    </span>
-                    <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    Send Another Transmission
                   </button>
-                  
-                  {status === "success" && (
-                    <motion.p 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-center mt-6 text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold"
-                    >
-                      Transmission successful. Response incoming.
-                    </motion.p>
-                  )}
                 </div>
-              </form>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between mb-12">
+                    <div className="flex flex-col gap-1">
+                      <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
+                      <div className="w-12 h-1 bg-(--accent) rounded-full" />
+                    </div>
+                    <div className="flex gap-1.5">
+                      {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-(--accent)/40" />)}
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-14">
+                    <div className="grid md:grid-cols-2 gap-x-12 gap-y-14">
+                      <div className="contact-input-group">
+                        <input
+                          type="text"
+                          placeholder=" "
+                          required
+                          value={formData.name}
+                          onChange={(e) => {
+                            setFormData({ ...formData, name: e.target.value });
+                            if (errors.name) setErrors(prev => { const c = { ...prev }; delete c.name; return c; });
+                          }}
+                          className={`contact-input ${errors.name ? '!border-red-500/50' : ''}`}
+                        />
+                        <label className="contact-label">Your Full Name</label>
+                        {errors.name && (
+                          <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.name}</p>
+                        )}
+                      </div>
+
+                      <div className="contact-input-group">
+                        <input
+                          type="email"
+                          placeholder=" "
+                          required
+                          value={formData.email}
+                          onChange={(e) => {
+                            setFormData({ ...formData, email: e.target.value });
+                            if (errors.email) setErrors(prev => { const c = { ...prev }; delete c.email; return c; });
+                          }}
+                          className={`contact-input ${errors.email ? '!border-red-500/50' : ''}`}
+                        />
+                        <label className="contact-label">Email Address</label>
+                        {errors.email && (
+                          <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.email}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="contact-input-group">
+                      <select
+                        value={formData.subject}
+                        onChange={(e) => {
+                          setFormData({ ...formData, subject: e.target.value });
+                          if (errors.subject) setErrors(prev => { const c = { ...prev }; delete c.subject; return c; });
+                        }}
+                        className={`contact-input appearance-none cursor-pointer ${errors.subject ? '!border-red-500/50' : ''}`}
+                      >
+                        {SUBJECTS.map((s) => (
+                          <option key={s} value={s} className="bg-[#111] p-4">
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                      <label className="contact-label">Inquiry Subject</label>
+                      <div className="absolute right-0 bottom-2 pointer-events-none text-(--muted-soft)">
+                        <ArrowRight size={16} className="rotate-90" />
+                      </div>
+                      {errors.subject && (
+                        <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.subject}</p>
+                      )}
+                    </div>
+
+                    <div className="contact-input-group">
+                      <textarea
+                        placeholder=" "
+                        required
+                        value={formData.message}
+                        onChange={(e) => {
+                          setFormData({ ...formData, message: e.target.value });
+                          if (errors.message) setErrors(prev => { const c = { ...prev }; delete c.message; return c; });
+                        }}
+                        className={`contact-input resize-none min-h-35 ${errors.message ? '!border-red-500/50' : ''}`}
+                      />
+                      <label className="contact-label">Project Details</label>
+                      {errors.message && (
+                        <p className="text-[10px] font-mono uppercase tracking-widest text-red-400 mt-2">{errors.message}</p>
+                      )}
+                    </div>
+
+                    <div className="pt-4">
+                      <button
+                        type="submit"
+                        disabled={status === "sending"}
+                        className="contact-btn w-full group flex items-center justify-center gap-4 py-5"
+                      >
+                        <span className="text-sm">
+                          {status === "sending"
+                            ? "Sending..."
+                            : status === "success"
+                            ? "Message Delivered"
+                            : "Initialize Transmission"}
+                        </span>
+                        <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </button>
+
+                      {status === "error" && (
+                        <p className="text-center mt-6 text-xs font-mono uppercase tracking-widest text-red-400 font-bold">
+                          Transmission failed. Please try again.
+                        </p>
+                      )}
+                    </div>
+                  </form>
+                </>
+              )}
             </div>
           </motion.div>
         </div>
