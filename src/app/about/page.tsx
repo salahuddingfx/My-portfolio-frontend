@@ -82,7 +82,8 @@ export default function AboutPage() {
     if (!container || !line || !lineMobile || !glow || !glowMobile) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
+      // 1. Continuous center line growth & comet glide
+      const trackTl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
           start: "top 60%",
@@ -91,49 +92,108 @@ export default function AboutPage() {
         }
       });
 
-      // Animate line height to 100% for both desktop and mobile lines
-      tl.to([line, lineMobile], {
+      trackTl.to([line, lineMobile], {
         height: "100%",
         ease: "none"
       }, 0);
 
-      // Animate glowing comet tips to 100% and fade in for both desktop and mobile comets
-      tl.to([glow, glowMobile], {
+      trackTl.to([glow, glowMobile], {
         top: "100%",
         opacity: 1,
         ease: "none"
       }, 0);
 
-      const badges = container.querySelectorAll(".timeline-badge");
-      const icons = container.querySelectorAll(".timeline-icon");
-      const contents = container.querySelectorAll(".timeline-content");
+      // 2. Individual card scroll-in (enter from bottom) and scroll-out (exit to top)
+      const items = container.querySelectorAll(".timeline-item");
 
-      badges.forEach((badge, index) => {
-        const progress = index / Math.max(badges.length - 1, 1);
-        const icon = icons[index];
-        
-        // Light up the central/left badges as the line scrolls past them
-        tl.to(badge, {
+      items.forEach((item) => {
+        const badge = item.querySelector(".timeline-badge");
+        const icon = item.querySelector(".timeline-icon");
+        const content = item.querySelector(".timeline-content");
+
+        if (!badge || !icon || !content) return;
+
+        // FADE IN TWEEN (As item enters from bottom)
+        gsap.fromTo([content, badge, icon], 
+          {
+            opacity: (el) => el === content ? 0.25 : 0.6,
+            scale: (el) => el === content ? 0.96 : 0.95,
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            ease: "power1.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 78%",
+              end: "top 55%",
+              scrub: 0.5,
+            }
+          }
+        );
+
+        // Badge border glow on enter
+        gsap.to(badge, {
           borderColor: "var(--accent)",
           backgroundColor: "var(--surface)",
-          boxShadow: "0 0 15px rgba(168, 85, 247, 0.4)",
-          scale: 1.1,
-          duration: 0.05,
-        }, progress * 0.95);
+          boxShadow: "0 0 15px rgba(168, 85, 247, 0.45)",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 78%",
+            end: "top 55%",
+            scrub: 0.5,
+          }
+        });
 
-        // Turn the icon inside purple
-        tl.to(icon, {
+        // Icon purple activation on enter
+        gsap.to(icon, {
           color: "var(--accent)",
-          scale: 1.15,
-          duration: 0.05,
-        }, progress * 0.95);
+          scale: 1.12,
+          scrollTrigger: {
+            trigger: item,
+            start: "top 78%",
+            end: "top 55%",
+            scrub: 0.5,
+          }
+        });
 
-        // Fade in and clarify the blurry content blocks
-        tl.to(contents[index], {
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.15,
-        }, progress * 0.95);
+        // FADE OUT TWEEN (As item leaves towards top)
+        gsap.to([content, badge, icon], {
+          opacity: (el) => el === content ? 0.25 : 0.6,
+          scale: (el) => el === content ? 0.96 : 0.95,
+          ease: "power1.in",
+          scrollTrigger: {
+            trigger: item,
+            start: "bottom 45%",
+            end: "bottom 18%",
+            scrub: 0.5,
+          }
+        });
+
+        // Badge border dim back on leave
+        gsap.to(badge, {
+          borderColor: "var(--border)",
+          backgroundColor: "var(--surface-2)",
+          boxShadow: "none",
+          scrollTrigger: {
+            trigger: item,
+            start: "bottom 45%",
+            end: "bottom 18%",
+            scrub: 0.5,
+          }
+        });
+
+        // Icon color reset on leave
+        gsap.to(icon, {
+          color: "var(--muted)",
+          scale: 1,
+          scrollTrigger: {
+            trigger: item,
+            start: "bottom 45%",
+            end: "bottom 18%",
+            scrub: 0.5,
+          }
+        });
       });
     }, container);
 
