@@ -18,6 +18,7 @@ import SocialSidebar from "@/components/ui/SocialSidebar";
 import EmailSidebar from "@/components/ui/EmailSidebar";
 import Footer from "@/components/ui/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import IntroLoader from "@/components/ui/IntroLoader";
 
 /* =============================================================================
    FONTS
@@ -111,6 +112,7 @@ export default function RootLayout({
         className="bg-background text-foreground antialiased overflow-x-hidden"
         style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
       >
+        <IntroLoader />
         <LenisProvider>
           <SettingsProvider>
             <VisitorTracker />
