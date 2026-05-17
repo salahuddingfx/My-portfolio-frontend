@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -84,150 +83,302 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
       const featured = projects.filter((p) => p.featured);
       return featured.length > 0 ? featured : projects;
     }
-    // stacked layout uses category filters
     return activeCategory === "All"
       ? projects
       : projects.filter((p) => p.category === activeCategory);
   }, [projects, activeCategory, layout]);
 
-  // GSAP horizontal scroll triggers only when layout is horizontal
   useEffect(() => {
-    if (layout !== "horizontal" || loading || displayProjects.length === 0) return;
+    if (loading || displayProjects.length === 0) return;
 
     const ctx = gsap.context(() => {
-      const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
+      if (layout === "horizontal") {
+        const section = sectionRef.current;
+        const track = trackRef.current;
+        if (!section || !track) return;
 
-      const getScrollAmount = () => {
-        const trackWidth = track.scrollWidth;
-        const viewportWidth = window.innerWidth;
-        // Keep 80px extra padding
-        return -(trackWidth - viewportWidth + 80);
-      };
+        const getScrollAmount = () => {
+          const base = track.scrollWidth - window.innerWidth;
+          const buffer = window.innerWidth * 0.18;
+          return Math.max(base + buffer, 1);
+        };
 
-      gsap.to(track, {
-        x: getScrollAmount,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: () => `+=${track.scrollWidth - window.innerWidth + 200}`,
-          invalidateOnRefresh: true,
-        },
+        gsap.to(track, {
+          x: () => -getScrollAmount(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: () => `+=${getScrollAmount()}`,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        return;
+      }
+
+      const rows = gsap.utils.toArray<HTMLElement>(".project-row");
+      rows.forEach((row) => {
+        const image = row.querySelector<HTMLElement>(".project-image");
+        gsap.fromTo(
+          row,
+          { y: 40, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 85%",
+            },
+          }
+        );
+
+        if (image) {
+          gsap.fromTo(
+            image,
+            { y: 24, scale: 1.03 },
+            {
+              y: -24,
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: row,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.4,
+              },
+            }
+          );
+        }
       });
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [layout, loading, displayProjects]);
+  }, [loading, displayProjects, layout]);
+
+  const projectRows = useMemo(() => {
+    return displayProjects.map((project, index) => {
+      const number = String(index + 1).padStart(2, "0");
+      const isEven = index % 2 === 0;
+      const tools = project.tags?.length ? project.tags.join(", ") : "—";
+      const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
+
+      return (
+        <div
+          key={project._id || index}
+          className={`project-row group ${index === 0 ? "" : "border-t border-white/5"} py-16 md:py-24`}
+        >
+          <div className="container px-8 md:px-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+              <div
+                className={`flex flex-col gap-6 lg:col-span-5 ${
+                  isEven
+                    ? "lg:order-1 lg:items-start lg:text-left"
+                    : "lg:order-2 lg:items-end lg:text-right"
+                }`}
+              >
+                <div
+                  className={`text-[48px] sm:text-[64px] lg:text-[72px] font-medium tracking-[-0.02em] text-white/80 ${
+                    isEven ? "self-start" : "self-start lg:self-end"
+                  }`}
+                  aria-hidden
+                >
+                  {number}
+                </div>
+
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <p className="text-xs tracking-[0.18em] text-white/40">Project Name</p>
+                    <h3
+                      className="text-[28px] sm:text-[34px] lg:text-[38px] font-medium text-white leading-[1.1]"
+                      style={{ fontFamily: "var(--font-space-grotesk)" }}
+                    >
+                      {project.title}
+                    </h3>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-xs tracking-[0.18em] text-white/40">Project Category</p>
+                    <p className="text-sm text-white/70">
+                      {project.category || "—"}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-xs tracking-[0.18em] text-white/40">Tools & Features</p>
+                    <p className="text-sm text-white/65">{tools}</p>
+                  </div>
+
+                  <p className="text-[15px] text-white/60 leading-[1.8]">
+                    {project.desc}
+                  </p>
+
+                  {liveLink && (
+                    <a
+                      href={liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
+                    >
+                      Live Preview
+                      <ArrowUpRight size={14} />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}
+              >
+                <div className="relative overflow-hidden rounded-3xl bg-white/2 aspect-16/10 lg:aspect-video">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    className="project-image object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  />
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/5" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  }, [displayProjects]);
+
+  const projectPanels = useMemo(() => {
+    return displayProjects.map((project, index) => {
+      const number = String(index + 1).padStart(2, "0");
+      const isEven = index % 2 === 0;
+      const tools = project.tags?.length ? project.tags.join(", ") : "—";
+      const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
+
+      return (
+        <div
+          key={project._id || index}
+          className="project-panel w-[85vw] sm:w-[75vw] lg:w-[70vw] shrink-0"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <div
+              className={`flex flex-col gap-6 lg:col-span-5 ${
+                isEven
+                  ? "lg:order-1 lg:items-start lg:text-left"
+                  : "lg:order-2 lg:items-end lg:text-right"
+              }`}
+            >
+              <div
+                className={`text-[48px] sm:text-[64px] lg:text-[72px] font-medium tracking-[-0.02em] text-white/80 ${
+                  isEven ? "self-start" : "self-start lg:self-end"
+                }`}
+                aria-hidden
+              >
+                {number}
+              </div>
+
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <p className="text-xs tracking-[0.18em] text-white/40">Project Name</p>
+                  <h3
+                    className="text-[28px] sm:text-[34px] lg:text-[38px] font-medium text-white leading-[1.1]"
+                    style={{ fontFamily: "var(--font-space-grotesk)" }}
+                  >
+                    {project.title}
+                  </h3>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs tracking-[0.18em] text-white/40">Project Category</p>
+                  <p className="text-sm text-white/70">
+                    {project.category || "—"}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs tracking-[0.18em] text-white/40">Tools & Features</p>
+                  <p className="text-sm text-white/65">{tools}</p>
+                </div>
+
+                <p className="text-[15px] text-white/60 leading-[1.8]">
+                  {project.desc}
+                </p>
+
+                {liveLink && (
+                  <a
+                    href={liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
+                  >
+                    Live Preview
+                    <ArrowUpRight size={14} />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <div className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}>
+              <div className="relative overflow-hidden rounded-3xl bg-white/2 aspect-16/10 lg:aspect-video">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="project-image object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+                <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/5" />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  }, [displayProjects]);
 
   if (layout === "horizontal") {
     return (
       <section
         id="projects"
         ref={sectionRef}
-        className="relative bg-[var(--background)] border-y border-[var(--border)] overflow-hidden flex flex-col justify-center min-h-screen py-24"
+        className="relative overflow-hidden text-white min-h-[120vh]"
+        style={{
+          backgroundColor: "#050505",
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "140px 140px",
+          backgroundPosition: "center",
+        }}
       >
-        <div className="container px-8 md:px-16" style={{ marginBottom: "3rem" }}>
-          <span className="section-eyebrow">Featured Showcase</span>
-          <h2 className="section-heading mt-1">Highlighted work.</h2>
-          <p className="section-subtext mt-4">
-            A horizontal gallery of selected projects engineered to solve complex problems.
+        <div className="container px-8 md:px-16 pt-24 md:pt-32">
+          <p className="text-sm text-white/60">Selected work</p>
+          <h2
+            className="text-[32px] sm:text-[40px] lg:text-[46px] font-medium text-white mt-3"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
+            Projects
+          </h2>
+          <p className="text-[15px] text-white/55 mt-4 max-w-2xl">
+            A curated set of case studies shaped by clarity, restraint, and strong visual systems.
           </p>
         </div>
 
         {loading ? (
           <div className="py-16 text-center">
-            <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading projects...</p>
+            <p className="text-sm text-white/50">Loading projects...</p>
           </div>
         ) : (
-          <div className="w-full overflow-hidden relative">
+          <div className="mt-20 md:mt-28 pb-28 md:pb-36">
             <div
               ref={trackRef}
-              className="flex gap-8 px-8 md:px-16 flex-nowrap shrink-0"
+              className="flex gap-16 md:gap-24 px-8 md:px-16 pr-[18vw] md:pr-[22vw]"
               style={{ width: "max-content", willChange: "transform" }}
             >
-              {displayProjects.map((project, i) => (
-                <div
-                  key={project._id || i}
-                  className="relative w-[280px] sm:w-[420px] md:w-[500px] shrink-0 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group flex flex-col justify-between"
-                >
-                  <Link
-                    href={`/projects/${project._id}`}
-                    className="absolute inset-0 z-10"
-                    aria-label={`View details for ${project.title}`}
-                  />
-
-                  {/* Image container */}
-                  <div className="relative aspect-[16/10] overflow-hidden w-full shrink-0">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 500px"
-                      className="object-cover transition-all duration-700 grayscale-[20%] group-hover:grayscale-0 group-hover:scale-[1.03]"
-                    />
-                  </div>
-
-                  {/* Content container */}
-                  <div className="p-6 sm:p-8 flex flex-col gap-4 flex-grow justify-between">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono text-[var(--muted-soft)]">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        {project.category && (
-                          <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent)] bg-[var(--accent)]/10 px-2 py-0.5 rounded-full border border-[var(--accent)]/20">
-                            {project.category}
-                          </span>
-                        )}
-                      </div>
-
-                      <h3
-                        className="text-xl sm:text-2xl font-semibold text-white leading-tight"
-                        style={{ fontFamily: "var(--font-space-grotesk)" }}
-                      >
-                        {project.title}
-                      </h3>
-
-                      <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed line-clamp-3">
-                        {project.desc}
-                      </p>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tags?.slice(0, 3).map((tag: string) => (
-                          <span key={tag} className="badge">{tag}</span>
-                        ))}
-                      </div>
-
-                      <div className="flex gap-5 pt-4 border-t border-[var(--border)] relative z-20">
-                        <a
-                          href={project.links?.live || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-medium text-white hover:text-[var(--accent)] transition-colors duration-200"
-                        >
-                          Live Preview
-                          <ArrowUpRight size={13} />
-                        </a>
-                        <a
-                          href={project.links?.source || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200"
-                        >
-                          Source Code
-                          <ArrowUpRight size={13} />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {projectPanels}
             </div>
           </div>
         )}
@@ -235,135 +386,65 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
     );
   }
 
-  // Stacked Overlapping Cards Layout (Dedicated Projects page)
   return (
-    <section id="projects" className="relative bg-[var(--background)] border-y border-[var(--border)]">
-      <div style={{ paddingTop: "95px", paddingBottom: "6rem" }}>
-        <div className="container">
-          <div className="text-center max-w-2xl mx-auto" style={{ marginBottom: "4rem" }}>
-            <span className="section-eyebrow">Selected work</span>
-            <h2 className="section-heading mt-1">Recent projects.</h2>
-            <p className="section-subtext mx-auto mt-4">
-              A few things I&apos;ve built recently — each one solving a real problem.
-            </p>
-          </div>
-
-          {!loading && categories.length > 1 && (
-            <div className="flex flex-wrap justify-center gap-2" style={{ marginBottom: "3rem" }}>
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest border transition-all ${
-                    activeCategory === cat
-                      ? "bg-[var(--accent)] text-black border-[var(--accent)]"
-                      : "border-[var(--border)] text-[var(--muted)] hover:text-white hover:border-[var(--border-hover)]"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {loading ? (
-            <div className="py-16 text-center">
-              <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading projects...</p>
-            </div>
-          ) : displayProjects.length === 0 ? (
-            <div className="card p-10 text-center max-w-md mx-auto">
-              <p className="text-sm text-[var(--muted)]">No projects in this category yet.</p>
-            </div>
-          ) : (
-            <div className="relative" style={{ paddingBottom: "40vh" }}>
-              {displayProjects.map((project, i) => (
-                <div
-                  key={project._id || i}
-                  className="sticky block"
-                  style={{
-                    top: `${100 + i * 40}px`,
-                    zIndex: i + 1,
-                    marginBottom: i < displayProjects.length - 1 ? "10vh" : "0",
-                  }}
-                >
-                  <div
-                    className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--accent)]/50 transition-all duration-500 shadow-2xl group"
-                  >
-                    <Link
-                      href={`/projects/${project._id}`}
-                      className="absolute inset-0 z-10"
-                      aria-label={`View details for ${project.title}`}
-                    />
-
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                      <div className="lg:col-span-7 relative aspect-[16/10] overflow-hidden">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 60vw"
-                          className="object-cover transition-all duration-700 grayscale-[20%] group-hover:grayscale-0 group-hover:scale-[1.03]"
-                        />
-                      </div>
-
-                      <div className="lg:col-span-5 flex flex-col justify-center gap-4 p-6 lg:p-8">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs font-mono text-[var(--muted-soft)]">
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                          {project.category && (
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent)] bg-[var(--accent)]/10 px-2 py-0.5 rounded-full border border-[var(--accent)]/20">
-                              {project.category}
-                            </span>
-                          )}
-                        </div>
-
-                        <h3
-                          className="text-2xl font-semibold text-white leading-tight"
-                          style={{ fontFamily: "var(--font-space-grotesk)" }}
-                        >
-                          {project.title}
-                        </h3>
-
-                        <p className="text-sm text-[var(--muted)] leading-relaxed">
-                          {project.desc}
-                        </p>
-
-                        <div className="flex flex-wrap gap-1.5">
-                          {project.tags?.slice(0, 4).map((tag: string) => (
-                            <span key={tag} className="badge">{tag}</span>
-                          ))}
-                        </div>
-
-                        <div className="flex gap-5 pt-4 border-t border-[var(--border)] relative z-20">
-                          <a
-                            href={project.links?.live || "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-medium text-white hover:text-[var(--accent)] transition-colors duration-200"
-                          >
-                            Live Preview
-                            <ArrowUpRight size={13} />
-                          </a>
-                          <a
-                            href={project.links?.source || "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200"
-                          >
-                            Source Code
-                            <ArrowUpRight size={13} />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative overflow-hidden text-white"
+      style={{
+        backgroundColor: "#050505",
+        backgroundImage:
+          "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+        backgroundSize: "140px 140px",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="container px-8 md:px-16 pt-24 md:pt-32">
+        <div className="max-w-2xl">
+          <p className="text-sm text-white/60">Selected work</p>
+          <h2
+            className="text-[32px] sm:text-[40px] lg:text-[46px] font-medium text-white mt-3"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
+            Recent projects
+          </h2>
+          <p className="text-[15px] text-white/55 mt-4">
+            Modern digital products and visual systems shaped for clarity, impact, and storytelling.
+          </p>
         </div>
+
+        {!loading && categories.length > 1 && (
+          <div className="flex flex-wrap gap-5 mt-10 text-sm text-white/55">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`transition ${
+                  activeCategory === cat
+                    ? "text-white"
+                    : "text-white/55 hover:text-white"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
+
+      {loading ? (
+        <div className="py-16 text-center">
+          <p className="text-sm text-white/50">Loading projects...</p>
+        </div>
+      ) : displayProjects.length === 0 ? (
+        <div className="py-16 text-center">
+          <p className="text-sm text-white/55">No projects in this category yet.</p>
+        </div>
+      ) : (
+        <div className="mt-20 md:mt-28 pb-28 md:pb-36">
+          {projectRows}
+        </div>
+      )}
     </section>
   );
 };

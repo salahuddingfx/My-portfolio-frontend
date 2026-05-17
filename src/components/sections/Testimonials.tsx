@@ -73,7 +73,7 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <section id="reviews" className="section-shell bg-[var(--background)]">
+    <section id="reviews" className="section-shell bg-[var(--background)] !pb-12 md:!pb-16">
       <div className="container">
 
         {/* Header */}
