@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Terminal, Sparkles, Compass } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -18,18 +18,21 @@ const TIMELINE = [
     role: "Freelance Frontend Engineer",
     company: "Remote & Open Source",
     desc: "Building premium spatial editorial web experiences, focusing on performance, custom 3D mechanics, and GSAP motion frameworks for global clients.",
+    icon: Terminal,
   },
   {
     year: "Early 2025",
     role: "Full Stack Web Developer",
     company: "SaaS & Interactive Apps",
     desc: "Mastered building robust database schemas and high-fidelity frontends, shipping complete applications with seamless backend API integrations.",
+    icon: Sparkles,
   },
   {
     year: "Late 2024",
     role: "Began My Developer Journey",
     company: "Passion-Driven Learning",
     desc: "Started learning coding out of curiosity. Focused on modern React, styling systems, and interactive UI animations. Fell in love with craft and design.",
+    icon: Compass,
   },
 ];
 
@@ -65,14 +68,18 @@ const fadeUp = {
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
+  const lineMobileRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const glowMobileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     const line = lineRef.current;
+    const lineMobile = lineMobileRef.current;
     const glow = glowRef.current;
+    const glowMobile = glowMobileRef.current;
 
-    if (!container || !line || !glow) return;
+    if (!container || !line || !lineMobile || !glow || !glowMobile) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -84,31 +91,40 @@ export default function AboutPage() {
         }
       });
 
-      // Animate line height to 100%
-      tl.to(line, {
+      // Animate line height to 100% for both desktop and mobile lines
+      tl.to([line, lineMobile], {
         height: "100%",
         ease: "none"
       }, 0);
 
-      // Animate glowing comet tip to 100% and fade in
-      tl.to(glow, {
+      // Animate glowing comet tips to 100% and fade in for both desktop and mobile comets
+      tl.to([glow, glowMobile], {
         top: "100%",
         opacity: 1,
         ease: "none"
       }, 0);
 
-      const dots = container.querySelectorAll(".timeline-dot");
+      const badges = container.querySelectorAll(".timeline-badge");
+      const icons = container.querySelectorAll(".timeline-icon");
       const contents = container.querySelectorAll(".timeline-content");
 
-      dots.forEach((dot, index) => {
-        const progress = index / Math.max(dots.length - 1, 1);
+      badges.forEach((badge, index) => {
+        const progress = index / Math.max(badges.length - 1, 1);
+        const icon = icons[index];
         
-        // Light up the dots exactly as the line scrolls past them
-        tl.to(dot, {
-          backgroundColor: "var(--accent)",
+        // Light up the central/left badges as the line scrolls past them
+        tl.to(badge, {
           borderColor: "var(--accent)",
-          scale: 1.3,
-          boxShadow: "0 0 10px var(--accent), 0 0 20px var(--accent)",
+          backgroundColor: "var(--surface)",
+          boxShadow: "0 0 15px rgba(168, 85, 247, 0.4)",
+          scale: 1.1,
+          duration: 0.05,
+        }, progress * 0.95);
+
+        // Turn the icon inside purple
+        tl.to(icon, {
+          color: "var(--accent)",
+          scale: 1.15,
           duration: 0.05,
         }, progress * 0.95);
 
@@ -116,7 +132,6 @@ export default function AboutPage() {
         tl.to(contents[index], {
           opacity: 1,
           filter: "blur(0px)",
-          x: 0,
           duration: 0.15,
         }, progress * 0.95);
       });
@@ -213,44 +228,73 @@ export default function AboutPage() {
       {/* ── Experience Timeline ── */}
       <section className="section-shell bg-[var(--background)]">
         <div className="container">
-          <div className="grid lg:grid-cols-12 gap-12">
-            <div className="lg:col-span-4">
-              <span className="section-eyebrow">Experience</span>
-              <h2 className="section-heading mt-1">
-                Where I&apos;ve worked.
-              </h2>
-            </div>
-            <div className="lg:col-span-8">
-              <div ref={containerRef} className="relative flex flex-col gap-0 select-none">
-                {/* Base track line */}
-                <div className="absolute left-[4px] top-2 bottom-2 w-px bg-[var(--border)]" />
-                
-                {/* Active growing line */}
-                <div 
-                  ref={lineRef} 
-                  className="absolute left-[4px] top-2 w-[2px] bg-[var(--accent)] origin-top transform-gpu -translate-x-[50%]" 
-                  style={{ height: '0%' }} 
-                />
+          {/* Centered Section Header */}
+          <div className="text-center max-w-xl mx-auto mb-16">
+            <span className="section-eyebrow">Experience</span>
+            <h2 className="section-heading mt-1">
+              Where I&apos;ve worked.
+            </h2>
+          </div>
 
-                {/* Glowing comet tip */}
-                <div 
-                  ref={glowRef} 
-                  className="absolute left-[4px] top-2 w-[8px] h-[8px] rounded-full bg-white pointer-events-none opacity-0 z-20"
-                  style={{
-                    boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
-                    transform: 'translate(-50%, -50%)'
-                  }}
-                />
+          {/* Center-Split Timeline Container */}
+          <div className="w-full max-w-4xl mx-auto relative">
+            <div ref={containerRef} className="relative w-full flex flex-col gap-0 select-none">
+              
+              {/* DESKTOP TRACKS (Centered) */}
+              <div className="absolute left-1/2 top-2 bottom-2 w-px bg-[var(--border)] -translate-x-1/2 hidden lg:block" />
+              <div 
+                ref={lineRef} 
+                className="absolute left-1/2 top-2 w-[2px] bg-[var(--accent)] origin-top transform-gpu -translate-x-1/2 hidden lg:block" 
+                style={{ height: '0%' }} 
+              />
+              <div 
+                ref={glowRef} 
+                className="absolute left-1/2 top-2 w-[8px] h-[8px] rounded-full bg-white pointer-events-none opacity-0 z-20"
+                style={{
+                  boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
+                  transform: 'translate(-50%, -50%)'
+                }}
+              />
 
-                {TIMELINE.map((item, i) => (
-                  <div
-                    key={i}
-                    className="relative pl-8 pb-12 last:pb-0"
+              {/* MOBILE TRACKS (Left Aligned) */}
+              <div className="absolute left-5 top-2 bottom-2 w-px bg-[var(--border)] lg:hidden" />
+              <div 
+                ref={lineMobileRef} 
+                className="absolute left-5 top-2 w-[2px] bg-[var(--accent)] origin-top lg:hidden" 
+                style={{ height: '0%' }} 
+              />
+              <div 
+                ref={glowMobileRef} 
+                className="absolute left-5 top-2 w-[8px] h-[8px] rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
+                style={{
+                  boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent)',
+                  transform: 'translate(-50%, -50%)'
+                }}
+              />
+
+              {TIMELINE.map((item, i) => {
+                const Icon = item.icon;
+                const isEven = i % 2 === 0;
+                return (
+                  <div 
+                    key={i} 
+                    className="relative w-full min-h-[100px] grid grid-cols-1 lg:grid-cols-2 mb-16 last:mb-0"
                   >
-                    {/* Dot */}
-                    <div className="timeline-dot absolute left-[4px] top-[10px] w-[8px] h-[8px] rounded-full bg-[var(--surface)] border border-[var(--border)] -translate-x-[50%] -translate-y-[50%] transition-transform duration-300 transform-gpu z-10" />
+                    {/* Center / Left Rounded Square Badge */}
+                    <div 
+                      className="timeline-badge absolute left-5 lg:left-1/2 top-[24px] w-10 h-10 rounded-lg bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 transform-gpu"
+                    >
+                      <Icon size={16} className="timeline-icon transition-colors" />
+                    </div>
 
-                    <div className="timeline-content flex flex-col gap-1 opacity-20 blur-[0.5px] translate-x-2 transition-all duration-500 transform-gpu">
+                    {/* Responsive Alternating Card Content */}
+                    <div 
+                      className={`timeline-content flex flex-col gap-1 transition-all duration-500 transform-gpu opacity-20 blur-[0.5px] pl-14 lg:pl-0 
+                        ${isEven 
+                          ? 'lg:col-start-1 lg:pr-16 lg:text-right lg:items-end' 
+                          : 'lg:col-start-2 lg:pl-16 lg:text-left lg:items-start'
+                        }`}
+                    >
                       <span className="text-xs font-mono text-[var(--muted-soft)]">
                         {item.year}
                       </span>
@@ -260,13 +304,13 @@ export default function AboutPage() {
                       <span className="text-xs text-[var(--accent)] font-medium">
                         {item.company}
                       </span>
-                      <p className="text-sm text-[var(--muted)] leading-relaxed mt-1">
+                      <p className="text-sm text-[var(--muted)] leading-relaxed mt-2 max-w-md">
                         {item.desc}
                       </p>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
         </div>
