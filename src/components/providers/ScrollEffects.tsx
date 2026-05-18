@@ -12,12 +12,6 @@ export function ScrollEffects() {
     if (pathname !== "/") return;
     if (typeof window === "undefined") return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    const saveData = connection?.saveData ?? false;
-    const isSmallScreen = window.matchMedia("(max-width: 1023px)").matches;
-    if (reduceMotion || saveData || isSmallScreen) return;
-
     let timeoutId: number | undefined;
     let cancelled = false;
 
@@ -82,7 +76,7 @@ export function ScrollEffects() {
       };
 
       init();
-    }, 1000);
+    }, 300);
 
     return () => {
       cancelled = true;
