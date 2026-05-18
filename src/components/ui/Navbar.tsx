@@ -5,10 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /* =============================================================================
    NAVIGATION LINKS
@@ -39,31 +35,47 @@ const Navbar = () => {
   =========================================================================== */
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const showAnim = gsap
-        .from(headerRef.current, {
-          yPercent: -100,
-          paused: true,
-          duration: 0.28,
-          ease: "power2.out",
-        })
-        .progress(1);
+    let ctx: { revert: () => void } | null = null;
+    let cancelled = false;
 
-      ScrollTrigger.create({
-        start: "top top",
-        end: 99999,
-        onUpdate: (self) => {
-          setScrolled(self.scroll() > 24);
-          if (self.direction === -1 || self.scroll() <= 0) {
-            showAnim.play();
-          } else {
-            showAnim.reverse();
-          }
-        },
+    const setup = async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (cancelled) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        const showAnim = gsap
+          .from(headerRef.current, {
+            yPercent: -100,
+            paused: true,
+            duration: 0.28,
+            ease: "power2.out",
+          })
+          .progress(1);
+
+        ScrollTrigger.create({
+          start: "top top",
+          end: 99999,
+          onUpdate: (self) => {
+            setScrolled(self.scroll() > 24);
+            if (self.direction === -1 || self.scroll() <= 0) {
+              showAnim.play();
+            } else {
+              showAnim.reverse();
+            }
+          },
+        });
       });
-    });
+    };
 
-    return () => ctx.revert();
+    setup();
+
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   /* ===========================================================================
