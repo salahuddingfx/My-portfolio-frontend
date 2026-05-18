@@ -169,6 +169,7 @@ export default function AboutContent() {
   }, []);
 
   useEffect(() => {
+    if (timelineLoading) return;
     const container = containerRef.current;
     const line = lineRef.current;
     const lineMobile = lineMobileRef.current;
@@ -294,8 +295,12 @@ export default function AboutContent() {
       });
     }, container);
 
+    if (typeof window !== "undefined") {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
+
     return () => ctx.revert();
-  }, []);
+  }, [timelineLoading, timeline.length]);
 
   return (
     <main className="bg-[var(--background)]">
