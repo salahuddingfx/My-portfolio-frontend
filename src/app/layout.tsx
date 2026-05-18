@@ -101,6 +101,10 @@ export const metadata: Metadata = {
     description: "Modern portfolio built with Next.js and React.",
     images: ["/mine-photo.png"],
   },
+
+  verification: {
+    google: "WJxBg6PfsLLZco7402kiWpUazOhNS1XIvAxQE8PMVxU",
+  },
 };
 
 /* =============================================================================
