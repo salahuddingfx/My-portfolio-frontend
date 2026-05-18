@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ArrowRight, GraduationCap, Briefcase, Code, Award, Heart, Star, Download } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import TrustedBy from "@/components/sections/TrustedBy";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -397,6 +398,9 @@ export default function AboutContent() {
           </div>
         </div>
       </section>
+
+      {/* ── Trusted By / Partners ── */}
+      <TrustedBy />
 
       {/* ── Experience Timeline ── */}
       <section className="section-shell bg-[var(--background)]">
