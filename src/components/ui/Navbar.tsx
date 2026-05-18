@@ -39,6 +39,10 @@ const Navbar = () => {
     let cancelled = false;
 
     const setup = async () => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const saveData = navigator.connection?.saveData ?? false;
+      if (reduceMotion || saveData) return;
+
       const { default: gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       if (cancelled) return;

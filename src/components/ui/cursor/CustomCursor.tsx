@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
 
 const CustomCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -17,91 +16,106 @@ const CustomCursor = () => {
 
     if (!cursor || !follower || !rays) return;
 
-    const moveCursor = (e: MouseEvent) => {
-      gsap.to(cursor, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0,
+    let cancelled = false;
+    let cleanup = () => {};
+
+    const setup = async () => {
+      const { default: gsap } = await import("gsap");
+      if (cancelled) return;
+
+      const moveCursor = (e: MouseEvent) => {
+        gsap.to(cursor, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0,
+        });
+        gsap.to(follower, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.2,
+          ease: "power2.out",
+        });
+      };
+
+      const handlePointerOver = (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.closest("button, a, .cursor-pointer")) {
+          gsap.to(follower, {
+            scale: 1.5,
+            duration: 0.3,
+          });
+          gsap.to(".sharingan-glow", {
+            opacity: 1,
+            scale: 1.8,
+            duration: 0.3,
+          });
+          // REVEAL RAYS
+          gsap.to(".ray", {
+            scaleY: 1,
+            opacity: 0.6,
+            stagger: 0.02,
+            duration: 0.4,
+            ease: "back.out(2)",
+          });
+        } else {
+          gsap.to(follower, {
+            scale: 1,
+            duration: 0.3,
+          });
+          gsap.to(".sharingan-glow", {
+            opacity: 0.6,
+            scale: 1,
+            duration: 0.3,
+          });
+          // HIDE RAYS
+          gsap.to(".ray", {
+            scaleY: 0,
+            opacity: 0,
+            duration: 0.3,
+          });
+        }
+      };
+
+      window.addEventListener("mousemove", moveCursor);
+      window.addEventListener("mouseover", handlePointerOver);
+
+      // Subtle rotation for the eye
+      gsap.to(".sharingan-inner", {
+        rotation: 360,
+        duration: 8,
+        repeat: -1,
+        ease: "none",
       });
-      gsap.to(follower, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.2,
-        ease: "power2.out",
+
+      // Pulsating glow animation
+      gsap.to(".sharingan-glow", {
+        opacity: 0.4,
+        scale: 1.2,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
+
+      // Constantly rotate the rays slowly
+      gsap.to(rays, {
+        rotation: -360,
+        duration: 15,
+        repeat: -1,
+        ease: "none",
+      });
+
+      cleanup = () => {
+        window.removeEventListener("mousemove", moveCursor);
+        window.removeEventListener("mouseover", handlePointerOver);
+      };
     };
 
-    const handlePointerOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest("button, a, .cursor-pointer")) {
-        gsap.to(follower, {
-          scale: 1.5,
-          duration: 0.3,
-        });
-        gsap.to(".sharingan-glow", {
-          opacity: 1,
-          scale: 1.8,
-          duration: 0.3,
-        });
-        // REVEAL RAYS
-        gsap.to(".ray", {
-          scaleY: 1,
-          opacity: 0.6,
-          stagger: 0.02,
-          duration: 0.4,
-          ease: "back.out(2)",
-        });
-      } else {
-        gsap.to(follower, {
-          scale: 1,
-          duration: 0.3,
-        });
-        gsap.to(".sharingan-glow", {
-          opacity: 0.6,
-          scale: 1,
-          duration: 0.3,
-        });
-        // HIDE RAYS
-        gsap.to(".ray", {
-          scaleY: 0,
-          opacity: 0,
-          duration: 0.3,
-        });
-      }
-    };
-
-    window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseover", handlePointerOver);
-
-    // Subtle rotation for the eye
-    gsap.to(".sharingan-inner", {
-      rotation: 360,
-      duration: 8,
-      repeat: -1,
-      ease: "none",
-    });
-
-    // Pulsating glow animation
-    gsap.to(".sharingan-glow", {
-      opacity: 0.4,
-      scale: 1.2,
-      duration: 1.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-
-    // Constantly rotate the rays slowly
-    gsap.to(rays, {
-      rotation: -360,
-      duration: 15,
-      repeat: -1,
-      ease: "none",
-    });
+    setup();
 
     return () => {
-      window.removeEventListener("mousemove", moveCursor);
-      window.removeEventListener("mouseover", handlePointerOver);
+      cancelled = true;
+      cleanup();
     };
   }, []);
 
