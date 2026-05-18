@@ -32,12 +32,18 @@ export function ScrollEffects() {
         // CRITICAL: `end: "bottom top"` makes each pin release exactly when
         // the section's bottom exits the viewport — no ghost blank space.
         if (i < sections.length - 2 && section.id !== "projects") {
+          const nextSection = sections[i + 1];
+          const nextIsContactOrFooter =
+            nextSection?.id === "contact-cta" ||
+            nextSection?.tagName.toLowerCase() === "footer";
+
           ScrollTrigger.create({
             trigger: section,
             start: "top top",
             end: "bottom top",
             pin: true,
-            pinSpacing: false,
+            // Keep spacing before ContactCTA/footer so it doesn't scroll past behind the pin.
+            pinSpacing: nextIsContactOrFooter,
             invalidateOnRefresh: true,
           });
         }
