@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Projects from "@/components/sections/Projects";
+import ProjectsPageClient from "./ProjectsPageClient";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -12,9 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  return (
-    <main style={{ paddingTop: 'var(--navbar-height, 120px)' }}>
-      <Projects layout="stacked" />
-    </main>
-  );
+  return <ProjectsPageClient />;
 }
