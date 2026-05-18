@@ -44,7 +44,7 @@ function useSafeTexture(url: string) {
   return texture;
 }
 
-const technologies = [
+export const technologies = [
   // UI & Design
   { name: "Tailwind",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
   { name: "Bootstrap",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" },

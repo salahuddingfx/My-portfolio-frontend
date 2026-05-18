@@ -94,7 +94,7 @@ const Hero = () => {
         {/* Background Glow behind the robot */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[600px] aspect-square bg-[var(--accent)]/20 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0" />
 
-        <div className="absolute inset-0 w-full h-full pointer-events-auto z-10 flex items-center justify-center">
+        <div className="absolute inset-0 w-full h-full pointer-events-none lg:pointer-events-auto z-10 hidden lg:flex items-center justify-center">
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
             className="w-full h-full opacity-100 transition-opacity duration-1000 scale-[1.2] md:scale-100"
