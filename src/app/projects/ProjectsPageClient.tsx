@@ -40,7 +40,7 @@ const ProjectsPageClient = () => {
 
   return (
     <main>
-      <Projects layout="stacked" />
+      <Projects layout="stacked" pageTopOffset />
     </main>
   );
 };

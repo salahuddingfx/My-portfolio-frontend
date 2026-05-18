@@ -76,7 +76,13 @@ export default function BlogContent() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[var(--background)]" style={{ paddingTop: 'var(--navbar-height, 120px)', paddingBottom: '5rem' }}>
+    <main
+      className="min-h-screen bg-[var(--background)]"
+      style={{
+        paddingTop: "calc(var(--navbar-height) + var(--space-8))",
+        paddingBottom: "var(--space-20)",
+      }}
+    >
       <div className="container">
 
         {/* Page header */}

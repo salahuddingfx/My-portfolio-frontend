@@ -30,9 +30,10 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
 
 interface ProjectsProps {
   layout?: "horizontal" | "stacked";
+  pageTopOffset?: boolean;
 }
 
-const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
+const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProps) => {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -94,6 +95,11 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
     const list = projects.map((p) => p.category).filter(Boolean);
     return ["All", ...Array.from(new Set(list))];
   }, [projects]);
+
+  const headerPaddingClass = pageTopOffset ? "pt-0" : "pt-24 md:pt-32";
+  const sectionPaddingTop = pageTopOffset
+    ? "calc(var(--navbar-height) + var(--space-8))"
+    : undefined;
 
   const effectiveLayout = layout === "horizontal" && !isCompact ? "horizontal" : "stacked";
 
@@ -373,7 +379,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
           backgroundPosition: "center",
         }}
       >
-        <div className="container px-8 md:px-16 pt-24 md:pt-32">
+        <div className={`container px-8 md:px-16 ${headerPaddingClass}`}>
           <p className="text-sm text-white/60">Selected work</p>
           <h2
             className="text-[32px] sm:text-[40px] lg:text-[46px] font-medium text-white mt-3"
@@ -445,9 +451,10 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
           "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
         backgroundSize: "140px 140px",
         backgroundPosition: "center",
+        paddingTop: sectionPaddingTop,
       }}
     >
-      <div className="container px-8 md:px-16 pt-24 md:pt-32">
+      <div className={`container px-8 md:px-16 ${headerPaddingClass}`}>
         <div className="max-w-2xl">
           <p className="text-sm text-white/60">Selected work</p>
           <h2

@@ -79,7 +79,10 @@ export default async function BlogPostPage({
   return (
     <main
       className="min-h-screen bg-[var(--background)]"
-      style={{ paddingTop: "var(--navbar-height, 120px)", paddingBottom: "5rem" }}
+      style={{
+        paddingTop: "calc(var(--navbar-height) + var(--space-8))",
+        paddingBottom: "var(--space-20)",
+      }}
     >
       <div className="container">
         <Link
