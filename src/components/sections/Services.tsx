@@ -123,11 +123,13 @@ const Services = () => {
                 <div className="border-t border-[var(--border)] pt-5">
                   <Link
                     href="/services"
+                    aria-label={`Learn more about ${service.title}`}
                     className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200 group/link"
                   >
                     Learn more
                     <ArrowUpRight
                       size={13}
+                      aria-hidden="true"
                       className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200"
                     />
                   </Link>
