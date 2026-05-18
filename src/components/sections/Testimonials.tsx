@@ -38,6 +38,7 @@ const Testimonials = () => {
   const [reviews, setReviews] = useState<typeof FALLBACK_REVIEWS>(FALLBACK_REVIEWS);
   const [loading, setLoading] = useState(true);
   const marqueeReviews = reviews.length > 0 ? [...reviews, ...reviews] : reviews;
+  const skeletonItems = Array.from({ length: 3 }, (_, i) => i);
 
   useEffect(() => {
     const fetch_ = async () => {
@@ -124,8 +125,26 @@ const Testimonials = () => {
         )}
 
         {loading && (
-          <div className="py-12 text-center">
-            <p className="text-sm text-white/50">Loading reviews...</p>
+          <div className="testimonials-marquee">
+            <div className="testimonials-track skeleton-track">
+              {skeletonItems.map((i) => (
+                <div key={i} className="testimonial-card card flex flex-col gap-4 p-7">
+                  <div className="skeleton h-3 w-20" />
+                  <div className="space-y-3">
+                    <div className="skeleton h-3 w-11/12" />
+                    <div className="skeleton h-3 w-10/12" />
+                    <div className="skeleton h-3 w-8/12" />
+                  </div>
+                  <div className="mt-auto flex items-center gap-3 pt-5 border-t border-[var(--border)]">
+                    <div className="skeleton h-9 w-9 rounded-full" />
+                    <div className="space-y-2">
+                      <div className="skeleton h-3 w-28" />
+                      <div className="skeleton h-2.5 w-20" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
