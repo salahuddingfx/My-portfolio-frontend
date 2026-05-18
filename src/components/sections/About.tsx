@@ -16,6 +16,8 @@ const fadeUp = {
 const About = () => {
   const { settings } = useSettings();
   const portraitRef = useRef<HTMLDivElement>(null);
+  // rAF handle — batches layout reads to avoid forced synchronous reflows
+  const rafId = useRef<number | null>(null);
 
   const stats = [
     { value: settings?.projectsCompleted || "50+", label: "Projects completed" },
@@ -102,19 +104,26 @@ const About = () => {
                 ref={portraitRef}
                 className="portrait-3d-card relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[var(--surface)] border border-[var(--border)] group shadow-2xl"
                 onMouseMove={(event) => {
-                  const el = portraitRef.current;
-                  if (!el) return;
-                  const rect = el.getBoundingClientRect();
-                  const x = event.clientX - rect.left;
-                  const y = event.clientY - rect.top;
-                  const px = (x / rect.width - 0.5) * 2;
-                  const py = (y / rect.height - 0.5) * 2;
-                  el.style.setProperty("--tilt-x", `${(-py * 8).toFixed(2)}deg`);
-                  el.style.setProperty("--tilt-y", `${(px * 10).toFixed(2)}deg`);
-                  el.style.setProperty("--glow-x", `${(x / rect.width) * 100}%`);
-                  el.style.setProperty("--glow-y", `${(y / rect.height) * 100}%`);
+                  // Capture values synchronously (cheap), then batch DOM writes in rAF
+                  const clientX = event.clientX;
+                  const clientY = event.clientY;
+                  if (rafId.current) cancelAnimationFrame(rafId.current);
+                  rafId.current = requestAnimationFrame(() => {
+                    const el = portraitRef.current;
+                    if (!el) return;
+                    const rect = el.getBoundingClientRect();
+                    const x = clientX - rect.left;
+                    const y = clientY - rect.top;
+                    const px = (x / rect.width - 0.5) * 2;
+                    const py = (y / rect.height - 0.5) * 2;
+                    el.style.setProperty("--tilt-x", `${(-py * 8).toFixed(2)}deg`);
+                    el.style.setProperty("--tilt-y", `${(px * 10).toFixed(2)}deg`);
+                    el.style.setProperty("--glow-x", `${(x / rect.width) * 100}%`);
+                    el.style.setProperty("--glow-y", `${(y / rect.height) * 100}%`);
+                  });
                 }}
                 onMouseLeave={() => {
+                  if (rafId.current) cancelAnimationFrame(rafId.current);
                   const el = portraitRef.current;
                   if (!el) return;
                   el.style.setProperty("--tilt-x", "0deg");
@@ -127,7 +136,7 @@ const About = () => {
                 src="/mine-photo.png"
                 alt="Salah Uddin Kader"
                 fill
-                sizes="(max-width: 1024px) 100vw, 500px"
+                sizes="(max-width: 768px) 90vw, (max-width: 1024px) 50vw, 500px"
                 className="object-cover img-portrait portrait-3d-img grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
               />
               {/* Brutalist accents */}

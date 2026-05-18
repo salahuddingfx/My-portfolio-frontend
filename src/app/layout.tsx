@@ -124,6 +124,15 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
+      {/* Preconnect to external CDNs used by the Spline 3D runtime.
+          These hints fire as soon as the HTML is parsed — TCP+TLS handshake
+          completes in the background so Spline loads faster when it defers. */}
+      <head>
+        <link rel="preconnect" href="https://prod.spline.design" />
+        <link rel="preconnect" href="https://unpkg.com" />
+        <link rel="dns-prefetch" href="https://prod.spline.design" />
+        <link rel="dns-prefetch" href="https://unpkg.com" />
+      </head>
       <body
         suppressHydrationWarning
         className="bg-background text-foreground antialiased overflow-x-hidden"
