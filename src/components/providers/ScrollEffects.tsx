@@ -33,7 +33,8 @@ export function ScrollEffects() {
         // the section's bottom exits the viewport — no ghost blank space.
         if (i < sections.length - 2 && section.id !== "projects") {
           const nextSection = sections[i + 1];
-          const nextIsContactOrFooter =
+          const nextNeedsSpacing =
+            nextSection?.id === "about" ||
             nextSection?.id === "contact-cta" ||
             nextSection?.tagName.toLowerCase() === "footer";
 
@@ -42,8 +43,8 @@ export function ScrollEffects() {
             start: "top top",
             end: "bottom top",
             pin: true,
-            // Keep spacing before ContactCTA/footer so it doesn't scroll past behind the pin.
-            pinSpacing: nextIsContactOrFooter,
+            // Keep spacing before About/ContactCTA/footer so it doesn't scroll past behind the pin.
+            pinSpacing: nextNeedsSpacing,
             invalidateOnRefresh: true,
           });
         }
