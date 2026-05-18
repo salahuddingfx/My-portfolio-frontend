@@ -12,6 +12,9 @@ export function ScrollEffects() {
     if (pathname !== "/") return;
     if (typeof window === "undefined") return;
 
+    const isSmallScreen = window.matchMedia("(max-width: 1023px)").matches;
+    if (isSmallScreen) return;
+
     let timeoutId: number | undefined;
     let cancelled = false;
 
