@@ -219,23 +219,39 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
 
 const TechSphere = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const activeTechs = useMemo(() => {
+    // Show top 12 primary technologies on mobile viewports for fluid 120 FPS performance,
+    // and full 30 technologies on desktop.
+    return isMobile ? technologies.slice(0, 12) : technologies;
+  }, [isMobile]);
 
   const ballPositions = useMemo<[number, number, number][]>(() => {
-    // Dynamically arrange them in a beautiful, loose grid of columns and rows.
-    const cols = 6;
-    const rowsCount = Math.ceil(technologies.length / cols);
-    return technologies.map((_, i) => {
+    // Arrange in 4 columns on mobile so it fits perfectly on narrow screens, and 6 columns on desktop.
+    const cols = isMobile ? 4 : 6;
+    const rowsCount = Math.ceil(activeTechs.length / cols);
+    return activeTechs.map((_, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
       
-      // Compute standard grid coordinates with offsets to center them perfectly
-      const x = (col - (cols - 1) / 2) * 2.8 + (Math.random() - 0.5) * 0.6;
-      const y = -(row - (rowsCount - 1) / 2) * 2.0 + (Math.random() - 0.5) * 0.6;
-      const z = (Math.random() - 0.5) * 1.5;
+      // Compute standard grid coordinates with responsive offsets
+      const x = (col - (cols - 1) / 2) * (isMobile ? 2.1 : 2.8) + (Math.random() - 0.5) * 0.4;
+      const y = -(row - (rowsCount - 1) / 2) * (isMobile ? 1.7 : 2.0) + (Math.random() - 0.5) * 0.4;
+      const z = (Math.random() - 0.5) * 1.0;
 
       return [x, y, z];
     });
-  }, []);
+  }, [activeTechs, isMobile]);
 
   return (
     <div 
@@ -258,7 +274,7 @@ const TechSphere = () => {
         
         <Suspense fallback={null}>
           <Physics gravity={[0, 0, 0]} iterations={15}>
-            {technologies.map((tech, i) => (
+            {activeTechs.map((tech, i) => (
               <TechBall 
                 key={tech.name} 
                 icon={tech.icon} 
