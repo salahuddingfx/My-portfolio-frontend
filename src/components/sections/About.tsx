@@ -55,7 +55,7 @@ const About = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-8 py-10 border-y border-[var(--border)]">
+            <div className="grid grid-cols-2 gap-8 py-10 my-8 border-y border-[var(--border)]">
               {stats.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-2">
                   <span
