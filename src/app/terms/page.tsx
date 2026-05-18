@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <main style={{ paddingTop: "var(--navbar-height, 120px)" }}>
+    <main>
       <section className="section-shell bg-[var(--background)]">
         <div className="container">
           <div className="max-w-3xl mx-auto">

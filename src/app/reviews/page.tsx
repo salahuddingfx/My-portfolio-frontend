@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function ReviewsPage() {
   return (
-    <main style={{ paddingTop: 'var(--navbar-height, 120px)' }}>
+    <main>
       <Testimonials />
     </main>
   );

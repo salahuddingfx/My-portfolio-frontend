@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <main style={{ paddingTop: 'var(--navbar-height, 120px)' }}>
+    <main>
       <Services />
     </main>
   );

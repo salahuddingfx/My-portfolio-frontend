@@ -39,7 +39,7 @@ const ProjectsPageClient = () => {
   }, []);
 
   return (
-    <main style={{ paddingTop: "var(--navbar-height, 120px)" }}>
+    <main>
       <Projects layout="stacked" />
     </main>
   );

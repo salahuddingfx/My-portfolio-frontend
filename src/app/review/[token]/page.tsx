@@ -184,7 +184,7 @@ const ReviewFormPage = () => {
   }
 
   return (
-    <main style={{ paddingTop: 'var(--navbar-height, 120px)' }}>
+    <main>
       <section className="section-shell">
         <div className="container">
           <div className="max-w-3xl mx-auto">
