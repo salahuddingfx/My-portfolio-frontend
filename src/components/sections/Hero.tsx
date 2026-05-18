@@ -133,27 +133,29 @@ const Hero = () => {
               <span className="block text-[var(--muted)]">Kader</span>
             </h1>
 
-            {/* Description */}
-            <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mt-6 mb-12">
-              {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design."}
-            </p>
+            <div className="mt-6 space-y-8">
+              {/* Description */}
+              <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm">
+                {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design."}
+              </p>
 
-            {/* Actions */}
-            <div className="flex flex-wrap items-center gap-6 mt-10">
-              <Magnetic>
-                <a href="#projects" className="btn-primary">
-                  Selected Works
-                  <ArrowRight size={15} />
-                </a>
-              </Magnetic>
-              <Magnetic>
-                <Link 
-                  href="/contact" 
-                  className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-white transition-colors"
-                >
-                  Let&apos;s Talk
-                </Link>
-              </Magnetic>
+              {/* Actions */}
+              <div className="flex flex-wrap items-center gap-6">
+                <Magnetic>
+                  <a href="#projects" className="btn-primary">
+                    Selected Works
+                    <ArrowRight size={15} />
+                  </a>
+                </Magnetic>
+                <Magnetic>
+                  <Link 
+                    href="/contact" 
+                    className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-white transition-colors"
+                  >
+                    Let&apos;s Talk
+                  </Link>
+                </Magnetic>
+              </div>
             </div>
           </div>
 
