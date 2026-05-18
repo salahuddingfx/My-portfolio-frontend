@@ -40,7 +40,8 @@ const Navbar = () => {
 
     const setup = async () => {
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const saveData = navigator.connection?.saveData ?? false;
+      const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+      const saveData = connection?.saveData ?? false;
       if (reduceMotion || saveData) return;
 
       const { default: gsap } = await import("gsap");
