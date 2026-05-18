@@ -23,13 +23,13 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="section-shell bg-[var(--background)] py-32">
+    <section id="about" className="section-shell bg-[var(--background)] py-20 lg:py-32">
       <div className="container">
 
         {/* Centered Header */}
         <motion.div 
           {...fadeUp}
-          className="text-center max-w-3xl mx-auto mb-24"
+          className="text-center max-w-3xl mx-auto mb-16 lg:mb-24"
         >
           <span className="section-eyebrow mb-4 block">About me</span>
           <h2 className="section-heading text-5xl md:text-7xl mt-2 leading-tight">
@@ -37,12 +37,12 @@ const About = () => {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-24 items-center">
           {/* Text content */}
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="lg:col-span-7 flex flex-col gap-10"
+            className="lg:col-span-7 flex flex-col gap-10 order-2 lg:order-1"
           >
 
             <div className="space-y-6">
@@ -95,7 +95,7 @@ const About = () => {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-5"
+            className="lg:col-span-5 order-1 lg:order-2 max-w-md mx-auto lg:max-w-none w-full"
           >
             <div className="portrait-3d">
               <div
