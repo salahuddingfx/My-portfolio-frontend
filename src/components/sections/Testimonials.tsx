@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 const FALLBACK_REVIEWS = [
@@ -35,15 +34,10 @@ const Stars = () => (
   </div>
 );
 
-const fadeUp = {
-  initial:     { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport:    { once: true, margin: "-50px" },
-};
-
 const Testimonials = () => {
   const [reviews, setReviews] = useState<typeof FALLBACK_REVIEWS>(FALLBACK_REVIEWS);
   const [loading, setLoading] = useState(true);
+  const marqueeReviews = reviews.length > 0 ? [...reviews, ...reviews] : reviews;
 
   useEffect(() => {
     const fetch_ = async () => {
@@ -84,44 +78,56 @@ const Testimonials = () => {
           </h2>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: '1.25rem' }}>
-          {reviews.map((review, i) => (
-            <motion.div
-              key={i}
-              {...fadeUp}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="card card-hover group flex flex-col h-full p-7"
-            >
-              {/* Stars */}
-              <Stars />
+        {/* Auto-scroll marquee */}
+        {!loading && reviews.length > 0 && (
+          <div className="testimonials-marquee">
+            <div className="testimonials-track" style={{ "--marquee-duration": `${Math.max(24, reviews.length * 8)}s` } as React.CSSProperties}>
+              {marqueeReviews.map((review, i) => {
+                const isClone = i >= reviews.length;
+                return (
+                  <div
+                    key={`${review.name}-${i}`}
+                    className="testimonial-card card card-hover group flex flex-col h-full p-7"
+                    aria-hidden={isClone}
+                  >
+                    {/* Stars */}
+                    <Stars />
 
-              {/* Quote */}
-              <blockquote className="flex-grow mt-5 mb-6">
-                <p className="text-sm text-[var(--muted)] leading-relaxed group-hover:text-white/70 transition-colors duration-300">
-                  &ldquo;{review.text}&rdquo;
-                </p>
-              </blockquote>
+                    {/* Quote */}
+                    <blockquote className="flex-grow mt-5 mb-6">
+                      <p className="text-sm text-[var(--muted)] leading-relaxed group-hover:text-white/70 transition-colors duration-300">
+                        &ldquo;{review.text}&rdquo;
+                      </p>
+                    </blockquote>
 
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-5 border-t border-[var(--border)]">
-                <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shrink-0">
-                  <Image
-                    src={review.avatar}
-                    alt={review.name}
-                    fill
-                    sizes="36px"
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white leading-none">{review.name}</p>
-                  <p className="text-xs text-[var(--muted)] mt-1">{review.role}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                    {/* Author */}
+                    <div className="flex items-center gap-3 pt-5 border-t border-[var(--border)]">
+                      <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shrink-0">
+                        <Image
+                          src={review.avatar}
+                          alt={review.name}
+                          fill
+                          sizes="36px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-white leading-none">{review.name}</p>
+                        <p className="text-xs text-[var(--muted)] mt-1">{review.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {loading && (
+          <div className="py-12 text-center">
+            <p className="text-sm text-white/50">Loading reviews...</p>
+          </div>
+        )}
       </div>
     </section>
   );
