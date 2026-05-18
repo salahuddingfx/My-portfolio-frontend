@@ -492,6 +492,10 @@ video {
   will-change: transform;
 }
 
+.testimonials-track.skeleton-track {
+  animation: none;
+}
+
 .testimonials-marquee:hover .testimonials-track {
   animation-play-state: paused;
 }
@@ -518,6 +522,38 @@ video {
 @media (prefers-reduced-motion: reduce) {
   .testimonials-track {
     animation: none;
+  }
+}
+
+/* =============================================================================
+   SKELETON LOADING
+   ============================================================================= */
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  animation: skeleton-shimmer 1.6s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
   }
 }
 
