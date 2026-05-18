@@ -27,19 +27,19 @@ export function ScrollEffects() {
           gsap.set(section, { marginTop: "5px" });
         }
 
-        // Pin all sections for stacked overlap animation.
-        // Skip Projects (it has its own horizontal pin) and skip the final footer
-        // to avoid cutting off the end of the page.
-        // CRITICAL: `end: "bottom top"` makes each pin release exactly when
-        // the section's bottom exits the viewport — no ghost blank space.
+        // Pin each section for the stacked card overlap effect.
+        // To make cards slide over each other without staying stuck forever or creating ghost spaces,
+        // we unpin the current section EXACTLY when the next section has fully scrolled up to cover it
+        // (i.e. next section's top reaches the top of the viewport).
+        const nextSection = sections[i + 1] as HTMLElement | undefined;
         const isFooter = section.tagName.toLowerCase() === "footer";
-        const isLast = i === sections.length - 1;
 
-        if (!isFooter && !isLast && section.id !== "projects") {
+        if (nextSection && !isFooter && section.id !== "projects") {
           ScrollTrigger.create({
             trigger: section,
             start: "top top",
-            end: "bottom top",
+            endTrigger: nextSection,
+            end: "top top",
             pin: true,
             pinSpacing: false,
             invalidateOnRefresh: true,
