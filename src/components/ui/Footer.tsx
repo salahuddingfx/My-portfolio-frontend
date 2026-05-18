@@ -68,7 +68,7 @@ const Footer = () => {
       <div className="container relative z-10 max-w-7xl">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14 border-b border-white/[0.06] lg:gap-16" style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
-          
+
           {/* Brand Column */}
           <div className="flex flex-col lg:pr-10" style={{ gap: '2rem' }}>
             {/* Logo */}
@@ -109,7 +109,7 @@ const Footer = () => {
 
             <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.04] px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[11px] text-[var(--muted)]">Open to new projects</span>
+              <span className="text-[11px] text-[var(--muted)] pr-4 pl-2 md:pl-4 ">Open to new projects</span>
             </div>
           </div>
 
@@ -153,7 +153,7 @@ const Footer = () => {
               <h4 className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]" style={{ marginBottom: '1.25rem' }}>
                 Hire Me
               </h4>
-              <div 
+              <div
                 className="flex flex-col rounded-2xl border border-white/[0.07] bg-white/[0.03]"
                 style={{ padding: '1.5rem', gap: '1rem' }}
               >

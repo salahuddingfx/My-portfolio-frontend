@@ -27,12 +27,15 @@ export function ScrollEffects() {
           gsap.set(section, { marginTop: "5px" });
         }
 
-        // Only pin sections if they are NOT the last two (Section before Footer and Footer itself)
-        // AND not the projects section (which handles its own horizontal GSAP pin/spacing)
+        // Pin all sections for stacked overlap animation EXCEPT ContactCTA, Footer,
+        // and Projects (which has its own horizontal scroll).
+        // CRITICAL: `end: "bottom top"` makes each pin release exactly when
+        // the section's bottom exits the viewport — no ghost blank space.
         if (i < sections.length - 2 && section.id !== "projects") {
           ScrollTrigger.create({
             trigger: section,
             start: "top top",
+            end: "bottom top",
             pin: true,
             pinSpacing: false,
             invalidateOnRefresh: true,
