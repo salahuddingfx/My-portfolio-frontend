@@ -51,8 +51,8 @@ export const technologies = [
   { name: "Figma",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
   { name: "Photoshop",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" },
   { name: "Adobe XD",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/xd/xd-original.svg" },
-  { name: "Framer",     icon: "https://cdn.simpleicons.org/framer/white" },
-  { name: "GSAP",       icon: "https://cdn.simpleicons.org/greensock/white" },
+  { name: "Framer",     icon: "https://cdn.jsdelivr.net/npm/simple-icons@13/icons/framer.svg" },
+  { name: "GSAP",       icon: "https://cdn.jsdelivr.net/npm/simple-icons@13/icons/greensock.svg" },
   
   // Frontend
   { name: "HTML5",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
@@ -76,11 +76,11 @@ export const technologies = [
   { name: "MongoDB",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
   { name: "MySQL",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
   { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
-  { name: "Prisma",     icon: "https://cdn.simpleicons.org/prisma/white" },
+  { name: "Prisma",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/prisma/prisma-original.svg" },
   { name: "Git",        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
   { name: "Docker",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
-  { name: "Vercel",     icon: "https://cdn.simpleicons.org/vercel/white" },
-  { name: "AWS",        icon: "https://icongr.am/devicon/amazonwebservices-original.svg" },
+  { name: "Vercel",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/vercel/vercel-original.svg" },
+  { name: "AWS",        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
   { name: "Linux",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
   { name: "Postman",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
 ];
