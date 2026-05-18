@@ -3,12 +3,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface ProjectItem {
   _id?: string;
@@ -116,73 +110,93 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
   useEffect(() => {
     if (loading || displayProjects.length === 0) return;
 
-    const ctx = gsap.context(() => {
-      if (effectiveLayout === "horizontal") {
-        const section = sectionRef.current;
-        const track = trackRef.current;
-        if (!section || !track) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData = navigator.connection?.saveData ?? false;
+    if (reduceMotion || saveData) return;
 
-        const getScrollAmount = () => {
-          const base = track.scrollWidth - window.innerWidth;
-          const buffer = window.innerWidth * 0.18;
-          return Math.max(base + buffer, 1);
-        };
+    let ctx: { revert: () => void } | null = null;
+    let cancelled = false;
 
-        gsap.to(track, {
-          x: () => -getScrollAmount(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            pin: true,
-            scrub: 1,
-            start: "top top",
-            end: () => `+=${getScrollAmount()}`,
-            invalidateOnRefresh: true,
-          },
-        });
+    const run = async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (cancelled) return;
 
-        return;
-      }
+      gsap.registerPlugin(ScrollTrigger);
 
-      const rows = gsap.utils.toArray<HTMLElement>(".project-row");
-      rows.forEach((row) => {
-        const image = row.querySelector<HTMLElement>(".project-image");
-        gsap.fromTo(
-          row,
-          { y: 40, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.9,
-            ease: "power3.out",
+      ctx = gsap.context(() => {
+        if (effectiveLayout === "horizontal") {
+          const section = sectionRef.current;
+          const track = trackRef.current;
+          if (!section || !track) return;
+
+          const getScrollAmount = () => {
+            const base = track.scrollWidth - window.innerWidth;
+            const buffer = window.innerWidth * 0.18;
+            return Math.max(base + buffer, 1);
+          };
+
+          gsap.to(track, {
+            x: () => -getScrollAmount(),
+            ease: "none",
             scrollTrigger: {
-              trigger: row,
-              start: "top 85%",
+              trigger: section,
+              pin: true,
+              scrub: 1,
+              start: "top top",
+              end: () => `+=${getScrollAmount()}`,
+              invalidateOnRefresh: true,
             },
-          }
-        );
+          });
 
-        if (image) {
+          return;
+        }
+
+        const rows = gsap.utils.toArray<HTMLElement>(".project-row");
+        rows.forEach((row) => {
+          const image = row.querySelector<HTMLElement>(".project-image");
           gsap.fromTo(
-            image,
-            { y: 24, scale: 1.03 },
+            row,
+            { y: 40, autoAlpha: 0 },
             {
-              y: -24,
-              scale: 1,
-              ease: "none",
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.9,
+              ease: "power3.out",
               scrollTrigger: {
                 trigger: row,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 0.4,
+                start: "top 85%",
               },
             }
           );
-        }
-      });
-    }, sectionRef);
 
-    return () => ctx.revert();
+          if (image) {
+            gsap.fromTo(
+              image,
+              { y: 24, scale: 1.03 },
+              {
+                y: -24,
+                scale: 1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: row,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: 0.4,
+                },
+              }
+            );
+          }
+        });
+      }, sectionRef);
+    };
+
+    run();
+
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, [loading, displayProjects, effectiveLayout]);
 
   const projectRows = useMemo(() => {

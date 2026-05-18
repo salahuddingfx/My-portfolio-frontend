@@ -129,9 +129,7 @@ export default function RootLayout({
           completes in the background so Spline loads faster when it defers. */}
       <head>
         <link rel="preconnect" href="https://prod.spline.design" />
-        <link rel="preconnect" href="https://unpkg.com" />
         <link rel="dns-prefetch" href="https://prod.spline.design" />
-        <link rel="dns-prefetch" href="https://unpkg.com" />
       </head>
       <body
         suppressHydrationWarning
@@ -149,7 +147,7 @@ export default function RootLayout({
         </noscript>
 
         {/* Google Tag Manager */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
+        <Script id="google-tag-manager" strategy="lazyOnload">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -162,9 +160,9 @@ export default function RootLayout({
         {/* Google Analytics (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SV5CCYTWG5"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
