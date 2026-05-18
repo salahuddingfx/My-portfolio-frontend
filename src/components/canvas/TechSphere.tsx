@@ -122,14 +122,8 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
     currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, 0.15);
     ref.current.scale.setScalar(currentScale.current);
 
-    // 2. Liquid Floating animation around home position (independent drift per ball)
-    const seed = targetPos[0] * 100 + targetPos[1];
-    const floatOffset = new THREE.Vector3(
-      Math.sin(t * 0.45 + seed) * 0.25,
-      Math.cos(t * 0.4 + seed) * 0.25,
-      Math.sin(t * 0.5 + seed) * 0.15
-    );
-    const homePos = new THREE.Vector3(...targetPos).add(floatOffset);
+    // 2. Static Home Position (Keeps balls perfectly aligned in a clean grid at rest)
+    const homePos = new THREE.Vector3(...targetPos);
 
     if (isDragging) {
       const mp = new THREE.Vector3((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 0);
