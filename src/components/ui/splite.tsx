@@ -32,8 +32,9 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     if (!el || typeof window === 'undefined') return
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const saveData = navigator.connection?.saveData ?? false
-    const effectiveType = navigator.connection?.effectiveType ?? ''
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection
+    const saveData = connection?.saveData ?? false
+    const effectiveType = connection?.effectiveType ?? ''
     const lowEndNetwork = effectiveType === 'slow-2g' || effectiveType === '2g'
     const deviceMemory = navigator.deviceMemory ?? 0
     const hardwareConcurrency = navigator.hardwareConcurrency ?? 0
