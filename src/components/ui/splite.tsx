@@ -36,7 +36,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     const saveData = connection?.saveData ?? false
     const effectiveType = connection?.effectiveType ?? ''
     const lowEndNetwork = effectiveType === 'slow-2g' || effectiveType === '2g'
-    const deviceMemory = navigator.deviceMemory ?? 0
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 0
     const hardwareConcurrency = navigator.hardwareConcurrency ?? 0
     const lowEndDevice = (deviceMemory > 0 && deviceMemory < 4) || (hardwareConcurrency > 0 && hardwareConcurrency <= 4)
 

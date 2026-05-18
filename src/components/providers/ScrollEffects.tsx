@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Context } from "gsap";
 
 import { usePathname } from "next/navigation";
 
 export function ScrollEffects() {
   const pathname = usePathname();
-  const ctxRef = useRef<Context | null>(null);
+  const ctxRef = useRef<{ revert: () => void } | null>(null);
 
   useEffect(() => {
     if (pathname !== "/") return;
