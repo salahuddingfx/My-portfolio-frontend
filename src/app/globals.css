@@ -607,6 +607,63 @@ video {
   transition: filter var(--duration-slow) var(--ease-out);
 }
 
+/* 3D Portrait Treatment */
+.portrait-3d {
+  perspective: 1200px;
+}
+
+.portrait-3d-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --glow-x: 50%;
+  --glow-y: 50%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  will-change: transform;
+}
+
+.portrait-3d-card::before,
+.portrait-3d-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.portrait-3d-card::before {
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.08), transparent 55%);
+  opacity: 0.4;
+}
+
+.portrait-3d-card::after {
+  background: radial-gradient(500px circle at var(--glow-x) var(--glow-y), rgba(168, 85, 247, 0.25), transparent 60%);
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+.portrait-3d-card:hover {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 40px rgba(168, 85, 247, 0.2);
+}
+
+.portrait-3d-img {
+  transform: translateZ(40px) scale(1.02);
+}
+
+.portrait-3d-accent {
+  transform: translateZ(60px);
+}
+
+.portrait-3d-badge {
+  transform: translateZ(70px);
+}
+
+@media (hover: none) {
+  .portrait-3d-card {
+    transform: none;
+  }
+}
+
 /* =============================================================================
    TYPING CURSOR
    ============================================================================= */
