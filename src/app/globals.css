@@ -1018,6 +1018,24 @@ video {
 }
 
 /* =============================================================================
+   TRUSTED BY MARQUEE
+   ============================================================================= */
+
+.trusted-by-marquee {
+  animation: trusted-by-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+.trusted-by-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes trusted-by-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
+/* =============================================================================
    REDUCED MOTION
    ============================================================================= */
 
