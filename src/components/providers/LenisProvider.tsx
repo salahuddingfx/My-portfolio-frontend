@@ -11,7 +11,8 @@ type LenisComponent = React.ComponentType<{
 const shouldEnableSmoothScroll = () => {
   if (typeof window === "undefined") return false;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const saveData = navigator.connection?.saveData ?? false;
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const saveData = connection?.saveData ?? false;
   return !(reduceMotion || saveData);
 };
 
