@@ -24,6 +24,8 @@ export const LenisProvider = ({ children }: { children: ReactNode }) => {
 
     let cancelled = false;
 
+    const w = typeof window !== "undefined" ? window : undefined;
+
     const loadLenis = () => {
       import("lenis/react").then((mod) => {
         if (!cancelled) {
@@ -32,11 +34,11 @@ export const LenisProvider = ({ children }: { children: ReactNode }) => {
       });
     };
 
-    if ("requestIdleCallback" in window) {
-      (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void })
+    if (w && "requestIdleCallback" in w) {
+      (w as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void })
         .requestIdleCallback(loadLenis, { timeout: 2000 });
     } else {
-      window.setTimeout(loadLenis, 700);
+      globalThis.setTimeout(loadLenis, 700);
     }
 
     return () => {
