@@ -48,6 +48,9 @@ const technologies = [
   // UI & Design
   { name: "Tailwind",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
   { name: "Bootstrap",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" },
+  { name: "Figma",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
+  { name: "Photoshop",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" },
+  { name: "Adobe XD",   icon: "https://cdn.simpleicons.org/adobexd/white" },
   { name: "Framer",     icon: "https://cdn.simpleicons.org/framer/white" },
   { name: "GSAP",       icon: "https://cdn.simpleicons.org/greensock/white" },
   
@@ -73,8 +76,13 @@ const technologies = [
   { name: "MongoDB",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
   { name: "MySQL",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
   { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  { name: "Prisma",     icon: "https://cdn.simpleicons.org/prisma/white" },
+  { name: "Git",        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
   { name: "Docker",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+  { name: "Vercel",     icon: "https://cdn.simpleicons.org/vercel/white" },
+  { name: "AWS",        icon: "https://cdn.simpleicons.org/amazonwebservices/white" },
   { name: "Linux",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
+  { name: "Postman",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
 ];
 
 interface TechBallProps {
@@ -213,15 +221,16 @@ const TechSphere = () => {
   const [isMouseIn, setIsMouseIn] = useState(false);
 
   const ballPositions = useMemo<[number, number, number][]>(() => {
-    // 23 items. Let's arrange them in a beautiful, loose grid of 4 rows and 6 columns.
+    // Dynamically arrange them in a beautiful, loose grid of columns and rows.
     const cols = 6;
+    const rowsCount = Math.ceil(technologies.length / cols);
     return technologies.map((_, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
       
       // Compute standard grid coordinates with offsets to center them perfectly
-      const x = (col - 2.5) * 2.8 + (Math.random() - 0.5) * 0.6;
-      const y = -(row - 1.5) * 2.0 + (Math.random() - 0.5) * 0.6;
+      const x = (col - (cols - 1) / 2) * 2.8 + (Math.random() - 0.5) * 0.6;
+      const y = -(row - (rowsCount - 1) / 2) * 2.0 + (Math.random() - 0.5) * 0.6;
       const z = (Math.random() - 0.5) * 1.5;
 
       return [x, y, z];
@@ -237,10 +246,10 @@ const TechSphere = () => {
       <Canvas
         dpr={[1, 2]}
         shadows
-        camera={{ position: [0, 0, 15], fov: 45 }}
+        camera={{ position: [0, 0, 16.8], fov: 45 }}
         gl={{ powerPreference: "high-performance", antialias: true, alpha: true }}
       >
-        <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={45} />
+        <PerspectiveCamera makeDefault position={[0, 0, 16.8]} fov={45} />
 
         <ambientLight intensity={0.5} />
         <pointLight position={[-10, 10,  12]} intensity={2} color="#ffffff" />
