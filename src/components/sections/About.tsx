@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRef } from "react";
 import { ArrowRight, Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +15,7 @@ const fadeUp = {
 
 const About = () => {
   const { settings } = useSettings();
+  const portraitRef = useRef<HTMLDivElement>(null);
 
   const stats = [
     { value: settings?.projectsCompleted || "50+", label: "Projects completed" },
@@ -95,22 +97,48 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5"
           >
-            <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[var(--surface)] border border-[var(--border)] group shadow-2xl">
+            <div className="portrait-3d">
+              <div
+                ref={portraitRef}
+                className="portrait-3d-card relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[var(--surface)] border border-[var(--border)] group shadow-2xl"
+                onMouseMove={(event) => {
+                  const el = portraitRef.current;
+                  if (!el) return;
+                  const rect = el.getBoundingClientRect();
+                  const x = event.clientX - rect.left;
+                  const y = event.clientY - rect.top;
+                  const px = (x / rect.width - 0.5) * 2;
+                  const py = (y / rect.height - 0.5) * 2;
+                  el.style.setProperty("--tilt-x", `${(-py * 8).toFixed(2)}deg`);
+                  el.style.setProperty("--tilt-y", `${(px * 10).toFixed(2)}deg`);
+                  el.style.setProperty("--glow-x", `${(x / rect.width) * 100}%`);
+                  el.style.setProperty("--glow-y", `${(y / rect.height) * 100}%`);
+                }}
+                onMouseLeave={() => {
+                  const el = portraitRef.current;
+                  if (!el) return;
+                  el.style.setProperty("--tilt-x", "0deg");
+                  el.style.setProperty("--tilt-y", "0deg");
+                  el.style.setProperty("--glow-x", "50%");
+                  el.style.setProperty("--glow-y", "50%");
+                }}
+              >
               <Image
                 src="/mine-photo.png"
                 alt="Salah Uddin Kader"
                 fill
                 sizes="(max-width: 1024px) 100vw, 500px"
-                className="object-cover img-portrait grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                className="object-cover img-portrait portrait-3d-img grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
               />
               {/* Brutalist accents */}
-              <div className="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-[var(--accent)] opacity-40" />
-              <div className="absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-[var(--accent)] opacity-40" />
+              <div className="portrait-3d-accent absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-[var(--accent)] opacity-40" />
+              <div className="portrait-3d-accent absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-[var(--accent)] opacity-40" />
               
               {/* Badge overlay */}
-              <div className="absolute bottom-8 left-8 bg-black/60 backdrop-blur-xl border border-white/10 p-5 rounded-2xl flex items-center gap-4 shadow-2xl">
+              <div className="portrait-3d-badge absolute bottom-8 left-8 bg-black/60 backdrop-blur-xl border border-white/10 p-5 rounded-2xl flex items-center gap-4 shadow-2xl">
                 <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
                 <span className="text-[10px] uppercase tracking-widest font-bold">Based in BD</span>
+              </div>
               </div>
             </div>
           </motion.div>
