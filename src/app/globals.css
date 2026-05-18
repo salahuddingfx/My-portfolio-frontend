@@ -89,8 +89,8 @@
   --z-cursor: 9999;
 
   /* ── Container ───────────────────────────────────────────────── */
-  --container-max: 1200px;
-  --container-pad: 1.5rem;
+  --container-max: 1440px;
+  --container-pad: 2rem;
 }
 
 /* NAVBAR HEIGHT SYSTEM */

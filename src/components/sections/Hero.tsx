@@ -126,7 +126,7 @@ const Hero = () => {
               Hello! I&apos;m
             </span>
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1] tracking-tighter uppercase"
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-[1] tracking-tighter uppercase"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Salah Uddin
@@ -166,7 +166,7 @@ const Hero = () => {
             </span>
             <div className="min-h-[60px] md:min-h-[80px] flex flex-col justify-start md:justify-end items-start md:items-end w-full">
               <span 
-                className="text-3xl sm:text-4xl lg:text-5xl text-white font-bold uppercase tracking-tighter leading-[1]" 
+                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white font-bold uppercase tracking-tighter leading-[1]" 
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 <RoleTyper />
