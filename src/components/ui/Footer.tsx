@@ -171,7 +171,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col items-center justify-between gap-5 py-7 text-center sm:flex-row sm:text-left">
+        <div className="flex flex-col items-center justify-between gap-5 pt-7 pb-10 text-center sm:flex-row sm:text-left">
           <p className="text-center text-[12px] text-[var(--muted-soft)]">
             © {year} Salah Uddin Kader — All rights reserved.
           </p>
