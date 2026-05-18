@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import {
   Space_Grotesk,
   Inter,
@@ -128,6 +129,20 @@ export default function RootLayout({
         className="bg-background text-foreground antialiased overflow-x-hidden"
         style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
       >
+        {/* Google Analytics (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SV5CCYTWG5"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SV5CCYTWG5');
+          `}
+        </Script>
+
         <IntroLoader />
         <LenisProvider>
           <SettingsProvider>
