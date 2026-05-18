@@ -37,6 +37,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
   const [isCompact, setIsCompact] = useState(false);
+  const skeletonItems = Array.from({ length: 3 }, (_, i) => i);
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -386,8 +387,37 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
         </div>
 
         {loading ? (
-          <div className="py-16 text-center">
-            <p className="text-sm text-white/50">Loading projects...</p>
+          <div className="mt-20 md:mt-28 pb-28 md:pb-36">
+            <div className="flex gap-16 md:gap-24 px-8 md:px-16 pr-[18vw] md:pr-[22vw]">
+              {skeletonItems.map((i) => (
+                <div key={i} className="project-panel w-[85vw] sm:w-[75vw] lg:w-[70vw] shrink-0">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                    <div className="flex flex-col gap-6 lg:col-span-5">
+                      <div className="skeleton h-12 w-20" />
+                      <div className="space-y-3">
+                        <div className="skeleton h-4 w-32" />
+                        <div className="skeleton h-7 w-52" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="skeleton h-3 w-36" />
+                        <div className="skeleton h-3 w-28" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="skeleton h-3 w-40" />
+                        <div className="skeleton h-3 w-56" />
+                      </div>
+                      <div className="space-y-3">
+                        <div className="skeleton h-3 w-11/12" />
+                        <div className="skeleton h-3 w-10/12" />
+                      </div>
+                    </div>
+                    <div className="lg:col-span-7">
+                      <div className="skeleton aspect-16/10 lg:aspect-video rounded-3xl" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="mt-20 md:mt-28 pb-28 md:pb-36">
@@ -451,8 +481,37 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
       </div>
 
       {loading ? (
-        <div className="py-16 text-center">
-          <p className="text-sm text-white/50">Loading projects...</p>
+        <div className="mt-20 md:mt-28 pb-28 md:pb-36">
+          {skeletonItems.map((i) => (
+            <div key={i} className={`project-row ${i === 0 ? "" : "border-t border-white/5"} py-16 md:py-24`}>
+              <div className="container px-8 md:px-16">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                  <div className="flex flex-col gap-6 lg:col-span-5">
+                    <div className="skeleton h-12 w-20" />
+                    <div className="space-y-3">
+                      <div className="skeleton h-4 w-32" />
+                      <div className="skeleton h-7 w-52" />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="skeleton h-3 w-36" />
+                      <div className="skeleton h-3 w-28" />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="skeleton h-3 w-40" />
+                      <div className="skeleton h-3 w-56" />
+                    </div>
+                    <div className="space-y-3">
+                      <div className="skeleton h-3 w-11/12" />
+                      <div className="skeleton h-3 w-10/12" />
+                    </div>
+                  </div>
+                  <div className="lg:col-span-7">
+                    <div className="skeleton aspect-16/10 lg:aspect-video rounded-3xl" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : displayProjects.length === 0 ? (
         <div className="py-16 text-center">
