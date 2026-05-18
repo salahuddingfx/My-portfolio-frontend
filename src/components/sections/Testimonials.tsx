@@ -96,7 +96,7 @@ const Testimonials = () => {
                     aria-hidden={isClone}
                   >
                     {/* Stars */}
-                    <Stars rating={typeof review.rating === 'number' ? review.rating : 5} />
+                    <Stars rating={typeof (review as Record<string, unknown>).rating === 'number' ? (review as Record<string, unknown>).rating as number : 5} />
 
                     {/* Quote */}
                     <blockquote className="flex-grow mt-5 mb-6">
