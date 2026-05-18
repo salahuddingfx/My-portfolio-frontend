@@ -14,7 +14,8 @@ export function ScrollEffects() {
     if (typeof window === "undefined") return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const saveData = navigator.connection?.saveData ?? false;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    const saveData = connection?.saveData ?? false;
     const isSmallScreen = window.matchMedia("(max-width: 1023px)").matches;
     if (reduceMotion || saveData || isSmallScreen) return;
 
