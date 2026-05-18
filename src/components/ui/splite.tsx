@@ -17,9 +17,9 @@ interface SplineSceneProps {
  * blocking the main thread for several seconds and destroying LCP/TBT.
  *
  * Solution:
- *   1. IntersectionObserver waits until the element is near the viewport.
- *   2. requestIdleCallback (or a 500ms fallback) defers mount until the browser
- *      is idle — after FCP and LCP have already been measured.
+ *   1. IntersectionObserver waits until the element is in the viewport (rootMargin:0px).
+ *   2. requestIdleCallback (or a 1500ms fallback) defers mount until the browser
+ *      is genuinely idle — after FCP and LCP have already been measured.
  *   3. The parent component's decorative glows/blobs are shown as a fallback
  *      while Spline loads, so there is no layout shift.
  */
@@ -33,12 +33,11 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
 
     const scheduleMount = () => {
       if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        // Cast needed because TS doesn't include requestIdleCallback types by default
         ;(window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void })
-          .requestIdleCallback(() => setShouldMount(true), { timeout: 2000 })
+          .requestIdleCallback(() => setShouldMount(true), { timeout: 3000 })
       } else {
-        // Safari / older browsers — short delay still lets FCP/LCP paint first
-        setTimeout(() => setShouldMount(true), 500)
+        // Safari / older browsers — delay long enough for LCP to be captured
+        setTimeout(() => setShouldMount(true), 1500)
       }
     }
 
@@ -49,8 +48,8 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
           scheduleMount()
         }
       },
-      // Start loading a little before it's actually visible
-      { rootMargin: '200px' }
+      // rootMargin: 0px — only trigger when actually visible, not pre-fetched
+      { rootMargin: '0px' }
     )
 
     observer.observe(el)
