@@ -25,8 +25,14 @@ export function ScrollEffects() {
         const sections = gsap.utils.toArray<HTMLElement>("main section, main footer");
 
         sections.forEach((section, i) => {
-          // Ensure they stack on top of each other correctly
-          gsap.set(section, { zIndex: i });
+          // Ensure they stack on top of each other correctly.
+          // Enforce a high z-index (10) for projects so it stays on top of Testimonials (zIndex 5)
+          // during its horizontal pinning scroll.
+          if (section.id === "projects") {
+            gsap.set(section, { zIndex: 10 });
+          } else {
+            gsap.set(section, { zIndex: i });
+          }
 
           // Add a subtle 5px margin-top to home page sections (except Hero) to create a premium stacked gap
           if (i > 0) {
