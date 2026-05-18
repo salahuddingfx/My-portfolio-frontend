@@ -500,6 +500,12 @@ video {
   flex: 0 0 clamp(260px, 38vw, 360px);
 }
 
+@media (min-width: 1024px) {
+  .testimonial-card {
+    flex: 0 0 420px;
+  }
+}
+
 @keyframes testimonials-marquee {
   from {
     transform: translateX(0);
