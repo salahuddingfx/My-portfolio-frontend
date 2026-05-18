@@ -50,7 +50,7 @@ const technologies = [
   { name: "Bootstrap",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" },
   { name: "Figma",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
   { name: "Photoshop",  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" },
-  { name: "Adobe XD",   icon: "https://cdn.simpleicons.org/adobexd/white" },
+  { name: "Adobe XD",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/adobexd/adobexd-original.svg" },
   { name: "Framer",     icon: "https://cdn.simpleicons.org/framer/white" },
   { name: "GSAP",       icon: "https://cdn.simpleicons.org/greensock/white" },
   
@@ -80,7 +80,7 @@ const technologies = [
   { name: "Git",        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
   { name: "Docker",     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
   { name: "Vercel",     icon: "https://cdn.simpleicons.org/vercel/white" },
-  { name: "AWS",        icon: "https://cdn.simpleicons.org/amazonwebservices/white" },
+  { name: "AWS",        icon: "https://cdn.simpleicons.org/amazonaws/white" },
   { name: "Linux",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
   { name: "Postman",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
 ];

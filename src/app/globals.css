@@ -413,6 +413,15 @@ video {
   z-index: var(--z-base);
 }
 
+@media (min-width: 1024px) {
+  .section-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 767px) {
   .section-shell {
     padding-top: 75px;

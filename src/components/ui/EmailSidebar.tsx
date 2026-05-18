@@ -8,7 +8,7 @@ const EmailSidebar = () => {
       initial={{ opacity: 0, x: 12 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8, delay: 2.2, ease: "easeOut" }}
-      className="fixed right-6 bottom-0 z-[100] hidden xl:flex flex-col items-center gap-6"
+      className="fixed right-6 bottom-0 z-[100] hidden 2xl:flex flex-col items-center gap-6"
     >
       <a
         href="mailto:salahuddinkaderappy@gmail.com"
@@ -16,7 +16,7 @@ const EmailSidebar = () => {
         style={{ writingMode: "vertical-rl", fontFamily: "var(--font-jetbrains-mono)" }}
         aria-label="Send email"
       >
-        salahuddinkaderappy@gmail.com
+        salauddinkaderappy@gmail.com
       </a>
 
       <div className="w-px h-20 bg-[var(--border)]" />
