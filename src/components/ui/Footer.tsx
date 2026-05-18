@@ -176,6 +176,15 @@ const Footer = () => {
             © {year} Salah Uddin Kader — All rights reserved.
           </p>
 
+          <div className="flex flex-wrap items-center justify-center gap-4 text-[12px] text-[var(--muted-soft)]">
+            <Link href="/privacy-policy" className="footer-link text-[12px]">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="footer-link text-[12px]">
+              Terms
+            </Link>
+          </div>
+
           <div className="flex items-center gap-2">
             {socials.map((social) => (
               <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="footer-social">
