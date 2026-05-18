@@ -111,7 +111,8 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
     if (loading || displayProjects.length === 0) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const saveData = navigator.connection?.saveData ?? false;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    const saveData = connection?.saveData ?? false;
     if (reduceMotion || saveData) return;
 
     let ctx: { revert: () => void } | null = null;
