@@ -27,24 +27,21 @@ export function ScrollEffects() {
           gsap.set(section, { marginTop: "5px" });
         }
 
-        // Pin all sections for stacked overlap animation EXCEPT ContactCTA, Footer,
-        // and Projects (which has its own horizontal scroll).
+        // Pin all sections for stacked overlap animation.
+        // Skip Projects (it has its own horizontal pin) and skip the final footer
+        // to avoid cutting off the end of the page.
         // CRITICAL: `end: "bottom top"` makes each pin release exactly when
         // the section's bottom exits the viewport — no ghost blank space.
-        if (i < sections.length - 2 && section.id !== "projects") {
-          const nextSection = sections[i + 1];
-          const nextNeedsSpacing =
-            nextSection?.id === "about" ||
-            nextSection?.id === "contact-cta" ||
-            nextSection?.tagName.toLowerCase() === "footer";
+        const isFooter = section.tagName.toLowerCase() === "footer";
+        const isLast = i === sections.length - 1;
 
+        if (!isFooter && !isLast && section.id !== "projects") {
           ScrollTrigger.create({
             trigger: section,
             start: "top top",
             end: "bottom top",
             pin: true,
-            // Keep spacing before About/ContactCTA/footer so it doesn't scroll past behind the pin.
-            pinSpacing: nextNeedsSpacing,
+            pinSpacing: false,
             invalidateOnRefresh: true,
           });
         }
