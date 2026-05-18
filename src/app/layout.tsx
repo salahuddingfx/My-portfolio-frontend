@@ -130,6 +130,10 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://prod.spline.design" />
         <link rel="dns-prefetch" href="https://prod.spline.design" />
+        <meta
+          name="description"
+          content="Portfolio of Salah Uddin Kader — Full Stack Developer focused on modern interfaces, interactive experiences, and thoughtful digital products."
+        />
       </head>
       <body
         suppressHydrationWarning

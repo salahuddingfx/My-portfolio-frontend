@@ -126,7 +126,7 @@ const Services = () => {
                     aria-label={`Learn more about ${service.title}`}
                     className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200 group/link"
                   >
-                    Learn more
+                    Learn more about {service.title}
                     <ArrowUpRight
                       size={13}
                       aria-hidden="true"
