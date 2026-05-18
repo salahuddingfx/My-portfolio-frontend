@@ -29,16 +29,34 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
 
   useEffect(() => {
     const el = containerRef.current
-    if (!el) return
+    if (!el || typeof window === 'undefined') return
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const saveData = navigator.connection?.saveData ?? false
+    const effectiveType = navigator.connection?.effectiveType ?? ''
+    const lowEndNetwork = effectiveType === 'slow-2g' || effectiveType === '2g'
+    const deviceMemory = navigator.deviceMemory ?? 0
+    const hardwareConcurrency = navigator.hardwareConcurrency ?? 0
+    const lowEndDevice = (deviceMemory > 0 && deviceMemory < 4) || (hardwareConcurrency > 0 && hardwareConcurrency <= 4)
+
+    if (reduceMotion || saveData || lowEndNetwork || lowEndDevice) return
+
+    let cancelled = false
+    let timeoutId: number | undefined
 
     const scheduleMount = () => {
-      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        ;(window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void })
-          .requestIdleCallback(() => setShouldMount(true), { timeout: 3000 })
-      } else {
-        // Safari / older browsers — delay long enough for LCP to be captured
-        setTimeout(() => setShouldMount(true), 1500)
+      const mount = () => {
+        if (!cancelled) setShouldMount(true)
       }
+
+      timeoutId = window.setTimeout(() => {
+        if ('requestIdleCallback' in window) {
+          ;(window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void })
+            .requestIdleCallback(mount, { timeout: 4000 })
+        } else {
+          mount()
+        }
+      }, 1800)
     }
 
     const observer = new IntersectionObserver(
@@ -53,7 +71,11 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     )
 
     observer.observe(el)
-    return () => observer.disconnect()
+    return () => {
+      cancelled = true
+      if (timeoutId) window.clearTimeout(timeoutId)
+      observer.disconnect()
+    }
   }, [])
 
   return (
