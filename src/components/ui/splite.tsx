@@ -31,17 +31,6 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     const el = containerRef.current
     if (!el || typeof window === 'undefined') return
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection
-    const saveData = connection?.saveData ?? false
-    const effectiveType = connection?.effectiveType ?? ''
-    const lowEndNetwork = effectiveType === 'slow-2g' || effectiveType === '2g'
-    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 0
-    const hardwareConcurrency = navigator.hardwareConcurrency ?? 0
-    const lowEndDevice = (deviceMemory > 0 && deviceMemory < 4) || (hardwareConcurrency > 0 && hardwareConcurrency <= 4)
-
-    if (reduceMotion || saveData || lowEndNetwork || lowEndDevice) return
-
     let cancelled = false
     let timeoutId: number | undefined
 
