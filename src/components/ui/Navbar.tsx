@@ -122,7 +122,7 @@ const Navbar = () => {
                 <span className="text-[17px] font-semibold" style={{ fontFamily: "var(--font-space-grotesk)" }}>S</span>
               </div>
               <div className="hidden sm:flex flex-col leading-none">
-                <span className="text-[16px] font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>Salah Kader</span>
+                <span className="text-[16px] font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>Salah Uddin Kader</span>
                 <span className="mt-1 text-[10px] uppercase tracking-[0.08em] text-[var(--muted)]">Developer</span>
               </div>
             </Link>
@@ -259,7 +259,7 @@ const Navbar = () => {
                   <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
                 </Link>
                 <p className="mt-4 text-center text-[11px] text-[var(--muted-soft)]">
-                  salahuddinkaderappy@gmail.com
+                  salauddinkaderappy@gmail.com
                 </p>
               </div>
             </motion.div>
