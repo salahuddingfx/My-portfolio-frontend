@@ -36,6 +36,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [isCompact, setIsCompact] = useState(false);
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -73,26 +74,43 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
     fetchProjects();
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia("(max-width: 1023px)");
+    const onChange = (event: MediaQueryListEvent) => setIsCompact(event.matches);
+
+    setIsCompact(mql.matches);
+    if (mql.addEventListener) {
+      mql.addEventListener("change", onChange);
+      return () => mql.removeEventListener("change", onChange);
+    }
+
+    mql.addListener(onChange);
+    return () => mql.removeListener(onChange);
+  }, []);
+
   const categories = useMemo(() => {
     const list = projects.map((p) => p.category).filter(Boolean);
     return ["All", ...Array.from(new Set(list))];
   }, [projects]);
 
+  const effectiveLayout = layout === "horizontal" && !isCompact ? "horizontal" : "stacked";
+
   const displayProjects = useMemo(() => {
-    if (layout === "horizontal") {
+    if (effectiveLayout === "horizontal") {
       const featured = projects.filter((p) => p.featured);
       return featured.length > 0 ? featured : projects;
     }
     return activeCategory === "All"
       ? projects
       : projects.filter((p) => p.category === activeCategory);
-  }, [projects, activeCategory, layout]);
+  }, [projects, activeCategory, effectiveLayout]);
 
   useEffect(() => {
     if (loading || displayProjects.length === 0) return;
 
     const ctx = gsap.context(() => {
-      if (layout === "horizontal") {
+      if (effectiveLayout === "horizontal") {
         const section = sectionRef.current;
         const track = trackRef.current;
         if (!section || !track) return;
@@ -158,7 +176,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [loading, displayProjects, layout]);
+  }, [loading, displayProjects, effectiveLayout]);
 
   const projectRows = useMemo(() => {
     return displayProjects.map((project, index) => {
@@ -340,7 +358,7 @@ const Projects = ({ layout = "horizontal" }: ProjectsProps) => {
     });
   }, [displayProjects]);
 
-  if (layout === "horizontal") {
+  if (effectiveLayout === "horizontal") {
     return (
       <section
         id="projects"

@@ -28,7 +28,7 @@ const ContactCTA = () => {
             love to hear about it.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link href="/contact" className="btn-primary">
               Start a project
               <ArrowRight size={15} />
