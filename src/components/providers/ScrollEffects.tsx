@@ -71,7 +71,7 @@ export function ScrollEffects() {
           if (copy) revealTl.from(copy, { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.7");
         });
       });
-    }, 0);
+    }, 500);
 
     return () => {
       if (timeoutId) {
