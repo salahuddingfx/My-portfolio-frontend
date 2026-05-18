@@ -1,8 +1,8 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, type ComponentType } from "react";
 
-type LenisComponent = React.ComponentType<{
+type LenisComponent = ComponentType<{
   root?: boolean;
   options?: { lerp: number; duration: number; smoothWheel: boolean };
   children?: ReactNode;
