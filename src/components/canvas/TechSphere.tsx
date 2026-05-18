@@ -104,8 +104,8 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
     mass: 1.2,
     position: targetPos,
     args: [0.85],
-    linearDamping: 0.75, // Slidability like a pool ball sliding
-    angularDamping: 0.8,
+    linearDamping: 0.88, // Water-like viscosity (heavy fluid drag)
+    angularDamping: 0.9,
     allowSleep: false,
     ...props,
   }));
@@ -122,23 +122,29 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
     currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, 0.15);
     ref.current.scale.setScalar(currentScale.current);
 
-    // 2. Static Home Position (Keeps balls perfectly aligned in a clean grid at rest)
-    const homePos = new THREE.Vector3(...targetPos);
-
     if (isDragging) {
       const mp = new THREE.Vector3((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 0);
       api.position.set(mp.x, mp.y, 0);
       api.velocity.set(0, 0, 0);
     } else {
-      // 3. Continuous gentle pull back to home position (Spring Force)
-      const diff = new THREE.Vector3().subVectors(homePos, currentPos);
-      const dist = diff.length();
+      // 2. Gentle Central Gravity (rubber-band pull to center [0,0,0] like fish staying in a school)
+      const center = new THREE.Vector3(0, 0, 0);
+      const toCenter = new THREE.Vector3().subVectors(center, currentPos);
+      const distToCenter = toCenter.length();
 
-      if (dist > 0.05) {
-        const k = mouseActive ? 12 : 28;
-        const pull = diff.clone().normalize().multiplyScalar(dist * k);
-        api.applyForce(pull.toArray(), [0, 0, 0]);
-      }
+      // Stronger elastic pull if they drift too far out to contain them in the viewport
+      const gravityK = distToCenter > 5 ? 3.5 : 1.2;
+      const pull = toCenter.clone().normalize().multiplyScalar(distToCenter * gravityK);
+      api.applyForce(pull.toArray(), [0, 0, 0]);
+
+      // 3. Fluid Water Current (dynamic floating waves, unique seed per ball)
+      const seed = targetPos[0] * 100 + targetPos[1];
+      const waterCurrent = new THREE.Vector3(
+        Math.sin(t * 0.4 + seed) * 1.8,
+        Math.cos(t * 0.35 + seed) * 1.8,
+        Math.sin(t * 0.5 + seed) * 0.8
+      );
+      api.applyForce(waterCurrent.toArray(), [0, 0, 0]);
 
       // 4. Subtle magnetic repel if mouse gets close
       if (mouseActive) {
@@ -146,8 +152,8 @@ function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
         const mouseDiff = new THREE.Vector3().subVectors(currentPos, mousePos);
         const mouseDist = mouseDiff.length();
         
-        if (mouseDist < 2.2) {
-          const repelForce = 35 / (mouseDist + 0.1); 
+        if (mouseDist < 2.5) {
+          const repelForce = 50 / (mouseDist + 0.1); 
           api.applyForce(mouseDiff.normalize().multiplyScalar(repelForce).toArray(), [0, 0, 0]);
         }
       }
