@@ -25,7 +25,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="section-shell bg-[var(--background)]">
+    <section id="about" className="section-shell bg-[var(--background)]" style={{ marginTop: "-100px", marginBottom: "100px" }}>
       <div className="container">
 
         {/* Centered Header */}
