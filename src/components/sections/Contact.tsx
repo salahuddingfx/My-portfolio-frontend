@@ -165,21 +165,21 @@ const Contact = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="contact-info-item flex items-center gap-6 group"
+                  className="contact-info-item flex items-center gap-6 group min-w-0"
                 >
                   <div className="contact-info-icon shrink-0">
                     <card.icon size={20} />
                   </div>
-                  <div className="flex flex-col gap-1 overflow-hidden">
+                  <div className="flex flex-col gap-1 overflow-hidden min-w-0">
                     <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-(--muted-soft)">
                       {card.label}
                     </p>
                     {card.href ? (
-                      <a href={card.href} className="text-base sm:text-lg font-bold text-white hover:text-[var(--accent)] transition-all truncate block">
+                      <a href={card.href} className="text-base sm:text-lg font-bold text-white hover:text-[var(--accent)] transition-all break-words sm:truncate block">
                         {card.value}
                       </a>
                     ) : (
-                      <p className="text-base sm:text-lg font-bold text-white truncate">{card.value}</p>
+                      <p className="text-base sm:text-lg font-bold text-white break-words sm:truncate">{card.value}</p>
                     )}
                   </div>
                 </motion.div>
@@ -213,7 +213,7 @@ const Contact = () => {
             className="lg:col-span-8 w-full min-w-0"
           >
             <div 
-              className="contact-card flex flex-col h-full"
+              className="contact-card flex flex-col h-full w-full max-w-full"
               style={{ padding: 'clamp(2rem, 5vw, 4rem)' }}
             >
               {status === "success" ? (
