@@ -387,7 +387,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
         ref={sectionRef}
         className="relative overflow-hidden text-white min-h-[120vh]"
         style={{
-          backgroundColor: "#050505",
+          backgroundColor: "var(--background)",
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
           backgroundSize: "140px 140px",
@@ -461,7 +461,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       ref={sectionRef}
       className="relative overflow-hidden text-white"
       style={{
-        backgroundColor: "#050505",
+        backgroundColor: "var(--background)",
         backgroundImage:
           "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
         backgroundSize: "140px 140px",

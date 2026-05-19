@@ -23,21 +23,34 @@ const CustomCursor = () => {
       const { default: gsap } = await import("gsap");
       if (cancelled) return;
 
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Use quickSetter for high-frequency updates
+      const setCursorX = gsap.quickSetter(cursor, "x", "px");
+      const setCursorY = gsap.quickSetter(cursor, "y", "px");
+      const setFollowerX = gsap.quickSetter(follower, "x", "px");
+      const setFollowerY = gsap.quickSetter(follower, "y", "px");
+
       const moveCursor = (e: MouseEvent) => {
-        gsap.to(cursor, {
-          x: e.clientX,
-          y: e.clientY,
-          duration: 0,
-        });
-        gsap.to(follower, {
-          x: e.clientX,
-          y: e.clientY,
-          duration: 0.2,
-          ease: "power2.out",
-        });
+        setCursorX(e.clientX);
+        setCursorY(e.clientY);
+        
+        if (reduceMotion) {
+          setFollowerX(e.clientX);
+          setFollowerY(e.clientY);
+        } else {
+          gsap.to(follower, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.2,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        }
       };
 
       const handlePointerOver = (e: MouseEvent) => {
+        if (reduceMotion) return;
         const target = e.target as HTMLElement;
         if (target.closest("button, a, .cursor-pointer")) {
           gsap.to(follower, {
@@ -79,31 +92,33 @@ const CustomCursor = () => {
       window.addEventListener("mousemove", moveCursor);
       window.addEventListener("mouseover", handlePointerOver);
 
-      // Subtle rotation for the eye
-      gsap.to(".sharingan-inner", {
-        rotation: 360,
-        duration: 8,
-        repeat: -1,
-        ease: "none",
-      });
+      if (!reduceMotion) {
+        // Subtle rotation for the eye
+        gsap.to(".sharingan-inner", {
+          rotation: 360,
+          duration: 8,
+          repeat: -1,
+          ease: "none",
+        });
 
-      // Pulsating glow animation
-      gsap.to(".sharingan-glow", {
-        opacity: 0.4,
-        scale: 1.2,
-        duration: 1.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
+        // Pulsating glow animation
+        gsap.to(".sharingan-glow", {
+          opacity: 0.4,
+          scale: 1.2,
+          duration: 1.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
 
-      // Constantly rotate the rays slowly
-      gsap.to(rays, {
-        rotation: -360,
-        duration: 15,
-        repeat: -1,
-        ease: "none",
-      });
+        // Constantly rotate the rays slowly
+        gsap.to(rays, {
+          rotation: -360,
+          duration: 15,
+          repeat: -1,
+          ease: "none",
+        });
+      }
 
       cleanup = () => {
         window.removeEventListener("mousemove", moveCursor);
@@ -124,20 +139,20 @@ const CustomCursor = () => {
       {/* TINY CENTER DOT */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-1 h-1 bg-white rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 w-1 h-1 bg-white rounded-full pointer-events-none z-[var(--z-cursor)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
       />
 
       {/* SHARINGAN EYE WITH INTENSE GLOW */}
       <div
         ref={followerRef}
-        className="fixed top-0 left-0 w-12 h-12 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 w-12 h-12 pointer-events-none z-[calc(var(--z-cursor)-1)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
       >
         {/* RADIATING RAYS CONTAINER */}
         <div ref={raysRef} className="absolute inset-0 flex items-center justify-center">
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={i}
-              className="ray absolute w-[1px] h-[60px] bg-gradient-to-t from-[#9333ea] to-transparent origin-bottom opacity-0 scale-y-0"
+              className="ray absolute w-[1px] h-[60px] bg-gradient-to-t from-[var(--accent)] to-transparent origin-bottom opacity-0 scale-y-0"
               style={{
                 transform: `rotate(${i * 30}deg) translateY(-50%)`,
               }}
@@ -146,9 +161,9 @@ const CustomCursor = () => {
         </div>
 
         {/* EXTERNAL AURA GLOW */}
-        <div className="sharingan-glow absolute inset-[-25px] rounded-full bg-[#9333ea]/20 blur-[20px] opacity-60 z-[-1]" />
+        <div className="sharingan-glow absolute inset-[-25px] rounded-full bg-[var(--accent)]/20 blur-[20px] opacity-60 z-[-1]" />
         
-        <div className="relative w-full h-full rounded-full bg-[#9333ea] border border-black/40 overflow-hidden shadow-[inset_0_0_12px_rgba(0,0,0,0.9),0_0_20px_rgba(147,51,234,0.6)]">
+        <div className="relative w-full h-full rounded-full bg-[var(--accent)] border border-black/40 overflow-hidden shadow-[inset_0_0_12px_rgba(0,0,0,0.9),0_0_20px_rgba(147,51,234,0.6)]">
           {/* Inner Pattern (EMS) */}
           <div className="sharingan-inner absolute inset-0 flex items-center justify-center">
             <svg viewBox="0 0 100 100" className="w-full h-full p-1 fill-black">

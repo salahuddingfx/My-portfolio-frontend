@@ -53,7 +53,7 @@ export default function IntroLoader() {
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
           transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background text-foreground"
+          className="fixed inset-0 z-[var(--z-cursor)] flex flex-col items-center justify-center bg-background text-foreground"
         >
           {/* Spatial Editorial / Brutalist Loader Aesthetic */}
           <div className="flex flex-col items-center gap-4 w-full px-8">
