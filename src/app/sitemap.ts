@@ -34,7 +34,7 @@ const getStaticEntries = (): MetadataRoute.Sitemap => [
   { url: `${BASE}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
 ];
 
-export const revalidate = REVALIDATE_SECONDS;
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
