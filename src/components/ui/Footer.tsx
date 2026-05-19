@@ -68,7 +68,10 @@ const Footer = () => {
 
       <div className="container relative z-10 max-w-7xl">
         {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14 border-b border-white/[0.06] lg:gap-16 pt-16 lg:pt-20 pb-14">
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white/[0.06]"
+          style={{ gap: '2rem', paddingTop: '3rem', paddingBottom: '3rem' }}
+        >
 
           {/* Brand Column */}
           <div className="flex flex-col lg:pr-10" style={{ gap: '2rem' }}>
@@ -108,14 +111,14 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.04] px-3 py-1.5">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.04] px-3 py-1.5" style={{ padding: "10px" }}>
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[11px] text-[var(--muted)] pr-4 pl-2 md:pl-4 ">Open to new projects</span>
+              <span className="text-[11px] text-[var(--muted)] pr-4 pl-2 md:pl-4">Open to new projects</span>
             </div>
           </div>
 
           {/* Nav Links Column */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:col-span-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:col-span-3" style={{ gap: '3rem' }}>
             {/* Pages */}
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]" style={{ marginBottom: '1.25rem' }}>
@@ -137,7 +140,7 @@ const Footer = () => {
               <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-soft)]" style={{ marginBottom: '1.25rem' }}>
                 Social
               </p>
-              <ul className="flex flex-col gap-3 items-start">
+              <ul className="flex flex-col items-start" style={{ gap: '0.75rem' }}>
                 {socials.map((social) => (
                   <li key={social.name}>
                     <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="footer-link text-[13px] flex items-center gap-2">
@@ -171,7 +174,10 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col items-center justify-between gap-6 pt-8 pb-12 text-center sm:flex-row sm:text-left">
+        <div
+          className="flex flex-col items-center justify-between text-center sm:flex-row sm:text-left"
+          style={{ gap: '1.5rem', paddingTop: '1.5rem', paddingBottom: '3rem' }}
+        >
           <p className="text-center text-[12px] text-[var(--muted-soft)]">
             © {year} Salah Uddin Kader — All rights reserved.
           </p>
