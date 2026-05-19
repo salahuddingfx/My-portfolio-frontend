@@ -61,12 +61,12 @@ const About = () => {
               {stats.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-2">
                   <span
-                    className="text-5xl font-black text-white italic tracking-tighter"
+                    className="text-3xl font-black text-white italic tracking-tighter"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
                   >
                     {stat.value}
                   </span>
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--muted)]">
+                  <span className="text-[9px] uppercase tracking-widest font-bold text-[var(--muted)]">
                     {stat.label}
                   </span>
                 </div>
