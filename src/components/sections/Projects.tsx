@@ -212,7 +212,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
           key={project._id || index}
           className={`project-row group ${index === 0 ? "" : "border-t border-white/5"} py-16 md:py-24`}
         >
-          <div className="container px-8 md:px-16">
+          <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
               <div
                 className={`flex flex-col gap-6 lg:col-span-5 ${
@@ -394,7 +394,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
           backgroundPosition: "center",
         }}
       >
-        <div className={`container px-8 md:px-16 ${headerPaddingClass}`}>
+        <div className={`container ${headerPaddingClass}`}>
           <p className="text-sm text-white/60">Selected work</p>
           <h2
             className="text-[32px] sm:text-[40px] lg:text-[46px] font-medium text-white mt-3"
@@ -469,7 +469,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
         paddingTop: sectionPaddingTop,
       }}
     >
-      <div className={`container px-8 md:px-16 ${headerPaddingClass}`}>
+      <div className={`container ${headerPaddingClass}`}>
         <div className="max-w-2xl">
           <p className="text-sm text-white/60">Selected work</p>
           <h2
@@ -506,7 +506,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
         <div className="mt-20 md:mt-28 pb-28 md:pb-36">
           {skeletonItems.map((i) => (
             <div key={i} className={`project-row ${i === 0 ? "" : "border-t border-white/5"} py-16 md:py-24`}>
-              <div className="container px-8 md:px-16">
+              <div className="container">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
                   <div className="flex flex-col gap-6 lg:col-span-5">
                     <div className="skeleton h-12 w-20" />

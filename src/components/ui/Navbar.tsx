@@ -125,7 +125,7 @@ const Navbar = () => {
       <header
         ref={headerRef}
         role="banner"
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[var(--z-navbar)] transition-all duration-300 ${
           scrolled
             ? "h-[72px] bg-[rgba(8,8,8,0.82)] border-b border-white/[0.06] backdrop-blur-xl"
             : "h-[84px] bg-transparent"
@@ -210,7 +210,7 @@ const Navbar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[110] bg-black/70 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm lg:hidden"
               onClick={() => setIsOpen(false)}
             />
 
@@ -225,7 +225,7 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="fixed top-0 right-0 z-[120] flex h-full w-full max-w-[360px] flex-col border-l border-white/[0.06] bg-[#0d0d0d] lg:hidden"
+              className="fixed top-0 right-0 z-[var(--z-overlay)] flex h-full w-full max-w-[360px] flex-col border-l border-white/[0.06] bg-[var(--background)] lg:hidden"
             >
               {/* DRAWER HEADER */}
               <div className="flex items-center justify-between border-b border-white/[0.06] px-5 h-[72px]">
