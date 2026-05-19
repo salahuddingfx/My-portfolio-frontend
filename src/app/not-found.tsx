@@ -292,7 +292,7 @@ export default function NotFound() {
                     }`}
                   >
                     {line.text}
-                  </div>
+                  </motion.div>
                 ))}
                 <div ref={terminalEndRef} />
               </div>
