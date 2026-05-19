@@ -25,7 +25,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="section-shell bg-[var(--background)] py-20 lg:py-32">
+    <section id="about" className="section-shell bg-[var(--background)]">
       <div className="container">
 
         {/* Centered Header */}
@@ -39,7 +39,7 @@ const About = () => {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-24 items-start">
           {/* Text content */}
           <motion.div
             {...fadeUp}
