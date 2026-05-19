@@ -90,11 +90,6 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
     return ["All", ...Array.from(new Set(list))];
   }, [projects]);
 
-  const headerPaddingClass = pageTopOffset ? "pt-0" : "pt-24 md:pt-32";
-  const sectionPaddingTop = pageTopOffset
-    ? "calc(var(--navbar-height) + var(--space-8))"
-    : undefined;
-
   const effectiveLayout = layout === "horizontal" && !isCompact ? "horizontal" : "stacked";
 
   const displayProjects = useMemo(() => {
@@ -210,10 +205,10 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       return (
         <div
           key={project._id || index}
-          className={`project-row group ${index === 0 ? "" : "border-t border-white/5"} py-16 md:py-24`}
+          className={`project-row group ${index === 0 ? "" : "border-t border-white/5"} py-12 md:py-20 lg:py-28`}
         >
           <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-center">
               <div
                 className={`flex flex-col gap-6 lg:col-span-5 ${
                   isEven
@@ -222,7 +217,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                 }`}
               >
                 <div
-                  className={`text-[48px] sm:text-[64px] lg:text-[72px] font-medium tracking-[-0.02em] text-white/80 ${
+                  className={`text-5xl md:text-7xl font-medium tracking-tight text-white/80 ${
                     isEven ? "self-start" : "self-start lg:self-end"
                   }`}
                   aria-hidden
@@ -232,9 +227,9 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
 
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <p className="text-xs tracking-[0.18em] text-white/40">Project Name</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Project Name</p>
                     <h3
-                      className="text-[28px] sm:text-[34px] lg:text-[38px] font-medium text-white leading-[1.1]"
+                      className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
                       {project.title}
@@ -242,31 +237,33 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-xs tracking-[0.18em] text-white/40">Project Category</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Category</p>
+                    <p className="text-sm font-medium text-white/70">
                       {project.category || "—"}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-xs tracking-[0.18em] text-white/40">Tools & Features</p>
-                    <p className="text-sm text-white/65">{tools}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Stack</p>
+                    <p className="text-sm text-white/65 leading-relaxed">{tools}</p>
                   </div>
 
-                  <p className="text-[15px] text-white/60 leading-[1.8]">
+                  <p className="text-base text-[var(--muted)] leading-relaxed max-w-lg">
                     {project.desc}
                   </p>
 
                   {liveLink && (
-                    <a
-                      href={liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
-                    >
-                      Live Preview
-                      <ArrowUpRight size={14} />
-                    </a>
+                    <div className="pt-4">
+                      <a
+                        href={liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary"
+                      >
+                        <span>Live Preview</span>
+                        <ArrowUpRight size={14} />
+                      </a>
+                    </div>
                   )}
                 </div>
               </div>
@@ -274,15 +271,15 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
               <div
                 className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}
               >
-                <div className="relative overflow-hidden rounded-3xl bg-white/2 aspect-16/10 lg:aspect-video">
+                <div className="relative overflow-hidden rounded-[2rem] bg-white/[0.02] aspect-[16/10] border border-white/5 shadow-2xl">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="project-image object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    className="project-image object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/5" />
+                  <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-white/10" />
                 </div>
               </div>
             </div>
@@ -302,20 +299,18 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       return (
         <div
           key={project._id || index}
-          className="project-panel w-[85vw] sm:w-[75vw] lg:w-[70vw] shrink-0"
+          className="project-panel w-[85vw] sm:w-[75vw] lg:w-[65vw] shrink-0"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             <div
               className={`flex flex-col gap-6 lg:col-span-5 ${
                 isEven
                   ? "lg:order-1 lg:items-start lg:text-left"
-                  : "lg:order-2 lg:items-end lg:text-right"
+                  : "lg:order-1 lg:items-start lg:text-left" // Always left-align in horizontal panels for consistency
               }`}
             >
               <div
-                className={`text-[48px] sm:text-[64px] lg:text-[72px] font-medium tracking-[-0.02em] text-white/80 ${
-                  isEven ? "self-start" : "self-start lg:self-end"
-                }`}
+                className="text-6xl md:text-8xl font-bold tracking-tighter text-white/20"
                 aria-hidden
               >
                 {number}
@@ -323,9 +318,9 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
 
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <p className="text-xs tracking-[0.18em] text-white/40">Project Name</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Project Name</p>
                   <h3
-                    className="text-[28px] sm:text-[34px] lg:text-[38px] font-medium text-white leading-[1.1]"
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
                   >
                     {project.title}
@@ -333,45 +328,47 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-xs tracking-[0.18em] text-white/40">Project Category</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Category</p>
+                  <p className="text-sm font-medium text-white/70">
                     {project.category || "—"}
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-xs tracking-[0.18em] text-white/40">Tools & Features</p>
-                  <p className="text-sm text-white/65">{tools}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Stack</p>
+                  <p className="text-sm text-white/65 leading-relaxed">{tools}</p>
                 </div>
 
-                <p className="text-[15px] text-white/60 leading-[1.8]">
+                <p className="text-sm text-[var(--muted)] leading-relaxed max-w-sm">
                   {project.desc}
                 </p>
 
                 {liveLink && (
-                  <a
-                    href={liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
-                  >
-                    Live Preview
-                    <ArrowUpRight size={14} />
-                  </a>
+                  <div className="pt-2">
+                    <a
+                      href={liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-outline"
+                    >
+                      <span>Live Preview</span>
+                      <ArrowUpRight size={14} />
+                    </a>
+                  </div>
                 )}
               </div>
             </div>
 
-            <div className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}>
-              <div className="relative overflow-hidden rounded-3xl bg-white/2 aspect-16/10 lg:aspect-video">
+            <div className="lg:col-span-7">
+              <div className="relative overflow-hidden rounded-[2.5rem] bg-white/[0.02] aspect-[16/10] border border-white/5 shadow-2xl">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="project-image object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  className="project-image object-cover transition-transform duration-1000 ease-out hover:scale-[1.05]"
                 />
-                <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/5" />
+                <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-white/10" />
               </div>
             </div>
           </div>
@@ -385,67 +382,64 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       <section
         id="projects"
         ref={sectionRef}
-        className="relative overflow-hidden text-white min-h-[120vh]"
+        className="section-shell relative overflow-hidden text-white min-h-screen flex flex-col justify-center"
         style={{
           backgroundColor: "var(--background)",
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-          backgroundSize: "140px 140px",
+            "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+          backgroundSize: "120px 120px",
           backgroundPosition: "center",
         }}
       >
-        <div className={`container ${headerPaddingClass}`}>
-          <p className="text-sm text-white/60">Selected work</p>
+        <div className="container mb-20">
+          <span className="section-eyebrow">Selected work</span>
           <h2
-            className="text-[32px] sm:text-[40px] lg:text-[46px] font-medium text-white mt-3"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
+            className="section-heading mt-2"
           >
             Projects
           </h2>
-          <p className="text-[15px] text-white/55 mt-4 max-w-2xl">
+          <p className="section-subtext mt-4">
             A curated set of case studies shaped by clarity, restraint, and strong visual systems.
           </p>
         </div>
 
         {loading ? (
-          <div className="mt-20 md:mt-28 pb-28 md:pb-36">
-            <div className="flex gap-16 md:gap-24 px-8 md:px-16 pr-[18vw] md:pr-[22vw]">
-              {skeletonItems.map((i) => (
-                <div key={i} className="project-panel w-[85vw] sm:w-[75vw] lg:w-[70vw] shrink-0">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-                    <div className="flex flex-col gap-6 lg:col-span-5">
-                      <div className="skeleton h-12 w-20" />
-                      <div className="space-y-3">
-                        <div className="skeleton h-4 w-32" />
-                        <div className="skeleton h-7 w-52" />
-                      </div>
-                      <div className="space-y-2">
-                        <div className="skeleton h-3 w-36" />
-                        <div className="skeleton h-3 w-28" />
-                      </div>
-                      <div className="space-y-2">
-                        <div className="skeleton h-3 w-40" />
-                        <div className="skeleton h-3 w-56" />
-                      </div>
-                      <div className="space-y-3">
-                        <div className="skeleton h-3 w-11/12" />
-                        <div className="skeleton h-3 w-10/12" />
-                      </div>
+          <div className="flex gap-16 md:gap-24 container overflow-hidden">
+            {skeletonItems.map((i) => (
+              <div key={i} className="project-panel w-[85vw] sm:w-[75vw] lg:w-[65vw] shrink-0">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                  <div className="flex flex-col gap-6 lg:col-span-5">
+                    <div className="skeleton h-16 w-32" />
+                    <div className="space-y-4">
+                      <div className="skeleton h-4 w-40" />
+                      <div className="skeleton h-10 w-64" />
                     </div>
-                    <div className="lg:col-span-7">
-                      <div className="skeleton aspect-16/10 lg:aspect-video rounded-3xl" />
+                    <div className="space-y-3">
+                      <div className="skeleton h-3 w-44" />
+                      <div className="skeleton h-3 w-32" />
+                    </div>
+                    <div className="space-y-4">
+                      <div className="skeleton h-3 w-full" />
+                      <div className="skeleton h-3 w-5/6" />
                     </div>
                   </div>
+                  <div className="lg:col-span-7">
+                    <div className="skeleton aspect-[16/10] rounded-[2.5rem]" />
+                  </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         ) : (
-          <div className="mt-20 md:mt-28 pb-28 md:pb-36">
+          <div className="relative">
             <div
               ref={trackRef}
-              className="flex gap-16 md:gap-24 px-8 md:px-16 pr-[18vw] md:pr-[22vw]"
-              style={{ width: "max-content", willChange: "transform" }}
+              className="flex gap-20 md:gap-32 lg:gap-40 px-[container-padding] pr-[20vw]"
+              style={{ 
+                width: "max-content", 
+                willChange: "transform",
+                paddingLeft: "max(2rem, calc((100vw - var(--container-max)) / 2 + 2rem))" 
+              }}
             >
               {projectPanels}
             </div>
@@ -459,40 +453,36 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
     <section
       id="projects"
       ref={sectionRef}
-      className="relative overflow-hidden text-white"
+      className="section-shell relative overflow-hidden text-white"
       style={{
         backgroundColor: "var(--background)",
         backgroundImage:
-          "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-        backgroundSize: "140px 140px",
+          "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+        backgroundSize: "120px 120px",
         backgroundPosition: "center",
-        paddingTop: sectionPaddingTop,
       }}
     >
-      <div className={`container ${headerPaddingClass}`}>
+      <div className="container">
         <div className="max-w-2xl">
-          <p className="text-sm text-white/60">Selected work</p>
-          <h2
-            className="text-[32px] sm:text-[40px] lg:text-[46px] font-medium text-white mt-3"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
+          <span className="section-eyebrow">Selected work</span>
+          <h2 className="section-heading mt-2">
             Recent projects
           </h2>
-          <p className="text-[15px] text-white/55 mt-4">
+          <p className="section-subtext mt-4">
             Modern digital products and visual systems shaped for clarity, impact, and storytelling.
           </p>
         </div>
 
         {!loading && categories.length > 1 && (
-          <div className="flex flex-wrap gap-5 mt-10 text-sm text-white/55">
+          <div className="flex flex-wrap gap-4 mt-12">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`transition ${
+                className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border transition-all duration-300 ${
                   activeCategory === cat
-                    ? "text-white"
-                    : "text-white/55 hover:text-white"
+                    ? "bg-[var(--accent)] border-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20"
+                    : "bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {cat}
@@ -503,44 +493,34 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       </div>
 
       {loading ? (
-        <div className="mt-20 md:mt-28 pb-28 md:pb-36">
+        <div className="mt-20 space-y-12">
           {skeletonItems.map((i) => (
-            <div key={i} className={`project-row ${i === 0 ? "" : "border-t border-white/5"} py-16 md:py-24`}>
-              <div className="container">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-                  <div className="flex flex-col gap-6 lg:col-span-5">
-                    <div className="skeleton h-12 w-20" />
-                    <div className="space-y-3">
-                      <div className="skeleton h-4 w-32" />
-                      <div className="skeleton h-7 w-52" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="skeleton h-3 w-36" />
-                      <div className="skeleton h-3 w-28" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="skeleton h-3 w-40" />
-                      <div className="skeleton h-3 w-56" />
-                    </div>
-                    <div className="space-y-3">
-                      <div className="skeleton h-3 w-11/12" />
-                      <div className="skeleton h-3 w-10/12" />
-                    </div>
+            <div key={i} className="container">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center py-12">
+                <div className="flex flex-col gap-6 lg:col-span-5">
+                  <div className="skeleton h-16 w-32" />
+                  <div className="space-y-4">
+                    <div className="skeleton h-4 w-40" />
+                    <div className="skeleton h-10 w-64" />
                   </div>
-                  <div className="lg:col-span-7">
-                    <div className="skeleton aspect-16/10 lg:aspect-video rounded-3xl" />
+                  <div className="space-y-3">
+                    <div className="skeleton h-3 w-44" />
+                    <div className="skeleton h-3 w-32" />
                   </div>
+                </div>
+                <div className="lg:col-span-7">
+                  <div className="skeleton aspect-[16/10] rounded-[2rem]" />
                 </div>
               </div>
             </div>
           ))}
         </div>
       ) : displayProjects.length === 0 ? (
-        <div className="py-16 text-center">
-          <p className="text-sm text-white/55">No projects in this category yet.</p>
+        <div className="py-24 text-center">
+          <p className="text-sm text-[var(--muted)] font-mono uppercase tracking-widest">No projects in this category yet.</p>
         </div>
       ) : (
-        <div className="mt-20 md:mt-28 pb-28 md:pb-36">
+        <div className="mt-8">
           {projectRows}
         </div>
       )}
