@@ -58,25 +58,63 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Portfolio of Salah Uddin Kader — Full Stack Developer focused on modern interfaces, interactive experiences, and thoughtful digital products.",
+    "Portfolio of Salah Uddin Kader (salahuddingfx) — Full Stack Developer in Cox's Bazar, Bangladesh. Builds modern web apps, interactive experiences, and scalable products with Next.js, React, TypeScript, Node.js, Python, Django, PHP, Laravel, and MySQL for local and global clients.",
 
   keywords: [
     "salahuddingfx",
     "Salah Uddin Kader",
+    "Salahuddin Kader",
+    "Salah Uddin",
+    "salahuddin.codes",
     "Full Stack Developer",
+    "Full Stack Engineer",
+    "Creative Developer",
+    "Frontend Engineer",
+    "Interactive Web Designer",
+    "Digital Experience Builder",
+    "Modern UI Designer",
+    "Web Interface Engineer",
+    "Motion & Interaction Designer",
     "Next.js Developer",
     "React Developer",
     "Frontend Developer",
     "MERN Stack Developer",
-    "Cox's Bazar",
-    "Cox's Bazar web developer",
-    "Chittagong",
-    "Chittagong web developer",
-    "Bangladesh",
-    "Bangladeshi web developer",
-    "Web Developer",
+    "MERN Developer",
+    "MERN Developer Cox's Bazar",
+    "MERN Developer Bangladesh",
+    "MERN Developer Chittagong",
+    "MERN Developer Nationwide",
+    "MERN Developer International",
+    "Node.js Developer",
+    "JavaScript Developer",
     "TypeScript Developer",
     "Three.js Developer",
+    "Web App Developer",
+    "UI/UX Developer",
+    "Backend Developer",
+    "Backend Engineer",
+    "Python Developer",
+    "Django Developer",
+    "PHP Developer",
+    "Laravel Developer",
+    "MySQL Developer",
+    "Cox's Bazar",
+    "Cox's Bazar web developer",
+    "Cox's Bazar MERN developer",
+    "Cox's Bazar backend developer",
+    "Chittagong",
+    "Chittagong web developer",
+    "Chittagong MERN developer",
+    "Chittagong backend developer",
+    "Bangladesh",
+    "Bangladeshi web developer",
+    "Bangladesh MERN developer",
+    "Bangladesh backend developer",
+    "Remote web developer",
+    "Worldwide web developer",
+    "Global web developer",
+    "International clients",
+    "Global clients",
     "Portfolio",
     "Web Development",
   ],
@@ -88,7 +126,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Salah Uddin Kader — Full Stack Developer",
     description:
-      "Modern portfolio built with Next.js, React, and thoughtful interaction design.",
+      "Modern portfolio built with Next.js, React, and thoughtful interaction design. Based in Cox's Bazar, Bangladesh and available for local, nationwide, and global projects.",
     url: "https://salahuddin.codes",
     siteName: "Salah Uddin Kader",
     images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
@@ -99,7 +137,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Salah Uddin Kader — Full Stack Developer",
-    description: "Modern portfolio built with Next.js and React.",
+    description:
+      "Modern portfolio built with Next.js, React, and thoughtful interaction design. Based in Cox's Bazar, Bangladesh and working with local to global clients.",
     images: ["/mine-photo.png"],
   },
 
@@ -132,7 +171,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://prod.spline.design" />
         <meta
           name="description"
-          content="Portfolio of Salah Uddin Kader — Full Stack Developer focused on modern interfaces, interactive experiences, and thoughtful digital products."
+          content="Portfolio of Salah Uddin Kader (salahuddingfx) — Full Stack Developer in Cox's Bazar, Bangladesh. Builds modern web apps, interactive experiences, and scalable products with Next.js, React, TypeScript, Node.js, Python, Django, PHP, Laravel, and MySQL for local and global clients."
         />
       </head>
       <body
@@ -188,14 +227,30 @@ export default function RootLayout({
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "Person",
+                "@id": "https://salahuddin.codes/#person",
                 name: "Salah Uddin Kader",
-                alternateName: "salahuddingfx",
+                alternateName: ["salahuddingfx", "Salahuddin Kader", "Salah Uddin"],
+                description:
+                  "Full Stack Developer based in Cox's Bazar, Bangladesh. Builds modern web apps and interactive experiences with Next.js, React, TypeScript, Node.js, Python, Django, PHP, Laravel, and MySQL.",
                 url: "https://salahuddin.codes",
                 image: "https://salahuddin.codes/mine-photo.png",
                 jobTitle: "Full Stack Developer",
                 knowsAbout: [
-                  "React", "Next.js", "TypeScript", "Node.js",
-                  "MongoDB", "Express", "Three.js", "Web Development",
+                  "React",
+                  "Next.js",
+                  "TypeScript",
+                  "JavaScript",
+                  "Node.js",
+                  "MongoDB",
+                  "Express",
+                  "Three.js",
+                  "Python",
+                  "Django",
+                  "PHP",
+                  "Laravel",
+                  "MySQL",
+                  "Web Development",
+                  "UI/UX",
                 ],
                 address: {
                   "@type": "PostalAddress",
@@ -216,11 +271,34 @@ export default function RootLayout({
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "WebSite",
+                "@id": "https://salahuddin.codes/#website",
                 name: "Salah Uddin Kader",
                 alternateName: "salahuddingfx",
                 url: "https://salahuddin.codes",
                 description:
                   "Portfolio of Salah Uddin Kader — Full Stack Developer from Cox's Bazar, Bangladesh.",
+                publisher: { "@id": "https://salahuddin.codes/#person" },
+              }),
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "@id": "https://salahuddin.codes/#home",
+                url: "https://salahuddin.codes",
+                name: "Salah Uddin Kader — Full Stack Developer",
+                description:
+                  "Portfolio site for Salah Uddin Kader (salahuddingfx), a Full Stack Developer based in Cox's Bazar, Bangladesh, available for global projects.",
+                inLanguage: "en",
+                primaryImageOfPage: {
+                  "@type": "ImageObject",
+                  url: "https://salahuddin.codes/mine-photo.png",
+                },
+                about: { "@id": "https://salahuddin.codes/#person" },
+                isPartOf: { "@id": "https://salahuddin.codes/#website" },
               }),
             }}
           />
