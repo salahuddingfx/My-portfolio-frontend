@@ -113,8 +113,8 @@ export default function BlogContent() {
                     px-3.5 py-1.5 rounded-[var(--radius-md)] text-xs font-medium
                     transition-colors duration-200
                     ${activeCategory === cat
-                      ? "bg-white text-black"
-                      : "text-[var(--muted)] border border-[var(--border)] hover:text-white hover:border-[var(--border-hover)]"
+                      ? "bg-[var(--foreground)] text-[var(--background)]"
+                      : "text-[var(--muted)] border border-[var(--border)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
                     }
                   `}
                 >
@@ -124,19 +124,19 @@ export default function BlogContent() {
             </div>
           )}
           <div className="relative">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-soft)] pointer-events-none" />
             <input
               type="text"
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-56 bg-white/[0.06] border border-white/10 rounded-[var(--radius-md)] pl-9 pr-4 py-2 text-xs text-white placeholder:text-white/50 focus:outline-none focus:border-[var(--accent)] transition-all"
+              className="w-full md:w-56 bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-md)] pl-9 pr-4 py-2 text-xs text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] transition-all"
             />
           </div>
         </div>
 
         {/* Post list */}
-        <div className="flex flex-col" style={{ gap: '1rem' }}>
+        <div className="flex flex-col" style={{ gap: '1.25rem' }}>
           {loading ? (
             <div className="py-16 text-center">
               <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading articles...</p>
@@ -167,7 +167,7 @@ export default function BlogContent() {
           <div className="text-center" style={{ marginTop: '2.5rem' }}>
             <button
               onClick={() => setPage((p) => p + 1)}
-              className="px-8 py-4 border border-[var(--border)] rounded-[var(--radius-md)] text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-white hover:border-[var(--border-hover)] transition-all"
+              className="px-8 py-4 border border-[var(--border)] rounded-[var(--radius-md)] text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)] transition-all"
             >
               Load more ({filtered.length - page * PER_PAGE} remaining)
             </button>
@@ -185,7 +185,7 @@ export default function BlogContent() {
         >
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-2xl font-semibold text-white mb-2" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                 Stay in the loop.
               </h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed max-w-sm">
@@ -201,7 +201,7 @@ export default function BlogContent() {
                   onChange={(e) => setEmail(e.target.value)}
                   onFocus={() => setEmailFocused(true)}
                   onBlur={() => setEmailFocused(false)}
-                  className="w-full bg-white/[0.02] border rounded-[var(--radius-md)] px-4 pt-5 pb-1.5 text-sm text-white focus:outline-none transition-all duration-200"
+                  className="w-full bg-[var(--navbar-btn-bg)] border rounded-[var(--radius-md)] px-4 pt-5 pb-1.5 text-sm text-[var(--foreground)] focus:outline-none transition-all duration-200"
                   style={{ 
                     borderColor: emailFocused ? 'var(--accent)' : 'var(--border)',
                     height: '50px'
@@ -214,7 +214,7 @@ export default function BlogContent() {
                     fontSize: (emailFocused || email) ? '10px' : '14px',
                     color: emailFocused 
                       ? 'var(--accent)' 
-                      : (email ? 'var(--muted)' : 'rgba(255, 255, 255, 0.45)'),
+                      : (email ? 'var(--muted)' : 'var(--muted-soft)'),
                     fontFamily: 'var(--font-mono)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em'
