@@ -228,7 +228,7 @@ export default function NotFound() {
   };
 
   return (
-    <section className="min-h-screen w-full bg-[var(--background)] flex items-center justify-center relative overflow-hidden font-mono selection:bg-[var(--accent)]/30 selection:text-white py-24 px-4 sm:px-6 lg:px-8">
+    <section className="is-404-page min-h-screen w-full bg-[var(--background)] flex items-center justify-center relative overflow-hidden font-mono selection:bg-[var(--accent)]/30 selection:text-white py-24 px-4 sm:px-6 lg:px-8">
       {/* Canvas Matrix Code Rain Background */}
       {matrixActive && <MatrixRain active={matrixActive} />}
 

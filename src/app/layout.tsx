@@ -330,8 +330,12 @@ export default function RootLayout({
           <Navbar />
 
           {/* SIDEBARS */}
-          <SocialSidebar />
-          <EmailSidebar />
+          <div className="global-sidebar">
+            <SocialSidebar />
+          </div>
+          <div className="global-sidebar">
+            <EmailSidebar />
+          </div>
 
           {/* PAGE CONTENT */}
           <main className="relative min-h-screen">
