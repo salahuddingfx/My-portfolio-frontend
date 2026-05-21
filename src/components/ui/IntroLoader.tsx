@@ -1,100 +1,125 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import Marquee from "react-fast-marquee";
 
 export default function IntroLoader() {
   const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
+  const [percent, setPercent] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-    // Use sessionStorage so the loader only plays once per browsing session
     const hasLoaded = sessionStorage.getItem("introLoaded");
     if (hasLoaded) {
       setLoading(false);
       return;
     }
 
-    const duration = 2000;
-    const interval = 20;
-    const steps = duration / interval;
-    let currentStep = 0;
-
-    const timer = setInterval(() => {
-      currentStep++;
-      // A simple easing function for the progress counter
-      const easeOutQuad = (t: number) => t * (2 - t);
-      const easedProgress = easeOutQuad(currentStep / steps);
-      
-      const currentProgress = Math.min(Math.floor(easedProgress * 100), 100);
-      setProgress(currentProgress);
-
-      if (currentStep >= steps) {
-        clearInterval(timer);
-        setTimeout(() => {
-          setLoading(false);
-          sessionStorage.setItem("introLoaded", "true");
-        }, 600); // Pause briefly at 100% before sliding out
+    // Simulate progress percentage loading
+    let currentPercent = 0;
+    const interval = setInterval(() => {
+      if (currentPercent < 50) {
+        currentPercent += Math.floor(Math.random() * 8) + 2;
+      } else if (currentPercent < 90) {
+        currentPercent += Math.floor(Math.random() * 3) + 1;
+      } else if (currentPercent < 100) {
+        currentPercent += 1;
       }
-    }, interval);
+      
+      const nextPercent = Math.min(currentPercent, 100);
+      setPercent(nextPercent);
 
-    return () => clearInterval(timer);
+      if (nextPercent >= 100) {
+        clearInterval(interval);
+      }
+    }, 80);
+
+    return () => clearInterval(interval);
   }, []);
 
-  if (!isClient) return null; // Avoid hydration mismatch
+  useEffect(() => {
+    if (percent >= 100) {
+      const t1 = setTimeout(() => {
+        setLoaded(true);
+        const t2 = setTimeout(() => {
+          setIsLoaded(true);
+        }, 1000);
+        return () => clearTimeout(t2);
+      }, 600);
+      return () => clearTimeout(t1);
+    }
+  }, [percent]);
+
+  useEffect(() => {
+    if (isLoaded) {
+      setClicked(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+        sessionStorage.setItem("introLoaded", "true");
+      }, 900);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded]);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
+    const { currentTarget: target } = e;
+    const rect = target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    target.style.setProperty("--mouse-x", `${x}px`);
+    target.style.setProperty("--mouse-y", `${y}px`);
+  }
+
+  if (!isClient || !loading) return null;
 
   return (
-    <AnimatePresence mode="wait">
-      {loading && (
-        <motion.div
-          key="intro-loader"
-          initial={{ y: 0 }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[var(--z-cursor)] flex flex-col items-center justify-center bg-background text-foreground"
-        >
-          {/* Spatial Editorial / Brutalist Loader Aesthetic */}
-          <div className="flex flex-col items-center gap-4 w-full px-8">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="text-xs md:text-sm font-jetbrains-mono tracking-[0.3em] uppercase text-zinc-500 mb-8"
-            >
-              Salah Uddin Kader
-            </motion.div>
-            
-            <div className="flex items-baseline overflow-hidden">
-              <motion.div 
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-                className="text-8xl md:text-[14rem] font-bold font-space-grotesk tracking-tighter leading-none"
-              >
-                {progress}
-              </motion.div>
-              <motion.span 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="text-3xl md:text-6xl text-zinc-600 font-jetbrains-mono ml-2 md:ml-4"
-              >
-                %
-              </motion.span>
+    <>
+      <div className="loading-header">
+        <a href="/#" className="loader-title" data-cursor="disable">
+          Salah Uddin Kader
+        </a>
+        <div className={`loaderGame ${clicked ? "loader-out" : ""}`}>
+          <div className="loaderGame-container">
+            <div className="loaderGame-in">
+              {[...Array(27)].map((_, index) => (
+                <div className="loaderGame-line" key={index}></div>
+              ))}
             </div>
-
-            <div className="w-full max-w-sm h-[1px] bg-zinc-800 mt-16 relative overflow-hidden">
-              <motion.div 
-                className="absolute top-0 left-0 h-full bg-foreground"
-                style={{ width: `${progress}%` }}
-                transition={{ ease: "linear", duration: 0.1 }}
-              />
+            <div className="loaderGame-ball"></div>
+          </div>
+        </div>
+      </div>
+      <div className="loading-screen">
+        <div className="loading-marquee">
+          <Marquee speed={80}>
+            <span> A Creative Developer</span> <span>A Creative Designer</span>
+            <span> A Creative Developer</span> <span>A Creative Designer</span>
+          </Marquee>
+        </div>
+        <div
+          className={`loading-wrap ${clicked ? "loading-clicked" : ""}`}
+          onMouseMove={(e) => handleMouseMove(e)}
+        >
+          <div className="loading-hover"></div>
+          <div className={`loading-button ${loaded ? "loading-complete" : ""}`}>
+            <div className="loading-container">
+              <div className="loading-content">
+                <div className="loading-content-in">
+                  Loading <span>{percent}%</span>
+                </div>
+              </div>
+              <div className="loading-box"></div>
+            </div>
+            <div className="loading-content2">
+              <span>Welcome</span>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+      </div>
+    </>
   );
 }

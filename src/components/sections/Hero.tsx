@@ -110,31 +110,26 @@ const Hero = () => {
       </div>
 
       {/* Content layer */}
-      <div className="relative z-10 container min-h-screen flex flex-col justify-center pt-24 pb-16 pointer-events-none">
-        <div className="flex flex-col md:flex-row justify-between items-center w-full gap-16 md:gap-4 mt-10 md:mt-0">
-          
+      <div className="relative z-10 min-h-screen pointer-events-none landing-section" id="landingDiv">
+        <div className="landing-container flex flex-col justify-center pt-24 pb-16">
           {/* Left Side: Name & Info */}
-          <div className="flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12">
+          <div className="landing-intro flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12">
             {/* Status */}
-            <div className="flex items-center gap-3 mb-6 md:mb-10">
+            <div className="flex items-center gap-3 mb-6">
               <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse" />
               <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest">
                 Available for work
               </span>
             </div>
 
-            <span className="text-[var(--foreground)]/80 font-mono text-sm sm:text-base mb-2 tracking-widest uppercase">
-              Hello! I&apos;m
-            </span>
-            <h1
-              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--foreground)] leading-[1] tracking-tighter uppercase"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <h2>Hello! I'm</h2>
+            <h1 className="uppercase font-bold tracking-tighter">
               Salah Uddin
-              <span className="block text-[var(--muted)]">Kader</span>
+              <br />
+              <span className="text-[var(--accent)] font-medium">Kader</span>
             </h1>
 
-            <div className="mt-8 space-y-10">
+            <div className="mt-8 space-y-6">
               {/* Description */}
               <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm">
                 {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design."}
@@ -161,20 +156,17 @@ const Hero = () => {
           </div>
 
           {/* Right Side: Role */}
-          <div className="flex flex-col z-20 pointer-events-auto text-left md:text-right w-full md:w-5/12 items-start md:items-end justify-center">
-            <span className="text-[var(--foreground)] font-mono text-base sm:text-lg mb-2 tracking-widest uppercase">
-              A Creative
-            </span>
-            <div className="min-h-[60px] md:min-h-[80px] flex flex-col justify-start md:justify-end items-start md:items-end w-full">
-              <span 
-                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-[var(--foreground)] font-bold uppercase tracking-tighter leading-[1]" 
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                <RoleTyper />
-              </span>
-            </div>
+          <div className="landing-info flex flex-col z-20 pointer-events-auto text-left md:text-right w-full md:w-5/12 justify-center">
+            <h3>A Creative</h3>
+            <h2 className="landing-info-h2">
+              <div className="landing-h2-1">Designer</div>
+              <div className="landing-h2-2">Developer</div>
+            </h2>
+            <h2>
+              <div className="landing-h2-info">Developer</div>
+              <div className="landing-h2-info-1">Designer</div>
+            </h2>
           </div>
-
         </div>
       </div>
 
