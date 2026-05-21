@@ -1553,94 +1553,42 @@ body:has(.is-404-page) footer {
   color: var(--accent);
   margin: 0;
 }
-.landing-info h2 {
-  margin: 0;
+.rotating-roles-container {
+  display: flex;
+  flex-direction: column;
   margin-top: 8px;
-  margin-left: 20px;
+  position: relative;
+  align-items: flex-start;
+}
+@media screen and (min-width: 768px) {
+  .rotating-roles-container {
+    align-items: flex-end;
+  }
+}
+
+.role-item {
   font-family: "Geist", sans-serif;
   font-weight: 600;
-  font-size: 32px;
-  line-height: 1.2;
-  height: 1.2em;
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
   text-transform: uppercase;
   letter-spacing: 2px;
-  overflow: hidden;
-}
-.landing-h2-info-1 {
-  position: absolute;
-  top: 0;
-}
-h2.landing-info-h2 {
-  color: var(--accent);
-  font-size: 42px;
-  width: 120%;
+  line-height: 1.0;
   margin: 0;
-  font-family: "Geist", sans-serif;
-  font-weight: 600;
-  height: 1.2em;
-  position: relative;
-  margin-left: -5px;
-  overflow: hidden;
-  line-height: 1.2;
-}
-.landing-h2-2 {
-  position: absolute;
-  top: 0;
-}
-.landing-info-h2::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 120%;
-  z-index: 3;
-  background-image: linear-gradient(
-    0deg,
-    var(--background) 40%,
-    rgba(0, 0, 0, 0) 110%
-  );
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  display: none;
+  display: block;
+  white-space: nowrap;
+  transition: color 0.8s cubic-bezier(0.77, 0, 0.175, 1),
+              font-size 0.8s cubic-bezier(0.77, 0, 0.175, 1),
+              margin-top 0.8s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-@keyframes textSlide1 {
-  0%, 40% {
-    transform: translateY(0);
-  }
-  50%, 90% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.role-top {
+  font-size: 42px;
+  color: var(--accent);
 }
 
-@keyframes textSlide2 {
-  0%, 40% {
-    transform: translateY(100%);
-  }
-  50%, 90% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(100%);
-  }
-}
-
-.landing-h2-1, .landing-h2-info {
-  animation: textSlide1 5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-  display: inline-block;
-  will-change: transform;
-}
-
-.landing-h2-2, .landing-h2-info-1 {
-  animation: textSlide2 5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-  display: inline-block;
-  will-change: transform;
+.role-bottom {
+  font-size: 32px;
+  color: var(--foreground);
+  margin-top: -0.15em;
 }
 
 @media screen and (min-width: 500px) {
@@ -1660,10 +1608,10 @@ h2.landing-info-h2 {
     font-size: 46px;
     line-height: 1.1;
   }
-  .landing-info h2 {
+  .role-bottom {
     font-size: 35px;
   }
-  h2.landing-info-h2 {
+  .role-top {
     font-size: 38px;
   }
 }
@@ -1681,10 +1629,10 @@ h2.landing-info-h2 {
   .landing-info h3 {
     font-size: 25px;
   }
-  .landing-info h2 {
+  .role-bottom {
     font-size: 45px;
   }
-  h2.landing-info-h2 {
+  .role-top {
     font-size: 55px;
   }
 }
@@ -1719,10 +1667,10 @@ h2.landing-info-h2 {
     right: 0;
     left: auto;
   }
-  .landing-info h2 {
+  .role-bottom {
     font-size: 50px;
   }
-  h2.landing-info-h2 {
+  .role-top {
     font-size: 60px;
   }
 }
@@ -1747,10 +1695,10 @@ h2.landing-info-h2 {
     right: 0;
     left: auto;
   }
-  .landing-info h2 {
+  .role-bottom {
     font-size: 58px;
   }
-  h2.landing-info-h2 {
+  .role-top {
     font-size: 68px;
   }
 }
@@ -1765,10 +1713,10 @@ h2.landing-info-h2 {
   .landing-info h3 {
     font-size: 35px;
   }
-  .landing-info h2 {
+  .role-bottom {
     font-size: 68px;
   }
-  h2.landing-info-h2 {
+  .role-top {
     font-size: 78px;
   }
 }

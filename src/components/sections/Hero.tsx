@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -9,64 +9,48 @@ import { Spotlight } from "@/components/ui/spotlight";
 import Magnetic from "@/components/ui/Magnetic";
 import { useSettings } from "@/context/SettingsContext";
 
-const TYPING_ROLES = [
-  "Creative Developer",
-  "Frontend Engineer",
-  "Interactive Web Designer",
-  "Full Stack Developer",
-  "Digital Experience Builder",
-  "Modern UI Designer",
-  "Web Interface Engineer",
-  "Motion & Interaction Designer",
+const DESIGNATIONS = [
+  "DESIGNER",
+  "DEVELOPER",
+  "ENGINEER",
+  "CREATOR",
+  "BUILDER",
+  "INNOVATOR"
 ];
 
-const RoleTyper = () => {
+const RotatingRoles = () => {
   const [index, setIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % DESIGNATIONS.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const visibleRoles = [
+    { name: DESIGNATIONS[index], position: "top" as const },
+    { name: DESIGNATIONS[(index + 1) % DESIGNATIONS.length], position: "bottom" as const }
+  ];
 
   return (
-    <span className="inline-flex items-center">
-      <AnimatePresence 
-        mode="wait" 
-        onExitComplete={() => {
-          setIndex((prev) => (prev + 1) % TYPING_ROLES.length);
-          setIsVisible(true);
-        }}
-      >
-        {isVisible && (
-          <motion.span
-            key={index}
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.045 } },
-              exit: { transition: { staggerChildren: 0.02, staggerDirection: -1 } }
-            }}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            onAnimationComplete={(variant) => {
-              if (variant === "visible") {
-                setTimeout(() => setIsVisible(false), 2200);
-              }
-            }}
+    <div className="rotating-roles-container">
+      <AnimatePresence mode="popLayout">
+        {visibleRoles.map((role) => (
+          <motion.h2
+            key={role.name}
+            layout
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
+            className={`role-item ${role.position === "top" ? "role-top" : "role-bottom"}`}
           >
-            {TYPING_ROLES[index].split("").map((char, i) => (
-              <motion.span
-                key={i}
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1 },
-                  exit: { opacity: 0 }
-                }}
-              >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-          </motion.span>
-        )}
+            {role.name}
+          </motion.h2>
+        ))}
       </AnimatePresence>
-      <span className="typing-cursor ml-1 inline-block" />
-    </span>
+    </div>
   );
 };
 
@@ -158,14 +142,7 @@ const Hero = () => {
           {/* Right Side: Role */}
           <div className="landing-info flex flex-col z-20 pointer-events-auto text-left md:text-right w-full md:w-5/12 justify-center">
             <h3>A Creative</h3>
-            <h2 className="landing-info-h2">
-              <div className="landing-h2-1">Designer</div>
-              <div className="landing-h2-2">Developer</div>
-            </h2>
-            <h2>
-              <div className="landing-h2-info">Developer</div>
-              <div className="landing-h2-info-1">Designer</div>
-            </h2>
+            <RotatingRoles />
           </div>
         </div>
       </div>
