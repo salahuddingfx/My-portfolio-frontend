@@ -433,30 +433,30 @@ video {
 .section-shell::after {
   content: "";
   position: absolute;
-  width: clamp(300px, 40vw, 640px);
-  height: clamp(300px, 40vw, 640px);
+  width: clamp(280px, 35vw, 560px);
+  height: clamp(280px, 35vw, 560px);
   border-radius: 50%;
   background: var(--accent);
-  opacity: 0.08;
-  filter: blur(110px);
+  opacity: 0.07;
+  filter: blur(130px);
   pointer-events: none;
   z-index: 0;
   will-change: opacity;
 }
 
 .section-shell::before {
-  top: -15%;
-  left: -10%;
+  top: -20%;
+  left: -12%;
 }
 
 .section-shell::after {
-  bottom: -15%;
-  right: -10%;
+  bottom: -20%;
+  right: -12%;
 }
 
 html[data-theme="light"] .section-shell::before,
 html[data-theme="light"] .section-shell::after {
-  opacity: 0.05;
+  opacity: 0.03;
 }
 
 /* Hero has its own custom blobs — suppress the global ones */
