@@ -23,15 +23,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    optimizePackageImports: [
-      "three",
-      "@react-three/drei",
-      "@react-three/fiber",
-      "framer-motion",
-      "gsap",
-    ],
-  },
+
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
