@@ -198,7 +198,7 @@ function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
       colliders={false}
       enabledRotations={[false, false, false]}
     >
-      <BallCollider args={[0.85]} />
+      <BallCollider args={[1.15]} />
       <mesh
         ref={meshRef}
         castShadow
@@ -221,7 +221,7 @@ function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
         }}
         onPointerOut={() => setHovered(false)}
       >
-        <sphereGeometry args={[0.85, 32, 32]} />
+        <sphereGeometry args={[1.15, 32, 32]} />
         {/* Creative Frosted Glass Material */}
         <meshPhysicalMaterial
           color={hovered ? "#9333ea" : "#ffffff"}
@@ -240,7 +240,7 @@ function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
         />
         
         {texture && (
-          <Decal position={[0, 0, 0.85]} rotation={[0, 0, 0]} scale={[1.4, 1.4, 1.4]}>
+          <Decal position={[0, 0, 1.15]} rotation={[0, 0, 0]} scale={[1.9, 1.9, 1.9]}>
             <meshStandardMaterial 
               map={texture} 
               transparent 
@@ -325,8 +325,8 @@ const TechSphere = ({ isActive }: TechSphereProps) => {
       const row = Math.floor(i / cols);
       
       // Compute standard grid coordinates with responsive offsets
-      const x = (col - (cols - 1) / 2) * (isMobile ? 2.1 : 2.8) + (Math.random() - 0.5) * 0.4;
-      const y = -(row - (rowsCount - 1) / 2) * (isMobile ? 1.7 : 2.0) + (Math.random() - 0.5) * 0.4;
+      const x = (col - (cols - 1) / 2) * (isMobile ? 2.4 : 3.2) + (Math.random() - 0.5) * 0.4;
+      const y = -(row - (rowsCount - 1) / 2) * (isMobile ? 2.0 : 2.4) + (Math.random() - 0.5) * 0.4;
       const z = (Math.random() - 0.5) * 1.0;
 
       return [x, y, z];
