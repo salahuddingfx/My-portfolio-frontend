@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   images: {
@@ -21,6 +22,22 @@ const nextConfig: NextConfig = {
         hostname: 'res.cloudinary.com',
       },
     ],
+  },
+  experimental: {
+    optimizePackageImports: [
+      "three",
+      "@react-three/drei",
+      "@react-three/fiber",
+      "framer-motion",
+      "gsap",
+    ],
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      three: path.resolve(__dirname, "node_modules/three"),
+    };
+    return config;
   },
 };
 

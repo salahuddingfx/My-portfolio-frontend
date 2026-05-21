@@ -108,7 +108,7 @@ export default function NotFound() {
   };
 
   return (
-    <section className="min-h-screen bg-[var(--background)] flex flex-col relative overflow-hidden font-mono selection:bg-[var(--accent)]/30 selection:text-white">
+    <section className="bg-[var(--background)] flex flex-col relative overflow-hidden font-mono selection:bg-[var(--accent)]/30 selection:text-white" style={{paddingTop: "100px", paddingBottom: "100px", marginLeft: "20px", marginRight: "20px"}}>
       
       {/* Dynamic Background Effects */}
       <AnimatePresence>
@@ -131,7 +131,7 @@ export default function NotFound() {
       <div className="absolute w-[600px] h-[600px] rounded-full bg-red-500/5 blur-[100px] pointer-events-none -bottom-40 -right-40 animate-pulse" style={{ animationDuration: '12s' }} />
 
       {/* Top Navigation / Safe Return */}
-      <div className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] w-full p-6 md:p-10 flex justify-between items-start pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] w-full  md:p-10 flex justify-between items-start pointer-events-none">
         <div className="flex flex-col gap-1 pointer-events-auto">
           <Link href="/" className="inline-flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center group-hover:border-[var(--accent)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]">

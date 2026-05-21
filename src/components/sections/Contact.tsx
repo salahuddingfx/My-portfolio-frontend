@@ -105,7 +105,7 @@ const Contact = () => {
       <div className="container max-w-6xl relative z-10 px-6 sm:px-10">
 
         {/* Header - Editorial Style */}
-        <div className="grid lg:grid-cols-2 gap-16 items-end mb-32">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end mb-16 lg:mb-32">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -124,8 +124,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-md lg:text-right lg:ml-auto"
-            style={{ marginBottom: '4rem' }}
+            className="max-w-md lg:text-right lg:ml-auto mb-12 lg:mb-0"
           >
             <p className="text-lg text-[var(--muted)] leading-relaxed italic border-l-2 lg:border-l-0 lg:border-r-2 border-[var(--accent)]/30 pl-8 lg:pl-0 lg:pr-8">
               {'"Design is not just what it looks like and feels like. Design is how it works."'.split(' ').map((word, i) => (
@@ -190,8 +189,7 @@ const Contact = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="border-t border-(--border)"
-              style={{ marginTop: '3rem', paddingTop: '2rem' }}
+              className="border-t border-(--border) mt-12 pt-8"
             >
               <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-6">Social Networks</p>
               <div className="flex flex-wrap gap-x-8 gap-y-4">
@@ -214,7 +212,6 @@ const Contact = () => {
           >
             <div 
               className="contact-card flex flex-col h-full w-full max-w-full"
-              style={{ padding: 'clamp(2rem, 5vw, 4rem)' }}
             >
               {status === "success" ? (
                 <div 

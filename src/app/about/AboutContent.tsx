@@ -454,7 +454,7 @@ export default function AboutContent() {
                   <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading timeline...</p>
                 </div>
               ) : timeline.length === 0 ? (
-                <div className="card p-10 text-center col-span-full">
+                <div className="card card-large text-center col-span-full">
                   <p className="text-sm text-[var(--muted)]">No timeline entries yet.</p>
                 </div>
               ) : (
@@ -580,7 +580,7 @@ export default function AboutContent() {
                 key={i}
                 {...fadeUp}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
-                className="card card-hover p-7"
+                className="card card-hover"
               >
                 <span className="text-xs font-mono text-[var(--muted-soft)] mb-4 block">
                   {String(i + 1).padStart(2, "0")}
@@ -666,7 +666,7 @@ export default function AboutContent() {
               <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading certificates...</p>
             </div>
           ) : filteredCertificates.length === 0 ? (
-            <div className="card p-10 text-center">
+            <div className="card card-large text-center">
               <p className="text-sm text-[var(--muted)]">
                 No certificates yet. Add them from the admin panel to showcase here.
               </p>

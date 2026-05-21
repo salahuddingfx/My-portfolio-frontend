@@ -23,7 +23,7 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="card card-hover group"
+      className="card card-hover group card-flat"
     >
       <Link
         href={`/blog/${slug}`}

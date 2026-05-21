@@ -25,7 +25,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="section-shell bg-[var(--background)]" style={{ marginTop: "-100px", marginBottom: "100px" }}>
+    <section id="about" className="section-shell bg-[var(--background)]">
       <div className="container">
 
         {/* Centered Header */}
@@ -57,7 +57,7 @@ const About = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-8 py-10 my-8 border-y border-[var(--border)]" style={{ marginLeft: "10px", marginRight: "10px", padding:"15px"}}>
+            <div className="grid grid-cols-2 gap-8 py-10 my-8 border-y border-[var(--border)] px-4 mx-2.5">
               {stats.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-2">
                   <span

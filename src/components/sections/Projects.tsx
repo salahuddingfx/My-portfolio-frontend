@@ -207,7 +207,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
           key={project._id || index}
           className={`project-row group ${index === 0 ? "" : "border-t border-white/5"} py-12 md:py-20 lg:py-28`}
         >
-          <div className="container" style={{ paddingLeft: "20px", paddingRight: "20px"}}>
+          <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-center">
               <div
                 className={`flex flex-col gap-6 lg:col-span-5 ${

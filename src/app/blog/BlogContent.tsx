@@ -142,7 +142,7 @@ export default function BlogContent() {
               <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading articles...</p>
             </div>
           ) : paginated.length === 0 ? (
-            <div className="card p-10 text-center">
+            <div className="card card-large text-center">
               <p className="text-sm text-[var(--muted)]">{searchQuery ? 'No matching articles.' : 'No articles yet. Check back later.'}</p>
             </div>
           ) : (
@@ -180,7 +180,7 @@ export default function BlogContent() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7 }}
-          className="card p-8 md:p-10"
+          className="card card-large"
           style={{ marginTop: '3.5rem', marginBottom: '3.5rem' }}
         >
           <div className="grid lg:grid-cols-2 gap-8 items-center">

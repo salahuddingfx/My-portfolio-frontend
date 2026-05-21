@@ -78,7 +78,7 @@ const Services = () => {
                 key={service._id}
                 {...fadeUp}
                 transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="card card-hover group flex flex-col h-full p-8 sm:p-10"
+                className="card card-hover group flex flex-col h-full"
               >
                 {/* Number + Icon */}
                 <span className="text-xs font-mono text-[var(--muted-soft)] mb-5 flex items-center gap-3">

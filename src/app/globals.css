@@ -470,11 +470,25 @@ video {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: var(--space-6);
   transition:
     border-color var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-out),
     box-shadow var(--duration-base) var(--ease-out);
+  padding: 1.75rem !important;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 2rem !important;
+  }
+}
+
+.card-flat {
+  padding: 0 !important;
+}
+
+.card-large {
+  padding: 2.5rem !important;
 }
 
 .card-hover:hover {
@@ -880,6 +894,7 @@ video {
   backdrop-filter: blur(20px);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
   transition: all var(--duration-slow) var(--ease-out);
+  padding: clamp(2rem, 5vw, 4rem) !important;
 }
 
 .contact-card,

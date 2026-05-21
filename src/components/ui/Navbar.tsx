@@ -145,7 +145,7 @@ const Navbar = () => {
             </Link>
 
             {/* DESKTOP NAVIGATION */}
-            <nav aria-label="Main Navigation" className="hidden lg:flex items-center">
+            <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-6">
               <div className={`flex h-11 items-center rounded-full border px-1.5 transition-all duration-300 ${
                 scrolled ? "border-white/[0.06] bg-white/[0.03]" : "border-transparent bg-transparent"
               }`}>
@@ -173,7 +173,7 @@ const Navbar = () => {
               {/* CTA BUTTON */}
               <Link
                 href="/contact"
-                className="nav-cta gap-2 group ml-3 inline-flex h-11 items-center justify-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-6 text-[13px] font-medium leading-none text-white transition-all duration-300 hover:border-white/[0.14] hover:bg-white/[0.06] hover:-translate-y-[1px]"
+                className="nav-cta group inline-flex h-11 items-center justify-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-6 text-[13px] font-medium leading-none text-white transition-all duration-300 hover:border-white/[0.14] hover:bg-white/[0.06] hover:-translate-y-[1px]"
               >
                 <span className="relative top-[0.5px]">Let&apos;s Talk</span>
                 <ArrowUpRight size={15} strokeWidth={2} className="shrink-0 transition-transform duration-300 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
@@ -225,10 +225,10 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="fixed top-0 right-0 z-[var(--z-overlay)] flex h-full w-full max-w-[360px] flex-col border-l border-white/[0.06] bg-[var(--background)] lg:hidden"
+              className="fixed inset-y-0 right-0 z-[var(--z-overlay)] flex h-full w-full max-w-[360px] flex-col border-l border-white/[0.06] bg-[var(--background)] overflow-hidden lg:hidden"
             >
               {/* DRAWER HEADER */}
-              <div className="flex items-center justify-between border-b border-white/[0.06] px-5 h-[72px]">
+              <div className="flex items-center justify-between border-b border-white/[0.06] p-5 h-[72px] mx-2.5 shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)]">
                     <span className="text-sm font-semibold text-white">S</span>
@@ -244,7 +244,7 @@ const Navbar = () => {
               </div>
 
               {/* MOBILE NAV LINKS */}
-              <nav className="flex flex-col px-4 py-5">
+              <nav className="flex-1 overflow-y-auto flex flex-col gap-1.5 p-5">
                 {navLinks.map((link, index) => {
                   const active = pathname === link.href;
                   return (
@@ -253,6 +253,7 @@ const Navbar = () => {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.05 + index * 0.04 }}
+                      className="shrink-0"
                     >
                       <Link
                         href={link.href}
@@ -264,10 +265,12 @@ const Navbar = () => {
                     </motion.div>
                   );
                 })}
+                {/* Spacer to guarantee padding-bottom is respected in overflow scrolling */}
+                <div className="h-4 shrink-0" />
               </nav>
 
               {/* FOOTER CTA */}
-              <div className="mt-auto border-t border-white/[0.06] px-5 py-5">
+              <div className="border-t border-white/[0.06] p-5 shrink-0 flex flex-col gap-4">
                 <Link
                   href="/contact"
                   className="group flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.04] text-[14px] font-medium text-white transition-all duration-300 hover:bg-white/[0.08]"
@@ -275,7 +278,7 @@ const Navbar = () => {
                   Let&apos;s Talk
                   <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
                 </Link>
-                <p className="mt-4 text-center text-[11px] text-[var(--muted-soft)]">
+                <p className="text-center text-[11px] text-[var(--muted-soft)]">
                   salauddinkaderappy@gmail.com
                 </p>
               </div>

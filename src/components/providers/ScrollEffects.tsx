@@ -57,7 +57,13 @@ export function ScrollEffects() {
             if (shouldPin) {
               ScrollTrigger.create({
                 trigger: section,
-                start: "top top",
+                start: () => {
+                  const viewportHeight = window.innerHeight;
+                  const sectionHeight = section.offsetHeight;
+                  // If a section is taller than the viewport, pin it at bottom bottom
+                  // so the user can scroll through the entire content before it gets covered.
+                  return sectionHeight <= viewportHeight ? "top top" : "bottom bottom";
+                },
                 endTrigger: nextSection,
                 end: "top top",
                 pin: true,

@@ -152,7 +152,7 @@ const ReviewFormPage = () => {
         </div>
 
         <div 
-          className="contact-card flex flex-col items-center text-center max-w-xl w-full border border-[var(--border)] bg-[var(--surface)] p-10 md:p-14 rounded-[2.5rem] shadow-2xl relative z-10"
+          className="contact-card flex flex-col items-center text-center max-w-xl w-full rounded-[2.5rem] shadow-2xl relative z-10"
           style={{
             animation: 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both'
           }}
@@ -188,7 +188,7 @@ const ReviewFormPage = () => {
       <section className="section-shell">
         <div className="container">
           <div className="max-w-3xl mx-auto">
-            <div className="contact-card flex flex-col" style={{ padding: 'clamp(2rem, 5vw, 4rem)' }}>
+            <div className="contact-card flex flex-col">
               <div className="flex items-center justify-between mb-12">
                 <div className="flex flex-col gap-1">
                   <h1 className="text-3xl font-black uppercase tracking-tighter italic">Share a Review.</h1>

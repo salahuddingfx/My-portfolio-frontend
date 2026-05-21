@@ -6,6 +6,22 @@ import { PerspectiveCamera, Decal, Environment, ContactShadows } from "@react-th
 import { Physics, useSphere } from "@react-three/cannon";
 import * as THREE from "three";
 
+// Silence library-level Three.js deprecation/multiple import warnings that we cannot control
+if (typeof window !== "undefined") {
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (
+      args[0] &&
+      (args[0].toString().includes("THREE.Clock") ||
+       args[0].toString().includes("THREE.Timer") ||
+       args[0].toString().includes("Three.js being imported"))
+    ) {
+      return;
+    }
+    originalWarn(...args);
+  };
+}
+
 /* ─── Custom Hook to safely load SVGs as Textures ─── */
 function useSafeTexture(url: string) {
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
@@ -261,7 +277,7 @@ const TechSphere = () => {
     >
       <Canvas
         dpr={[1, 2]}
-        shadows
+        shadows={{ type: THREE.PCFShadowMap }}
         camera={{ position: [0, 0, 16.8], fov: 45 }}
         gl={{ powerPreference: "high-performance", antialias: true, alpha: true }}
       >

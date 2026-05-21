@@ -76,7 +76,7 @@ const Testimonials = () => {
       <div className="container">
 
         {/* Header */}
-        <div className="text-center max-w-lg mx-auto" style={{ marginBottom: '3.5rem' }}>
+        <div className="text-center max-w-lg mx-auto mb-14">
           <span className="section-eyebrow">Kind words</span>
           <h2 className="section-heading mt-1">
             What clients say.
@@ -92,7 +92,7 @@ const Testimonials = () => {
                 return (
                   <div
                     key={`${review.name}-${i}`}
-                    className="testimonial-card card card-hover group flex flex-col h-full p-7"
+                    className="testimonial-card card card-hover group flex flex-col h-full"
                     aria-hidden={isClone}
                   >
                     {/* Stars */}
@@ -132,7 +132,7 @@ const Testimonials = () => {
           <div className="testimonials-marquee">
             <div className="testimonials-track skeleton-track">
               {skeletonItems.map((i) => (
-                <div key={i} className="testimonial-card card flex flex-col gap-4 p-7">
+                <div key={i} className="testimonial-card card flex flex-col gap-4">
                   <div className="skeleton h-3 w-20" />
                   <div className="space-y-3">
                     <div className="skeleton h-3 w-11/12" />
