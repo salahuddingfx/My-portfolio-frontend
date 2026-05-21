@@ -173,6 +173,47 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
             return Math.max(calculated, 0);
           };
 
+          // Animate title entrance
+          const title = section.querySelector(".work-container h2");
+          if (title) {
+            gsap.fromTo(
+              title,
+              { y: 50, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power4.out",
+                scrollTrigger: {
+                  trigger: section,
+                  start: "top 85%",
+                  toggleActions: "play none none none",
+                }
+              }
+            );
+          }
+
+          // Animate project card boxes staggered reveal
+          const boxes = track.querySelectorAll(".work-box");
+          if (boxes.length > 0) {
+            gsap.fromTo(
+              boxes,
+              { y: 60, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: section,
+                  start: "top 80%",
+                  toggleActions: "play none none none",
+                }
+              }
+            );
+          }
+
           gsap.to(track, {
             x: () => -getTranslateX(),
             ease: "none",
