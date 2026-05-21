@@ -512,6 +512,13 @@ video {
   box-shadow: var(--shadow-md);
 }
 
+/* Ensures consistent inner spacing between description and CTA buttons */
+.card .card-cta {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
 /* =============================================================================
    TESTIMONIALS MARQUEE
    ============================================================================= */
@@ -620,19 +627,20 @@ video {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 0.625rem 1.375rem;
-  height: 2.5rem;
+  padding: 0.75rem 1.625rem;
+  height: 2.75rem;
   background: var(--foreground);
   color: var(--background);
   font-family: var(--font-body), sans-serif;
   font-size: var(--text-sm);
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   border-radius: var(--radius-md);
   transition:
     background var(--duration-base) var(--ease-out),
     color var(--duration-base) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -640,6 +648,7 @@ video {
 .btn-primary:hover {
   background: var(--accent);
   color: #ffffff;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
 }
 
 .btn-primary:active {
@@ -651,15 +660,15 @@ video {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 0.625rem 1.375rem;
-  height: 2.5rem;
+  padding: 0.75rem 1.625rem;
+  height: 2.75rem;
   background: transparent;
   color: var(--foreground);
-  border: 1px solid var(--border-hover);
+  border: 1.5px solid var(--border-hover);
   font-family: var(--font-body), sans-serif;
   font-size: var(--text-sm);
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   border-radius: var(--radius-md);
   transition:
     border-color var(--duration-base) var(--ease-out),

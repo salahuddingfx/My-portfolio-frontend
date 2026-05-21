@@ -253,7 +253,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                   </p>
 
                   {liveLink && (
-                    <div className="pt-4">
+                    <div className="pt-8">
                       <a
                         href={liveLink}
                         target="_blank"

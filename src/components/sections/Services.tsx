@@ -97,20 +97,20 @@ const Services = () => {
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-[var(--muted)] leading-relaxed flex-grow mb-5">
+                <p className="text-sm text-[var(--muted)] leading-relaxed flex-grow mb-6">
                   {service.description}
                 </p>
 
                 {/* Price */}
                 {service.price && (
-                  <div className="text-xs font-mono text-[var(--accent)] mb-4 uppercase tracking-widest">
+                  <div className="text-xs font-mono text-[var(--accent)] mb-5 uppercase tracking-widest">
                     {service.price}
                   </div>
                 )}
 
                 {/* Tags */}
                 {service.tags && service.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-6">
+                  <div className="flex flex-wrap gap-1.5 mb-8">
                     {service.tags.map((t) => (
                       <span key={t} className="badge group-hover:border-[var(--border-hover)] group-hover:text-[var(--foreground)]/60 transition-colors duration-200">
                         {t}
@@ -120,7 +120,7 @@ const Services = () => {
                 )}
 
                 {/* Link */}
-                <div className="border-t border-[var(--border)] pt-5">
+                <div className="border-t border-[var(--border)] pt-5 mt-auto">
                   <Link
                     href="/services"
                     aria-label={`Learn more about ${service.title}`}

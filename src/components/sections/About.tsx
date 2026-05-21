@@ -73,7 +73,7 @@ const About = () => {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-6 pt-4">
+            <div className="flex flex-wrap gap-4 pt-2">
               <Link href="/about" className="btn-primary px-10 py-5 rounded-2xl group">
                 <span>Read my story</span>
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />

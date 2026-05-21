@@ -134,14 +134,14 @@ const Hero = () => {
               <span className="block text-[var(--muted)]">Kader</span>
             </h1>
 
-            <div className="mt-6 space-y-8">
+            <div className="mt-8 space-y-10">
               {/* Description */}
               <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm">
                 {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design."}
               </p>
 
               {/* Actions */}
-              <div className="flex flex-wrap items-center gap-6">
+              <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Magnetic>
                   <a href="#projects" className="btn-primary">
                     Selected Works
