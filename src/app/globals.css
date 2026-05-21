@@ -428,6 +428,43 @@ video {
   z-index: var(--z-base);
 }
 
+/* Purple ambient glow blobs — top-left & bottom-right on every section */
+.section-shell::before,
+.section-shell::after {
+  content: "";
+  position: absolute;
+  width: clamp(300px, 40vw, 640px);
+  height: clamp(300px, 40vw, 640px);
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.08;
+  filter: blur(110px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: opacity;
+}
+
+.section-shell::before {
+  top: -15%;
+  left: -10%;
+}
+
+.section-shell::after {
+  bottom: -15%;
+  right: -10%;
+}
+
+html[data-theme="light"] .section-shell::before,
+html[data-theme="light"] .section-shell::after {
+  opacity: 0.05;
+}
+
+/* Hero has its own custom blobs — suppress the global ones */
+#home::before,
+#home::after {
+  display: none;
+}
+
 @media (min-width: 1024px) {
   .section-shell {
     padding-top: 8rem;
