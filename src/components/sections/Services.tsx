@@ -90,7 +90,7 @@ const Services = () => {
 
                 {/* Title */}
                 <h3
-                  className="text-xl font-semibold text-white mb-3 group-hover:text-[var(--foreground)] transition-colors duration-200"
+                  className="text-xl font-semibold text-[var(--foreground)] mb-3 transition-colors duration-200"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {service.title}
@@ -112,7 +112,7 @@ const Services = () => {
                 {service.tags && service.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-6">
                     {service.tags.map((t) => (
-                      <span key={t} className="badge group-hover:border-[var(--border-hover)] group-hover:text-white/60 transition-colors duration-200">
+                      <span key={t} className="badge group-hover:border-[var(--border-hover)] group-hover:text-[var(--foreground)]/60 transition-colors duration-200">
                         {t}
                       </span>
                     ))}
@@ -124,7 +124,7 @@ const Services = () => {
                   <Link
                     href="/services"
                     aria-label={`Learn more about ${service.title}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-white transition-colors duration-200 group/link"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200 group/link"
                   >
                     Learn more about {service.title}
                     <ArrowUpRight

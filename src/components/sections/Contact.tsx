@@ -112,7 +112,7 @@ const Contact = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="section-eyebrow text-white/40 mb-6 block">Inquiries</span>
+            <span className="section-eyebrow text-[var(--foreground)] opacity-40 mb-6 block">Inquiries</span>
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
               Let&apos;s build <br />
               <span className="text-stroke">something</span> <br />
@@ -144,7 +144,7 @@ const Contact = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 1.2 }}
-                className="block mt-4 text-xs font-mono uppercase tracking-widest text-white/30 not-italic"
+                className="block mt-4 text-xs font-mono uppercase tracking-widest text-[var(--foreground)] opacity-30 not-italic"
               >
                 — Steve Jobs
               </motion.span>
@@ -174,11 +174,11 @@ const Contact = () => {
                       {card.label}
                     </p>
                     {card.href ? (
-                      <a href={card.href} className="text-base sm:text-lg font-bold text-white hover:text-[var(--accent)] transition-all break-words sm:truncate block">
+                      <a href={card.href} className="text-base sm:text-lg font-bold text-[var(--foreground)] hover:text-[var(--accent)] transition-all break-words sm:truncate block">
                         {card.value}
                       </a>
                     ) : (
-                      <p className="text-base sm:text-lg font-bold text-white break-words sm:truncate">{card.value}</p>
+                      <p className="text-base sm:text-lg font-bold text-[var(--foreground)] break-words sm:truncate">{card.value}</p>
                     )}
                   </div>
                 </motion.div>
@@ -194,7 +194,7 @@ const Contact = () => {
               <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-6">Social Networks</p>
               <div className="flex flex-wrap gap-x-8 gap-y-4">
                 {['LinkedIn', 'Github', 'Twitter', 'Instagram'].map(social => (
-                  <a key={social} href="#" className="text-xs font-bold hover:text-(--accent) transition-all uppercase tracking-widest text-white/60">
+                  <a key={social} href="#" className="text-xs font-bold hover:text-(--accent) transition-all uppercase tracking-widest text-[var(--foreground)] opacity-60">
                     {social}
                   </a>
                 ))}
@@ -301,7 +301,7 @@ const Contact = () => {
                         className={`contact-input appearance-none cursor-pointer ${errors.subject ? '!border-red-500/50' : ''}`}
                       >
                         {SUBJECTS.map((s) => (
-                          <option key={s} value={s} className="bg-[#111] p-4">
+                          <option key={s} value={s} className="bg-[var(--surface)] text-[var(--foreground)] p-4">
                             {s}
                           </option>
                         ))}

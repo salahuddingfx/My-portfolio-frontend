@@ -139,7 +139,7 @@ const CustomCursor = () => {
       {/* TINY CENTER DOT */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-1 h-1 bg-white rounded-full pointer-events-none z-[var(--z-cursor)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 w-1 h-1 bg-[var(--foreground)] rounded-full pointer-events-none z-[var(--z-cursor)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
       />
 
       {/* SHARINGAN EYE WITH INTENSE GLOW */}

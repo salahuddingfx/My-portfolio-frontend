@@ -159,7 +159,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
@@ -167,6 +167,22 @@ export default function RootLayout({
           These hints fire as soon as the HTML is parsed — TCP+TLS handshake
           completes in the background so Spline loads faster when it defers. */}
       <head>
+        <script
+          id="theme-loader"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var theme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              })();
+            `,
+          }}
+        />
         <link rel="preconnect" href="https://prod.spline.design" />
         <link rel="dns-prefetch" href="https://prod.spline.design" />
         <meta

@@ -19,11 +19,46 @@
   --border: rgba(255, 255, 255, 0.07);
   --border-hover: rgba(255, 255, 255, 0.14);
 
+  /* ── Theme Adaptations ───────────────────────────────────────── */
+  --navbar-bg: rgba(8, 8, 8, 0.82);
+  --nav-pill-bg: rgba(255, 255, 255, 0.07);
+  --navbar-btn-bg: rgba(255, 255, 255, 0.03);
+  --navbar-btn-border: rgba(255, 255, 255, 0.08);
+  --navbar-btn-hover-bg: rgba(255, 255, 255, 0.06);
+  --navbar-btn-hover-border: rgba(255, 255, 255, 0.14);
+  --grid-color: rgba(255, 255, 255, 0.02);
+  --spotlight-color: rgba(255, 255, 255, 0.4);
+
   /* ── Fonts ───────────────────────────────────────────────────── */
   --font-display: var(--font-space-grotesk);
   --font-body: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
+}
 
+html[data-theme="light"] {
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --muted-soft: #94a3b8;
+  --accent: #7c3aed;
+  --accent-soft: rgba(124, 58, 237, 0.08);
+
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.15);
+
+  --navbar-bg: rgba(248, 250, 252, 0.85);
+  --nav-pill-bg: rgba(0, 0, 0, 0.05);
+  --navbar-btn-bg: rgba(0, 0, 0, 0.03);
+  --navbar-btn-border: rgba(0, 0, 0, 0.08);
+  --navbar-btn-hover-bg: rgba(0, 0, 0, 0.06);
+  --navbar-btn-hover-border: rgba(0, 0, 0, 0.14);
+  --grid-color: rgba(0, 0, 0, 0.02);
+  --spotlight-color: rgba(124, 58, 237, 0.08);
+}
+
+:root {
   /* ── Spacing Scale ───────────────────────────────────────────── */
   --space-1: 0.25rem;
   /* 4px  */
@@ -284,6 +319,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: background-color var(--duration-base) var(--ease-in-out), color var(--duration-base) var(--ease-in-out), border-color var(--duration-base) var(--ease-in-out), box-shadow var(--duration-base) var(--ease-in-out);
 }
 
 body {
@@ -341,27 +377,6 @@ video {
   max-width: 100%;
 }
 
-/* =============================================================================
-   SCROLLBAR
-   ============================================================================= */
-
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0d0d0d;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #2c2c2c;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
-}
 
 /* =============================================================================
    TEXT SELECTION
@@ -696,8 +711,8 @@ video {
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  background: var(--nav-pill-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.2rem 0.55rem;
@@ -916,7 +931,7 @@ video {
   border: none;
   border-bottom: 1px solid var(--border);
   padding: 1.5rem 0.5rem 0.5rem 0.5rem;
-  color: white;
+  color: var(--foreground);
   font-size: 0.95rem;
   transition: border-color var(--duration-base) var(--ease-out);
 }
@@ -926,7 +941,7 @@ video {
 .contact-input:-webkit-autofill:focus,
 .contact-input:-webkit-autofill:active {
   -webkit-background-clip: text;
-  -webkit-text-fill-color: white;
+  -webkit-text-fill-color: var(--foreground);
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -943,7 +958,7 @@ video {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--muted-soft);
   pointer-events: none;
   transition: all var(--duration-base) var(--ease-out);
 }
@@ -983,8 +998,8 @@ video {
 .contact-btn {
   position: relative;
   padding: 1.25rem 2.5rem;
-  background: white;
-  color: black;
+  background: var(--foreground);
+  color: var(--background);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;

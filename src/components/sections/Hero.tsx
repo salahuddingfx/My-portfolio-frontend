@@ -84,7 +84,7 @@ const Hero = () => {
         {/* Acernity Spotlight */}
         <Spotlight
           className="-top-40 left-0 md:left-[20%] md:-top-20 z-0"
-          fill="rgba(255, 255, 255, 0.4)"
+          fill="var(--spotlight-color)"
         />
 
         {/* Decorative Spots */}
@@ -123,11 +123,11 @@ const Hero = () => {
               </span>
             </div>
 
-            <span className="text-white/80 font-mono text-sm sm:text-base mb-2 tracking-widest uppercase">
+            <span className="text-[var(--foreground)]/80 font-mono text-sm sm:text-base mb-2 tracking-widest uppercase">
               Hello! I&apos;m
             </span>
             <h1
-              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-[1] tracking-tighter uppercase"
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--foreground)] leading-[1] tracking-tighter uppercase"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Salah Uddin
@@ -151,7 +151,7 @@ const Hero = () => {
                 <Magnetic>
                   <Link 
                     href="/contact" 
-                    className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-white transition-colors"
+                    className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
                   >
                     Let&apos;s Talk
                   </Link>
@@ -162,12 +162,12 @@ const Hero = () => {
 
           {/* Right Side: Role */}
           <div className="flex flex-col z-20 pointer-events-auto text-left md:text-right w-full md:w-5/12 items-start md:items-end justify-center">
-            <span className="text-white font-mono text-base sm:text-lg mb-2 tracking-widest uppercase">
+            <span className="text-[var(--foreground)] font-mono text-base sm:text-lg mb-2 tracking-widest uppercase">
               A Creative
             </span>
             <div className="min-h-[60px] md:min-h-[80px] flex flex-col justify-start md:justify-end items-start md:items-end w-full">
               <span 
-                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white font-bold uppercase tracking-tighter leading-[1]" 
+                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-[var(--foreground)] font-bold uppercase tracking-tighter leading-[1]" 
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 <RoleTyper />

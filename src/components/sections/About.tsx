@@ -48,7 +48,7 @@ const About = () => {
           >
 
             <div className="space-y-6">
-              <p className="text-white text-xl md:text-2xl font-medium leading-relaxed opacity-90">
+              <p className="text-[var(--foreground)] text-xl md:text-2xl font-medium leading-relaxed opacity-90">
                 {settings?.bio || "I'm Salah Uddin Kader, a Full Stack Developer based in Cox's Bazar, Bangladesh."}
               </p>
               <p className="text-[var(--muted)] text-lg leading-relaxed max-w-2xl">
@@ -61,7 +61,7 @@ const About = () => {
               {stats.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-2">
                   <span
-                    className="text-3xl font-black text-white italic tracking-tighter"
+                    className="text-3xl font-black text-[var(--foreground)] italic tracking-tighter"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
                   >
                     {stat.value}
@@ -84,7 +84,7 @@ const About = () => {
                   href={settings.cvUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-10 py-5 bg-white/5 border border-[var(--border)] text-white font-bold uppercase tracking-tighter rounded-2xl hover:bg-white/10 hover:border-[var(--accent)]/50 transition-all group"
+                  className="flex items-center gap-3 px-10 py-5 bg-[var(--navbar-btn-bg)] border border-[var(--border)] text-[var(--foreground)] font-bold uppercase tracking-tighter rounded-2xl hover:bg-[var(--navbar-btn-hover-bg)] hover:border-[var(--accent)]/50 transition-all group"
                 >
                   <Download size={18} className="text-[var(--accent)] group-hover:translate-y-0.5 transition-transform" />
                   <span>Download CV</span>
@@ -144,9 +144,9 @@ const About = () => {
               <div className="portrait-3d-accent absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-[var(--accent)] opacity-40" />
               
               {/* Badge overlay */}
-              <div className="portrait-3d-badge absolute bottom-8 left-8 bg-black/60 backdrop-blur-xl border border-white/10 p-5 rounded-2xl flex items-center gap-4 shadow-2xl">
+              <div className="portrait-3d-badge absolute bottom-8 left-8 bg-[var(--surface)]/60 backdrop-blur-xl border border-[var(--border)] p-5 rounded-2xl flex items-center gap-4 shadow-2xl">
                 <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
-                <span className="text-[10px] uppercase tracking-widest font-bold">Based in BD</span>
+                <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--foreground)]">Based in BD</span>
               </div>
               </div>
             </div>

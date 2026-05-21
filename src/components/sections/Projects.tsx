@@ -205,7 +205,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       return (
         <div
           key={project._id || index}
-          className={`project-row group ${index === 0 ? "" : "border-t border-white/5"} py-12 md:py-20 lg:py-28`}
+          className={`project-row group ${index === 0 ? "" : "border-t border-[var(--border)]"} py-12 md:py-20 lg:py-28`}
         >
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-center">
@@ -217,7 +217,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                 }`}
               >
                 <div
-                  className={`text-5xl md:text-7xl font-medium tracking-tight text-white/80 ${
+                  className={`text-5xl md:text-7xl font-medium tracking-tight text-[var(--foreground)] opacity-80 ${
                     isEven ? "self-start" : "self-start lg:self-end"
                   }`}
                   aria-hidden
@@ -229,7 +229,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                   <div className="space-y-2">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Project Name</p>
                     <h3
-                      className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
+                      className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--foreground)] leading-tight"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
                       {project.title}
@@ -238,14 +238,14 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
 
                   <div className="space-y-2">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Category</p>
-                    <p className="text-sm font-medium text-white/70">
+                    <p className="text-sm font-medium text-[var(--foreground)] opacity-70">
                       {project.category || "—"}
                     </p>
                   </div>
 
                   <div className="space-y-2">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Stack</p>
-                    <p className="text-sm text-white/65 leading-relaxed">{tools}</p>
+                    <p className="text-sm text-[var(--foreground)] opacity-65 leading-relaxed">{tools}</p>
                   </div>
 
                   <p className="text-base text-[var(--muted)] leading-relaxed max-w-lg">
@@ -271,7 +271,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
               <div
                 className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}
               >
-                <div className="relative overflow-hidden rounded-[2rem] bg-white/[0.02] aspect-[16/10] border border-white/5 shadow-2xl">
+                <div className="relative overflow-hidden rounded-[2rem] bg-[var(--surface-2)] aspect-[16/10] border border-[var(--border)] shadow-2xl">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -279,7 +279,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="project-image object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-white/10" />
+                  <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-[var(--border)]" />
                 </div>
               </div>
             </div>
@@ -310,7 +310,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
               }`}
             >
               <div
-                className="text-6xl md:text-8xl font-bold tracking-tighter text-white/20"
+                className="text-6xl md:text-8xl font-bold tracking-tighter text-[var(--foreground)] opacity-20"
                 aria-hidden
               >
                 {number}
@@ -320,7 +320,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                 <div className="space-y-2">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Project Name</p>
                   <h3
-                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--foreground)] leading-tight"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
                   >
                     {project.title}
@@ -329,14 +329,14 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
 
                 <div className="space-y-2">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Category</p>
-                  <p className="text-sm font-medium text-white/70">
+                  <p className="text-sm font-medium text-[var(--foreground)] opacity-70">
                     {project.category || "—"}
                   </p>
                 </div>
 
                 <div className="space-y-2">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Stack</p>
-                  <p className="text-sm text-white/65 leading-relaxed">{tools}</p>
+                  <p className="text-sm text-[var(--foreground)] opacity-65 leading-relaxed">{tools}</p>
                 </div>
 
                 <p className="text-sm text-[var(--muted)] leading-relaxed max-w-sm">
@@ -360,7 +360,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
             </div>
 
             <div className="lg:col-span-7">
-              <div className="relative overflow-hidden rounded-[2.5rem] bg-white/[0.02] aspect-[16/10] border border-white/5 shadow-2xl">
+              <div className="relative overflow-hidden rounded-[2.5rem] bg-[var(--surface-2)] aspect-[16/10] border border-[var(--border)] shadow-2xl">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -368,7 +368,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="project-image object-cover transition-transform duration-1000 ease-out hover:scale-[1.05]"
                 />
-                <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-white/10" />
+                <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-[var(--border)]" />
               </div>
             </div>
           </div>
@@ -382,11 +382,11 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       <section
         id="projects"
         ref={sectionRef}
-        className="section-shell relative overflow-hidden text-white min-h-screen flex flex-col justify-center"
+        className="section-shell relative overflow-hidden text-[var(--foreground)] min-h-screen flex flex-col justify-center"
         style={{
           backgroundColor: "var(--background)",
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+            "linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)",
           backgroundSize: "120px 120px",
           backgroundPosition: "center",
         }}
@@ -453,11 +453,11 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
     <section
       id="projects"
       ref={sectionRef}
-      className="section-shell relative overflow-hidden text-white"
+      className="section-shell relative overflow-hidden text-[var(--foreground)]"
       style={{
         backgroundColor: "var(--background)",
         backgroundImage:
-          "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+          "linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)",
         backgroundSize: "120px 120px",
         backgroundPosition: "center",
       }}
@@ -482,7 +482,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                 className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border transition-all duration-300 ${
                   activeCategory === cat
                     ? "bg-[var(--accent)] border-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20"
-                    : "bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white"
+                    : "bg-[var(--nav-pill-bg)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--navbar-btn-hover-bg)] hover:text-[var(--foreground)]"
                 }`}
               >
                 {cat}
