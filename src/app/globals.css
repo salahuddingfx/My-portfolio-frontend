@@ -1566,29 +1566,87 @@ body:has(.is-404-page) footer {
   }
 }
 
-.role-item {
+.landing-info h2 {
+  margin: 0;
+  margin-top: -20px;
+  margin-left: 20px;
   font-family: "Geist", sans-serif;
   font-weight: 600;
+  font-size: 32px;
+  line-height: 40px;
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
   text-transform: uppercase;
   letter-spacing: 2px;
-  line-height: 1.0;
-  margin: 0;
-  display: block;
-  white-space: nowrap;
-  transition: color 0.8s cubic-bezier(0.77, 0, 0.175, 1),
-              font-size 0.8s cubic-bezier(0.77, 0, 0.175, 1),
-              margin-top 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  overflow: hidden;
+  height: 40px;
 }
 
-.role-top {
+.landing-h2-info-1 {
+  position: absolute;
+  top: 0;
+}
+
+h2.landing-info-h2 {
+  color: #c481ff;
   font-size: 42px;
-  color: var(--accent);
+  width: 120%;
+  margin: 0;
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  position: relative;
+  margin-left: -5px;
+  overflow: hidden;
+  height: 45px;
+  line-height: 45px;
 }
 
-.role-bottom {
-  font-size: 32px;
-  color: var(--foreground);
-  margin-top: -0.15em;
+.landing-h2-2 {
+  position: absolute;
+  top: 0;
+}
+
+.landing-info-h2::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 120%;
+  z-index: 3;
+  background-image: linear-gradient(
+    0deg,
+    var(--background) 40%,
+    rgba(0, 0, 0, 0) 110%
+  );
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.landing-h2-1,
+.landing-h2-info {
+  display: inline-block;
+  will-change: transform;
+  transform: translateY(0);
+}
+
+.landing-h2-2,
+.landing-h2-info-1 {
+  display: inline-block;
+  will-change: transform;
+  transform: translateY(100%);
+}
+
+.animating .landing-h2-1,
+.animating .landing-h2-info {
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  transform: translateY(-100%);
+}
+
+.animating .landing-h2-2,
+.animating .landing-h2-info-1 {
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  transform: translateY(0);
 }
 
 @media screen and (min-width: 500px) {
@@ -1608,11 +1666,15 @@ body:has(.is-404-page) footer {
     font-size: 46px;
     line-height: 1.1;
   }
-  .role-bottom {
+  .landing-info h2 {
     font-size: 35px;
+    line-height: 40px;
+    height: 40px;
   }
-  .role-top {
+  h2.landing-info-h2 {
     font-size: 38px;
+    line-height: 42px;
+    height: 42px;
   }
 }
 @media screen and (min-width: 768px) {
@@ -1629,11 +1691,15 @@ body:has(.is-404-page) footer {
   .landing-info h3 {
     font-size: 25px;
   }
-  .role-bottom {
+  .landing-info h2 {
     font-size: 45px;
+    line-height: 50px;
+    height: 50px;
   }
-  .role-top {
+  h2.landing-info-h2 {
     font-size: 55px;
+    line-height: 60px;
+    height: 60px;
   }
 }
 @media screen and (min-width: 1025px) {
@@ -1667,11 +1733,15 @@ body:has(.is-404-page) footer {
     right: 0;
     left: auto;
   }
-  .role-bottom {
+  .landing-info h2 {
     font-size: 50px;
+    line-height: 55px;
+    height: 55px;
   }
-  .role-top {
+  h2.landing-info-h2 {
     font-size: 60px;
+    line-height: 65px;
+    height: 65px;
   }
 }
 @media screen and (min-width: 1200px) {
@@ -1695,11 +1765,15 @@ body:has(.is-404-page) footer {
     right: 0;
     left: auto;
   }
-  .role-bottom {
+  .landing-info h2 {
     font-size: 58px;
+    line-height: 65px;
+    height: 65px;
   }
-  .role-top {
+  h2.landing-info-h2 {
     font-size: 68px;
+    line-height: 75px;
+    height: 75px;
   }
 }
 @media screen and (min-width: 1600px) {
@@ -1713,11 +1787,15 @@ body:has(.is-404-page) footer {
   .landing-info h3 {
     font-size: 35px;
   }
-  .role-bottom {
-    font-size: 68px;
+  .landing-info h2 {
+    font-size: 65px;
+    line-height: 72px;
+    height: 72px;
   }
-  .role-top {
-    font-size: 78px;
+  h2.landing-info-h2 {
+    font-size: 75px;
+    line-height: 82px;
+    height: 82px;
   }
 }
 

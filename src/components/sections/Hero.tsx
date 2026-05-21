@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
@@ -20,36 +19,36 @@ const DESIGNATIONS = [
 
 const RotatingRoles = () => {
   const [index, setIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % DESIGNATIONS.length);
+      setIsAnimating(true);
+      timer = setTimeout(() => {
+        setIndex((prev) => (prev + 1) % DESIGNATIONS.length);
+        setIsAnimating(false);
+      }, 800);
     }, 3000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
-  const visibleRoles = [
-    { name: DESIGNATIONS[index], position: "top" as const },
-    { name: DESIGNATIONS[(index + 1) % DESIGNATIONS.length], position: "bottom" as const }
-  ];
+  const currentRole = DESIGNATIONS[index];
+  const nextRole = DESIGNATIONS[(index + 1) % DESIGNATIONS.length];
 
   return (
-    <div className="rotating-roles-container">
-      <AnimatePresence mode="popLayout">
-        {visibleRoles.map((role) => (
-          <motion.h2
-            key={role.name}
-            layout
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
-            className={`role-item ${role.position === "top" ? "role-top" : "role-bottom"}`}
-          >
-            {role.name}
-          </motion.h2>
-        ))}
-      </AnimatePresence>
+    <div className={`rotating-roles-container ${isAnimating ? "animating" : ""}`}>
+      <h2 className="landing-info-h2">
+        <div className="landing-h2-1">{currentRole}</div>
+        <div className="landing-h2-2">{nextRole}</div>
+      </h2>
+      <h2>
+        <div className="landing-h2-info">{nextRole}</div>
+        <div className="landing-h2-info-1">{currentRole}</div>
+      </h2>
     </div>
   );
 };
