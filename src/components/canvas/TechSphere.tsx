@@ -3,7 +3,8 @@
 import React, { useRef, useMemo, Suspense, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, Decal, Environment, ContactShadows } from "@react-three/drei";
-import { Physics, useSphere } from "@react-three/cannon";
+import { Physics, RigidBody, BallCollider, RapierRigidBody } from "@react-three/rapier";
+import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
 
 // Silence library-level Three.js deprecation/multiple import warnings that we cannot control
@@ -105,135 +106,198 @@ interface TechBallProps {
   icon: string;
   targetPos: [number, number, number];
   mouseActive: boolean;
-  [key: string]: unknown;
+  isActive: boolean;
 }
 
-function TechBall({ icon, targetPos, mouseActive, ...props }: TechBallProps) {
+function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
   const texture = useSafeTexture(icon);
   const { viewport } = useThree();
   const [isDragging, setIsDragging] = useState(false);
-  const [hovered, setHovered]       = useState(false);
+  const [hovered, setHovered] = useState(false);
   const dragStart = useRef(new THREE.Vector3());
   const currentScale = useRef(1);
+  const api = useRef<RapierRigidBody>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
 
-  const [ref, api] = useSphere(() => ({
-    mass: 1.2,
-    position: targetPos,
-    args: [0.85],
-    linearDamping: 0.88, // Water-like viscosity (heavy fluid drag)
-    angularDamping: 0.9,
-    allowSleep: false,
-    ...props,
-  }));
+  useFrame((state, delta) => {
+    if (!api.current || !isActive) return;
 
-  useFrame((state) => {
-    if (!ref.current) return;
-
-    const currentPosArr = ref.current.position.toArray();
-    const currentPos = new THREE.Vector3(...currentPosArr);
-    const t = state.clock.getElapsedTime();
+    // Constrain delta to avoid giant physics jumps
+    const dt = Math.min(0.03, delta);
 
     // 1. Hover Scale
     const targetScale = hovered ? 1.3 : 1;
     currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, 0.15);
-    ref.current.scale.setScalar(currentScale.current);
+    if (meshRef.current) {
+      meshRef.current.scale.setScalar(currentScale.current);
+    }
 
     if (isDragging) {
-      const mp = new THREE.Vector3((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 0);
-      api.position.set(mp.x, mp.y, 0);
-      api.velocity.set(0, 0, 0);
+      const mp = new THREE.Vector3(
+        (state.mouse.x * viewport.width) / 2,
+        (state.mouse.y * viewport.height) / 2,
+        0
+      );
+      api.current.setTranslation({ x: mp.x, y: mp.y, z: 0 }, true);
+      api.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
     } else {
-      // 2. Gentle Central Gravity (rubber-band pull to center [0,0,0] like fish staying in a school)
-      const center = new THREE.Vector3(0, 0, 0);
-      const toCenter = new THREE.Vector3().subVectors(center, currentPos);
-      const distToCenter = toCenter.length();
+      const currentPos = api.current.translation();
+      const t = state.clock.getElapsedTime();
 
-      // Stronger elastic pull if they drift too far out to contain them in the viewport
-      const gravityK = distToCenter > 5 ? 3.5 : 1.2;
-      const pull = toCenter.clone().normalize().multiplyScalar(distToCenter * gravityK);
-      api.applyForce(pull.toArray(), [0, 0, 0]);
+      // 2. Gentle Central Gravity (pull to center [0,0,0], stronger if far out)
+      const toCenter = new THREE.Vector3(-currentPos.x, -currentPos.y, -currentPos.z);
+      const distToCenter = toCenter.length();
+      
+      // We pull slightly stronger on Y to create a nice elliptical school shape, similar to user's vector multiply
+      const gravityKX = distToCenter > 5 ? 5.0 : 1.5;
+      const gravityKY = distToCenter > 5 ? 12.0 : 4.0;
+      
+      const pull = new THREE.Vector3(
+        toCenter.x * gravityKX * dt,
+        toCenter.y * gravityKY * dt,
+        toCenter.z * gravityKX * dt
+      );
 
       // 3. Fluid Water Current (dynamic floating waves, unique seed per ball)
       const seed = targetPos[0] * 100 + targetPos[1];
       const waterCurrent = new THREE.Vector3(
-        Math.sin(t * 0.4 + seed) * 1.8,
-        Math.cos(t * 0.35 + seed) * 1.8,
-        Math.sin(t * 0.5 + seed) * 0.8
+        Math.sin(t * 0.4 + seed) * 1.5 * dt,
+        Math.cos(t * 0.35 + seed) * 1.5 * dt,
+        Math.sin(t * 0.5 + seed) * 0.6 * dt
       );
-      api.applyForce(waterCurrent.toArray(), [0, 0, 0]);
 
-      // 4. Subtle magnetic repel if mouse gets close
+      // 4. Subtle magnetic repel if mouse gets close but dragging is not active
+      let magneticRepel = new THREE.Vector3();
       if (mouseActive) {
-        const mousePos = new THREE.Vector3((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 0);
-        const mouseDiff = new THREE.Vector3().subVectors(currentPos, mousePos);
+        const mousePos = new THREE.Vector3(
+          (state.mouse.x * viewport.width) / 2,
+          (state.mouse.y * viewport.height) / 2,
+          0
+        );
+        const mouseDiff = new THREE.Vector3(currentPos.x - mousePos.x, currentPos.y - mousePos.y, currentPos.z - mousePos.z);
         const mouseDist = mouseDiff.length();
         
         if (mouseDist < 2.5) {
-          const repelForce = 50 / (mouseDist + 0.1); 
-          api.applyForce(mouseDiff.normalize().multiplyScalar(repelForce).toArray(), [0, 0, 0]);
+          const repelForce = 35 / (mouseDist + 0.1); 
+          magneticRepel = mouseDiff.normalize().multiplyScalar(repelForce * dt);
         }
       }
-    }
 
-    // Keep it rotationally locked
-    api.rotation.set(0, 0, 0);
+      const totalImpulse = pull.add(waterCurrent).add(magneticRepel);
+      api.current.applyImpulse({ x: totalImpulse.x, y: totalImpulse.y, z: totalImpulse.z }, true);
+    }
   });
 
   return (
-    <mesh
-      ref={ref as React.RefObject<THREE.Mesh>}
-      castShadow
-      onPointerDown={(e) => { e.stopPropagation(); setIsDragging(true); dragStart.current.set(e.point.x, e.point.y, 0); }}
-      onPointerUp={() => setIsDragging(false)}
-      onPointerOver={() => {
-        setHovered(true);
-        // 8-ball pool shot break scatter! Explode away from cursor in random/outward directions
-        if (ref.current) {
-          const forceDirection = new THREE.Vector3(
-            (Math.random() - 0.5) * 22,
-            (Math.random() - 0.5) * 22,
-            (Math.random() - 0.5) * 6
-          );
-          api.velocity.set(forceDirection.x, forceDirection.y, forceDirection.z);
-        }
-      }}
-      onPointerOut={()  => setHovered(false)}
+    <RigidBody
+      ref={api}
+      linearDamping={0.85}
+      angularDamping={0.9}
+      friction={0.2}
+      position={targetPos}
+      colliders={false}
+      enabledRotations={[false, false, false]}
     >
-      <sphereGeometry args={[0.85, 32, 32]} />
-      {/* Creative Frosted Glass Material */}
-      <meshPhysicalMaterial
-        color={hovered ? "#9333ea" : "#ffffff"}
-        transmission={0.95}
-        thickness={0.5}
-        roughness={0.08}
-        envMapIntensity={2}
-        clearcoat={1}
-        clearcoatRoughness={0.1}
-        metalness={0}
-        ior={1.5}
-        attenuationColor="#ffffff"
-        attenuationDistance={0.5}
-        emissive={hovered ? "#9333ea" : "#000000"}
-        emissiveIntensity={hovered ? 0.6 : 0}
-      />
-      
-      {texture && (
-        <Decal position={[0, 0, 0.85]} rotation={[0, 0, 0]} scale={[1.4, 1.4, 1.4]}>
-          <meshStandardMaterial 
-            map={texture} 
-            transparent 
-            polygonOffset 
-            polygonOffsetFactor={-10} 
-            roughness={0.1} 
-            metalness={0.1} 
-          />
-        </Decal>
-      )}
-    </mesh>
+      <BallCollider args={[0.85]} />
+      <mesh
+        ref={meshRef}
+        castShadow
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          setIsDragging(true);
+          dragStart.current.set(e.point.x, e.point.y, 0);
+        }}
+        onPointerUp={() => setIsDragging(false)}
+        onPointerOver={() => {
+          setHovered(true);
+          if (api.current) {
+            const forceDirection = {
+              x: (Math.random() - 0.5) * 15,
+              y: (Math.random() - 0.5) * 15,
+              z: (Math.random() - 0.5) * 4
+            };
+            api.current.setLinvel(forceDirection, true);
+          }
+        }}
+        onPointerOut={() => setHovered(false)}
+      >
+        <sphereGeometry args={[0.85, 32, 32]} />
+        {/* Creative Frosted Glass Material */}
+        <meshPhysicalMaterial
+          color={hovered ? "#9333ea" : "#ffffff"}
+          transmission={0.95}
+          thickness={0.5}
+          roughness={0.08}
+          envMapIntensity={2}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+          metalness={0}
+          ior={1.5}
+          attenuationColor="#ffffff"
+          attenuationDistance={0.5}
+          emissive={hovered ? "#9333ea" : "#000000"}
+          emissiveIntensity={hovered ? 0.6 : 0}
+        />
+        
+        {texture && (
+          <Decal position={[0, 0, 0.85]} rotation={[0, 0, 0]} scale={[1.4, 1.4, 1.4]}>
+            <meshStandardMaterial 
+              map={texture} 
+              transparent 
+              polygonOffset 
+              polygonOffsetFactor={-10} 
+              roughness={0.1} 
+              metalness={0.1} 
+            />
+          </Decal>
+        )}
+      </mesh>
+    </RigidBody>
   );
 }
 
-const TechSphere = () => {
+type PointerProps = {
+  isActive: boolean;
+};
+
+function Pointer({ isActive }: PointerProps) {
+  const ref = useRef<RapierRigidBody>(null);
+  const vec = useRef(new THREE.Vector3());
+
+  useFrame(({ pointer, viewport }) => {
+    if (!ref.current) return;
+    if (!isActive) {
+      ref.current.setNextKinematicTranslation(new THREE.Vector3(100, 100, 100));
+      return;
+    }
+    const targetVec = vec.current.lerp(
+      new THREE.Vector3(
+        (pointer.x * viewport.width) / 2,
+        (pointer.y * viewport.height) / 2,
+        0
+      ),
+      0.2
+    );
+    ref.current.setNextKinematicTranslation(targetVec);
+  });
+
+  return (
+    <RigidBody
+      position={[100, 100, 100]}
+      type="kinematicPosition"
+      colliders={false}
+      ref={ref}
+    >
+      <BallCollider args={[2.0]} />
+    </RigidBody>
+  );
+}
+
+interface TechSphereProps {
+  isActive: boolean;
+}
+
+const TechSphere = ({ isActive }: TechSphereProps) => {
   const [isMouseIn, setIsMouseIn] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -289,19 +353,24 @@ const TechSphere = () => {
         <spotLight position={[0, 15, 10]} angle={0.2} penumbra={1} intensity={3} castShadow />
         
         <Suspense fallback={null}>
-          <Physics gravity={[0, 0, 0]} iterations={15}>
+          <Physics gravity={[0, 0, 0]}>
+            <Pointer isActive={isActive && isMouseIn && !isMobile} />
             {activeTechs.map((tech, i) => (
               <TechBall 
                 key={tech.name} 
                 icon={tech.icon} 
                 targetPos={ballPositions[i]} 
                 mouseActive={isMouseIn}
+                isActive={isActive}
               />
             ))}
           </Physics>
           <Environment preset="night" />
           <ContactShadows position={[0, -6, 0]} opacity={0.4} scale={20} blur={2.5} far={4.5} />
         </Suspense>
+        <EffectComposer enableNormalPass={false}>
+          <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+        </EffectComposer>
       </Canvas>
     </div>
   );

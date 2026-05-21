@@ -26,6 +26,7 @@ const TechSphereCanvas = dynamic(() => import("../canvas/TechSphere"), {
  */
 const TechStack = () => {
   const [shouldRender, setShouldRender] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -43,8 +44,8 @@ const TechStack = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          observer.disconnect();
+        setIsActive(entry.isIntersecting);
+        if (entry.isIntersecting && !shouldRender) {
           scheduleRender();
         }
       },
@@ -53,7 +54,7 @@ const TechStack = () => {
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [shouldRender]);
 
   return (
     <section
@@ -82,7 +83,7 @@ const TechStack = () => {
         {/* 3D Sphere — deferred until visible + idle, pointer-events-none on mobile */}
         <div className="w-full h-[280px] lg:h-[380px] relative z-20 pointer-events-none lg:pointer-events-auto cursor-grab active:cursor-grabbing">
           {shouldRender ? (
-            <TechSphereCanvas />
+            <TechSphereCanvas isActive={isActive} />
           ) : (
             /* Placeholder that matches the exact dimensions to prevent CLS */
             <div className="h-full w-full flex items-center justify-center">
