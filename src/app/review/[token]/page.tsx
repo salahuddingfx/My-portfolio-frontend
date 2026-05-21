@@ -264,13 +264,13 @@ const ReviewFormPage = () => {
                           <button
                             type="button"
                             onClick={() => setFormData({ ...formData, avatar: '' })}
-                            className="text-xs text-[var(--muted)] hover:text-white transition"
+                            className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition"
                           >
                             Remove
                           </button>
                         </div>
                       ) : (
-                        <label className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl border border-[var(--border)] text-xs text-[var(--muted)] hover:text-white hover:border-[var(--accent)]/60 transition cursor-pointer w-fit">
+                        <label className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl border border-[var(--border)] text-xs text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--accent)]/60 transition cursor-pointer w-fit">
                           {uploading ? 'Uploading...' : 'Upload avatar'}
                           <input
                             type="file"

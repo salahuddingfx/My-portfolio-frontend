@@ -35,7 +35,7 @@ const ContactCTA = () => {
             </Link>
             <a
               href="mailto:salahuddinkaderappy@gmail.com"
-              className="text-sm text-[var(--muted)] hover:text-white transition-colors duration-200"
+              className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200"
             >
               salahuddinkaderappy@gmail.com
             </a>

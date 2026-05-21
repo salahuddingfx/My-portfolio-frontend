@@ -87,7 +87,7 @@ export default async function BlogPostPage({
       <div className="container">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-white transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)] transition-colors mb-12"
         >
           <ArrowLeft size={14} /> Back to articles
         </Link>
@@ -112,7 +112,7 @@ export default async function BlogPostPage({
               </div>
             </div>
             <h1
-              className="text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight"
+              className="text-4xl lg:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
               {post.title}
@@ -137,14 +137,14 @@ export default async function BlogPostPage({
             {post.tags?.map((tag: string) => (
               <span
                 key={tag}
-                className="text-[10px] font-mono uppercase tracking-widest text-[var(--muted)] bg-white/5 px-3 py-1 rounded-full border border-[var(--border)]"
+                className="text-[10px] font-mono uppercase tracking-widest text-[var(--muted)] bg-[var(--surface-2)] px-3 py-1 rounded-full border border-[var(--border)]"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="prose prose-invert max-w-none text-[var(--muted)] leading-relaxed whitespace-pre-wrap text-base">
+          <div className="prose dark:prose-invert max-w-none text-[var(--muted)] leading-relaxed whitespace-pre-wrap text-base">
             {post.content}
           </div>
         </article>

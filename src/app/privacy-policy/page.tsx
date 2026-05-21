@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
 
             <div className="mt-12 space-y-10 text-[15px] leading-relaxed text-[var(--muted)]">
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Overview</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Overview</h2>
                 <p>
                   This site is a personal portfolio. It collects limited information to respond to inquiries, publish
                   reviews, and understand site usage.
@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Information we collect</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Information we collect</h2>
                 <ul className="mt-4 list-disc pl-5 space-y-2">
                   <li>Contact details (name, email, message) when you use the contact form.</li>
                   <li>Review details you submit through the review form, including optional image uploads.</li>
@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">How we use information</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">How we use information</h2>
                 <ul className="mt-4 list-disc pl-5 space-y-2">
                   <li>Respond to messages and project inquiries.</li>
                   <li>Display approved reviews and improve site content.</li>
@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Analytics and cookies</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Analytics and cookies</h2>
                 <p>
                   This site uses analytics (such as Google Analytics) to measure traffic and improve the experience.
                   Analytics may set cookies or similar technologies. You can disable cookies in your browser settings.
@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Sharing and retention</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Sharing and retention</h2>
                 <p>
                   Information is not sold. It may be processed by trusted service providers (hosting, analytics, email)
                   only as needed to operate the site. Data is kept only for as long as necessary for the purposes above.
@@ -67,11 +67,11 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Your choices</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Your choices</h2>
                 <p>
                   You can request access, correction, or deletion of your information by reaching out via the
                   {" "}
-                  <Link href="/contact" className="text-white hover:text-[var(--accent)] transition-colors">
+                  <Link href="/contact" className="text-[var(--foreground)] hover:text-[var(--accent)] transition-colors">
                     contact page
                   </Link>
                   .

@@ -61,8 +61,8 @@ const TechStack = () => {
       id="tech"
       className="section-shell border-y border-[var(--border)]"
       style={{
-        backgroundColor: "#111111",
-        backgroundImage: "radial-gradient(circle at center, rgba(147, 51, 234, 0.06) 0%, #111111 100%)",
+        backgroundColor: "var(--surface)",
+        backgroundImage: "radial-gradient(circle at center, var(--accent-soft) 0%, var(--surface) 100%)",
       }}
     >
       <div className="container">

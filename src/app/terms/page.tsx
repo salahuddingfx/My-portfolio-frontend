@@ -24,7 +24,7 @@ export default function TermsPage() {
 
             <div className="mt-12 space-y-10 text-[15px] leading-relaxed text-[var(--muted)]">
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Use of the site</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Use of the site</h2>
                 <p>
                   This portfolio is provided for personal and informational use. You agree not to misuse the site,
                   attempt to access restricted areas, or disrupt services.
@@ -32,7 +32,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Intellectual property</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Intellectual property</h2>
                 <p>
                   All content on this site, including text, images, and code samples, is owned by Salah Uddin Kader or
                   used with permission. You may not copy or redistribute content without written consent.
@@ -40,7 +40,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Links to third parties</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Links to third parties</h2>
                 <p>
                   This site may link to external websites. Those sites are not controlled by this portfolio, and their
                   content or policies are not the responsibility of the site owner.
@@ -48,7 +48,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Disclaimer</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Disclaimer</h2>
                 <p>
                   This site is provided on an "as is" basis without warranties of any kind. While efforts are made to
                   keep information accurate, no guarantees are provided.
@@ -56,7 +56,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Changes to these terms</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Changes to these terms</h2>
                 <p>
                   Terms may be updated from time to time. Continued use of the site means you accept the latest
                   version.
@@ -64,11 +64,11 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white mb-3">Contact</h2>
+                <h2 className="text-base font-semibold text-[var(--foreground)] mb-3">Contact</h2>
                 <p>
                   For questions about these terms, reach out via the
                   {" "}
-                  <Link href="/contact" className="text-white hover:text-[var(--accent)] transition-colors">
+                  <Link href="/contact" className="text-[var(--foreground)] hover:text-[var(--accent)] transition-colors">
                     contact page
                   </Link>
                   .

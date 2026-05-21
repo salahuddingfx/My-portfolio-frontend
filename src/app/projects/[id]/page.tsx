@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({
       <div className="container">
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-white transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)] transition-colors mb-12"
         >
           <ArrowLeft size={14} /> Back to projects
         </Link>
@@ -93,7 +93,7 @@ export default async function ProjectDetailPage({
                 {project.tags?.slice(0, 3).map((tag: string) => (
                   <span
                     key={tag}
-                    className="text-[10px] font-mono uppercase tracking-widest text-[var(--muted)] bg-white/5 px-2 py-1 rounded-full"
+                    className="text-[10px] font-mono uppercase tracking-widest text-[var(--muted)] bg-[var(--surface-2)] px-2 py-1 rounded-full border border-[var(--border)]"
                   >
                     {tag}
                   </span>
@@ -101,7 +101,7 @@ export default async function ProjectDetailPage({
               </div>
             </div>
             <h1
-              className="text-4xl lg:text-6xl font-bold tracking-tight text-white"
+              className="text-4xl lg:text-6xl font-bold tracking-tight text-[var(--foreground)]"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
               {project.title}

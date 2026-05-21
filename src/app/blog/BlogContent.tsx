@@ -3,7 +3,7 @@
 import BlogCard from "@/components/ui/BlogCard";
 import { motion } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 const PER_PAGE = 5;
 
@@ -75,6 +75,18 @@ export default function BlogContent() {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
+        e.preventDefault();
+        const searchInput = document.querySelector('input[placeholder*="Search"]') as HTMLInputElement;
+        searchInput?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <main
       className="min-h-screen bg-[var(--background)]"
@@ -102,36 +114,54 @@ export default function BlogContent() {
           </p>
         </motion.div>
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4" style={{ marginBottom: '2.5rem' }}>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6" style={{ marginBottom: '2.5rem' }}>
           {!loading && categories.length > 1 && (
-            <div className="flex flex-wrap" style={{ gap: '0.5rem' }}>
+            <div className="flex flex-wrap items-center" style={{ gap: '0.375rem' }}>
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`
-                    px-3.5 py-1.5 rounded-[var(--radius-md)] text-xs font-medium
-                    transition-colors duration-200
-                    ${activeCategory === cat
-                      ? "bg-[var(--foreground)] text-[var(--background)]"
-                      : "text-[var(--muted)] border border-[var(--border)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
-                    }
-                  `}
+                  className="relative px-4 py-2 rounded-[var(--radius-md)] text-xs font-medium transition-colors duration-200 focus-visible:outline-none"
+                  style={{
+                    color: activeCategory === cat ? "var(--background)" : "var(--muted)",
+                  }}
                 >
-                  {cat}
+                  {activeCategory === cat && (
+                    <motion.span
+                      layoutId="activeCategory"
+                      className="absolute inset-0 bg-[var(--foreground)] rounded-[var(--radius-md)] -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{cat}</span>
                 </button>
               ))}
             </div>
           )}
-          <div className="relative">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-soft)] pointer-events-none" />
+          <div className="relative flex items-center w-full md:w-72 group">
+            <Search 
+              size={14} 
+              className="absolute left-3.5 text-[var(--muted-soft)] group-focus-within:text-[var(--accent)] transition-colors duration-200 pointer-events-none" 
+            />
             <input
               type="text"
-              placeholder="Search articles..."
+              placeholder="Search articles... (Press '/' to focus)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-56 bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-md)] pl-9 pr-4 py-2 text-xs text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] transition-all"
+              className="w-full bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-md)] pl-9 pr-14 py-2.5 text-xs text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-soft)] transition-all duration-300 shadow-sm"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-9 p-1 rounded-full text-[var(--muted-soft)] hover:text-[var(--foreground)] hover:bg-[var(--border)] transition-colors"
+                title="Clear search"
+              >
+                <X size={10} />
+              </button>
+            )}
+            <span className="absolute right-3 px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--surface-2)] text-[9px] font-mono text-[var(--muted-soft)] tracking-wider pointer-events-none group-focus-within:opacity-0 transition-opacity">
+              /
+            </span>
           </div>
         </div>
 

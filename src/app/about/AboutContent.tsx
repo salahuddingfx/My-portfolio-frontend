@@ -315,7 +315,7 @@ export default function AboutContent() {
               transition={{ duration: 0.7 }}
               className="lg:col-span-7 flex flex-col gap-6"
             >
-              <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                 Salah Uddin<br />Kader
               </h1>
               <p className="text-lg lg:text-xl text-[var(--muted)] leading-relaxed max-w-xl">
@@ -332,7 +332,7 @@ export default function AboutContent() {
                   View my work
                 </Link>
                 {cvUrl && (
-                  <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 border border-[var(--border)] rounded-[var(--radius-md)] text-xs font-medium text-[var(--muted)] hover:text-white hover:border-[var(--accent)]/50 transition-all">
+                  <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 border border-[var(--border)] rounded-[var(--radius-md)] text-xs font-medium text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--accent)]/50 transition-all">
                     <Download size={13} /> Resume
                   </a>
                 )}
@@ -352,8 +352,8 @@ export default function AboutContent() {
                   sizes="(max-width: 1024px) 100vw, 400px"
                   className="object-cover grayscale-[10%] group-hover:grayscale-0 transition-all duration-700"
                 />
-                <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-white/20 rounded-tl-sm" />
-                <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-white/20 rounded-br-sm" />
+                <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-[var(--border)] rounded-tl-sm" />
+                <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-[var(--border)] rounded-br-sm" />
               </div>
             </motion.div>
           </div>
@@ -418,7 +418,7 @@ export default function AboutContent() {
             <div ref={containerRef} className="relative w-full flex flex-col gap-12 select-none">
 
               {/* ── DESKTOP TRACK (Centered) ── */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-white/[0.07] -translate-x-1/2 hidden lg:block z-0" />
+              <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-[var(--border)] -translate-x-1/2 hidden lg:block z-0" />
               <div
                 ref={lineRef}
                 className="absolute left-1/2 top-0 w-[2px] bg-[var(--accent)] origin-top -translate-x-1/2 hidden lg:block z-0"
@@ -426,7 +426,7 @@ export default function AboutContent() {
               />
               <div
                 ref={glowRef}
-                className="absolute left-1/2 top-0 w-3 h-3 rounded-full bg-white pointer-events-none opacity-0 z-20 hidden lg:block"
+                className="absolute left-1/2 top-0 w-3 h-3 rounded-full bg-[var(--accent)] pointer-events-none opacity-0 z-20 hidden lg:block"
                 style={{
                   boxShadow: "0 0 8px var(--accent), 0 0 18px var(--accent), 0 0 28px var(--accent)",
                   transform: "translate(-50%, -50%)",
@@ -434,7 +434,7 @@ export default function AboutContent() {
               />
 
               {/* ── MOBILE TRACK (Left Aligned) ── */}
-              <div className="absolute left-5 top-0 bottom-0 w-[2px] bg-white/[0.07] lg:hidden z-0" />
+              <div className="absolute left-5 top-0 bottom-0 w-[2px] bg-[var(--border)] lg:hidden z-0" />
               <div
                 ref={lineMobileRef}
                 className="absolute left-5 top-0 w-[2px] bg-[var(--accent)] origin-top lg:hidden z-0"
@@ -442,7 +442,7 @@ export default function AboutContent() {
               />
               <div
                 ref={glowMobileRef}
-                className="absolute left-5 top-0 w-3 h-3 rounded-full bg-white pointer-events-none opacity-0 z-20 lg:hidden"
+                className="absolute left-5 top-0 w-3 h-3 rounded-full bg-[var(--accent)] pointer-events-none opacity-0 z-20 lg:hidden"
                 style={{
                   boxShadow: "0 0 8px var(--accent), 0 0 18px var(--accent), 0 0 28px var(--accent)",
                   transform: "translate(-50%, -50%)",
@@ -483,7 +483,7 @@ export default function AboutContent() {
                       <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
                         {item.year}
                       </span>
-                      <h3 className="text-[18px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                      <h3 className="text-[18px] leading-tight font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                         {item.title}
                       </h3>
                       <span className="text-xs text-[var(--accent)] font-medium">
@@ -505,7 +505,7 @@ export default function AboutContent() {
                           <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
                             {item.year}
                           </span>
-                          <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                          <h3 className="text-[22px] leading-tight font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                             {item.title}
                           </h3>
                           <span className="text-xs text-[var(--accent)] font-medium">
@@ -544,7 +544,7 @@ export default function AboutContent() {
                           <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
                             {item.year}
                           </span>
-                          <h3 className="text-[22px] leading-tight font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                          <h3 className="text-[22px] leading-tight font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                             {item.title}
                           </h3>
                           <span className="text-xs text-[var(--accent)] font-medium">
@@ -585,7 +585,7 @@ export default function AboutContent() {
                 <span className="text-xs font-mono text-[var(--muted-soft)] mb-4 block">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="text-base font-semibold text-white mb-3" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                <h3 className="text-base font-semibold text-[var(--foreground)] mb-3" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                   {item.title}
                 </h3>
                 <p className="text-sm text-[var(--muted)] leading-relaxed">
@@ -644,18 +644,24 @@ export default function AboutContent() {
           </div>
 
           {categories.length > 1 && (
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="flex flex-wrap items-center gap-2 mb-10">
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest border transition-all ${
-                    activeCategory === category
-                      ? "bg-[var(--accent)] text-black border-[var(--accent)]"
-                      : "border-[var(--border)] text-[var(--muted)] hover:text-white hover:border-[var(--border-hover)]"
-                  }`}
+                  className="relative px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-colors duration-200 focus-visible:outline-none"
+                  style={{
+                    color: activeCategory === category ? "var(--background)" : "var(--muted)",
+                  }}
                 >
-                  {category}
+                  {activeCategory === category && (
+                    <motion.span
+                      layoutId="activeCertCategory"
+                      className="absolute inset-0 bg-[var(--foreground)] rounded-full -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{category}</span>
                 </button>
               ))}
             </div>

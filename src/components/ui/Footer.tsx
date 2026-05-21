@@ -64,12 +64,12 @@ const Footer = () => {
   return (
     <footer className="relative overflow-hidden isolate bg-[var(--background)]">
       {/* Divider */}
-      <div className="border-t border-white/[0.05]" />
+      <div className="border-t border-[var(--border)]" />
 
       <div className="container relative z-10 max-w-7xl">
         {/* Top Section */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-white/[0.06]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-[var(--border)]"
           style={{ gap: '2rem', paddingTop: '3rem', paddingBottom: '3rem' }}
         >
 
@@ -83,7 +83,7 @@ const Footer = () => {
                 </span>
               </div>
               <div className="flex flex-col leading-none">
-                <span className="text-[16px] font-semibold text-white transition-colors duration-200 group-hover:text-white/80" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                <span className="text-[16px] font-semibold text-[var(--foreground)] transition-colors duration-200 group-hover:text-[var(--foreground)]/80" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                   Salah Uddin Kader
                 </span>
                 <span className="mt-1 text-[11px] text-[var(--muted-soft)]">
@@ -97,21 +97,21 @@ const Footer = () => {
             </p>
 
             <div className="flex flex-col gap-3">
-              <a href={`mailto:${settings?.email || "salahuddinkaderappy@gmail.com"}`} className="group/footer inline-flex items-center gap-3 text-[13px] text-[var(--muted)] transition-colors duration-200 hover:text-white">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.04]">
+              <a href={`mailto:${settings?.email || "salahuddinkaderappy@gmail.com"}`} className="group/footer inline-flex items-center gap-3 text-[13px] text-[var(--muted)] transition-colors duration-200 hover:text-[var(--foreground)]">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-2)]">
                   <Mail size={12} className="text-[var(--accent)]" />
                 </div>
                 {settings?.email || "salahuddinkaderappy@gmail.com"}
               </a>
               <div className="inline-flex items-center gap-3 text-[13px] text-[var(--muted)]">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.04]">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface-2)]">
                   <MapPin size={12} className="text-[var(--accent)]" />
                 </div>
                 {settings?.location || "Cox's Bazar, Bangladesh"}
               </div>
             </div>
 
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.04] px-3 py-1.5" style={{ padding: "10px" }}>
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5" style={{ padding: "10px" }}>
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-[11px] text-[var(--muted)] pr-4 pl-2 md:pl-4">Open to new projects</span>
             </div>
@@ -158,13 +158,13 @@ const Footer = () => {
                 Hire Me
               </p>
               <div
-                className="flex flex-col rounded-2xl border border-white/[0.07] bg-white/[0.03]"
+                className="flex flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/50 backdrop-blur-sm"
                 style={{ padding: '1.5rem', gap: '1rem' }}
               >
                 <p className="text-[13px] leading-relaxed text-[var(--muted)]">
                   Available for freelance projects, collaborations, and creative web work.
                 </p>
-                <Link href="/contact" className="group/cta inline-flex items-center gap-1.5 text-[13px] font-medium text-white transition-colors duration-200 hover:text-[var(--accent)]" style={{ gap: '0.375rem' }}>
+                <Link href="/contact" className="group/cta inline-flex items-center gap-1.5 text-[13px] font-medium text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)]" style={{ gap: '0.375rem' }}>
                   Start a project
                   <ArrowUpRight size={13} className="transition-transform duration-200 group-hover/cta:translate-x-[1px] group-hover/cta:-translate-y-[1px]" />
                 </Link>

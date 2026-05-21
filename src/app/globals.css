@@ -245,11 +245,11 @@ html[data-theme="light"] {
 
   border-radius: 50%;
 
-  color: var(--muted-soft);
+  color: var(--muted);
 
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--navbar-btn-bg);
 
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
 
   transition:
     background var(--duration-base) var(--ease-out),
@@ -259,11 +259,11 @@ html[data-theme="light"] {
 }
 
 .footer-social:hover {
-  color: white;
+  color: var(--foreground);
 
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--navbar-btn-hover-bg);
 
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-hover);
 
   transform: translateY(-2px);
 }
@@ -630,8 +630,8 @@ html[data-theme="light"] .section-shell::after {
 .skeleton {
   position: relative;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
 }
 
@@ -643,7 +643,7 @@ html[data-theme="light"] .section-shell::after {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.18),
+    var(--accent-soft),
     transparent
   );
   animation: skeleton-shimmer 1.6s infinite;
