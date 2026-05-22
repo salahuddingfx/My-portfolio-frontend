@@ -1560,11 +1560,6 @@ body:has(.is-404-page) footer {
   position: relative;
   align-items: flex-start;
 }
-@media screen and (min-width: 768px) {
-  .rotating-roles-container {
-    align-items: flex-end;
-  }
-}
 
 .landing-info h2 {
   margin: 0;

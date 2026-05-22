@@ -139,7 +139,7 @@ const Hero = () => {
           </div>
 
           {/* Right Side: Role */}
-          <div className="landing-info flex flex-col z-20 pointer-events-auto text-left md:text-right w-full md:w-5/12 justify-center">
+          <div className="landing-info flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12 justify-center">
             <h3>A Creative</h3>
             <RotatingRoles />
           </div>
