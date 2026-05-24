@@ -209,19 +209,22 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
             );
           }
 
-          gsap.to(track, {
-            x: () => -getTranslateX(),
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              pin: true,
-              scrub: true,
-              start: "top top",
-              end: () => `+=${getTranslateX()}`,
-              invalidateOnRefresh: true,
-              id: "work-trigger",
-            },
-          });
+          gsap.fromTo(track,
+            { x: 0 },
+            {
+              x: () => -getTranslateX(),
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                pin: true,
+                scrub: true,
+                start: "top top",
+                end: () => `+=${getTranslateX()}`,
+                invalidateOnRefresh: true,
+                id: "work-trigger",
+              },
+            }
+          );
 
           return;
         }

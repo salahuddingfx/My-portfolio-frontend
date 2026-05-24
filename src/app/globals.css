@@ -302,7 +302,7 @@ html[data-theme="light"] {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--background);
