@@ -42,11 +42,11 @@ const SocialSidebar = () => {
   const { settings } = useSettings();
 
   const socials = [
-    { name: "GitHub", href: settings?.socials.github, icon: GithubIcon },
-    { name: "LinkedIn", href: settings?.socials.linkedin, icon: LinkedinIcon },
-    { name: "Twitter", href: settings?.socials.twitter, icon: TwitterIcon },
-    { name: "Instagram", href: settings?.socials.instagram, icon: InstagramIcon },
-    { name: "Facebook", href: settings?.socials.facebook, icon: FacebookIcon },
+    { name: "GitHub", href: settings?.socials.github || "https://github.com/salahuddingfx", icon: GithubIcon },
+    { name: "LinkedIn", href: settings?.socials.linkedin || "https://linkedin.com/in/salahuddingfx", icon: LinkedinIcon },
+    { name: "Twitter", href: settings?.socials.twitter || "https://x.com/salahuddingfx", icon: TwitterIcon },
+    { name: "Instagram", href: settings?.socials.instagram || "https://instagram.com/salahuddingfx", icon: InstagramIcon },
+    { name: "Facebook", href: settings?.socials.facebook || "https://facebook.com/salahuddingfx", icon: FacebookIcon },
   ].filter(s => s.href && s.href !== "#" && s.href !== "");
 
   return (
@@ -66,7 +66,7 @@ const SocialSidebar = () => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.1 + i * 0.08 }}
-            className="text-[var(--muted-soft)] hover:text-white transition-colors duration-200 group relative"
+            className="text-[var(--muted-soft)] hover:text-[var(--foreground)] transition-colors duration-200 group relative"
             aria-label={social.name}
           >
             <social.icon className="w-[18px] h-[18px]" />

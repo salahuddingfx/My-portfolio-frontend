@@ -16,7 +16,7 @@ const EmailSidebar = () => {
     >
       <a
         href={`mailto:${email}`}
-        className="text-[11px] text-[var(--muted-soft)] hover:text-[var(--muted)] transition-colors duration-200 tracking-widest"
+        className="text-[11px] text-[var(--muted-soft)] hover:text-[var(--foreground)] transition-colors duration-200 tracking-widest"
         style={{ writingMode: "vertical-rl", fontFamily: "var(--font-jetbrains-mono)" }}
         aria-label="Send email"
       >

@@ -54,11 +54,11 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   const socials = [
-    { name: "GitHub", href: settings?.socials.github, icon: GithubIcon },
-    { name: "LinkedIn", href: settings?.socials.linkedin, icon: LinkedinIcon },
-    { name: "Twitter", href: settings?.socials.twitter, icon: TwitterIcon },
-    { name: "Instagram", href: settings?.socials.instagram, icon: InstagramIcon },
-    { name: "Facebook", href: settings?.socials.facebook, icon: FacebookIcon },
+    { name: "GitHub", href: settings?.socials.github || "https://github.com/salahuddingfx", icon: GithubIcon },
+    { name: "LinkedIn", href: settings?.socials.linkedin || "https://linkedin.com/in/salahuddingfx", icon: LinkedinIcon },
+    { name: "Twitter", href: settings?.socials.twitter || "https://x.com/salahuddingfx", icon: TwitterIcon },
+    { name: "Instagram", href: settings?.socials.instagram || "https://instagram.com/salahuddingfx", icon: InstagramIcon },
+    { name: "Facebook", href: settings?.socials.facebook || "https://facebook.com/salahuddingfx", icon: FacebookIcon },
   ].filter(s => s.href && s.href !== "#" && s.href !== "");
 
   return (
@@ -179,7 +179,7 @@ const Footer = () => {
           style={{ gap: '1.5rem', paddingTop: '1.5rem', paddingBottom: '3rem' }}
         >
           <p className="text-center text-[12px] text-[var(--muted-soft)]">
-            © {year} Salah Uddin Kader — All rights reserved.
+            © {year} Salah Uddin Kader (@salahuddingfx) — All rights reserved.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-[12px] text-[var(--muted-soft)]">

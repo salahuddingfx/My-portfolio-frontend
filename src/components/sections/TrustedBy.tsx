@@ -86,7 +86,7 @@ export default function TrustedBy() {
                     sizes="32px"
                   />
                 </div>
-                <span className="text-xs font-bold text-[var(--muted)] group-hover:text-white transition-colors whitespace-nowrap tracking-wide">
+                <span className="text-xs font-bold text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors whitespace-nowrap tracking-wide">
                   {partner.name}
                 </span>
               </div>

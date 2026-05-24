@@ -228,7 +228,20 @@ export default function NotFoundClient() {
   };
 
   return (
-    <section className="is-404-page min-h-screen w-full bg-[var(--background)] flex items-center justify-center relative overflow-hidden font-mono selection:bg-[var(--accent)]/30 selection:text-white py-24 px-4 sm:px-6 lg:px-8">
+    <section 
+      className="is-404-page min-h-screen w-full bg-[#080808] flex items-center justify-center relative overflow-hidden font-mono selection:bg-[var(--accent)]/30 selection:text-white py-24 px-4 sm:px-6 lg:px-8"
+      style={{
+        colorScheme: "dark",
+        ["--background" as any]: "#080808",
+        ["--surface" as any]: "#111111",
+        ["--surface-2" as any]: "#181818",
+        ["--foreground" as any]: "#f2f2f2",
+        ["--muted" as any]: "#888888",
+        ["--muted-soft" as any]: "#777777",
+        ["--border" as any]: "rgba(255, 255, 255, 0.07)",
+        ["--border-hover" as any]: "rgba(255, 255, 255, 0.14)",
+      }}
+    >
       {/* Canvas Matrix Code Rain Background */}
       {matrixActive && <MatrixRain active={matrixActive} />}
 

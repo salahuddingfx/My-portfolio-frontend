@@ -60,6 +60,7 @@ export default function IntroLoader() {
       const timer = setTimeout(() => {
         setLoading(false);
         sessionStorage.setItem("introLoaded", "true");
+        window.dispatchEvent(new Event("intro-loader-finished"));
       }, 900);
       return () => clearTimeout(timer);
     }

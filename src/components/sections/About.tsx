@@ -49,7 +49,7 @@ const About = () => {
 
             <div className="space-y-6">
               <p className="text-[var(--foreground)] text-xl md:text-2xl font-medium leading-relaxed opacity-90">
-                {settings?.bio || "I'm Salah Uddin Kader, a Full Stack Developer based in Cox's Bazar, Bangladesh."}
+                {settings?.bio || "I'm Salah Uddin Kader (salahuddingfx), a Full Stack Developer based in Cox's Bazar, Bangladesh."}
               </p>
               <p className="text-[var(--muted)] text-lg leading-relaxed max-w-2xl">
                 {settings?.aboutText || "I care about the details — from the architecture of a system to the feel of an interaction. Good software should be reliable, understandable, and a pleasure to use."}

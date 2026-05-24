@@ -45,7 +45,7 @@ const RotatingRoles = () => {
         <div className="landing-h2-1">{currentRole}</div>
         <div className="landing-h2-2">{nextRole}</div>
       </h2>
-      <h2>
+      <h2 className="text-stroke">
         <div className="landing-h2-info">{nextRole}</div>
         <div className="landing-h2-info-1">{currentRole}</div>
       </h2>
@@ -55,6 +55,19 @@ const RotatingRoles = () => {
 
 const Hero = () => {
   const { settings } = useSettings();
+  const [isLoaderFinished, setIsLoaderFinished] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (sessionStorage.getItem("introLoaded") === "true") {
+        setIsLoaderFinished(true);
+      } else {
+        const handleFinished = () => setIsLoaderFinished(true);
+        window.addEventListener("intro-loader-finished", handleFinished);
+        return () => window.removeEventListener("intro-loader-finished", handleFinished);
+      }
+    }
+  }, []);
 
   return (
     <section
@@ -79,10 +92,12 @@ const Hero = () => {
 
         {/* 3D Spline Scene rendered on all devices; enable pointer events on larger screens */}
         <div className="absolute inset-0 w-full h-full pointer-events-none md:pointer-events-auto z-10 flex items-center justify-center">
-          <SplineScene
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full opacity-100 transition-opacity duration-1000 scale-[1.2] md:scale-100"
-          />
+          {isLoaderFinished && (
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full opacity-100 transition-opacity duration-1000 scale-[1.2] md:scale-100"
+            />
+          )}
         </div>
 
         {/* Radial vignette so the center stays clear but edges fade to background */}
@@ -101,7 +116,7 @@ const Hero = () => {
             <div className="flex items-center gap-3 mb-6">
               <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse" />
               <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest">
-                Available for work
+                Available for work | @salahuddingfx
               </span>
             </div>
 
