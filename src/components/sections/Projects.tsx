@@ -163,17 +163,9 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
           const getTranslateX = () => {
             const boxes = track.querySelectorAll(".work-box");
             if (boxes.length === 0) return 0;
-            const container = section.querySelector(".work-container");
-            if (!container) return 0;
-            
-            const rectLeft = container.getBoundingClientRect().left;
-            const rect = boxes[0].getBoundingClientRect();
-            const parentWidth = boxes[0].parentElement?.getBoundingClientRect().width ?? window.innerWidth;
-            const computedStyle = window.getComputedStyle(boxes[0]);
-            const padding = (parseInt(computedStyle.paddingLeft || "0") || parseInt(computedStyle.padding || "0")) / 2;
-            
-            const calculated = rect.width * boxes.length - (rectLeft + parentWidth) + padding;
-            return Math.max(calculated, 0);
+            const trackWidth = track.scrollWidth;
+            const viewportWidth = window.innerWidth;
+            return Math.max(trackWidth - viewportWidth, 0);
           };
 
           // Animate title entrance
