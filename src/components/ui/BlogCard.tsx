@@ -23,8 +23,10 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="group overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-md transition-all duration-300 hover:border-[var(--accent)]/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_var(--accent-soft)]"
+      className="group overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-md transition-all duration-300 hover:border-[var(--accent)]/30 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-20px_rgba(168,85,247,0.25)] relative"
     >
+      {/* Top Border Glow Line */}
+      <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center z-10" />
       <Link
         href={`/blog/${slug}`}
         className="flex flex-col md:flex-row h-full"

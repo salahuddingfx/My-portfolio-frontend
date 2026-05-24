@@ -680,10 +680,12 @@ export default function AboutContent() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCertificates.map((cert) => (
-                <div
+                 <div
                   key={cert._id || `${cert.title}-${cert.issuer}`}
-                  className="group relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)]"
+                  className="group relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] transition-all duration-300 hover:border-[var(--accent)]/30 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-20px_rgba(168,85,247,0.25)]"
                 >
+                  {/* Top Border Glow Line */}
+                  <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center z-20" />
                   <div className="relative aspect-[4/3]">
                     <Image
                       src={cert.image}

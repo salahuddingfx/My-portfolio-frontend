@@ -81,12 +81,16 @@ const Services = () => {
                 className="card card-hover group flex flex-col h-full"
               >
                 {/* Number + Icon */}
-                <span className="text-xs font-mono text-[var(--muted-soft)] mb-5 flex items-center gap-3">
-                  {String(i + 1).padStart(2, "0")}
+                <div className="flex items-center justify-between mb-6 w-full">
+                  <span className="text-xs font-mono text-[var(--muted-soft)] tracking-widest">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   {service.icon && (
-                    <span className="text-lg">{service.icon}</span>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--surface-2)] border border-[var(--border)] group-hover:border-[var(--accent)]/50 group-hover:bg-[var(--accent)]/10 text-xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                      {service.icon}
+                    </div>
                   )}
-                </span>
+                </div>
 
                 {/* Title */}
                 <h3
@@ -112,7 +116,10 @@ const Services = () => {
                 {service.tags && service.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-8">
                     {service.tags.map((t) => (
-                      <span key={t} className="badge group-hover:border-[var(--border-hover)] group-hover:text-[var(--foreground)]/60 transition-colors duration-200">
+                      <span
+                        key={t}
+                        className="badge bg-[var(--surface-2)] border-[var(--border)] text-[var(--muted)] group-hover:border-[var(--accent)]/30 group-hover:text-[var(--accent)] group-hover:bg-[var(--accent-soft)] transition-all duration-300 text-[10px] tracking-wider uppercase font-mono px-2.5 py-1"
+                      >
                         {t}
                       </span>
                     ))}
@@ -124,13 +131,12 @@ const Services = () => {
                   <Link
                     href="/services"
                     aria-label={`Learn more about ${service.title}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200 group/link"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors duration-300 group/link"
                   >
-                    Learn more about {service.title}
+                    <span>Learn more about {service.title}</span>
                     <ArrowUpRight
-                      size={13}
-                      aria-hidden="true"
-                      className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200"
+                      size={14}
+                      className="text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300"
                     />
                   </Link>
                 </div>
