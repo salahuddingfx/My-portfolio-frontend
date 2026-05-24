@@ -1956,9 +1956,15 @@ h2.landing-info-h2 {
   align-items: center;
   column-gap: 10px;
   text-align: center;
-  transition: 1s;
+  transition: opacity 0.5s ease, transform 0.5s ease;
   max-width: var(--Lsize);
   color: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+.loading-complete .loading-content2 {
+  opacity: 1;
+  pointer-events: auto;
 }
 .loading-clicked .loading-content2 {
   opacity: 0;
@@ -2012,14 +2018,17 @@ h2.landing-info-h2 {
   width: fit-content;
   max-width: var(--Lsize);
   top: 50%;
-  transition: 1s;
-  left: 50px;
+  transition: opacity 0.5s ease, max-width 0.5s ease, transform 0.5s ease;
+  left: 50%;
   z-index: 9;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
+  opacity: 1;
 }
 
 .loading-complete .loading-container {
   max-width: 0px;
+  opacity: 0;
+  pointer-events: none;
 }
 .loading-header {
   width: var(--cWidth);
@@ -2126,14 +2135,14 @@ h2.landing-info-h2 {
   left: 0;
   width: 100%;
   transform: translateY(-50%);
-  color: var(--background);
+  color: var(--foreground);
   font-size: 60px;
   font-weight: 600;
   text-transform: uppercase;
-  opacity: 0.05;
+  opacity: 0.06;
 }
 html[data-theme="light"] .loading-marquee {
-  opacity: 0.15;
+  opacity: 0.08;
 }
 .loading-marquee span {
   padding: 0px 50px;
@@ -2143,7 +2152,7 @@ html[data-theme="light"] .loading-marquee {
   content: "";
   width: 20px;
   height: 20px;
-  background-color: var(--background);
+  background-color: var(--accent);
   position: absolute;
   top: 50%;
   border-radius: 50px;
