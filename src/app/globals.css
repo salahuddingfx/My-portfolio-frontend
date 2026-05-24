@@ -2215,3 +2215,56 @@ html[data-theme="light"] .loading-marquee {
     font-size: 18px;
   }
 }
+
+/* =============================================================================
+   DEDICATED PROJECTS PAGE REDESIGN STYLES
+   ============================================================================= */
+
+.projects-page-hero {
+  position: relative;
+  background-image: 
+    linear-gradient(var(--grid-color) 1px, transparent 1px), 
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 100px 100px;
+  background-position: center top;
+}
+
+.project-grid-card {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, border-color, background-color;
+}
+
+.project-grid-card:hover {
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 40px rgba(147, 51, 234, 0.05); /* subtle accent glow */
+  transform: translateY(-4px);
+}
+
+.dark .project-grid-card {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dark .project-grid-card:hover {
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 50px rgba(168, 85, 247, 0.07);
+}
+
+.project-card-wrapper {
+  transition: transform 0.4s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Scroll adjustments to prevent clipping */
+.projects-grid-container {
+  overflow: visible !important;
+}
+
+@media (max-width: 767px) {
+  .project-card-wrapper {
+    transform: none !important; /* disable staggered offset on mobile */
+  }
+}
