@@ -330,8 +330,8 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                     {project.desc}
                   </p>
 
-                  {liveLink && (
-                    <div className="pt-8">
+                  <div className="flex flex-wrap gap-4 pt-8">
+                    {liveLink && (
                       <a
                         href={liveLink}
                         target="_blank"
@@ -341,8 +341,18 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                         <span>Live Preview</span>
                         <ArrowUpRight size={14} />
                       </a>
-                    </div>
-                  )}
+                    )}
+                    {project.links?.source && project.links.source !== "#" && (
+                      <a
+                        href={project.links.source}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-secondary"
+                      >
+                        <span>Source Code</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -386,10 +396,33 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
             <h4 className="text-[var(--foreground)] font-semibold mb-1">Tools and features</h4>
             <p className="text-[var(--muted)]">{tools}</p>
             {project.desc && (
-              <p className="mt-4 text-xs text-[var(--muted)] leading-relaxed line-clamp-3">
+              <p className="mt-4 text-xs text-[var(--muted)] leading-relaxed line-clamp-3 font-normal">
                 {project.desc}
               </p>
             )}
+            <div className="flex flex-wrap gap-3 mt-6">
+              {liveLink && (
+                <a
+                  href={liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary !py-2.5 !px-4 !text-[10px]"
+                >
+                  <span>Live Preview</span>
+                  <ArrowUpRight size={12} />
+                </a>
+              )}
+              {project.links?.source && project.links.source !== "#" && (
+                <a
+                  href={project.links.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary !py-2.5 !px-4 !text-[10px]"
+                >
+                  <span>Source Code</span>
+                </a>
+              )}
+            </div>
           </div>
           <WorkImage image={project.image} alt={project.title} liveLink={liveLink} />
         </div>
