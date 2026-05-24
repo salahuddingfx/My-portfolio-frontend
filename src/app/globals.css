@@ -1181,6 +1181,8 @@ body:has(.is-404-page) footer {
   background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 120px 120px;
   background-position: center;
+  position: relative;
+  z-index: 2;
 }
 .work-container {
   margin: auto;
@@ -1951,7 +1953,7 @@ h2.landing-info-h2 {
   text-transform: uppercase;
   width: var(--Lsize);
   overflow: hidden;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   column-gap: 10px;
@@ -1963,6 +1965,7 @@ h2.landing-info-h2 {
   pointer-events: none;
 }
 .loading-complete .loading-content2 {
+  display: flex;
   opacity: 1;
   pointer-events: auto;
 }
@@ -2029,6 +2032,7 @@ h2.landing-info-h2 {
   max-width: 0px;
   opacity: 0;
   pointer-events: none;
+  display: none;
 }
 .loading-header {
   width: var(--cWidth);
@@ -2193,9 +2197,6 @@ html[data-theme="light"] .loading-marquee {
   .loading-button {
     padding: 30px 70px;
     font-size: 25px;
-  }
-  .loading-container {
-    left: 70px;
   }
   .loading-marquee {
     font-size: 100px;
