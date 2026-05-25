@@ -1883,7 +1883,7 @@ h2.landing-info-h2 {
 }
 
 .loading-wrap {
-  --Lsize: 240px;
+  --Lsize: 260px;
   padding: 6px;
   position: relative;
   min-width: 0px;
@@ -2189,7 +2189,7 @@ html[data-theme="light"] .loading-marquee {
 
 @media only screen and (min-width: 1400px) {
   .loading-wrap {
-    --Lsize: 210px;
+    --Lsize: 400px;
   }
   .loading-button {
     padding: 30px 70px;
