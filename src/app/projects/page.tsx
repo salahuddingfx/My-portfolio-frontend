@@ -2,15 +2,45 @@ import type { Metadata } from "next";
 import ProjectsPageClient from "./ProjectsPageClient";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Projects — Salah Uddin Kader (Saka Chowdhury)",
   description:
-    "Explore projects by Salah Uddin Kader (salahuddingfx) — Full Stack Developer from Cox's Bazar, Bangladesh. Web apps built with Next.js, React, TypeScript, and more.",
+    "Explore the creative work and digital systems portfolio of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx). Featuring Next.js applications, GSAP web animations, and Three.js 3D web experiences.",
+  alternates: {
+    canonical: "/projects",
+  },
   openGraph: {
-    title: "Projects | Salah Uddin Kader",
-    description: "Full Stack Developer portfolio projects from Cox's Bazar, Bangladesh.",
+    title: "Projects | Salah Uddin Kader (Saka Chowdhury)",
+    description: "Explore portfolio works by Saka Chowdhury (Salah Uddin Kader) — Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh.",
   },
 };
 
 export default function ProjectsPage() {
-  return <ProjectsPageClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://salahuddin.codes"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Projects",
+                "item": "https://salahuddin.codes/projects"
+              }
+            ]
+          })
+        }}
+      />
+      <ProjectsPageClient />
+    </>
+  );
 }

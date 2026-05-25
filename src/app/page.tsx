@@ -8,13 +8,22 @@ import Testimonials from "@/components/sections/Testimonials";
 import ContactCTA from "@/components/sections/ContactCTA";
 
 export const metadata: Metadata = {
-  title: "Salah Uddin Kader — Full Stack Developer from Cox's Bazar",
+  title: "Salah Uddin Kader (Saka Chowdhury) — Creative Developer & Frontend Engineer",
   description:
-    "Portfolio of Salah Uddin Kader (salahuddingfx) — Full Stack Developer from Cox's Bazar, Chittagong, Bangladesh. Specializing in MERN, Next.js, React, TypeScript, Node.js, Python, Django, PHP, Laravel, and MySQL for local, nationwide, and global clients.",
+    "Portfolio of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), a Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh. Immersive web apps using Next.js, React, GSAP, and Three.js.",
   keywords: [
     "Salah Uddin Kader",
+    "Saka Chowdhury",
     "salahuddingfx",
+    "Frontend Developer Bangladesh",
+    "Creative Developer Bangladesh",
+    "Next.js Developer",
+    "GSAP Developer",
+    "Three.js Portfolio",
+    "Interactive Web Developer",
+    "Modern Web Designer",
     "Full Stack Developer Bangladesh",
+    "Creative Frontend Engineer",
     "Cox's Bazar developer",
     "Cox's Bazar MERN developer",
     "Cox's Bazar backend developer",
@@ -46,11 +55,11 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Salah Uddin Kader — Full Stack Developer from Cox's Bazar",
+    title: "Salah Uddin Kader (Saka Chowdhury) — Creative Developer & Frontend Engineer",
     description:
-      "Full Stack Developer from Cox's Bazar, Bangladesh. Specializing in MERN, Next.js, React, TypeScript, Node.js, Python, Django, PHP, Laravel, and MySQL for local, nationwide, and global clients.",
+      "Portfolio of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), a Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh. Immersive web apps using Next.js, React, GSAP, and Three.js.",
     url: "https://salahuddin.codes",
-    siteName: "Salah Uddin Kader",
+    siteName: "Salah Uddin Kader (Saka Chowdhury)",
     images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
@@ -60,6 +69,23 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://salahuddin.codes"
+              }
+            ]
+          })
+        }}
+      />
       <Hero />
       <About />
       <TechStack />

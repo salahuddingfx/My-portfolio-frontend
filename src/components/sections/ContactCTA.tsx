@@ -23,9 +23,9 @@ const ContactCTA = () => {
             Got a project in mind?
           </h2>
           <p className="text-sm text-[var(--muted)] leading-relaxed max-w-md mb-10">
-            I&apos;m currently open to selected projects, collaborations, and
-            interesting opportunities. If you have something in mind, I&apos;d
-            love to hear about it.
+            I&apos;m currently open to selected freelance projects, client collaborations, and
+            agency contracts. If you have a project in mind for a creative developer, I&apos;d
+            love to connect.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">

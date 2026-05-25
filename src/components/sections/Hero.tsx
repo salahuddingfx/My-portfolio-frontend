@@ -131,7 +131,7 @@ const Hero = () => {
             <div className="mt-8 space-y-6">
               {/* Description */}
               <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm">
-                {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design."}
+                {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design. Known online as Saka Chowdhury (@salahuddingfx), I collaborate with clients worldwide from Cox's Bazar, Bangladesh."}
               </p>
 
               {/* Actions */}

@@ -2,16 +2,46 @@ import type { Metadata } from "next";
 import AboutContent from "./AboutContent";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About — Salah Uddin Kader (Saka Chowdhury)",
   description:
-    "Learn about Salah Uddin Kader (salahuddingfx) — Full Stack Developer from Cox's Bazar, Chittagong, Bangladesh. Experience, skills, certificates, and philosophy.",
+    "Discover the professional journey, technical expertise, and creative philosophy of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), an elite Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh.",
+  alternates: {
+    canonical: "/about",
+  },
   openGraph: {
-    title: "About | Salah Uddin Kader",
-    description: "Full Stack Developer from Cox's Bazar, Bangladesh — experience, skills, and more.",
+    title: "About | Salah Uddin Kader (Saka Chowdhury)",
+    description: "Learn about Saka Chowdhury (Salah Uddin Kader) — Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh. Profile, experience, and tech stack.",
     images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
   },
 };
 
 export default function AboutPage() {
-  return <AboutContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://salahuddin.codes"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://salahuddin.codes/about"
+              }
+            ]
+          })
+        }}
+      />
+      <AboutContent />
+    </>
+  );
 }
