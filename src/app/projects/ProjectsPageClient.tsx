@@ -359,6 +359,7 @@ const ProjectsPageClient = () => {
                           src={project.image}
                           alt={project.title}
                           fill
+                          priority={index < 2}
                           sizes="(max-width: 1024px) 100vw, 40vw"
                           className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-[1.03]"
                         />
