@@ -580,54 +580,7 @@ html[data-theme="light"] .section-shell::after {
    TESTIMONIALS MARQUEE
    ============================================================================= */
 
-.testimonials-marquee {
-  position: relative;
-  overflow: hidden;
-  margin-top: 2.5rem;
-  padding-bottom: 1.5rem;
-  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-}
-
-.testimonials-track {
-  display: flex;
-  gap: 1.25rem;
-  width: max-content;
-  animation: testimonials-marquee var(--marquee-duration, 32s) linear infinite;
-  will-change: transform;
-}
-
-.testimonials-track.skeleton-track {
-  animation: none;
-}
-
-.testimonials-marquee:hover .testimonials-track {
-  animation-play-state: paused;
-}
-
-.testimonial-card {
-  flex: 0 0 clamp(260px, 38vw, 360px);
-}
-
-@media (min-width: 1024px) {
-  .testimonial-card {
-    flex: 0 0 420px;
-  }
-}
-
-@keyframes testimonials-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .testimonials-track {
-    animation: none;
-  }
-}
+/* Removed Old Testimonials Marquee system in favor of interactive slider */
 
 /* =============================================================================
    PROJECTS PAGE SPACING
@@ -1338,13 +1291,43 @@ body:has(.is-404-page) footer {
   }
 }
 @media only screen and (max-width: 1024px) {
-  .work-box {
-    width: 350px;
-    padding: 30px;
+  .work-section {
+    height: auto !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+  }
+  .work-container {
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+    padding-inline: var(--container-pad) !important;
+    align-content: normal !important;
+  }
+  .work-container::-webkit-scrollbar {
+    display: none !important;
   }
   .work-flex {
-    margin-left: -30px;
-    padding-right: 45px;
+    margin-left: 0 !important;
+    padding-right: 0 !important;
+    width: max-content !important;
+    display: flex !important;
+    height: auto !important;
+  }
+  .work-box {
+    width: 85vw !important;
+    max-width: 420px !important;
+    padding: 30px !important;
+    border-right: 1px solid var(--border) !important;
+    gap: 30px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .work-section h2 {
+    font-size: 36px !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
   }
 }
 
@@ -1352,20 +1335,8 @@ body:has(.is-404-page) footer {
   .work-image img {
     max-height: 200px;
   }
-  .work-section h2 {
-    font-size: 40px;
-    margin-bottom: 20px;
-  }
   .work-box {
-    gap: 20px;
-  }
-}
-@media only screen and (max-width: 1025px) {
-  .work-container {
-    align-content: normal;
-  }
-  .work-flex {
-    height: auto;
+    gap: 20px !important;
   }
 }
 
@@ -1392,11 +1363,18 @@ body:has(.is-404-page) footer {
   }
 }
 .landing-container {
-  width: var(--cWidth);
+  width: 100%;
+  padding-inline: var(--container-pad);
   margin: auto;
   height: 100%;
   position: relative;
   max-width: var(--cMaxWidth);
+}
+@media screen and (min-width: 1025px) {
+  .landing-container {
+    width: var(--cWidth);
+    padding-inline: 0;
+  }
 }
 .landing-circle1 {
   top: 0%;
@@ -1595,7 +1573,7 @@ body:has(.is-404-page) footer {
 
 .landing-info h2 {
   margin: 0;
-  margin-top: -20px;
+  margin-top: 0;
   margin-left: 20px;
   font-family: "Geist", sans-serif;
   font-weight: 600;
@@ -1632,22 +1610,6 @@ h2.landing-info-h2 {
 .landing-h2-2 {
   position: absolute;
   top: 0;
-}
-
-.landing-info-h2::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 120%;
-  z-index: 3;
-  background-image: linear-gradient(
-    0deg,
-    var(--background) 40%,
-    rgba(0, 0, 0, 0) 110%
-  );
-  top: 0;
-  left: 0;
-  pointer-events: none;
 }
 
 .landing-h2-1,

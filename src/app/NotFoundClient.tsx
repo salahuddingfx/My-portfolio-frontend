@@ -257,12 +257,12 @@ export default function NotFoundClient() {
       />
 
       {/* Top Header Controls / Safe Return */}
-      <div className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] w-full p-6 md:p-10 flex justify-between items-start pointer-events-none">
-        <div className="flex flex-col gap-1 pointer-events-auto">
-          <Link href="/" className="inline-flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center group-hover:border-[var(--accent)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+      <div className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] w-full py-4 px-6 md:px-10 flex justify-between items-center bg-[#080808]/80 backdrop-blur-md border-b border-white/5">
+        <div className="flex items-center">
+          <Link href="/" className="inline-flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center group-hover:border-[var(--accent)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]">
               <ArrowRight
-                size={16}
+                size={14}
                 className="text-white group-hover:text-[var(--accent)] rotate-180 transition-colors"
               />
             </div>
@@ -271,13 +271,13 @@ export default function NotFoundClient() {
             </span>
           </Link>
         </div>
-        <div className="flex items-center gap-2 text-red-500 text-[10px] md:text-xs uppercase tracking-[0.2em] font-black animate-pulse pointer-events-auto">
-          <ShieldAlert size={16} />
+        <div className="flex items-center gap-2 text-red-500 text-[10px] md:text-xs uppercase tracking-[0.2em] font-black animate-pulse">
+          <ShieldAlert size={14} />
           <span>Sector Offline</span>
         </div>
       </div>
 
-      <div className="relative z-[var(--z-card)] w-full max-w-7xl mx-auto flex flex-col pt-20 pb-10">
+      <div className="relative z-[var(--z-card)] w-full max-w-7xl mx-auto flex flex-col pt-32 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-stretch">
           {/* Left Column: Diagnostics & Info */}
           <div className="lg:col-span-4 flex flex-col justify-between gap-8 h-full">
@@ -308,8 +308,8 @@ export default function NotFoundClient() {
                 Diagnostic Report
               </div>
 
-              <div className="space-y-3.5">
-                <div className="flex items-center justify-between py-2 border-b border-white/[0.03]">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between py-3 border-b border-white/[0.03]">
                   <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">
                     <Activity size={14} className="text-red-500 shrink-0" />
                     <span>Status</span>
@@ -317,7 +317,7 @@ export default function NotFoundClient() {
                   <span className="text-[10px] text-red-500 font-black animate-pulse">CRITICAL</span>
                 </div>
 
-                <div className="flex items-center justify-between py-2 border-b border-white/[0.03]">
+                <div className="flex items-center justify-between py-3 border-b border-white/[0.03]">
                   <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">
                     <HardDrive size={14} className="text-[var(--accent)] shrink-0" />
                     <span>Location</span>
@@ -325,7 +325,7 @@ export default function NotFoundClient() {
                   <span className="text-[10px] text-white font-bold uppercase">Sector 404-G</span>
                 </div>
 
-                <div className="flex items-center justify-between py-2 border-b border-white/[0.03]">
+                <div className="flex items-center justify-between py-3 border-b border-white/[0.03]">
                   <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">
                     <Cpu size={14} className="text-[var(--accent)] shrink-0" />
                     <span>Protocol</span>
@@ -333,7 +333,7 @@ export default function NotFoundClient() {
                   <span className="text-[10px] text-white font-bold uppercase">HTTPS/RESEND</span>
                 </div>
 
-                <div className="flex items-center justify-between py-2 border-b border-white/[0.03]">
+                <div className="flex items-center justify-between py-3 border-b border-white/[0.03]">
                   <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">
                     <Wifi size={14} className="text-emerald-400 shrink-0" />
                     <span>Connection</span>
@@ -341,7 +341,7 @@ export default function NotFoundClient() {
                   <span className="text-[10px] text-emerald-400 font-bold uppercase">SECURE 443</span>
                 </div>
 
-                <div className="flex items-center justify-between py-2">
+                <div className="flex items-center justify-between py-3">
                   <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">
                     <Activity size={14} className="text-yellow-500 shrink-0" />
                     <span>Uptime</span>
@@ -405,7 +405,7 @@ export default function NotFoundClient() {
                         ? "text-yellow-400 italic"
                         : line.type === "input"
                         ? "text-white font-black"
-                        : "text-[var(--muted)] opacity-75"
+                        : "text-zinc-400"
                     }`}
                   >
                     {line.text}
@@ -433,7 +433,7 @@ export default function NotFoundClient() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="awaiting recovery command..."
-                  className="flex-1 bg-transparent text-white font-mono text-xs md:text-sm placeholder-white/10 select-all !border-0 !outline-none !ring-0 !shadow-none !p-0 !m-0"
+                  className="flex-1 bg-transparent text-white font-mono text-xs md:text-sm placeholder-white/35 select-all !border-0 !outline-none !ring-0 !shadow-none !p-0 !m-0"
                   style={{
                     border: "none",
                     outline: "none",

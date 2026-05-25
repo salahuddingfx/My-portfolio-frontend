@@ -257,27 +257,27 @@ export default function BlogContent() {
           {/* Search Input */}
           <div className="relative flex items-center w-full md:w-72 group">
             <Search 
-              size={14} 
-              className="absolute left-3.5 text-[var(--muted-soft)] group-focus-within:text-[var(--accent)] transition-colors duration-200 pointer-events-none" 
+              size={15} 
+              className="absolute left-4 text-[var(--muted-soft)] group-focus-within:text-[var(--accent)] transition-colors duration-200 pointer-events-none" 
             />
             <input
               type="text"
               placeholder="Search articles... (Press '/' to focus)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-md)] py-2.5 text-xs text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-soft)] transition-all duration-300 shadow-sm"
-              style={{ paddingLeft: "38px", paddingRight: "50px" }}
+              className="w-full bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-lg)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-soft)] transition-all duration-300 shadow-sm"
+              style={{ paddingLeft: "42px", paddingRight: "54px", paddingTop: "12px", paddingBottom: "12px" }}
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-9 p-1 rounded-full text-[var(--muted-soft)] hover:text-[var(--foreground)] hover:bg-[var(--border)] transition-colors"
+                className="absolute right-10 p-1 rounded-full text-[var(--muted-soft)] hover:text-[var(--foreground)] hover:bg-[var(--border)] transition-colors"
                 title="Clear search"
               >
                 <X size={10} />
               </button>
             )}
-            <span className="absolute right-3 px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--surface-2)] text-[9px] font-mono text-[var(--muted-soft)] tracking-wider pointer-events-none group-focus-within:opacity-0 transition-opacity">
+            <span className="absolute right-4 px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--surface-2)] text-[9px] font-mono text-[var(--muted-soft)] tracking-wider pointer-events-none group-focus-within:opacity-0 transition-opacity">
               /
             </span>
           </div>

@@ -124,7 +124,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
     return ["All", ...Array.from(new Set(list))];
   }, [projects]);
 
-  const effectiveLayout = layout === "horizontal" && !isCompact ? "horizontal" : "stacked";
+  const effectiveLayout = layout;
 
   const displayProjects = useMemo(() => {
     if (effectiveLayout === "horizontal") {
@@ -159,6 +159,8 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
           const section = sectionRef.current;
           const track = trackRef.current;
           if (!section || !track) return;
+
+          if (isCompact) return;
 
           const getTranslateX = () => {
             const boxes = track.querySelectorAll(".work-box");

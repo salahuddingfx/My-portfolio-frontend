@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const FALLBACK_REVIEWS = [
   {
@@ -9,40 +11,72 @@ const FALLBACK_REVIEWS = [
     role: "CTO at TechFlow",
     text: "Salah didn't just build our platform — he genuinely understood the problem. The attention to interaction detail was extraordinary, and the result boosted our conversion by 40%.",
     avatar: "https://i.pravatar.cc/150?u=alex",
+    rating: 5,
   },
   {
     name: "Sarah Chen",
     role: "Product Manager at Nexus",
     text: "The level of craft Salah brings to his work is rare. He asks the right questions, communicates clearly, and delivers something that actually exceeds expectations. I'd work with him again without hesitation.",
     avatar: "https://i.pravatar.cc/150?u=sarah",
+    rating: 5,
   },
   {
     name: "Marcus Thorne",
     role: "Founder at S-Corp",
     text: "Reliable, strategic, and technically brilliant. Salah's ability to simplify complex problems while keeping the UI clean and premium is genuinely rare. An invaluable partner.",
     avatar: "https://i.pravatar.cc/150?u=marcus",
+    rating: 5,
   },
 ];
 
 const Stars = ({ rating = 5 }: { rating?: number }) => (
   <div
-    className="flex gap-0.5"
+    className="flex gap-1 justify-center"
     role="img"
     aria-label={`${rating} out of 5 stars`}
   >
     {[...Array(5)].map((_, i) => (
-      <svg key={i} className={`w-3.5 h-3.5 ${i < rating ? 'text-[var(--accent)]' : 'text-[var(--foreground)] opacity-20'}`} fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-      </svg>
+      <Star
+        key={i}
+        size={16}
+        className={i < rating ? "text-[var(--accent)] fill-[var(--accent)]" : "text-[var(--muted-soft)]"}
+      />
     ))}
   </div>
 );
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 120 : -120,
+    opacity: 0,
+    scale: 0.96,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.45,
+      ease: [0.25, 0.46, 0.45, 0.94] as any,
+    },
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? 120 : -120,
+    opacity: 0,
+    scale: 0.96,
+    transition: {
+      duration: 0.35,
+      ease: [0.25, 0.46, 0.45, 0.94] as any,
+    },
+  }),
+};
+
 const Testimonials = () => {
   const [reviews, setReviews] = useState<typeof FALLBACK_REVIEWS>(FALLBACK_REVIEWS);
   const [loading, setLoading] = useState(true);
-  const marqueeReviews = reviews.length > 0 ? [...reviews, ...reviews] : reviews;
-  const skeletonItems = Array.from({ length: 3 }, (_, i) => i);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const [isAutoplay, setIsAutoplay] = useState(true);
 
   useEffect(() => {
     const fetch_ = async () => {
@@ -59,98 +93,157 @@ const Testimonials = () => {
         /* use fallback */
       } finally {
         setLoading(false);
-        setTimeout(() => {
-          if (typeof window !== "undefined") {
-            import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-              ScrollTrigger.refresh();
-            });
-          }
-        }, 100);
       }
     };
     fetch_();
   }, []);
 
-  return (
-    <section id="reviews" className="section-shell bg-[var(--background)] !pb-12 md:!pb-16">
-      <div className="container">
+  // Autoplay Logic
+  useEffect(() => {
+    if (!isAutoplay || reviews.length <= 1 || loading) return;
+    const interval = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isAutoplay, reviews.length, loading]);
 
+  const handlePrev = () => {
+    setIsAutoplay(false);
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setIsAutoplay(false);
+    setDirection(1);
+    setCurrentIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+  };
+
+  const currentReview = reviews[currentIndex];
+
+  return (
+    <section 
+      id="reviews" 
+      className="section-shell bg-[var(--background)] !pb-20 md:!pb-28 overflow-hidden text-[var(--foreground)]"
+      onMouseEnter={() => setIsAutoplay(false)}
+      onMouseLeave={() => setIsAutoplay(true)}
+    >
+      <div className="container relative z-10">
+        
         {/* Header */}
-        <div className="text-center max-w-lg mx-auto mb-14">
+        <div className="text-center max-w-lg mx-auto mb-16">
           <span className="section-eyebrow">Kind words</span>
           <h2 className="section-heading mt-1">
             What clients say.
           </h2>
         </div>
 
-        {/* Auto-scroll marquee */}
-        {!loading && reviews.length > 0 && (
-          <div className="testimonials-marquee">
-            <div className="testimonials-track" style={{ "--marquee-duration": `${Math.max(24, reviews.length * 8)}s` } as React.CSSProperties}>
-              {marqueeReviews.map((review, i) => {
-                const isClone = i >= reviews.length;
-                return (
-                  <div
-                    key={`${review.name}-${i}`}
-                    className="testimonial-card card card-hover group flex flex-col h-full"
-                    aria-hidden={isClone}
+        {loading ? (
+          <div className="max-w-3xl mx-auto glass-panel rounded-3xl p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/30 backdrop-blur-md shadow-2xl flex flex-col gap-6">
+            <div className="flex justify-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="skeleton h-4 w-4 rounded-full" />
+              ))}
+            </div>
+            <div className="space-y-3 flex flex-col items-center">
+              <div className="skeleton h-4 w-11/12 md:w-3/4" />
+              <div className="skeleton h-4 w-10/12 md:w-2/3" />
+              <div className="skeleton h-4 w-8/12 md:w-1/2" />
+            </div>
+            <div className="mt-6 flex flex-col items-center gap-3 pt-6 border-t border-[var(--border)]">
+              <div className="skeleton h-12 w-12 rounded-full" />
+              <div className="skeleton h-4 w-28" />
+              <div className="skeleton h-3.5 w-20" />
+            </div>
+          </div>
+        ) : (
+          reviews.length > 0 && (
+            <div className="relative max-w-3xl mx-auto">
+              
+              {/* Testimonial Card Slider */}
+              <div className="relative overflow-hidden min-h-[360px] md:min-h-[290px] w-full flex items-center justify-center">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
+                  <motion.div
+                    key={currentIndex}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className="absolute w-full h-full flex flex-col justify-between glass-panel rounded-3xl p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/35 backdrop-blur-xl shadow-2xl"
                   >
                     {/* Stars */}
-                    <Stars rating={typeof (review as Record<string, unknown>).rating === 'number' ? (review as Record<string, unknown>).rating as number : 5} />
+                    <Stars rating={currentReview.rating} />
 
                     {/* Quote */}
-                    <blockquote className="flex-grow mt-5 mb-6">
-                      <p className="text-sm text-[var(--muted)] leading-relaxed group-hover:text-[var(--foreground)] transition-colors duration-300">
-                        &ldquo;{review.text}&rdquo;
+                    <blockquote className="flex-grow flex items-center justify-center my-6">
+                      <p className="text-base md:text-lg text-[var(--foreground)] text-center italic font-light leading-relaxed max-w-2xl">
+                        &ldquo;{currentReview.text}&rdquo;
                       </p>
                     </blockquote>
 
                     {/* Author */}
-                    <div className="flex items-center gap-3 pt-5 border-t border-[var(--border)]">
-                      <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shrink-0">
+                    <div className="flex flex-col items-center gap-3 pt-6 border-t border-[var(--border)]">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shadow-md shrink-0">
                         <Image
-                          src={review.avatar}
-                          alt={review.name}
+                          src={currentReview.avatar}
+                          alt={currentReview.name}
                           fill
-                          sizes="36px"
+                          sizes="48px"
                           className="object-cover"
                         />
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-[var(--foreground)] leading-none">{review.name}</p>
-                        <p className="text-xs text-[var(--muted)] mt-1">{review.role}</p>
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-[var(--foreground)] leading-none">{currentReview.name}</p>
+                        <p className="text-xs text-[var(--accent)] mt-1.5 font-medium tracking-widest uppercase">{currentReview.role}</p>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Slider Controls */}
+              <div className="flex items-center justify-center gap-6 mt-10">
+                <button
+                  onClick={handlePrev}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-2)]/60 text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] hover:-translate-x-[2px] cursor-pointer shadow-sm active:scale-95"
+                  aria-label="Previous Testimonial"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                
+                {/* Dot Indicators */}
+                <div className="flex gap-2.5">
+                  {reviews.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setIsAutoplay(false);
+                        setDirection(idx > currentIndex ? 1 : -1);
+                        setCurrentIndex(idx);
+                      }}
+                      className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        idx === currentIndex ? "w-6 bg-[var(--accent)]" : "w-2.5 bg-[var(--border)] hover:bg-[var(--muted-soft)]"
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={handleNext}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-2)]/60 text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] hover:translate-x-[2px] cursor-pointer shadow-sm active:scale-95"
+                  aria-label="Next Testimonial"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+
             </div>
-          </div>
+          )
         )}
 
-        {loading && (
-          <div className="testimonials-marquee">
-            <div className="testimonials-track skeleton-track">
-              {skeletonItems.map((i) => (
-                <div key={i} className="testimonial-card card flex flex-col gap-4">
-                  <div className="skeleton h-3 w-20" />
-                  <div className="space-y-3">
-                    <div className="skeleton h-3 w-11/12" />
-                    <div className="skeleton h-3 w-10/12" />
-                    <div className="skeleton h-3 w-8/12" />
-                  </div>
-                  <div className="mt-auto flex items-center gap-3 pt-5 border-t border-[var(--border)]">
-                    <div className="skeleton h-9 w-9 rounded-full" />
-                    <div className="space-y-2">
-                      <div className="skeleton h-3 w-28" />
-                      <div className="skeleton h-2.5 w-20" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

@@ -38,6 +38,7 @@ const RotatingRoles = () => {
 
   const currentRole = DESIGNATIONS[index];
   const nextRole = DESIGNATIONS[(index + 1) % DESIGNATIONS.length];
+  const nextNextRole = DESIGNATIONS[(index + 2) % DESIGNATIONS.length];
 
   return (
     <div className={`rotating-roles-container ${isAnimating ? "animating" : ""}`}>
@@ -47,7 +48,7 @@ const RotatingRoles = () => {
       </h2>
       <h2 className="text-stroke">
         <div className="landing-h2-info">{nextRole}</div>
-        <div className="landing-h2-info-1">{currentRole}</div>
+        <div className="landing-h2-info-1">{nextNextRole}</div>
       </h2>
     </div>
   );
@@ -109,7 +110,7 @@ const Hero = () => {
 
       {/* Content layer */}
       <div className="relative z-10 min-h-screen pointer-events-none landing-section" id="landingDiv">
-        <div className="landing-container flex flex-col justify-center pt-24 pb-16">
+        <div className="landing-container flex flex-col justify-start md:justify-center pt-32 pb-16 md:py-0 px-8 md:px-0">
           {/* Left Side: Name & Info */}
           <div className="landing-intro flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12">
             {/* Status */}

@@ -72,7 +72,10 @@ const SocialSidebar = () => {
             <social.icon className="w-[18px] h-[18px]" />
 
             {/* Tooltip */}
-            <span className="absolute left-8 top-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-[var(--surface-2)] border border-[var(--border)] text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] opacity-0 group-hover:opacity-100 translate-x-[-6px] group-hover:translate-x-0 transition-all duration-200 pointer-events-none whitespace-nowrap shadow-2xl">
+            <span 
+              className="absolute left-9 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--surface-2)] border border-[var(--border)] text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] opacity-0 group-hover:opacity-100 -translate-x-1.5 group-hover:translate-x-0 transition-all duration-200 pointer-events-none whitespace-nowrap shadow-2xl"
+              style={{ padding: "8px 16px" }}
+            >
               {social.name}
             </span>
           </motion.a>
