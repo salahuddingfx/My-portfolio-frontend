@@ -265,7 +265,8 @@ export default function BlogContent() {
               placeholder="Search articles... (Press '/' to focus)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-md)] pl-9 pr-14 py-2.5 text-xs text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-soft)] transition-all duration-300 shadow-sm"
+              className="w-full bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-md)] py-2.5 text-xs text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-soft)] transition-all duration-300 shadow-sm"
+              style={{ paddingLeft: "38px", paddingRight: "50px" }}
             />
             {searchQuery && (
               <button
