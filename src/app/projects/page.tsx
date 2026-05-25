@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ProjectsPageClient from "./ProjectsPageClient";
 
 export const metadata: Metadata = {
-  title: "Projects — Salah Uddin Kader (Saka Chowdhury)",
+  title: "Projects",
   description:
     "Explore the creative work and digital systems portfolio of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx). Featuring Next.js applications, GSAP web animations, and Three.js 3D web experiences.",
   alternates: {

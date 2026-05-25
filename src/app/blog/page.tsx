@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import BlogContent from "./BlogContent";
 
 export const metadata: Metadata = {
-  title: "Blog — Salah Uddin Kader (Saka Chowdhury)",
+  title: "Blog",
   description:
     "Read technical articles, frontend design insights, and creative web engineering tutorials by Salah Uddin Kader (Saka Chowdhury / @salahuddingfx). Exploring Next.js, GSAP, and Three.js.",
   alternates: {

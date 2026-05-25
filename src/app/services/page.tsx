@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Services from "@/components/sections/Services";
 
 export const metadata: Metadata = {
-  title: "Services — Salah Uddin Kader (Saka Chowdhury)",
+  title: "Services",
   description:
     "Premium web development services by Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), a Creative Developer based in Cox's Bazar, Bangladesh. Specializing in Next.js development, React applications, and interactive web experiences.",
   alternates: {

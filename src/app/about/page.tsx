@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import AboutContent from "./AboutContent";
 
 export const metadata: Metadata = {
-  title: "About — Salah Uddin Kader (Saka Chowdhury)",
+  title: "About",
   description:
     "Discover the professional journey, technical expertise, and creative philosophy of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), an elite Full Stack AI Engineer, Creative Developer, and secure Database Designer based in Cox's Bazar, Bangladesh.",
   alternates: {

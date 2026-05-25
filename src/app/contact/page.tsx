@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Contact from "@/components/sections/Contact";
 
 export const metadata: Metadata = {
-  title: "Contact — Salah Uddin Kader (Saka Chowdhury)",
+  title: "Contact",
   description:
     "Get in touch with Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), an interactive Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh. Open for contracts and collaborations.",
   alternates: {

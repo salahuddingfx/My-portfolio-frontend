@@ -23,65 +23,65 @@ interface ProjectItem {
 }
 
 const FALLBACK_PROJECTS: ProjectItem[] = [
-  { 
-    title: "StudyFlow", 
-    desc: "A full-stack productivity and study-management application designed to help self-learners track progress, use Pomodoro timers, and build consistent study habits.", 
-    image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=1200", 
-    tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Socket.io"], 
-    links: { live: "https://github.com/salahuddingfx/Study-Flow", source: "https://github.com/salahuddingfx/Study-Flow" }, 
-    category: "Full Stack", 
-    featured: true, 
-    order: 1 
+  {
+    title: "StudyFlow",
+    desc: "A full-stack productivity and study-management application designed to help self-learners track progress, use Pomodoro timers, and build consistent study habits.",
+    image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=1200",
+    tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Socket.io"],
+    links: { live: "https://github.com/salahuddingfx/Study-Flow", source: "https://github.com/salahuddingfx/Study-Flow" },
+    category: "Full Stack",
+    featured: true,
+    order: 1
   },
-  { 
-    title: "SalahUddin OS", 
-    desc: "A hyper-interactive, cinematic Operating System simulation running entirely in the browser, featuring custom terminal utilities, window management, desktop widgets, and live tool pipelines.", 
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200", 
-    tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vite"], 
-    links: { live: "https://github.com/salahuddingfx/MY-OS", source: "https://github.com/salahuddingfx/MY-OS" }, 
-    category: "System Sim", 
-    featured: true, 
-    order: 2 
+  {
+    title: "SalahUddin OS",
+    desc: "A hyper-interactive, cinematic Operating System simulation running entirely in the browser, featuring custom terminal utilities, window management, desktop widgets, and live tool pipelines.",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vite"],
+    links: { live: "https://github.com/salahuddingfx/MY-OS", source: "https://github.com/salahuddingfx/MY-OS" },
+    category: "System Sim",
+    featured: true,
+    order: 2
   },
-  { 
-    title: "Aether 3D Engine", 
-    desc: "A browser-based, mobile-first 3D interactive system built with Three.js that allows users to sculpt and manipulate digital matter using motion controls.", 
-    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=1200", 
-    tags: ["HTML5", "Three.js", "JavaScript", "WebGL", "CSS3"], 
-    links: { live: "https://github.com/salahuddingfx/Gesture-System", source: "https://github.com/salahuddingfx/Gesture-System" }, 
-    category: "Creative 3D", 
-    featured: true, 
-    order: 3 
+  {
+    title: "Aether 3D Engine",
+    desc: "A browser-based, mobile-first 3D interactive system built with Three.js that allows users to sculpt and manipulate digital matter using motion controls.",
+    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=1200",
+    tags: ["HTML5", "Three.js", "JavaScript", "WebGL", "CSS3"],
+    links: { live: "https://github.com/salahuddingfx/Gesture-System", source: "https://github.com/salahuddingfx/Gesture-System" },
+    category: "Creative 3D",
+    featured: true,
+    order: 3
   },
-  { 
-    title: "NoteSphere", 
-    desc: "A high-performance Academic Intelligence platform and note-sharing system designed for student resource indexing, search optimization, and academic collaboration.", 
-    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200", 
-    tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"], 
-    links: { live: "https://github.com/salahuddingfx/NoteSphere", source: "https://github.com/salahuddingfx/NoteSphere" }, 
-    category: "Full Stack", 
-    featured: false, 
-    order: 4 
+  {
+    title: "NoteSphere",
+    desc: "A high-performance Academic Intelligence platform and note-sharing system designed for student resource indexing, search optimization, and academic collaboration.",
+    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200",
+    tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+    links: { live: "https://github.com/salahuddingfx/NoteSphere", source: "https://github.com/salahuddingfx/NoteSphere" },
+    category: "Full Stack",
+    featured: false,
+    order: 4
   },
-  { 
-    title: "Memory Master", 
-    desc: "A real-time multiplayer memory-matching game built with React and Socket.io, featuring a high-fidelity glassmorphism design and state synchronization.", 
-    image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=1200", 
-    tags: ["React", "Node.js", "Express", "Socket.io", "Tailwind CSS"], 
-    links: { live: "https://github.com/salahuddingfx/Memory-Master", source: "https://github.com/salahuddingfx/Memory-Master" }, 
-    category: "Game", 
-    featured: false, 
-    order: 5 
+  {
+    title: "Memory Master",
+    desc: "A real-time multiplayer memory-matching game built with React and Socket.io, featuring a high-fidelity glassmorphism design and state synchronization.",
+    image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=1200",
+    tags: ["React", "Node.js", "Express", "Socket.io", "Tailwind CSS"],
+    links: { live: "https://github.com/salahuddingfx/Memory-Master", source: "https://github.com/salahuddingfx/Memory-Master" },
+    category: "Game",
+    featured: false,
+    order: 5
   },
-  { 
-    title: "Habit-OS", 
-    desc: "A next-generation AI-powered health tracking and habit management ecosystem built to optimize personal health metrics, exercise routines, and wellness targets.", 
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=1200", 
-    tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Tailwind CSS"], 
-    links: { live: "https://github.com/salahuddingfx/Habit-OS", source: "https://github.com/salahuddingfx/Habit-OS" }, 
-    category: "Full Stack", 
-    featured: false, 
-    order: 6 
+  {
+    title: "Habit-OS",
+    desc: "A next-generation AI-powered health tracking and habit management ecosystem built to optimize personal health metrics, exercise routines, and wellness targets.",
+    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=1200",
+    tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+    links: { live: "https://github.com/salahuddingfx/Habit-OS", source: "https://github.com/salahuddingfx/Habit-OS" },
+    category: "Full Stack",
+    featured: false,
+    order: 6
   },
 ];
 
@@ -133,18 +133,6 @@ const ProjectsPageClient = () => {
       : projects.filter((p) => p.category === activeCategory);
   }, [projects, activeCategory]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const PROJECTS_PER_PAGE = 4;
-  const totalPages = Math.ceil(displayProjects.length / PROJECTS_PER_PAGE);
-
-  const paginatedProjects = useMemo(() => {
-    return displayProjects.slice((currentPage - 1) * PROJECTS_PER_PAGE, currentPage * PROJECTS_PER_PAGE);
-  }, [displayProjects, currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeCategory]);
-
   // 4. Staggered header text animation
   useEffect(() => {
     if (loading) return;
@@ -171,7 +159,7 @@ const ProjectsPageClient = () => {
 
   // 5. Cinematic Scroll-Scrub Animation (Ease In from bottom, Ease Out to top)
   useEffect(() => {
-    if (loading || paginatedProjects.length === 0) return;
+    if (loading || displayProjects.length === 0) return;
 
     let ctx: gsap.Context | null = null;
     let cancelled = false;
@@ -252,21 +240,21 @@ const ProjectsPageClient = () => {
       cancelled = true;
       if (ctx) ctx.revert();
     };
-  }, [loading, paginatedProjects]);
+  }, [loading, displayProjects]);
 
   return (
-    <section 
-      ref={containerRef} 
+    <section
+      ref={containerRef}
       className="projects-page-hero min-h-screen text-[var(--foreground)]"
     >
       {/* Dynamic Header */}
-      <div 
+      <div
         ref={headerRef}
         className="container pb-12"
         style={{ paddingTop: "clamp(120px, 10vw, 170px)" }}
       >
         <div className="max-w-4xl space-y-6">
-          <div className="animate-fade-up archive-badge">
+          <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/15 text-[var(--accent)] text-[10px] font-bold uppercase tracking-widest font-mono">
             <Sparkles size={10} />
             <span>Digital Archive</span>
           </div>
@@ -281,7 +269,7 @@ const ProjectsPageClient = () => {
 
         {/* Category Filters */}
         {!loading && categories.length > 1 && (
-          <div className="animate-fade-up filter-btn-container">
+          <div className="animate-fade-up flex flex-wrap gap-4 mt-16 border-b border-[var(--border)] pb-8">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -295,7 +283,10 @@ const ProjectsPageClient = () => {
                     ScrollTrigger.refresh();
                   }, 400);
                 }}
-                className={`filter-btn ${activeCategory === cat ? "active" : ""}`}
+                className={`px-6 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider uppercase border transition-all duration-300 ${activeCategory === cat
+                  ? "bg-[var(--accent)] border-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20 scale-[1.02]"
+                  : "bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
+                  }`}
               >
                 {cat}
               </button>
@@ -309,8 +300,8 @@ const ProjectsPageClient = () => {
         <div className="container pb-32">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 projects-grid-container">
             {[0, 1, 2, 3].map((i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className={`project-card-wrapper ${i % 2 === 0 ? "" : "md:translate-y-16"}`}
               >
                 <div className="project-grid-card aspect-[4/5] opacity-50">
@@ -335,8 +326,8 @@ const ProjectsPageClient = () => {
       ) : (
         <div className="container pb-48 projects-grid-container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {paginatedProjects.map((project, index) => {
-              const number = String((currentPage - 1) * PROJECTS_PER_PAGE + index + 1).padStart(2, "0");
+            {displayProjects.map((project, index) => {
+              const number = String(index + 1).padStart(2, "0");
               const isEven = index % 2 === 0;
               const tools = project.tags?.length ? project.tags : [];
               const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
@@ -347,7 +338,7 @@ const ProjectsPageClient = () => {
                   className={`project-card-wrapper ${isEven ? "" : "md:mt-16"}`}
                 >
                   <div className="project-grid-card">
-                    
+
                     {/* Background Number */}
                     <div className="absolute right-8 top-6 text-8xl md:text-9xl font-bold font-mono text-[var(--foreground)] opacity-[0.02] pointer-events-none select-none group-hover:scale-105 group-hover:opacity-[0.04] transition-all duration-700">
                       {number}
@@ -376,7 +367,7 @@ const ProjectsPageClient = () => {
 
                       {/* Info */}
                       <div className="space-y-3">
-                        <h3 
+                        <h3
                           className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] tracking-tight font-space-grotesk"
                         >
                           {project.title}
@@ -392,8 +383,8 @@ const ProjectsPageClient = () => {
                       {tools.length > 0 && (
                         <div className="flex flex-wrap gap-1.5">
                           {tools.map((tag) => (
-                            <span 
-                              key={tag} 
+                            <span
+                              key={tag}
                               className="badge bg-[var(--surface-2)] border-[var(--border)] text-[var(--muted-soft)] text-[9px] tracking-wider uppercase font-mono px-2 py-0.5"
                             >
                               {tag}
@@ -435,54 +426,6 @@ const ProjectsPageClient = () => {
               );
             })}
           </div>
-
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-2 mt-24">
-              <button
-                onClick={() => {
-                  if (currentPage > 1) {
-                    setCurrentPage(currentPage - 1);
-                    containerRef.current?.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                disabled={currentPage === 1}
-                className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
-              >
-                Prev
-              </button>
-              
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pNum) => (
-                <button
-                  key={pNum}
-                  onClick={() => {
-                    setCurrentPage(pNum);
-                    containerRef.current?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 cursor-pointer ${
-                    currentPage === pNum
-                      ? "bg-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/15 scale-[1.05]"
-                      : "bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
-                  }`}
-                >
-                  {pNum}
-                </button>
-              ))}
-
-              <button
-                onClick={() => {
-                  if (currentPage < totalPages) {
-                    setCurrentPage(currentPage + 1);
-                    containerRef.current?.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                disabled={currentPage === totalPages}
-                className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
-              >
-                Next
-              </button>
-            </div>
-          )}
         </div>
       )}
     </section>
