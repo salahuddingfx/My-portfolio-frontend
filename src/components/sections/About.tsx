@@ -138,6 +138,7 @@ const About = () => {
                 src="/mine-photo.png"
                 alt="Salah Uddin Kader"
                 fill
+                priority
                 sizes="(max-width: 768px) 90vw, (max-width: 1024px) 50vw, 500px"
                 className="object-cover img-portrait portrait-3d-img grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
               />

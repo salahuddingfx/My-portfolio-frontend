@@ -9,9 +9,10 @@ interface WorkImageProps {
   alt: string;
   liveLink?: string;
   onLoad?: () => void;
+  priority?: boolean;
 }
 
-const WorkImage = ({ image, alt, liveLink, onLoad }: WorkImageProps) => {
+const WorkImage = ({ image, alt, liveLink, onLoad, priority }: WorkImageProps) => {
   return (
     <div className="work-image">
       <div className="work-image-in">
@@ -20,6 +21,7 @@ const WorkImage = ({ image, alt, liveLink, onLoad }: WorkImageProps) => {
             src={image}
             alt={alt}
             fill
+            priority={priority}
             sizes="(max-width: 1024px) 100vw, 60vw"
             className="object-cover transition-transform duration-700 hover:scale-105"
             onLoad={onLoad}
@@ -420,7 +422,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
               )}
             </div>
           </div>
-          <WorkImage image={project.image} alt={project.title} liveLink={liveLink} onLoad={handleImageLoad} />
+          <WorkImage image={project.image} alt={project.title} liveLink={liveLink} onLoad={handleImageLoad} priority={index === 0} />
         </div>
       );
     });
