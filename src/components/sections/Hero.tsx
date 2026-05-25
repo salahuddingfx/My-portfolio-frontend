@@ -92,11 +92,11 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[600px] aspect-square bg-[var(--accent)]/20 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0" />
 
         {/* 3D Spline Scene rendered on all devices; enable pointer events on larger screens */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none md:pointer-events-auto z-10 flex items-center justify-center">
+        <div className="absolute inset-0 w-full h-full pointer-events-none md:pointer-events-auto z-10 flex items-center justify-center hero-spline-container">
           {isLoaderFinished && (
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full opacity-100 transition-opacity duration-1000 scale-[1.2] md:scale-100"
+              className="w-full h-full opacity-100 transition-opacity duration-1000 scale-[0.9] sm:scale-100"
             />
           )}
         </div>
@@ -130,12 +130,12 @@ const Hero = () => {
 
             <div className="mt-8 space-y-6">
               {/* Description */}
-              <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm">
-                {settings?.bio || "I engineer robust digital experiences with a focus on modern web technologies and structural, minimalist design. Known online as Saka Chowdhury (@salahuddingfx), I collaborate with clients worldwide from Cox's Bazar, Bangladesh."}
+              <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mb-6">
+                {settings?.bio || "I am a Full Stack AI Engineer and Creative Developer specializing in secure full-stack architecture, relational database design (with protection against SQL Injection and other exploits), and custom LLM model integrations. Known online as Saka Chowdhury (@salahuddingfx)."}
               </p>
 
               {/* Actions */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-4 pt-6 md:pt-4">
                 <Magnetic>
                   <a href="#projects" className="btn-primary">
                     Selected Works

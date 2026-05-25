@@ -4,6 +4,7 @@ import {
   Space_Grotesk,
   Inter,
   JetBrains_Mono,
+  Jersey_25,
 } from "next/font/google";
 
 import "./globals.css";
@@ -45,6 +46,14 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+const jersey25 = Jersey_25({
+  subsets: ["latin"],
+  variable: "--font-jersey-25",
+  weight: "400",
+  display: "swap",
+});
+
+
 /* =============================================================================
    METADATA
    ============================================================================= */
@@ -53,14 +62,21 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://salahuddin.codes"),
 
   title: {
-    default: "Salah Uddin Kader (Saka Chowdhury) — Creative Developer & Frontend Engineer",
+    default: "Salah Uddin Kader (Saka Chowdhury) — Full Stack AI Engineer & Creative Developer",
     template: "%s | Salah Uddin Kader (Saka Chowdhury)",
   },
 
   description:
-    "Portfolio of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx) — Creative Developer and Frontend Engineer in Cox's Bazar, Bangladesh. Specialist in Next.js, React, TypeScript, GSAP, and Three.js.",
+    "Portfolio of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx) — Full Stack AI Engineer, Creative Developer, and Database Designer in Cox's Bazar, Bangladesh. Specialist in Next.js, React, Node.js, GSAP, Three.js, LLMs, and secure database designs.",
 
   keywords: [
+    "Full Stack AI Engineer",
+    "AI Developer",
+    "Database Designer",
+    "Database Design Bangladesh",
+    "SQL Injection Prevention",
+    "LLM Developer",
+    "AI Engineer Bangladesh",
     "Saka Chowdhury",
     "Saka Chowdhury Developer",
     "salahuddingfx",
@@ -168,7 +184,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} ${jersey25.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

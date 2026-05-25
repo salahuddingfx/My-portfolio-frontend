@@ -319,9 +319,9 @@ export default function AboutContent() {
                 Salah Uddin<br />Kader
               </h1>
               <p className="text-lg lg:text-xl text-[var(--muted)] leading-relaxed max-w-xl">
-                I am a full stack web developer based in Chittagong, Bangladesh.
-                I build clean, highly interactive digital products with a strong
-                focus on UX craft and technical detail.
+                I am a Full Stack AI Engineer, Creative Developer, and secure Database Designer based in Cox&apos;s Bazar, Bangladesh.
+                I build secure, highly interactive digital products with a strong
+                focus on database performance, LLM integrations, and motion design.
               </p>
               <div className="flex gap-4 items-center flex-wrap">
                 <Link href="/contact" className="btn-primary">
@@ -338,7 +338,7 @@ export default function AboutContent() {
                 )}
               </div>
             </motion.div>
-
+ 
             <motion.div
               {...fadeUp}
               transition={{ duration: 0.7, delay: 0.15 }}
@@ -359,7 +359,7 @@ export default function AboutContent() {
           </div>
         </div>
       </section>
-
+ 
       {/* ── Story ── */}
       <section className="section-shell bg-[var(--surface)] border-y border-[var(--border)]">
         <div className="container">
@@ -383,16 +383,13 @@ export default function AboutContent() {
               </p>
               <p className="text-base text-[var(--muted)] leading-relaxed">
                 Over the past 1.5 years, I&apos;ve worked across the full stack —
-                from designing database schemas to crafting pixel-perfect
-                interfaces. I&apos;ve shipped products for startups, agencies, and
-                individual clients, and every project has taught me something
-                new.
+                from designing secure, relational database schemas (with solid protection against exploits like SQL Injection) to building interactive frontends and custom AI/LLM pipelines. I&apos;ve shipped products for startups, agencies, and
+                individual clients, ensuring they are robust under load and secure.
               </p>
               <p className="text-base text-[var(--muted)] leading-relaxed">
-                Today, I work as a freelance developer, taking on projects where
+                Today, I work as a Full Stack AI Engineer, taking on complex projects where
                 I can genuinely make a difference. I&apos;m drawn to work that
-                challenges me technically while having a real impact for the
-                people using it.
+                challenges me technically — from training local models to designing secure, low-latency APIs and interactive user interfaces.
               </p>
             </motion.div>
           </div>

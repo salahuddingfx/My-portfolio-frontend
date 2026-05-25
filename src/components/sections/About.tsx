@@ -49,24 +49,26 @@ const About = () => {
 
             <div className="space-y-6">
               <p className="text-[var(--foreground)] text-xl md:text-2xl font-medium leading-relaxed opacity-90">
-                {settings?.bio || "I'm Salah Uddin Kader, widely known as Saka Chowdhury (salahuddingfx) — a Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh."}
+                {settings?.bio || "I'm Salah Uddin Kader, widely known as Saka Chowdhury (salahuddingfx) — a Full Stack AI Engineer, Creative Developer, and Database Designer based in Cox's Bazar, Bangladesh."}
               </p>
               <p className="text-[var(--muted)] text-lg leading-relaxed max-w-2xl">
-                {settings?.aboutText || "I specialize in crafting immersive, high-performance web applications using Next.js, React, TypeScript, and interactive motion designs with GSAP and Three.js. Good software should be reliable, understandable, and a pleasure to use."}
+                {settings?.aboutText || "I specialize in building secure, high-performance web applications using React, Next.js, and Node.js. My experience spans full-stack development, database design, securing applications against SQL Injection and web exploits, and training/running local LLM models. I craft experiences that are visually stunning, solid under the hood, and secure."}
               </p>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-8 py-10 my-8 border-y border-[var(--border)] px-4 mx-2.5">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 my-8">
               {stats.map((stat) => (
-                <div key={stat.label} className="flex flex-col gap-2">
+                <div 
+                  key={stat.label} 
+                  className="flex flex-col justify-between items-start gap-4 p-6 sm:p-8 min-h-[140px] rounded-2xl bg-[var(--surface-2)]/40 border border-[var(--border)] hover:border-[var(--accent)]/30 hover:bg-[var(--surface-2)]/60 transition-all duration-300 shadow-sm"
+                >
                   <span
-                    className="text-3xl font-black text-[var(--foreground)] italic tracking-tighter"
-                    style={{ fontFamily: "var(--font-space-grotesk)" }}
+                    className="text-4xl sm:text-5xl font-pixel text-[var(--foreground)] leading-none"
                   >
                     {stat.value}
                   </span>
-                  <span className="text-[9px] uppercase tracking-widest font-bold text-[var(--muted)]">
+                  <span className="text-[10px] sm:text-xs uppercase tracking-widest font-semibold text-[var(--muted)] leading-normal mt-auto">
                     {stat.label}
                   </span>
                 </div>

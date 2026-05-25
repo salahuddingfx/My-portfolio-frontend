@@ -4,13 +4,13 @@ import AboutContent from "./AboutContent";
 export const metadata: Metadata = {
   title: "About — Salah Uddin Kader (Saka Chowdhury)",
   description:
-    "Discover the professional journey, technical expertise, and creative philosophy of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), an elite Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh.",
+    "Discover the professional journey, technical expertise, and creative philosophy of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), an elite Full Stack AI Engineer, Creative Developer, and secure Database Designer based in Cox's Bazar, Bangladesh.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
-    title: "About | Salah Uddin Kader (Saka Chowdhury)",
-    description: "Learn about Saka Chowdhury (Salah Uddin Kader) — Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh. Profile, experience, and tech stack.",
+    title: "About — Salah Uddin Kader (Saka Chowdhury)",
+    description: "Learn about Saka Chowdhury (Salah Uddin Kader) — Full Stack AI Engineer, Creative Developer, and secure Database Designer based in Cox's Bazar, Bangladesh. Profile, experience, and tech stack.",
     images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
   },
 };

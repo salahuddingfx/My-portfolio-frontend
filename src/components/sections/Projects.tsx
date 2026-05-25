@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
@@ -8,9 +8,10 @@ interface WorkImageProps {
   image: string;
   alt: string;
   liveLink?: string;
+  onLoad?: () => void;
 }
 
-const WorkImage = ({ image, alt, liveLink }: WorkImageProps) => {
+const WorkImage = ({ image, alt, liveLink, onLoad }: WorkImageProps) => {
   return (
     <div className="work-image">
       <div className="work-image-in">
@@ -21,6 +22,7 @@ const WorkImage = ({ image, alt, liveLink }: WorkImageProps) => {
             fill
             sizes="(max-width: 1024px) 100vw, 60vw"
             className="object-cover transition-transform duration-700 hover:scale-105"
+            onLoad={onLoad}
           />
         </div>
         {liveLink && (
@@ -70,6 +72,14 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  const handleImageLoad = useCallback(() => {
+    if (typeof window !== "undefined") {
+      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        ScrollTrigger.refresh();
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -170,26 +180,6 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
             return Math.max(trackWidth - viewportWidth, 0);
           };
 
-          // Animate title entrance
-          const title = section.querySelector(".work-container h2");
-          if (title) {
-            gsap.fromTo(
-              title,
-              { y: 50, opacity: 0 },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power4.out",
-                scrollTrigger: {
-                  trigger: section,
-                  start: "top 85%",
-                  toggleActions: "play none none none",
-                }
-              }
-            );
-          }
-
           // Animate project card boxes staggered reveal
           const boxes = track.querySelectorAll(".work-box");
           if (boxes.length > 0) {
@@ -224,6 +214,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                 end: () => `+=${getTranslateX()}`,
                 invalidateOnRefresh: true,
                 id: "work-trigger",
+                refreshPriority: 96,
               },
             }
           );
@@ -300,7 +291,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                 }`}
               >
                 <div
-                  className={`text-5xl md:text-7xl font-medium tracking-tight text-[var(--foreground)] opacity-80 ${
+                  className={`text-6xl md:text-8xl font-pixel tracking-tight text-[var(--foreground)] opacity-80 ${
                     isEven ? "self-start" : "self-start lg:self-end"
                   }`}
                   aria-hidden
@@ -429,11 +420,11 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
               )}
             </div>
           </div>
-          <WorkImage image={project.image} alt={project.title} liveLink={liveLink} />
+          <WorkImage image={project.image} alt={project.title} liveLink={liveLink} onLoad={handleImageLoad} />
         </div>
       );
     });
-  }, [displayProjects]);
+  }, [displayProjects, handleImageLoad]);
 
   if (effectiveLayout === "horizontal") {
     return (
@@ -442,40 +433,47 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
         ref={sectionRef}
         className="work-section relative overflow-hidden"
       >
-        <div className="work-container section-container">
-          <h2>
-            My <span>Work</span>
-          </h2>
+        <div className="work-container section-container w-full">
+          <div className="container text-center mb-12 lg:mb-20">
+            <span className="section-eyebrow">Portfolio</span>
+            <h2 className="section-heading mt-2">
+              My <span>Work</span>
+            </h2>
+          </div>
 
           {loading ? (
-            <div className="work-flex" ref={trackRef} style={{ width: "max-content" }}>
-              {skeletonItems.map((i) => (
-                <div key={i} className="work-box">
-                  <div className="work-info">
-                    <div className="work-title">
-                      <div className="skeleton h-12 w-16" />
-                      <div>
-                        <div className="skeleton h-6 w-32 mb-2" />
-                        <div className="skeleton h-4 w-24" />
+            <div className="work-track-wrapper">
+              <div className="work-flex" ref={trackRef} style={{ width: "max-content" }}>
+                {skeletonItems.map((i) => (
+                  <div key={i} className="work-box">
+                    <div className="work-info">
+                      <div className="work-title">
+                        <div className="skeleton h-12 w-16" />
+                        <div>
+                          <div className="skeleton h-6 w-32 mb-2" />
+                          <div className="skeleton h-4 w-24" />
+                        </div>
                       </div>
+                      <div className="skeleton h-5 w-28 mb-2" />
+                      <div className="skeleton h-4 w-full" />
                     </div>
-                    <div className="skeleton h-5 w-28 mb-2" />
-                    <div className="skeleton h-4 w-full" />
+                    <div className="skeleton aspect-[16/10] w-full rounded-2xl" />
                   </div>
-                  <div className="skeleton aspect-[16/10] w-full rounded-2xl" />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           ) : (
-            <div
-              ref={trackRef}
-              className="work-flex"
-              style={{ 
-                width: "max-content", 
-                willChange: "transform",
-              }}
-            >
-              {projectPanels}
+            <div className="work-track-wrapper">
+              <div
+                ref={trackRef}
+                className="work-flex"
+                style={{ 
+                  width: "max-content", 
+                  willChange: "transform",
+                }}
+              >
+                {projectPanels}
+              </div>
             </div>
           )}
         </div>

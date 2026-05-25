@@ -140,7 +140,7 @@ const Testimonials = () => {
         </div>
 
         {loading ? (
-          <div className="max-w-3xl mx-auto glass-panel rounded-3xl p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/30 backdrop-blur-md shadow-2xl flex flex-col gap-6">
+          <div className="max-w-3xl mx-auto glass-panel rounded-3xl p-6 sm:p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/30 backdrop-blur-md shadow-2xl flex flex-col gap-6">
             <div className="flex justify-center gap-1">
               {[...Array(5)].map((_, i) => (
                 <div key={i} className="skeleton h-4 w-4 rounded-full" />
@@ -162,7 +162,7 @@ const Testimonials = () => {
             <div className="relative max-w-3xl mx-auto">
               
               {/* Testimonial Card Slider */}
-              <div className="relative overflow-hidden min-h-[360px] md:min-h-[290px] w-full flex items-center justify-center">
+              <div className="relative overflow-hidden w-full flex items-center justify-center min-h-[420px] sm:min-h-[340px] md:min-h-[280px]">
                 <AnimatePresence initial={false} custom={direction} mode="wait">
                   <motion.div
                     key={currentIndex}
@@ -171,14 +171,14 @@ const Testimonials = () => {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="absolute w-full h-full flex flex-col justify-between glass-panel rounded-3xl p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/35 backdrop-blur-xl shadow-2xl"
+                    className="relative w-full h-auto flex flex-col justify-between glass-panel rounded-3xl p-6 sm:p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/35 backdrop-blur-xl shadow-2xl"
                   >
                     {/* Stars */}
                     <Stars rating={currentReview.rating} />
 
                     {/* Quote */}
                     <blockquote className="flex-grow flex items-center justify-center my-6">
-                      <p className="text-base md:text-lg text-[var(--foreground)] text-center italic font-light leading-relaxed max-w-2xl">
+                      <p className="text-base md:text-lg text-[var(--foreground)] text-center italic font-light leading-relaxed max-w-2xl mx-auto">
                         &ldquo;{currentReview.text}&rdquo;
                       </p>
                     </blockquote>

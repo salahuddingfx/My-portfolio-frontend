@@ -78,6 +78,7 @@ export function ScrollEffects() {
               pin: true,
               pinSpacing: false,
               invalidateOnRefresh: true,
+              refreshPriority: 100 - i,
             });
           }
 
@@ -92,6 +93,7 @@ export function ScrollEffects() {
               start: "top 80%",
               end: "top 20%",
               toggleActions: "play none none reverse",
+              refreshPriority: 100 - i,
             },
           });
 
