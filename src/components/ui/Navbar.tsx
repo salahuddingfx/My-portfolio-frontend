@@ -55,51 +55,13 @@ const Navbar = () => {
   =========================================================================== */
 
   useEffect(() => {
-    let ctx: { revert: () => void } | null = null;
-    let cancelled = false;
-
-    const setup = async () => {
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-      const saveData = connection?.saveData ?? false;
-      if (reduceMotion || saveData) return;
-
-      const { default: gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      if (cancelled) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      ctx = gsap.context(() => {
-        const showAnim = gsap
-          .from(headerRef.current, {
-            yPercent: -100,
-            paused: true,
-            duration: 0.28,
-            ease: "power2.out",
-          })
-          .progress(1);
-
-        ScrollTrigger.create({
-          start: "top top",
-          end: 99999,
-          onUpdate: (self) => {
-            setScrolled(self.scroll() > 24);
-            if (self.direction === -1 || self.scroll() <= 0) {
-              showAnim.play();
-            } else {
-              showAnim.reverse();
-            }
-          },
-        });
-      });
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
     };
-
-    setup();
-
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => {
-      cancelled = true;
-      if (ctx) ctx.revert();
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

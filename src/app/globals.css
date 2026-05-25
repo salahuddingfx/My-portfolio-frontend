@@ -1859,6 +1859,11 @@ h2.landing-info-h2 {
   z-index: 9;
   color: #fff;
   border: 1px solid var(--border);
+  width: var(--Lsize);
+  min-width: var(--Lsize);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .loading-button::before {
   content: "";
@@ -1886,7 +1891,7 @@ h2.landing-info-h2 {
   --Lsize: 260px;
   padding: 6px;
   position: relative;
-  min-width: 0px;
+  min-width: var(--Lsize);
   min-height: 0px;
   border-radius: 100px;
   background-color: #000;
@@ -1946,6 +1951,7 @@ h2.landing-info-h2 {
   width: auto;
   overflow: hidden;
   color: #fff;
+  white-space: nowrap;
 }
 .loading-content2 {
   position: relative;
@@ -2023,6 +2029,7 @@ h2.landing-info-h2 {
   z-index: 9;
   transform: translate(-50%, -50%);
   opacity: 1;
+  white-space: nowrap;
 }
 
 .loading-complete .loading-container {
