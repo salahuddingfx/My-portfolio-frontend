@@ -254,7 +254,7 @@ const ProjectsPageClient = () => {
         style={{ paddingTop: "clamp(120px, 10vw, 170px)" }}
       >
         <div className="max-w-4xl space-y-6">
-          <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/15 text-[var(--accent)] text-[10px] font-bold uppercase tracking-widest font-mono">
+          <div className="animate-fade-up archive-badge">
             <Sparkles size={10} />
             <span>Digital Archive</span>
           </div>
@@ -269,7 +269,7 @@ const ProjectsPageClient = () => {
 
         {/* Category Filters */}
         {!loading && categories.length > 1 && (
-          <div className="animate-fade-up flex flex-wrap gap-4 mt-16 border-b border-[var(--border)] pb-8">
+          <div className="animate-fade-up filter-btn-container">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -283,11 +283,7 @@ const ProjectsPageClient = () => {
                     ScrollTrigger.refresh();
                   }, 400);
                 }}
-                className={`px-6 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider uppercase border transition-all duration-300 ${
-                  activeCategory === cat
-                    ? "bg-[var(--accent)] border-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20 scale-[1.02]"
-                    : "bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
-                }`}
+                className={`filter-btn ${activeCategory === cat ? "active" : ""}`}
               >
                 {cat}
               </button>

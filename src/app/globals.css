@@ -2298,3 +2298,61 @@ html[data-theme="light"] .loading-marquee {
     transform: none !important; /* disable staggered offset on mobile */
   }
 }
+
+/* Custom Archive Badge & Filter Pill Buttons to bypass DaisyUI/Tailwind conflicts */
+.archive-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 14px !important;
+  border-radius: 9999px !important;
+  background-color: var(--accent-soft) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
+  color: var(--accent) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  font-family: var(--font-mono), monospace !important;
+  width: fit-content !important;
+}
+
+.filter-btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 64px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 32px;
+}
+
+.filter-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px 24px !important;
+  border-radius: 9999px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--muted) !important;
+  transition: all var(--duration-base) var(--ease-out) !important;
+  cursor: pointer !important;
+}
+
+.filter-btn:hover {
+  background-color: var(--surface-2) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border-hover) !important;
+}
+
+.filter-btn.active {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 20px -5px rgba(168, 85, 247, 0.3) !important;
+  transform: scale(1.02) !important;
+}
