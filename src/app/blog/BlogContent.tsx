@@ -1,11 +1,17 @@
 "use client";
 
-import BlogCard from "@/components/ui/BlogCard";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { Search, X, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState, useEffect, useMemo } from "react";
-import { Search, X } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import BlogCard from "@/components/ui/BlogCard";
 
-const PER_PAGE = 5;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+const BLOGS_PER_PAGE = 2; // set to 2 so pagination is easily visible with 5 seeded posts!
 
 interface BlogPost {
   _id: string;
@@ -26,35 +32,14 @@ export default function BlogContent() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [email, setEmail] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
 
-  const categories = useMemo(() => {
-    const list = posts.map((p) => p.category).filter(Boolean);
-    return ["All", ...Array.from(new Set(list))];
-  }, [posts]);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const filtered = useMemo(() => {
-    let result = activeCategory === "All" ? posts : posts.filter((p) => p.category === activeCategory);
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter((p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.excerpt.toLowerCase().includes(q) ||
-        p.tags?.some((t) => t.toLowerCase().includes(q))
-      );
-    }
-    return result;
-  }, [posts, activeCategory, searchQuery]);
-
-  const totalPages = Math.ceil(filtered.length / PER_PAGE);
-  const paginated = filtered.slice(0, page * PER_PAGE);
-
-  useEffect(() => {
-    setPage(1);
-  }, [activeCategory, searchQuery]);
-
+  // 1. Fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -75,6 +60,7 @@ export default function BlogContent() {
     fetchPosts();
   }, []);
 
+  // 2. Search shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
@@ -87,57 +73,188 @@ export default function BlogContent() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // 3. Derive categories
+  const categories = useMemo(() => {
+    const list = posts.map((p) => p.category).filter(Boolean);
+    return ["All", ...Array.from(new Set(list))];
+  }, [posts]);
+
+  // 4. Filtering logic
+  const filtered = useMemo(() => {
+    let result = activeCategory === "All" ? posts : posts.filter((p) => p.category === activeCategory);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.excerpt.toLowerCase().includes(q) ||
+        p.tags?.some((t) => t.toLowerCase().includes(q))
+      );
+    }
+    return result;
+  }, [posts, activeCategory, searchQuery]);
+
+  // 5. Pagination logic
+  const totalPages = Math.ceil(filtered.length / BLOGS_PER_PAGE);
+  const paginated = useMemo(() => {
+    return filtered.slice((currentPage - 1) * BLOGS_PER_PAGE, currentPage * BLOGS_PER_PAGE);
+  }, [filtered, currentPage]);
+
+  // Reset pagination page on filter or search updates
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, searchQuery]);
+
+  // 6. GSAP Entrance Header animations
+  useEffect(() => {
+    if (loading) return;
+
+    const ctx = gsap.context(() => {
+      const elements = headerRef.current?.querySelectorAll(".animate-fade-up");
+      if (!elements || elements.length === 0) return;
+
+      gsap.fromTo(
+        elements,
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.15,
+          ease: "power4.out",
+        }
+      );
+    }, headerRef);
+
+    return () => ctx.revert();
+  }, [loading]);
+
+  // 7. Cinematic Scroll-Scrub Animation (Ease In / Ease Out)
+  useEffect(() => {
+    if (loading || paginated.length === 0) return;
+
+    let ctx: gsap.Context | null = null;
+    let cancelled = false;
+
+    const runAnimations = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 80));
+      if (cancelled) return;
+
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (cancelled) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.vars.id && trigger.vars.id.startsWith("blog-page-card-")) {
+          trigger.kill();
+        }
+      });
+
+      ctx = gsap.context(() => {
+        const cards = gsap.utils.toArray<HTMLElement>(".project-card-wrapper");
+        cards.forEach((card, index) => {
+          // Entrance
+          gsap.fromTo(
+            card,
+            { opacity: 0, y: 80, scale: 0.95 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.6,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 92%",
+                toggleActions: "play none none none",
+                id: `blog-page-card-enter-${index}`,
+              }
+            }
+          );
+
+          // Exit
+          gsap.fromTo(
+            card,
+            { opacity: 1, y: 0, scale: 1 },
+            {
+              opacity: 0,
+              y: -80,
+              scale: 0.95,
+              ease: "power1.in",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 12%",
+                end: "top -12%",
+                scrub: 1,
+                id: `blog-page-card-exit-${index}`,
+              }
+            }
+          );
+        });
+
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 150);
+      }, containerRef);
+    };
+
+    runAnimations();
+
+    return () => {
+      cancelled = true;
+      if (ctx) ctx.revert();
+    };
+  }, [loading, paginated]);
+
   return (
     <main
+      ref={containerRef}
       className="min-h-screen bg-[var(--background)]"
       style={{
-        paddingTop: "calc(var(--navbar-height) + var(--space-8))",
+        paddingTop: "clamp(120px, 10vw, 170px)",
         paddingBottom: "var(--space-20)",
       }}
     >
       <div className="container">
 
-        {/* Page header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        {/* Page Header */}
+        <div
+          ref={headerRef}
           className="max-w-2xl"
           style={{ marginBottom: '3.5rem' }}
         >
-          <span className="section-eyebrow">Writing</span>
-          <h1 className="section-heading mt-1" style={{ marginBottom: '1rem' }}>
+          <div className="animate-fade-up archive-badge inline-flex items-center gap-2 mb-4">
+            <Sparkles size={10} />
+            <span>Writing</span>
+          </div>
+          <h1 className="animate-fade-up text-5xl sm:text-7xl font-bold tracking-tight leading-[0.95] font-space-grotesk" style={{ marginBottom: '1.5rem' }}>
             Thoughts & insights.
           </h1>
-          <p className="section-subtext text-sm">
+          <p className="animate-fade-up text-base sm:text-lg text-[var(--muted)] leading-relaxed max-w-2xl font-normal">
             Notes on engineering, design, and the craft of building good software.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6" style={{ marginBottom: '2.5rem' }}>
+        {/* Filter & Search Panel */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b border-[var(--border)]" style={{ marginBottom: '3.5rem' }}>
           {!loading && categories.length > 1 && (
-            <div className="flex flex-wrap items-center" style={{ gap: '0.375rem' }}>
+            <div className="flex flex-wrap gap-3">
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className="relative px-4 py-2 rounded-[var(--radius-md)] text-xs font-medium transition-colors duration-200 focus-visible:outline-none"
-                  style={{
-                    color: activeCategory === cat ? "var(--background)" : "var(--muted)",
+                  onClick={() => {
+                    setActiveCategory(cat);
                   }}
+                  className={`filter-btn ${activeCategory === cat ? "active" : ""}`}
                 >
-                  {activeCategory === cat && (
-                    <motion.span
-                      layoutId="activeCategory"
-                      className="absolute inset-0 bg-[var(--foreground)] rounded-[var(--radius-md)] -z-10"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{cat}</span>
+                  {cat}
                 </button>
               ))}
             </div>
           )}
+          
+          {/* Search Input */}
           <div className="relative flex items-center w-full md:w-72 group">
             <Search 
               size={14} 
@@ -165,57 +282,104 @@ export default function BlogContent() {
           </div>
         </div>
 
-        {/* Post list */}
-        <div className="flex flex-col" style={{ gap: '1.25rem' }}>
-          {loading ? (
-            <div className="py-16 text-center">
-              <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading articles...</p>
+        {/* Main Display Grid */}
+        {loading ? (
+          <div className="py-16 text-center">
+            <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading articles...</p>
+          </div>
+        ) : paginated.length === 0 ? (
+          <div className="container py-24 text-center">
+            <p className="text-sm text-[var(--muted)] font-mono uppercase tracking-widest">
+              {searchQuery ? 'No matching articles.' : 'No articles yet. Check back later.'}
+            </p>
+          </div>
+        ) : (
+          <div className="container pb-32 projects-grid-container">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+              {paginated.map((post, index) => {
+                const isEven = index % 2 === 0;
+                return (
+                  <div
+                    key={post._id || index}
+                    className={`project-card-wrapper ${isEven ? "" : "md:mt-16"}`}
+                  >
+                    <BlogCard
+                      title={post.title}
+                      excerpt={post.excerpt}
+                      date={post.publishedAt || ''}
+                      readTime={post.readTime || ''}
+                      category={post.category}
+                      image={post.image}
+                      slug={post.slug}
+                      index={(currentPage - 1) * BLOGS_PER_PAGE + index}
+                    />
+                  </div>
+                );
+              })}
             </div>
-          ) : paginated.length === 0 ? (
-            <div className="card card-large text-center">
-              <p className="text-sm text-[var(--muted)]">{searchQuery ? 'No matching articles.' : 'No articles yet. Check back later.'}</p>
-            </div>
-          ) : (
-            paginated.map((post, i) => (
-              <BlogCard
-                key={post._id}
-                title={post.title}
-                excerpt={post.excerpt}
-                date={post.publishedAt || ''}
-                readTime={post.readTime || ''}
-                category={post.category}
-                image={post.image}
-                slug={post.slug}
-                index={i}
-              />
-            ))
-          )}
-        </div>
 
-        {/* Pagination */}
-        {filtered.length > PER_PAGE && page < totalPages && (
-          <div className="text-center" style={{ marginTop: '2.5rem' }}>
-            <button
-              onClick={() => setPage((p) => p + 1)}
-              className="px-8 py-4 border border-[var(--border)] rounded-[var(--radius-md)] text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)] transition-all"
-            >
-              Load more ({filtered.length - page * PER_PAGE} remaining)
-            </button>
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mt-24">
+                <button
+                  onClick={() => {
+                    if (currentPage > 1) {
+                      setCurrentPage(currentPage - 1);
+                      containerRef.current?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  disabled={currentPage === 1}
+                  className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
+                >
+                  Prev
+                </button>
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pNum) => (
+                  <button
+                    key={pNum}
+                    onClick={() => {
+                      setCurrentPage(pNum);
+                      containerRef.current?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 cursor-pointer ${
+                      currentPage === pNum
+                        ? "bg-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/15 scale-[1.05]"
+                        : "bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
+                    }`}
+                  >
+                    {pNum}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => {
+                    if (currentPage < totalPages) {
+                      setCurrentPage(currentPage + 1);
+                      containerRef.current?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  disabled={currentPage === totalPages}
+                  className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Newsletter */}
+        {/* Newsletter Subscription */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7 }}
-          className="card card-large"
+          className="project-grid-card"
           style={{ marginTop: '3.5rem', marginBottom: '3.5rem' }}
         >
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                 Stay in the loop.
               </h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed max-w-sm">

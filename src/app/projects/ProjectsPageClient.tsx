@@ -133,6 +133,18 @@ const ProjectsPageClient = () => {
       : projects.filter((p) => p.category === activeCategory);
   }, [projects, activeCategory]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const PROJECTS_PER_PAGE = 4;
+  const totalPages = Math.ceil(displayProjects.length / PROJECTS_PER_PAGE);
+
+  const paginatedProjects = useMemo(() => {
+    return displayProjects.slice((currentPage - 1) * PROJECTS_PER_PAGE, currentPage * PROJECTS_PER_PAGE);
+  }, [displayProjects, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory]);
+
   // 4. Staggered header text animation
   useEffect(() => {
     if (loading) return;
@@ -159,7 +171,7 @@ const ProjectsPageClient = () => {
 
   // 5. Cinematic Scroll-Scrub Animation (Ease In from bottom, Ease Out to top)
   useEffect(() => {
-    if (loading || displayProjects.length === 0) return;
+    if (loading || paginatedProjects.length === 0) return;
 
     let ctx: gsap.Context | null = null;
     let cancelled = false;
@@ -240,7 +252,7 @@ const ProjectsPageClient = () => {
       cancelled = true;
       if (ctx) ctx.revert();
     };
-  }, [loading, displayProjects]);
+  }, [loading, paginatedProjects]);
 
   return (
     <section 
@@ -323,8 +335,8 @@ const ProjectsPageClient = () => {
       ) : (
         <div className="container pb-48 projects-grid-container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {displayProjects.map((project, index) => {
-              const number = String(index + 1).padStart(2, "0");
+            {paginatedProjects.map((project, index) => {
+              const number = String((currentPage - 1) * PROJECTS_PER_PAGE + index + 1).padStart(2, "0");
               const isEven = index % 2 === 0;
               const tools = project.tags?.length ? project.tags : [];
               const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
@@ -423,6 +435,54 @@ const ProjectsPageClient = () => {
               );
             })}
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-24">
+              <button
+                onClick={() => {
+                  if (currentPage > 1) {
+                    setCurrentPage(currentPage - 1);
+                    containerRef.current?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                disabled={currentPage === 1}
+                className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
+              >
+                Prev
+              </button>
+              
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pNum) => (
+                <button
+                  key={pNum}
+                  onClick={() => {
+                    setCurrentPage(pNum);
+                    containerRef.current?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 cursor-pointer ${
+                    currentPage === pNum
+                      ? "bg-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/15 scale-[1.05]"
+                      : "bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
+                  }`}
+                >
+                  {pNum}
+                </button>
+              ))}
+
+              <button
+                onClick={() => {
+                  if (currentPage < totalPages) {
+                    setCurrentPage(currentPage + 1);
+                    containerRef.current?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                disabled={currentPage === totalPages}
+                className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       )}
     </section>
