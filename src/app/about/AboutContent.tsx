@@ -349,6 +349,7 @@ export default function AboutContent() {
                   src="/mine-photo.png"
                   alt="Salah Uddin Kader"
                   fill
+                  priority
                   sizes="(max-width: 1024px) 100vw, 400px"
                   className="object-cover grayscale-[10%] group-hover:grayscale-0 transition-all duration-700"
                 />
