@@ -185,31 +185,46 @@ const ProjectsPageClient = () => {
       ctx = gsap.context(() => {
         const cards = gsap.utils.toArray<HTMLElement>(".project-card-wrapper");
         cards.forEach((card, index) => {
-          // Single scrubbed timeline mapping entry, hold, and exit to scrollbar progress
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: card,
-              start: "top bottom",     // Starts when top of card enters bottom of viewport
-              end: "bottom top",       // Ends when bottom of card leaves top of viewport
-              scrub: 1,                // Smooth scrub
-              invalidateOnRefresh: true,
-              id: `projects-page-card-${index}`,
-            },
-          });
-
-          tl.fromTo(
+          // 1. Entrance animation (ease-in from bottom) - Trigger-based (plays once)
+          // This ensures that the cards are fully visible when they enter and stay visible
+          // even if the page scroll height is too short to scrub them.
+          gsap.fromTo(
             card,
-            { opacity: 0, y: 120, scale: 0.93 },
-            { opacity: 1, y: 0, scale: 1, ease: "power2.out", duration: 0.3 }
-          )
-          .to(card, { opacity: 1, y: 0, scale: 1, duration: 0.4 })
-          .to(card, {
-            opacity: 0,
-            y: -120,
-            scale: 0.93,
-            ease: "power2.in",
-            duration: 0.3,
-          });
+            { opacity: 0, y: 80, scale: 0.95 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.6,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 92%", // triggers near bottom of screen
+                toggleActions: "play none none none",
+                id: `projects-page-card-enter-${index}`,
+              }
+            }
+          );
+
+          // 2. Exit animation (ease-out at top) - Scrub-based
+          // This provides a smooth fade-out as the card leaves the top of the viewport.
+          gsap.fromTo(
+            card,
+            { opacity: 1, y: 0, scale: 1 },
+            {
+              opacity: 0,
+              y: -80,
+              scale: 0.95,
+              ease: "power1.in",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 12%",  // starts exiting when top of card is near the top
+                end: "top -12%",  // completes when it is scrolled further up
+                scrub: 1,
+                id: `projects-page-card-exit-${index}`,
+              }
+            }
+          );
         });
 
         // Trigger refresh
@@ -259,15 +274,18 @@ const ProjectsPageClient = () => {
                 key={cat}
                 onClick={() => {
                   setActiveCategory(cat);
-                  // Quick refresh triggers to adapt offsets
+                  if (containerRef.current) {
+                    containerRef.current.scrollIntoView({ behavior: "smooth" });
+                  }
+                  // Quick refresh triggers to adapt offsets after scroll completes
                   setTimeout(() => {
                     ScrollTrigger.refresh();
-                  }, 100);
+                  }, 400);
                 }}
                 className={`px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-all duration-300 ${
                   activeCategory === cat
                     ? "bg-[var(--accent)] border-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/15"
-                    : "bg-[var(--surface-1)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)]"
+                    : "bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)]"
                 }`}
               >
                 {cat}
@@ -286,7 +304,7 @@ const ProjectsPageClient = () => {
                 key={i} 
                 className={`project-card-wrapper ${i % 2 === 0 ? "" : "md:translate-y-16"}`}
               >
-                <div className="project-grid-card relative flex flex-col justify-between rounded-[2.5rem] bg-[var(--surface-1)] border border-[var(--border)] p-6 md:p-8 lg:p-10 aspect-[4/5] opacity-50">
+                <div className="project-grid-card aspect-[4/5] opacity-50">
                   <div className="space-y-6 w-full">
                     <div className="skeleton h-4 w-28" />
                     <div className="skeleton aspect-[16/10] w-full rounded-2xl" />
@@ -319,7 +337,7 @@ const ProjectsPageClient = () => {
                   key={project._id || index}
                   className={`project-card-wrapper ${isEven ? "" : "md:mt-16"}`}
                 >
-                  <div className="project-grid-card relative flex flex-col justify-between overflow-hidden rounded-[2.5rem] bg-[var(--surface-1)] border border-[var(--border)] p-6 sm:p-8 lg:p-10">
+                  <div className="project-grid-card">
                     
                     {/* Background Number */}
                     <div className="absolute right-8 top-6 text-8xl md:text-9xl font-bold font-mono text-[var(--foreground)] opacity-[0.02] pointer-events-none select-none group-hover:scale-105 group-hover:opacity-[0.04] transition-all duration-700">

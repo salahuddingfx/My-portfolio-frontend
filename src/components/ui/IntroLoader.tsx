@@ -13,8 +13,7 @@ export default function IntroLoader() {
 
   useEffect(() => {
     setIsClient(true);
-    const hasLoaded = sessionStorage.getItem("introLoaded");
-    if (hasLoaded) {
+    if (typeof window !== "undefined" && (window as any)._introLoaded) {
       setLoading(false);
       return;
     }
@@ -59,7 +58,9 @@ export default function IntroLoader() {
       setClicked(true);
       const timer = setTimeout(() => {
         setLoading(false);
-        sessionStorage.setItem("introLoaded", "true");
+        if (typeof window !== "undefined") {
+          (window as any)._introLoaded = true;
+        }
         window.dispatchEvent(new Event("intro-loader-finished"));
       }, 900);
       return () => clearTimeout(timer);

@@ -1883,7 +1883,7 @@ h2.landing-info-h2 {
 }
 
 .loading-wrap {
-  --Lsize: 145px;
+  --Lsize: 240px;
   padding: 6px;
   position: relative;
   min-width: 0px;
@@ -2230,6 +2230,15 @@ html[data-theme="light"] .loading-marquee {
 }
 
 .project-grid-card {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 2rem !important;
+  padding: 2.5rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2251,6 +2260,20 @@ html[data-theme="light"] .loading-marquee {
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.4),
     0 0 50px rgba(168, 85, 247, 0.07);
+}
+
+@media (max-width: 1024px) {
+  .project-grid-card {
+    padding: 2rem !important;
+    border-radius: 1.75rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-grid-card {
+    padding: 1.5rem !important;
+    border-radius: 1.5rem !important;
+  }
 }
 
 .project-card-wrapper {

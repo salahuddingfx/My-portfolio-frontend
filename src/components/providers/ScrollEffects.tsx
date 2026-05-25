@@ -38,7 +38,7 @@ export function ScrollEffects() {
           // always visually covers earlier pinned ones. Projects gets a bump
           // so it stays above all regular sections.
           allEls.forEach((el, i) => {
-            const baseZ = el.id === "projects" ? sections.length + 10 : i + 1;
+            const baseZ = i + 1;
             gsap.set(el, { zIndex: baseZ, position: "relative" });
           });
 
