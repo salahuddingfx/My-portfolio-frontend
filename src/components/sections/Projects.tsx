@@ -362,6 +362,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                     src={project.image}
                     alt={project.title}
                     fill
+                    priority={index === 0}
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="project-image object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
                   />
