@@ -61,16 +61,18 @@ const About = () => {
               {stats.map((stat) => (
                 <div 
                   key={stat.label} 
-                  className="flex flex-col justify-between items-start gap-4 p-6 sm:p-8 min-h-[140px] rounded-2xl bg-[var(--surface-2)]/40 border border-[var(--border)] hover:border-[var(--accent)]/30 hover:bg-[var(--surface-2)]/60 transition-all duration-300 shadow-sm"
+                  className="flex flex-col items-center justify-center text-center p-6 sm:p-8 min-h-[140px] rounded-2xl bg-[var(--surface-2)]/40 border border-[var(--border)] hover:border-[var(--accent)]/30 hover:bg-[var(--surface-2)]/60 transition-all duration-300 shadow-sm"
                 >
-                  <span
-                    className="text-4xl sm:text-5xl font-pixel text-[var(--foreground)] leading-none"
-                  >
-                    {stat.value}
-                  </span>
-                  <span className="text-[10px] sm:text-xs uppercase tracking-widest font-semibold text-[var(--muted)] leading-normal mt-auto">
-                    {stat.label}
-                  </span>
+                  <div className="p-2 flex flex-col items-center justify-center">
+                    <span
+                      className="text-4xl sm:text-5xl font-pixel text-[var(--foreground)] leading-none mb-2"
+                    >
+                      {stat.value}
+                    </span>
+                    <span className="text-[10px] sm:text-xs uppercase tracking-widest font-semibold text-[var(--muted)] leading-normal">
+                      {stat.label}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>

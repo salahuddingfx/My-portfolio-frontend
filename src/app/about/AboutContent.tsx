@@ -735,12 +735,12 @@ export default function AboutContent() {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.7 }}
-            className="max-w-xl"
+            className="max-w-2xl mx-auto text-center flex flex-col items-center justify-center"
           >
-            <h2 className="section-heading mb-4">
+            <h2 className="section-heading mb-4 text-center">
               Want to build something together?
             </h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed mb-8">
+            <p className="text-sm text-[var(--muted)] leading-relaxed max-w-md mb-8 text-center mx-auto">
               I&apos;m always open to hearing about new projects. If you have an
               idea or a problem you&apos;re trying to solve, let&apos;s talk.
             </p>
