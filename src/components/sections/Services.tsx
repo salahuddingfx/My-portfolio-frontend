@@ -56,7 +56,7 @@ const Services = () => {
       <div className="container">
 
         {/* Header - Centered */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="section-header-center">
           <span className="section-eyebrow">Services</span>
           <h2 className="section-heading mt-1">
             What I do best.
