@@ -404,7 +404,7 @@ export default function AboutContent() {
       <section className="section-shell bg-[var(--background)]">
         <div className="container">
           {/* Centered Section Header */}
-          <div className="text-center max-w-xl mx-auto mb-20">
+          <div className="section-header-center">
             <span className="section-eyebrow">Experience</span>
             <h2 className="section-heading mt-1">
               My journey so far.
