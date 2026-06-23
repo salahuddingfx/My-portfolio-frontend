@@ -56,6 +56,7 @@ export default function TrustedBy() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
+          className="section-header-center mb-0"
         >
           <span className="section-eyebrow">Trusted by</span>
           <h2 className="section-heading mt-1">Companies I&apos;ve worked with.</h2>
