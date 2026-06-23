@@ -221,8 +221,7 @@ export default function BlogContent() {
         {/* Page Header */}
         <div
           ref={headerRef}
-          className="max-w-2xl"
-          style={{ marginBottom: '3.5rem' }}
+          className="max-w-2xl mb-14"
         >
           <div className="animate-fade-up archive-badge inline-flex items-center gap-2 mb-4">
             <Sparkles size={10} />
@@ -237,7 +236,7 @@ export default function BlogContent() {
         </div>
 
         {/* Filter & Search Panel */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b-2 border-[var(--border)]" style={{ marginBottom: '3.5rem' }}>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b-[3px] border-[#000000]" style={{ marginBottom: '3.5rem' }}>
           {!loading && categories.length > 1 && (
             <div className="flex flex-wrap gap-3">
               {categories.map((cat) => (
@@ -265,7 +264,7 @@ export default function BlogContent() {
               placeholder="Search articles... (Press '/' to focus)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[var(--surface)] border-2 border-[var(--border)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--neo-yellow)] transition-all duration-200 shadow-[3px_3px_0px_#000] focus:shadow-[4px_4px_0px_#000]"
+              className="w-full bg-[var(--surface)] border-[3px] border-[#000000] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--neo-yellow)] transition-all duration-200 shadow-[3px_3px_0px_#000000] focus:shadow-[4px_4px_0px_#000000]"
               style={{ paddingLeft: "42px", paddingRight: "54px", paddingTop: "12px", paddingBottom: "12px" }}
             />
             {searchQuery && (
@@ -330,7 +329,7 @@ export default function BlogContent() {
                     }
                   }}
                   disabled={currentPage === 1}
-                  className="px-5 py-2.5 border-2 border-[var(--border)] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[2px_2px_0px_#000] hover:shadow-[3px_3px_0px_#000] cursor-pointer"
+                  className="px-5 py-2.5 border-[3px] border-[#000000] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000] hover:shadow-[4px_4px_0px_#000000] cursor-pointer"
                 >
                   Prev
                 </button>
@@ -342,10 +341,10 @@ export default function BlogContent() {
                       setCurrentPage(pNum);
                       containerRef.current?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className={`w-10 h-10 flex items-center justify-center text-xs font-bold transition-all duration-200 cursor-pointer border-2 border-[var(--border)] ${
+                    className={`w-10 h-10 flex items-center justify-center text-xs font-bold transition-all duration-200 cursor-pointer border-[3px] border-[#000000] ${
                       currentPage === pNum
-                        ? "bg-[var(--neo-yellow)] text-black shadow-[3px_3px_0px_#000] scale-[1.05]"
-                        : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[2px_2px_0px_#000]"
+                        ? "bg-[var(--neo-yellow)] text-black shadow-[3px_3px_0px_#000000] scale-[1.05]"
+                        : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000]"
                     }`}
                   >
                     {pNum}
@@ -360,7 +359,7 @@ export default function BlogContent() {
                     }
                   }}
                   disabled={currentPage === totalPages}
-                  className="px-5 py-2.5 border-2 border-[var(--border)] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[2px_2px_0px_#000] hover:shadow-[3px_3px_0px_#000] cursor-pointer"
+                  className="px-5 py-2.5 border-[3px] border-[#000000] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000] hover:shadow-[4px_4px_0px_#000000] cursor-pointer"
                 >
                   Next
                 </button>
@@ -375,8 +374,7 @@ export default function BlogContent() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7 }}
-          className="project-grid-card"
-          style={{ marginTop: '3.5rem', marginBottom: '3.5rem' }}
+          className="project-grid-card mt-12 mb-12"
         >
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
@@ -396,9 +394,8 @@ export default function BlogContent() {
                   onChange={(e) => setEmail(e.target.value)}
                   onFocus={() => setEmailFocused(true)}
                   onBlur={() => setEmailFocused(false)}
-                  className="w-full bg-[var(--surface)] border-2 px-4 pt-5 pb-1.5 text-sm text-[var(--foreground)] focus:outline-none transition-all duration-200"
+                  className="w-full bg-[var(--surface)] border-[3px] border-[#000000] px-4 pt-5 pb-1.5 text-sm text-[var(--foreground)] focus:outline-none focus:border-[var(--neo-yellow)] transition-all duration-200"
                   style={{ 
-                    borderColor: emailFocused ? 'var(--neo-yellow)' : 'var(--border)',
                     height: '50px',
                     boxShadow: '3px 3px 0px #000'
                   }}

@@ -254,7 +254,7 @@ const ProjectsPageClient = () => {
         style={{ paddingTop: "clamp(120px, 10vw, 170px)" }}
       >
         <div className="max-w-4xl space-y-6">
-          <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1 bg-[var(--neo-yellow)] border-[2px] border-[#000000] text-[#000000] text-[10px] font-bold uppercase tracking-widest font-mono shadow-[2px_2px_0px_#000000]" style={{ borderRadius: "var(--radius-sm)" }}>
+          <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1 bg-[var(--neo-yellow)] border-[3px] border-[#000000] text-[#000000] text-[10px] font-bold uppercase tracking-widest font-mono shadow-[3px_3px_0px_#000000]" style={{ borderRadius: "var(--radius-sm)" }}>
             <Sparkles size={10} strokeWidth={2.5} />
             <span>Digital Archive</span>
           </div>

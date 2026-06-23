@@ -69,12 +69,11 @@ const Footer = () => {
       <div className="container relative z-10 max-w-7xl">
         {/* Top Section */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b-[3px] border-[#000000]"
-          style={{ gap: '2rem', paddingTop: '3rem', paddingBottom: '3rem' }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b-[3px] border-[#000000] gap-8 py-12"
         >
 
           {/* Brand Column */}
-          <div className="flex flex-col lg:pr-10" style={{ gap: '2rem' }}>
+          <div className="flex flex-col lg:pr-10 gap-8">
             {/* Logo */}
             <Link href="/" aria-label="Home" className="group flex w-fit items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#000000] border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000] transition-all duration-200 group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-[5px_5px_0px_#000000]">
@@ -118,13 +117,13 @@ const Footer = () => {
           </div>
 
           {/* Nav Links Column */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:col-span-3" style={{ gap: '3rem' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:col-span-3 gap-12">
             {/* Pages */}
             <div>
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)]" style={{ marginBottom: '1.25rem' }}>
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)] mb-5">
                 Pages
               </p>
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-3 items-start" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '0.75rem 1.5rem' }}>
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-3 items-start">
                 {NAV_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link href={link.href} className="footer-link text-[13px]">
@@ -137,10 +136,10 @@ const Footer = () => {
 
             {/* Socials */}
             <div>
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)]" style={{ marginBottom: '1.25rem' }}>
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)] mb-5">
                 Social
               </p>
-              <ul className="flex flex-col items-start" style={{ gap: '0.75rem' }}>
+              <ul className="flex flex-col items-start gap-3">
                 {socials.map((social) => (
                   <li key={social.name}>
                     <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="footer-link text-[13px] flex items-center gap-2">
@@ -154,12 +153,12 @@ const Footer = () => {
 
             {/* CTA Card */}
             <div className="flex flex-col">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)]" style={{ marginBottom: '1.25rem' }}>
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)] mb-5">
                 Hire Me
               </p>
               <div
-                className="flex flex-col border-[3px] border-[#000000] bg-[var(--surface)] shadow-[4px_4px_0px_#000000]"
-                style={{ padding: '1.5rem', gap: '1rem', borderRadius: 'var(--radius-lg)' }}
+                className="flex flex-col border-[3px] border-[#000000] bg-[var(--surface)] shadow-[4px_4px_0px_#000000] p-6 gap-4"
+                style={{ borderRadius: "var(--radius-lg)" }}
               >
                 <p className="text-[13px] leading-relaxed text-[var(--muted)]">
                   Available for freelance projects, collaborations, and creative web work.
@@ -175,8 +174,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div
-          className="flex flex-col items-center justify-between text-center sm:flex-row sm:text-left"
-          style={{ gap: '1.5rem', paddingTop: '1.5rem', paddingBottom: '3rem' }}
+          className="flex flex-col items-center justify-between text-center sm:flex-row sm:text-left gap-6 py-6 pb-12"
         >
           <p className="text-center text-[12px] text-[var(--muted-soft)] font-bold uppercase tracking-wider">
             © {year} Salah Uddin Kader (@salahuddingfx) — All rights reserved.

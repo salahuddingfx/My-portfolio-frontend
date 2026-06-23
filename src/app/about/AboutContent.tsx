@@ -569,7 +569,7 @@ export default function AboutContent() {
       {/* ── Philosophy ── */}
       <section className="section-shell bg-[var(--surface)] border-y-[4px] border-[#000000]">
         <div className="container">
-          <div className="mb-12">
+          <div className="section-header-center mb-0">
             <span className="section-eyebrow">Philosophy</span>
             <h2 className="section-heading mt-1">
               How I think about work.
@@ -601,7 +601,7 @@ export default function AboutContent() {
       {/* ── Skills ── */}
       <section className="section-shell bg-[var(--background)]">
         <div className="container">
-          <div className="mb-12">
+          <div className="section-header-center mb-0">
             <span className="section-eyebrow">Skills & tools</span>
             <h2 className="section-heading mt-1">
               What I work with.
@@ -632,7 +632,7 @@ export default function AboutContent() {
       {/* ── Certificates ── */}
       <section className="section-shell bg-[var(--surface-2)] border-y-[4px] border-[#000000]">
         <div className="container">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
             <div>
               <span className="section-eyebrow">Certificates</span>
               <h2 className="section-heading mt-1">
@@ -742,7 +742,7 @@ export default function AboutContent() {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.7 }}
-            className="max-w-2xl mx-auto text-center flex flex-col items-center justify-center"
+            className="section-header-center"
           >
             <h2 className="section-heading mb-4 text-center">
               Want to build something together?

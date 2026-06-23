@@ -79,7 +79,7 @@ export default function ReviewsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pt-32 pb-24 relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] section-shell relative overflow-hidden">
       <div className="container relative z-10">
         
         {/* Back Link */}
@@ -109,8 +109,8 @@ export default function ReviewsPage() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-16 max-w-4xl">
-          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
-            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-yellow)]/10 text-[var(--neo-yellow)] border border-[var(--border)]">
+          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]">
+            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-yellow)]/10 text-[var(--neo-yellow)] border-[2px] border-[#000000]">
               <Star size={20} className="fill-[var(--neo-yellow)]" />
             </div>
             <div>
@@ -119,8 +119,8 @@ export default function ReviewsPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
-            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-green)]/10 text-[var(--neo-green)] border border-[var(--border)]">
+          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]">
+            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-green)]/10 text-[var(--neo-green)] border-[2px] border-[#000000]">
               <Heart size={20} className="fill-[var(--neo-green)]" />
             </div>
             <div>
@@ -129,8 +129,8 @@ export default function ReviewsPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
-            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-cyan)]/10 text-[var(--neo-cyan)] border border-[var(--border)]">
+          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]">
+            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-cyan)]/10 text-[var(--neo-cyan)] border-[2px] border-[#000000]">
               <Shield size={20} />
             </div>
             <div>
@@ -146,7 +146,7 @@ export default function ReviewsPage() {
             {[...Array(3)].map((_, i) => (
               <div 
                 key={i} 
-                className="p-6 sm:p-8 border-2 border-[var(--border)] bg-[var(--surface)] flex flex-col gap-6 shadow-[4px_4px_0px_#000]"
+                className="p-6 sm:p-8 border-[3px] border-[#000000] bg-[var(--surface)] flex flex-col gap-6 shadow-[4px_4px_0px_#000000]"
               >
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, j) => (
@@ -158,7 +158,7 @@ export default function ReviewsPage() {
                   <div className="skeleton h-4 w-5/6" />
                   <div className="skeleton h-4 w-4/5" />
                 </div>
-                <div className="flex items-center gap-3 pt-4 border-t-2 border-[var(--border)] mt-auto">
+                <div className="flex items-center gap-3 pt-4 border-t-[3px] border-[#000000] mt-auto">
                   <div className="skeleton h-10 w-10" />
                   <div className="space-y-1">
                     <div className="skeleton h-3.5 w-24" />
@@ -176,7 +176,7 @@ export default function ReviewsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="flex flex-col justify-between p-6 sm:p-8 border-2 border-[var(--border)] bg-[var(--surface)] shadow-[4px_4px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000] transition-all duration-200 group"
+                className="flex flex-col justify-between p-6 sm:p-8 border-[3px] border-[#000000] bg-[var(--surface)] shadow-[4px_4px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000000] transition-all duration-200 group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
@@ -191,8 +191,8 @@ export default function ReviewsPage() {
                   </blockquote>
                 </div>
 
-                <div className="flex items-center gap-3.5 pt-5 border-t-2 border-[var(--border)] mt-auto">
-                  <div className="relative w-10 h-10 overflow-hidden bg-[var(--surface-2)] border-2 border-[var(--border)] shrink-0">
+                <div className="flex items-center gap-3.5 pt-5 border-t-[3px] border-[#000000] mt-auto">
+                  <div className="relative w-10 h-10 overflow-hidden bg-[var(--surface-2)] border-[3px] border-[#000000] shrink-0">
                     <Image
                       src={review.avatar}
                       alt={review.name}

@@ -29,9 +29,9 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
 
       <div className="space-y-6">
         {/* Meta info & Tag */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[var(--border)] pb-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b-[3px] border-[#000000] pb-4">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 bg-[var(--neo-yellow)] border border-black" />
+            <span className="h-2 w-2 bg-[var(--neo-yellow)] border-[2px] border-black" />
             <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] font-mono">
               {category || "Article"}
             </span>
@@ -55,7 +55,7 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
         </div>
 
         {/* Mockup / Image Frame */}
-        <div className="relative overflow-hidden aspect-[16/10] bg-[var(--surface-2)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
+        <div className="relative overflow-hidden aspect-[16/10] bg-[var(--surface-2)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]">
           {image ? (
             <Image
               src={image}
@@ -85,7 +85,7 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
       </div>
 
       {/* Action CTA link */}
-      <div className="mt-8 pt-4 border-t-2 border-[var(--border)]">
+      <div className="mt-8 pt-4 border-t-[3px] border-[#000000]">
         <Link
           href={readLink}
           className="btn-primary !py-2.5 !px-5 !text-[10px] gap-1.5 group/btn inline-flex"
