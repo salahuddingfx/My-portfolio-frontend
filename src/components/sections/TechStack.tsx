@@ -69,7 +69,7 @@ const TechStack = () => {
       <div className="container">
 
         {/* Section header */}
-        <div className="text-center max-w-xl mx-auto mb-14">
+        <div className="section-header-center">
           <span className="section-eyebrow">Tech Stack</span>
           <h2 className="section-heading mt-1">
             Tools I work with.
