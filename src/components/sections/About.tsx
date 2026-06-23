@@ -31,7 +31,7 @@ const About = () => {
         {/* Centered Header */}
         <motion.div 
           {...fadeUp}
-          className="text-center max-w-3xl mx-auto mb-16 lg:mb-24"
+          className="section-header-center"
         >
           <span className="section-eyebrow mb-4 block">About me</span>
           <h2 className="section-heading text-5xl md:text-7xl mt-2 leading-tight">
