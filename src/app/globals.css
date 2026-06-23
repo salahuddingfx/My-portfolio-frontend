@@ -532,6 +532,7 @@ html[data-theme="dark"] .section-shell::after {
   color: var(--muted);
   line-height: 1.7;
   max-width: 52ch;
+  margin-top: var(--space-4);
 }
 
 /* =============================================================================
@@ -548,13 +549,13 @@ html[data-theme="dark"] .section-shell::after {
     transform var(--duration-base) var(--ease-out),
     box-shadow var(--duration-base) var(--ease-out),
     background var(--duration-base) var(--ease-out);
-  padding: 1.75rem !important;
+  padding: 2rem !important;
   box-shadow: var(--shadow-md);
 }
 
 @media (min-width: 640px) {
   .card {
-    padding: 2rem !important;
+    padding: 2.5rem !important;
   }
 }
 
@@ -992,7 +993,7 @@ html[data-theme="dark"] .section-shell::after {
   background: var(--surface);
   border: 3px solid #000000;
   border-radius: var(--radius-md);
-  padding: 1rem 1rem 0.75rem 1rem;
+  padding: 1.25rem 1rem 1rem 1rem;
   color: var(--foreground);
   font-size: 0.95rem;
   transition: border-color var(--duration-base) var(--ease-out),
