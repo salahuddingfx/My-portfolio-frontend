@@ -132,7 +132,7 @@ const Testimonials = () => {
       <div className="container relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-lg mx-auto mb-16">
+        <div className="section-header-center">
           <span className="section-eyebrow">Kind words</span>
           <h2 className="section-heading mt-1">
             What clients say.
