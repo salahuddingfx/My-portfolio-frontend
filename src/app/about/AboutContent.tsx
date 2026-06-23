@@ -364,7 +364,7 @@ export default function AboutContent() {
       {/* ── Story ── */}
       <section className="section-shell bg-[var(--surface-2)] border-y-[4px] border-[#000000]">
         <div className="container">
-          <div className="grid lg:grid-cols-12 gap-12">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-4">
               <span className="section-eyebrow">My story</span>
               <h2 className="section-heading mt-1">
