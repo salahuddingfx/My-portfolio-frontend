@@ -8,7 +8,7 @@ const ContactCTA = () => {
   return (
     <section
       id="contact-cta"
-      className="section-shell bg-[var(--surface-2)] border-t-[4px] border-[#000000] !pt-12 md:!pt-16"
+      className="section-shell bg-[var(--surface-2)] border-t-[4px] border-[#000000]"
     >
       <div className="container">
         <motion.div
