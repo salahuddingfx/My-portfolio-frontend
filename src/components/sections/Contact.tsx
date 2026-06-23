@@ -97,15 +97,15 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-shell pt-24 pb-20 bg-(--background) relative overflow-hidden">
+    <section id="contact" className="section-shell bg-(--background) relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-200 h-200 bg-(--accent)/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4" />
       <div className="absolute bottom-0 left-0 w-150 h-150 bg-(--accent)/5 blur-[120px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4" />
       
-      <div className="container max-w-6xl relative z-10 px-6 sm:px-10">
+      <div className="container relative z-10">
 
         {/* Header - Editorial Style */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end mb-16 lg:mb-32">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end mb-16 lg:mb-24">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
