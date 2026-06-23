@@ -29,10 +29,10 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
 
       <div className="space-y-6">
         {/* Meta info & Tag */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] pb-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[var(--border)] pb-4">
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] font-mono">
+            <span className="h-2 w-2 bg-[var(--neo-yellow)] border border-black" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] font-mono">
               {category || "Article"}
             </span>
           </div>
@@ -40,14 +40,14 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
           <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-mono">
             {date && (
               <span className="flex items-center gap-1.5">
-                <Calendar size={11} className="text-[var(--accent)]" />
+                <Calendar size={11} className="text-[var(--neo-yellow)]" />
                 {date}
               </span>
             )}
             <span className="text-[var(--border)]">•</span>
             {readTime && (
               <span className="flex items-center gap-1.5">
-                <Clock size={11} className="text-[var(--accent)]" />
+                <Clock size={11} className="text-[var(--neo-yellow)]" />
                 {readTime}
               </span>
             )}
@@ -55,7 +55,7 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
         </div>
 
         {/* Mockup / Image Frame */}
-        <div className="relative overflow-hidden rounded-2xl aspect-[16/10] bg-[var(--surface-2)] border border-[var(--border)] shadow-lg shadow-black/10">
+        <div className="relative overflow-hidden aspect-[16/10] bg-[var(--surface-2)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
           {image ? (
             <Image
               src={image}
@@ -65,13 +65,12 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
               className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-[1.03]"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[var(--accent-soft)]">
-              <span className="text-[var(--accent)] text-xs font-mono uppercase tracking-widest opacity-60">
+            <div className="absolute inset-0 flex items-center justify-center bg-[var(--surface-2)]">
+              <span className="text-[var(--muted)] text-xs font-mono uppercase tracking-widest opacity-60">
                 No Image
               </span>
             </div>
           )}
-          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-[var(--border)]" />
         </div>
 
         {/* Info */}
@@ -86,7 +85,7 @@ const BlogCard = ({ title, excerpt, date, readTime, category, image, slug, index
       </div>
 
       {/* Action CTA link */}
-      <div className="mt-8 pt-4 border-t border-[var(--border)]">
+      <div className="mt-8 pt-4 border-t-2 border-[var(--border)]">
         <Link
           href={readLink}
           className="btn-primary !py-2.5 !px-5 !text-[10px] gap-1.5 group/btn inline-flex"

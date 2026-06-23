@@ -140,10 +140,10 @@ const Testimonials = () => {
         </div>
 
         {loading ? (
-          <div className="max-w-3xl mx-auto glass-panel rounded-3xl p-6 sm:p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/30 backdrop-blur-md shadow-2xl flex flex-col gap-6">
+          <div className="max-w-3xl mx-auto border-[3px] border-[#000000] bg-[var(--surface)] shadow-[8px_8px_0px_#000000] p-6 sm:p-8 md:p-14 flex flex-col gap-6" style={{ borderRadius: "var(--radius-lg)" }}>
             <div className="flex justify-center gap-1">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="skeleton h-4 w-4 rounded-full" />
+                <div key={i} className="skeleton h-4 w-4" style={{ borderRadius: "var(--radius-sm)" }} />
               ))}
             </div>
             <div className="space-y-3 flex flex-col items-center">
@@ -151,8 +151,8 @@ const Testimonials = () => {
               <div className="skeleton h-4 w-10/12 md:w-2/3" />
               <div className="skeleton h-4 w-8/12 md:w-1/2" />
             </div>
-            <div className="mt-6 flex flex-col items-center gap-3 pt-6 border-t border-[var(--border)]">
-              <div className="skeleton h-12 w-12 rounded-full" />
+            <div className="mt-6 flex flex-col items-center gap-3 pt-6 border-t-[3px] border-[#000000]">
+              <div className="skeleton h-12 w-12" style={{ borderRadius: "var(--radius-md)" }} />
               <div className="skeleton h-4 w-28" />
               <div className="skeleton h-3.5 w-20" />
             </div>
@@ -171,7 +171,8 @@ const Testimonials = () => {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="relative w-full h-auto flex flex-col justify-between glass-panel rounded-3xl p-6 sm:p-8 md:p-14 border border-[var(--border)] bg-[var(--surface-2)]/35 backdrop-blur-xl shadow-2xl"
+                    className="relative w-full h-auto flex flex-col justify-between border-[3px] border-[#000000] bg-[var(--surface)] shadow-[8px_8px_0px_#000000] p-6 sm:p-8 md:p-14"
+                    style={{ borderRadius: "var(--radius-lg)" }}
                   >
                     {/* Stars */}
                     <Stars rating={currentReview.rating} />
@@ -184,8 +185,8 @@ const Testimonials = () => {
                     </blockquote>
 
                     {/* Author */}
-                    <div className="flex flex-col items-center gap-3 pt-6 border-t border-[var(--border)]">
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shadow-md shrink-0">
+                    <div className="flex flex-col items-center gap-3 pt-6 border-t-[3px] border-[#000000]">
+                      <div className="relative w-12 h-12 overflow-hidden bg-[var(--surface-2)] border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000] shrink-0" style={{ borderRadius: "var(--radius-md)" }}>
                         <Image
                           src={currentReview.avatar}
                           alt={currentReview.name}
@@ -195,8 +196,8 @@ const Testimonials = () => {
                         />
                       </div>
                       <div className="text-center">
-                        <p className="text-sm font-semibold text-[var(--foreground)] leading-none">{currentReview.name}</p>
-                        <p className="text-xs text-[var(--accent)] mt-1.5 font-medium tracking-widest uppercase">{currentReview.role}</p>
+                        <p className="text-sm font-extrabold text-[var(--foreground)] leading-none uppercase tracking-wide">{currentReview.name}</p>
+                        <p className="text-xs text-[var(--muted)] mt-1.5 font-bold tracking-widest uppercase">{currentReview.role}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -207,10 +208,11 @@ const Testimonials = () => {
               <div className="flex items-center justify-center gap-6 mt-10">
                 <button
                   onClick={handlePrev}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-2)]/60 text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] hover:-translate-x-[2px] cursor-pointer shadow-sm active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--foreground)] transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[3px_3px_0px_#000000] cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#000000]"
+                  style={{ borderRadius: "var(--radius-md)" }}
                   aria-label="Previous Testimonial"
                 >
-                  <ChevronLeft size={18} />
+                  <ChevronLeft size={18} strokeWidth={2.5} />
                 </button>
                 
                 {/* Dot Indicators */}
@@ -223,9 +225,10 @@ const Testimonials = () => {
                         setDirection(idx > currentIndex ? 1 : -1);
                         setCurrentIndex(idx);
                       }}
-                      className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                        idx === currentIndex ? "w-6 bg-[var(--accent)]" : "w-2.5 bg-[var(--border)] hover:bg-[var(--muted-soft)]"
+                      className={`transition-all duration-200 cursor-pointer border-[2px] border-[#000000] ${
+                        idx === currentIndex ? "w-6 h-2.5 bg-[var(--neo-yellow)]" : "w-2.5 h-2.5 bg-[var(--surface)] hover:bg-[var(--neo-cyan)]"
                       }`}
+                      style={{ borderRadius: "var(--radius-sm)" }}
                       aria-label={`Go to slide ${idx + 1}`}
                     />
                   ))}
@@ -233,10 +236,11 @@ const Testimonials = () => {
 
                 <button
                   onClick={handleNext}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-2)]/60 text-[var(--foreground)] transition-all duration-300 hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] hover:translate-x-[2px] cursor-pointer shadow-sm active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--foreground)] transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[3px_3px_0px_#000000] cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#000000]"
+                  style={{ borderRadius: "var(--radius-md)" }}
                   aria-label="Next Testimonial"
                 >
-                  <ChevronRight size={18} />
+                  <ChevronRight size={18} strokeWidth={2.5} />
                 </button>
               </div>
 

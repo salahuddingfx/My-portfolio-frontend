@@ -69,12 +69,12 @@ const SocialSidebar = () => {
             className="text-[var(--muted-soft)] hover:text-[var(--foreground)] transition-colors duration-200 group relative"
             aria-label={social.name}
           >
-            <social.icon className="w-[18px] h-[18px]" />
+            <social.icon className="w-[18px] h-[18px]" strokeWidth={2.5} />
 
             {/* Tooltip */}
             <span 
-              className="absolute left-9 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--surface-2)] border border-[var(--border)] text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] opacity-0 group-hover:opacity-100 -translate-x-1.5 group-hover:translate-x-0 transition-all duration-200 pointer-events-none whitespace-nowrap shadow-2xl"
-              style={{ padding: "8px 16px" }}
+              className="absolute left-9 top-1/2 -translate-y-1/2 bg-[var(--surface)] border-[2px] border-[#000000] shadow-[3px_3px_0px_#000000] text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] opacity-0 group-hover:opacity-100 -translate-x-1.5 group-hover:translate-x-0 transition-all duration-200 pointer-events-none whitespace-nowrap"
+              style={{ padding: "8px 16px", borderRadius: "var(--radius-md)" }}
             >
               {social.name}
             </span>
@@ -82,7 +82,7 @@ const SocialSidebar = () => {
         ))}
       </div>
 
-      <div className="w-px h-20 bg-[var(--border)]" />
+      <div className="w-1 h-20 bg-[#000000]" />
     </motion.div>
   );
 };

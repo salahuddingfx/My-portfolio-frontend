@@ -47,7 +47,7 @@ export default function TrustedBy() {
 
   return (
     <section
-      className="section-shell bg-[var(--surface)] border-y border-[var(--border)] overflow-hidden"
+      className="section-shell bg-[var(--surface)] border-y-[4px] border-[#000000] overflow-hidden"
       aria-label="Companies and partners"
     >
       <div className="container mb-10">
@@ -75,7 +75,8 @@ export default function TrustedBy() {
             const logo = (
               <div
                 key={`${partner._id}-${i}`}
-                className="flex-shrink-0 flex items-center justify-center gap-3 px-8 py-5 bg-[var(--background)] border border-[var(--border)] rounded-2xl group hover:border-[var(--accent)]/50 transition-all duration-300 min-w-[160px]"
+                className="flex-shrink-0 flex items-center justify-center gap-3 px-8 py-5 bg-[var(--background)] border-[3px] border-[#000000] group hover:bg-[var(--neo-yellow)] transition-all duration-200 min-w-[160px] shadow-[3px_3px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#000000]"
+                style={{ borderRadius: "var(--radius-md)" }}
               >
                 <div className="relative w-8 h-8 flex-shrink-0">
                   <Image

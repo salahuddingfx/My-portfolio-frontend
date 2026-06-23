@@ -112,11 +112,11 @@ const Contact = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="section-eyebrow text-[var(--foreground)] opacity-40 mb-6 block">Inquiries</span>
+            <span className="section-eyebrow mb-6 block">Inquiries</span>
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
               Let&apos;s build <br />
               <span className="text-stroke">something</span> <br />
-              <span className="text-(--accent) italic">legendary.</span>
+              <span className="text-[var(--neo-yellow)] italic">legendary.</span>
             </h2>
           </motion.div>
           <motion.div
@@ -167,7 +167,7 @@ const Contact = () => {
                   className="contact-info-item flex items-center gap-6 group min-w-0"
                 >
                   <div className="contact-info-icon shrink-0">
-                    <card.icon size={20} />
+                    <card.icon size={20} strokeWidth={2.5} />
                   </div>
                   <div className="flex flex-col gap-1 overflow-hidden min-w-0">
                     <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-(--muted-soft)">
@@ -219,11 +219,11 @@ const Contact = () => {
                   style={{ animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
                 >
                   {/* Spatial Brutalist Success Icon */}
-                  <div className="w-20 h-20 bg-emerald-500/10 border-2 border-emerald-500 text-emerald-400 rounded-full flex items-center justify-center mb-8 relative">
+                  <div className="w-20 h-20 bg-[var(--neo-green)] border-[3px] border-[#000000] text-[#000000] flex items-center justify-center mb-8 relative shadow-[4px_4px_0px_#000000]" style={{ borderRadius: "var(--radius-md)" }}>
                     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    <div className="absolute inset-0 rounded-full border border-emerald-500/30 animate-ping" style={{ animationDuration: '2s' }} />
+                    <div className="absolute inset-0 border-[2px] border-[var(--neo-green)] animate-ping" style={{ animationDuration: '2s', borderRadius: "var(--radius-md)" }} />
                   </div>
 
                   <h3 className="text-3xl font-black uppercase tracking-tighter italic mb-3">Delivered.</h3>
@@ -245,10 +245,10 @@ const Contact = () => {
                   <div className="flex items-center justify-between mb-12">
                     <div className="flex flex-col gap-1">
                       <h3 className="text-2xl font-black uppercase tracking-tighter italic">Send a Message.</h3>
-                      <div className="w-12 h-1 bg-(--accent) rounded-full" />
+                      <div className="w-12 h-1 bg-[var(--neo-yellow)]" style={{ borderRadius: "var(--radius-sm)" }} />
                     </div>
                     <div className="flex gap-1.5">
-                      {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-(--accent)/40" />)}
+                      {[1, 2, 3].map(i => <div key={i} className="w-2 h-2 bg-[var(--neo-yellow)]" style={{ borderRadius: "var(--radius-sm)" }} />)}
                     </div>
                   </div>
 

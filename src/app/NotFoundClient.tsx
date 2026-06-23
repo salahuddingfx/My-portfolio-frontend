@@ -46,10 +46,10 @@ const MatrixRain = ({ active }: { active: boolean }) => {
     const getAccentColor = () => {
       if (typeof window !== "undefined") {
         const computed = getComputedStyle(document.documentElement);
-        const color = computed.getPropertyValue("--accent").trim();
-        return color || "#a855f7"; // default to purple accent
+        const color = computed.getPropertyValue("--neo-yellow").trim();
+        return color || "#FFD84D";
       }
-      return "#a855f7";
+      return "#FFD84D";
     };
 
     const accentColor = getAccentColor();
@@ -67,9 +67,9 @@ const MatrixRain = ({ active }: { active: boolean }) => {
         // Random head highlight or alpha variation
         const rand = Math.random();
         if (rand > 0.98) {
-          ctx.fillStyle = "#ffffff"; // Glowing drop header
+          ctx.fillStyle = "#ffffff";
         } else if (rand > 0.85) {
-          ctx.fillStyle = "#d8b4fe"; // Accent soft glow (light violet)
+          ctx.fillStyle = "#FFD84D"; // yellow glow
         } else {
           ctx.fillStyle = accentColor;
         }
@@ -229,7 +229,7 @@ export default function NotFoundClient() {
 
   return (
     <section 
-      className="is-404-page min-h-screen w-full bg-[#080808] flex items-center justify-center relative overflow-hidden font-mono selection:bg-[var(--accent)]/30 selection:text-white py-24 px-4 sm:px-6 lg:px-8"
+      className="is-404-page min-h-screen w-full bg-[#080808] flex items-center justify-center relative overflow-hidden font-mono selection:bg-[var(--neo-yellow)]/30 selection:text-black py-24 px-4 sm:px-6 lg:px-8"
       style={{
         colorScheme: "dark",
         ["--background" as any]: "#080808",
@@ -248,7 +248,7 @@ export default function NotFoundClient() {
       {/* Grid Scanlines overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(255,255,255,0)_50%,rgba(0,0,0,0.3)_50%,rgba(0,0,0,0.3))] bg-[size:100%_4px] pointer-events-none z-[var(--z-base)] opacity-20" />
       <div
-        className="absolute w-[800px] h-[800px] rounded-full bg-[var(--accent)]/5 blur-[120px] pointer-events-none -top-40 -left-40 animate-pulse"
+        className="absolute w-[800px] h-[800px] rounded-full bg-[var(--neo-yellow)]/5 blur-[120px] pointer-events-none -top-40 -left-40 animate-pulse"
         style={{ animationDuration: "8s" }}
       />
       <div
@@ -257,13 +257,13 @@ export default function NotFoundClient() {
       />
 
       {/* Top Header Controls / Safe Return */}
-      <div className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] w-full py-4 px-6 md:px-10 flex justify-between items-center bg-[#080808]/80 backdrop-blur-md border-b border-white/5">
+      <div className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] w-full py-4 px-6 md:px-10 flex justify-between items-center bg-[#080808]/80 backdrop-blur-md border-b-2 border-white/5">
         <div className="flex items-center">
           <Link href="/" className="inline-flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center group-hover:border-[var(--accent)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+            <div className="w-9 h-9 bg-[var(--surface)] border-2 border-white/10 flex items-center justify-center group-hover:border-[var(--neo-yellow)] transition-all duration-200 group-hover:scale-105 shadow-[2px_2px_0px_rgba(255,255,255,0.1)] group-hover:shadow-[3px_3px_0px_rgba(255,215,77,0.3)]">
               <ArrowRight
                 size={14}
-                className="text-white group-hover:text-[var(--accent)] rotate-180 transition-colors"
+                className="text-white group-hover:text-[var(--neo-yellow)] rotate-180 transition-colors"
               />
             </div>
             <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold text-[var(--muted)] group-hover:text-white transition-colors">
@@ -297,14 +297,14 @@ export default function NotFoundClient() {
 
             {/* Diagnostics Panel */}
             <div
-              className="flex flex-col gap-1 p-6 md:p-8 rounded-2xl md:rounded-[2rem] bg-[var(--surface)] border border-[var(--border)] shadow-2xl relative overflow-hidden"
+              className="flex flex-col gap-1 p-6 md:p-8 bg-[var(--surface)] border-2 border-white/10 shadow-[4px_4px_0px_rgba(255,255,255,0.05)] relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-6 opacity-[0.02]">
                 <Activity size={100} />
               </div>
 
-              <div className="text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[var(--accent)] mb-6 font-black border-b border-white/5 pb-4 flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-ping" />
+              <div className="text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[var(--neo-yellow)] mb-6 font-black border-b border-white/5 pb-4 flex items-center gap-3">
+                <div className="w-2 h-2 bg-[var(--neo-yellow)] animate-ping" />
                 Diagnostic Report
               </div>
 
@@ -319,7 +319,7 @@ export default function NotFoundClient() {
 
                 <div className="flex items-center justify-between py-3 border-b border-white/[0.03]">
                   <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">
-                    <HardDrive size={14} className="text-[var(--accent)] shrink-0" />
+                    <HardDrive size={14} className="text-[var(--neo-yellow)] shrink-0" />
                     <span>Location</span>
                   </div>
                   <span className="text-[10px] text-white font-bold uppercase">Sector 404-G</span>
@@ -327,7 +327,7 @@ export default function NotFoundClient() {
 
                 <div className="flex items-center justify-between py-3 border-b border-white/[0.03]">
                   <div className="flex items-center gap-3 text-[10px] text-[var(--muted)] font-bold uppercase tracking-widest">
-                    <Cpu size={14} className="text-[var(--accent)] shrink-0" />
+                    <Cpu size={14} className="text-[var(--neo-yellow)] shrink-0" />
                     <span>Protocol</span>
                   </div>
                   <span className="text-[10px] text-white font-bold uppercase">HTTPS/RESEND</span>
@@ -363,7 +363,7 @@ export default function NotFoundClient() {
                   <button
                     key={macro}
                     onClick={() => handleCommand(macro)}
-                    className="px-4 md:px-5 py-2.5 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] rounded-xl border border-[var(--border)] bg-white/[0.01] text-[var(--muted)] hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(168,85,247,0.15)] cursor-pointer"
+                    className="px-4 md:px-5 py-2.5 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] border-2 border-white/10 bg-white/[0.01] text-[var(--muted)] hover:bg-[var(--neo-yellow)] hover:text-black hover:border-[var(--neo-yellow)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(255,215,77,0.3)] cursor-pointer shadow-[2px_2px_0px_rgba(255,255,255,0.05)]"
                   >
                     {macro}
                   </button>
@@ -376,15 +376,15 @@ export default function NotFoundClient() {
           <div
             className="lg:col-span-8 flex flex-col"
           >
-            <div className="w-full flex-1 bg-[var(--surface)]/50 border border-white/10 rounded-2xl md:rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col backdrop-blur-3xl min-h-[480px] md:min-h-[560px]">
+            <div className="w-full flex-1 bg-[var(--surface)]/50 border-2 border-white/10 shadow-[6px_6px_0px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col backdrop-blur-3xl min-h-[480px] md:min-h-[560px]">
               {/* Terminal Header */}
-              <div className="px-6 md:px-10 py-5 md:py-6 bg-[var(--surface-2)]/50 border-b border-white/5 flex items-center justify-between">
+              <div className="px-6 md:px-10 py-5 md:py-6 bg-[var(--surface-2)]/50 border-b-2 border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+                  <span className="w-2.5 h-2.5 bg-[#ff5f57]" />
+                  <span className="w-2.5 h-2.5 bg-[#ffbd2e]" />
+                  <span className="w-2.5 h-2.5 bg-[#27c93f]" />
                 </div>
-                <div className="flex items-center gap-3.5 text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[var(--accent)] font-black">
+                <div className="flex items-center gap-3.5 text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[var(--neo-yellow)] font-black">
                   <TerminalIcon size={14} className="shrink-0" />
                   <span>Terminal Recovery Environment</span>
                 </div>
@@ -417,12 +417,12 @@ export default function NotFoundClient() {
               {/* Terminal Input */}
               <form
                 onSubmit={handleSubmit}
-                className="p-5 md:p-8 bg-black/20 border-t border-white/5 flex items-center gap-4 md:gap-6"
+                className="p-5 md:p-8 bg-black/20 border-t-2 border-white/5 flex items-center gap-4 md:gap-6"
               >
                 <div className="flex items-center gap-1.5 shrink-0 select-none text-[10px] md:text-xs">
                   <span className="text-emerald-400 font-black">guest</span>
                   <span className="text-white opacity-20">@</span>
-                  <span className="text-[var(--accent)] font-black">salahuddin</span>
+                  <span className="text-[var(--neo-yellow)] font-black">salahuddin</span>
                   <span className="text-white opacity-20">:</span>
                   <span className="text-yellow-500 font-black">~</span>
                   <span className="text-white font-black">$</span>
@@ -447,7 +447,7 @@ export default function NotFoundClient() {
                 />
                 <button
                   type="submit"
-                  className="text-white w-10 h-10 md:w-12 md:h-12 rounded-xl bg-[var(--accent)] shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_35px_rgba(168,85,247,0.5)] hover:scale-105 active:scale-95 transition-all shrink-0 cursor-pointer flex items-center justify-center"
+                  className="text-white w-10 h-10 md:w-12 md:h-12 bg-[var(--neo-yellow)] shadow-[3px_3px_0px_rgba(255,215,77,0.3)] hover:shadow-[4px_4px_0px_rgba(255,215,77,0.5)] hover:scale-105 active:scale-95 transition-all shrink-0 cursor-pointer flex items-center justify-center border-2 border-black/30"
                 >
                   <ArrowRight size={18} strokeWidth={2.5} />
                 </button>

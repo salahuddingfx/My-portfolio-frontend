@@ -45,7 +45,7 @@ const Stars = ({ rating = 5 }: { rating?: number }) => (
       <Star
         key={i}
         size={14}
-        className={i < rating ? "text-[var(--accent)] fill-[var(--accent)]" : "text-[var(--muted-soft)]"}
+        className={i < rating ? "text-[var(--neo-yellow)] fill-[var(--neo-yellow)]" : "text-[var(--muted-soft)]"}
       />
     ))}
   </div>
@@ -80,10 +80,6 @@ export default function ReviewsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pt-32 pb-24 relative overflow-hidden">
-      {/* Background blobs */}
-      <div className="absolute top-[10%] left-[-10%] w-[45vw] h-[45vw] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[20%] right-[-10%] w-[45vw] h-[45vw] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none" />
-
       <div className="container relative z-10">
         
         {/* Back Link */}
@@ -113,9 +109,9 @@ export default function ReviewsPage() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-16 max-w-4xl">
-          <div className="flex items-center gap-4 p-5 rounded-2xl bg-[var(--surface-2)]/30 border border-[var(--border)] backdrop-blur-md">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--accent)]/10 text-[var(--accent)]">
-              <Star size={20} className="fill-[var(--accent)]" />
+          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
+            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-yellow)]/10 text-[var(--neo-yellow)] border border-[var(--border)]">
+              <Star size={20} className="fill-[var(--neo-yellow)]" />
             </div>
             <div>
               <p className="text-lg font-bold leading-none">5.0 / 5.0</p>
@@ -123,9 +119,9 @@ export default function ReviewsPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-5 rounded-2xl bg-[var(--surface-2)]/30 border border-[var(--border)] backdrop-blur-md">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--accent)]/10 text-[var(--accent)]">
-              <Heart size={20} className="fill-[var(--accent)]" />
+          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
+            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-green)]/10 text-[var(--neo-green)] border border-[var(--border)]">
+              <Heart size={20} className="fill-[var(--neo-green)]" />
             </div>
             <div>
               <p className="text-lg font-bold leading-none">100%</p>
@@ -133,8 +129,8 @@ export default function ReviewsPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-5 rounded-2xl bg-[var(--surface-2)]/30 border border-[var(--border)] backdrop-blur-md">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--accent)]/10 text-[var(--accent)]">
+          <div className="flex items-center gap-4 p-5 bg-[var(--surface)] border-2 border-[var(--border)] shadow-[4px_4px_0px_#000]">
+            <div className="flex h-11 w-11 items-center justify-center bg-[var(--neo-cyan)]/10 text-[var(--neo-cyan)] border border-[var(--border)]">
               <Shield size={20} />
             </div>
             <div>
@@ -150,11 +146,11 @@ export default function ReviewsPage() {
             {[...Array(3)].map((_, i) => (
               <div 
                 key={i} 
-                className="glass-panel rounded-3xl p-6 sm:p-8 border border-[var(--border)] bg-[var(--surface-2)]/20 flex flex-col gap-6"
+                className="p-6 sm:p-8 border-2 border-[var(--border)] bg-[var(--surface)] flex flex-col gap-6 shadow-[4px_4px_0px_#000]"
               >
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, j) => (
-                    <div key={j} className="skeleton h-3.5 w-3.5 rounded-full" />
+                    <div key={j} className="skeleton h-3.5 w-3.5" />
                   ))}
                 </div>
                 <div className="space-y-2">
@@ -162,8 +158,8 @@ export default function ReviewsPage() {
                   <div className="skeleton h-4 w-5/6" />
                   <div className="skeleton h-4 w-4/5" />
                 </div>
-                <div className="flex items-center gap-3 pt-4 border-t border-[var(--border)] mt-auto">
-                  <div className="skeleton h-10 w-10 rounded-full" />
+                <div className="flex items-center gap-3 pt-4 border-t-2 border-[var(--border)] mt-auto">
+                  <div className="skeleton h-10 w-10" />
                   <div className="space-y-1">
                     <div className="skeleton h-3.5 w-24" />
                     <div className="skeleton h-3 w-16" />
@@ -180,12 +176,12 @@ export default function ReviewsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="flex flex-col justify-between glass-panel rounded-3xl p-6 sm:p-8 border border-[var(--border)] bg-[var(--surface-2)]/30 backdrop-blur-xl hover:border-[var(--accent)]/30 hover:bg-[var(--surface-2)]/50 transition-all duration-300 shadow-lg group"
+                className="flex flex-col justify-between p-6 sm:p-8 border-2 border-[var(--border)] bg-[var(--surface)] shadow-[4px_4px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000] transition-all duration-200 group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
                     <Stars rating={review.rating} />
-                    <CheckCircle size={16} className="text-[var(--accent)] opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <CheckCircle size={16} className="text-[var(--neo-green)] opacity-50 group-hover:opacity-100 transition-opacity" />
                   </div>
 
                   <blockquote className="mb-6">
@@ -195,8 +191,8 @@ export default function ReviewsPage() {
                   </blockquote>
                 </div>
 
-                <div className="flex items-center gap-3.5 pt-5 border-t border-[var(--border)] mt-auto">
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shadow-sm shrink-0">
+                <div className="flex items-center gap-3.5 pt-5 border-t-2 border-[var(--border)] mt-auto">
+                  <div className="relative w-10 h-10 overflow-hidden bg-[var(--surface-2)] border-2 border-[var(--border)] shrink-0">
                     <Image
                       src={review.avatar}
                       alt={review.name}
@@ -207,7 +203,7 @@ export default function ReviewsPage() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-[var(--foreground)] leading-none">{review.name}</p>
-                    <p className="text-xs text-[var(--accent)] mt-1.5 font-medium tracking-wider uppercase">{review.role}</p>
+                    <p className="text-xs text-[var(--neo-yellow)] mt-1.5 font-bold tracking-wider uppercase">{review.role}</p>
                   </div>
                 </div>
               </motion.div>

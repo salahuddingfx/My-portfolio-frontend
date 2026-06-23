@@ -16,14 +16,14 @@ const EmailSidebar = () => {
     >
       <a
         href={`mailto:${email}`}
-        className="text-[11px] text-[var(--muted-soft)] hover:text-[var(--foreground)] transition-colors duration-200 tracking-widest"
+        className="text-[11px] text-[var(--muted-soft)] hover:text-[var(--foreground)] transition-colors duration-200 tracking-widest font-bold uppercase"
         style={{ writingMode: "vertical-rl", fontFamily: "var(--font-jetbrains-mono)" }}
         aria-label="Send email"
       >
         {email}
       </a>
 
-      <div className="w-px h-20 bg-[var(--border)]" />
+      <div className="w-1 h-20 bg-[#000000]" />
     </motion.div>
   );
 };

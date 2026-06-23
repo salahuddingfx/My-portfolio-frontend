@@ -82,11 +82,11 @@ const Services = () => {
               >
                 {/* Number + Icon */}
                 <div className="flex items-center justify-between mb-6 w-full">
-                  <span className="text-xs font-mono text-[var(--muted-soft)] tracking-widest">
+                  <span className="text-xs font-mono text-[var(--muted-soft)] tracking-widest font-bold">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {service.icon && (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--surface-2)] border border-[var(--border)] group-hover:border-[var(--accent)]/50 group-hover:bg-[var(--accent)]/10 text-xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                    <div className="flex h-12 w-12 items-center justify-center bg-[var(--surface-2)] border-[3px] border-[#000000] group-hover:border-[#000000] group-hover:bg-[var(--neo-yellow)] shadow-[3px_3px_0px_#000000] text-xl transition-all duration-200 group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-[5px_5px_0px_#000000]" style={{ borderRadius: "var(--radius-md)" }}>
                       {service.icon}
                     </div>
                   )}
@@ -94,7 +94,7 @@ const Services = () => {
 
                 {/* Title */}
                 <h3
-                  className="text-xl font-semibold text-[var(--foreground)] mb-3 transition-colors duration-200"
+                  className="text-xl font-extrabold text-[var(--foreground)] mb-3 transition-colors duration-200 uppercase tracking-wide"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {service.title}
@@ -107,7 +107,7 @@ const Services = () => {
 
                 {/* Price */}
                 {service.price && (
-                  <div className="text-xs font-mono text-[var(--accent)] mb-5 uppercase tracking-widest">
+                  <div className="text-xs font-mono text-[var(--foreground)] mb-5 uppercase tracking-widest font-bold">
                     {service.price}
                   </div>
                 )}
@@ -118,7 +118,7 @@ const Services = () => {
                     {service.tags.map((t) => (
                       <span
                         key={t}
-                        className="badge bg-[var(--surface-2)] border-[var(--border)] text-[var(--muted)] group-hover:border-[var(--accent)]/30 group-hover:text-[var(--accent)] group-hover:bg-[var(--accent-soft)] transition-all duration-300 text-[10px] tracking-wider uppercase font-mono px-2.5 py-1"
+                        className="badge group-hover:bg-[var(--neo-yellow)] group-hover:text-[#000000] transition-all duration-200"
                       >
                         {t}
                       </span>
@@ -127,16 +127,17 @@ const Services = () => {
                 )}
 
                 {/* Link */}
-                <div className="border-t border-[var(--border)] pt-5 mt-auto">
+                <div className="border-t-[3px] border-[#000000] pt-5 mt-auto">
                   <Link
                     href="/services"
                     aria-label={`Learn more about ${service.title}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors duration-300 group/link"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors duration-200 uppercase tracking-wider group/link"
                   >
                     <span>Learn more about {service.title}</span>
                     <ArrowUpRight
                       size={14}
-                      className="text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300"
+                      strokeWidth={2.5}
+                      className="text-[var(--muted)] group-hover:text-[var(--neo-yellow)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
                     />
                   </Link>
                 </div>

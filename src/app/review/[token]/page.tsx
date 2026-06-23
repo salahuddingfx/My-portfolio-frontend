@@ -124,8 +124,8 @@ const ReviewFormPage = () => {
   if (!valid) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <div className="text-center p-8 bg-[var(--surface)] border border-[var(--border)] rounded-[2rem] max-w-md mx-6 shadow-2xl">
-          <p className="text-sm font-mono uppercase tracking-widest text-rose-400 mb-4">Verification Error</p>
+        <div className="text-center p-8 bg-[var(--surface)] border-2 border-[var(--border)] max-w-md mx-6 shadow-[4px_4px_0px_#000]">
+          <p className="text-sm font-mono uppercase tracking-widest text-rose-500 mb-4 font-bold">Verification Error</p>
           <p className="text-base text-[var(--muted)]">{message}</p>
         </div>
       </main>
@@ -135,38 +135,21 @@ const ReviewFormPage = () => {
   if (submitted) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-[var(--background)] px-6 relative overflow-hidden">
-        {/* Spatial floating particles background */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse"
-              style={{
-                left: `${10 + Math.random() * 80}%`,
-                top: `${10 + Math.random() * 80}%`,
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: `${3 + Math.random() * 4}s`
-              }}
-            />
-          ))}
-        </div>
-
         <div 
-          className="contact-card flex flex-col items-center text-center max-w-xl w-full rounded-[2.5rem] shadow-2xl relative z-10"
+          className="contact-card flex flex-col items-center text-center max-w-xl w-full relative z-10"
           style={{
             animation: 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both'
           }}
         >
-          {/* Spatial brutalist success icon */}
-          <div className="w-20 h-20 bg-[var(--accent)]/10 border-2 border-[var(--accent)] text-[var(--accent)] rounded-full flex items-center justify-center mb-8 relative">
+          {/* Brutalist success icon */}
+          <div className="w-20 h-20 bg-[var(--neo-green)]/10 border-2 border-[var(--neo-green)] text-[var(--neo-green)] flex items-center justify-center mb-8 shadow-[3px_3px_0px_#000]">
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              <path strokeLinecap="square" strokeLinejoin="miter" d="M5 13l4 4L19 7" />
             </svg>
-            <div className="absolute inset-0 rounded-full border border-[var(--accent)]/30 animate-ping" style={{ animationDuration: '2s' }} />
           </div>
 
           <h1 className="text-3xl font-black uppercase tracking-tighter italic mb-3">Transmission Successful.</h1>
-          <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-8">Testimonial Cataloged</p>
+          <p className="text-xs font-mono uppercase tracking-widest text-[var(--neo-green)] mb-8 font-bold">Testimonial Cataloged</p>
 
           <p className="text-sm text-[var(--muted)] leading-relaxed mb-10">
             Thank you! Your feedback has been safely captured. It is currently queued for Salah&apos;s digital display board, where it will serve as an endorsement of our successful collaboration.
@@ -259,18 +242,18 @@ const ReviewFormPage = () => {
                           <img
                             src={formData.avatar}
                             alt="Avatar preview"
-                            className="h-16 w-16 rounded-2xl object-cover border border-[var(--border)]"
+                            className="h-16 w-16 object-cover border-2 border-[var(--border)] shadow-[2px_2px_0px_#000]"
                           />
                           <button
                             type="button"
                             onClick={() => setFormData({ ...formData, avatar: '' })}
-                            className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition"
+                            className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition font-mono uppercase tracking-widest"
                           >
                             Remove
                           </button>
                         </div>
                       ) : (
-                        <label className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl border border-[var(--border)] text-xs text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--accent)]/60 transition cursor-pointer w-fit">
+                        <label className="inline-flex items-center gap-3 px-5 py-3 border-2 border-[var(--border)] text-xs text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--neo-yellow)] transition cursor-pointer w-fit font-mono uppercase tracking-widest shadow-[2px_2px_0px_#000]">
                           {uploading ? 'Uploading...' : 'Upload avatar'}
                           <input
                             type="file"
@@ -318,13 +301,13 @@ const ReviewFormPage = () => {
                           setFormData({ ...formData, rating: num });
                           if (errors.rating) setErrors((prev) => { const c = { ...prev }; delete c.rating; return c; });
                         }}
-                        className={`flex items-center justify-center w-12 h-12 rounded-xl border transition-all ${
+                        className={`flex items-center justify-center w-12 h-12 border-2 transition-all ${
                           formData.rating >= num
-                            ? 'border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/5'
-                            : 'border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)]/40'
+                            ? 'border-[var(--neo-yellow)] text-[var(--neo-yellow)] bg-[var(--neo-yellow)]/5 shadow-[2px_2px_0px_#000]'
+                            : 'border-[var(--border)] text-[var(--muted)] hover:border-[var(--neo-yellow)]/40'
                         }`}
                       >
-                        <Star size={16} className={formData.rating >= num ? 'fill-[var(--accent)]' : ''} />
+                        <Star size={16} className={formData.rating >= num ? 'fill-[var(--neo-yellow)]' : ''} />
                       </button>
                     ))}
                   </div>

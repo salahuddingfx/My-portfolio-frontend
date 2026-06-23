@@ -16,7 +16,7 @@ const WorkImage = ({ image, alt, liveLink, onLoad, priority }: WorkImageProps) =
   return (
     <div className="work-image">
       <div className="work-image-in">
-        <div className="relative overflow-hidden aspect-[16/10] w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] h-[200px] sm:h-[280px] lg:h-[350px]">
+        <div className="relative overflow-hidden bg-[var(--surface-2)] aspect-[16/10] border-[3px] border-[#000000] shadow-[6px_6px_0px_#000000]" style={{ borderRadius: "var(--radius-lg)" }}>
           <Image
             src={image}
             alt={alt}
@@ -281,7 +281,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
       return (
         <div
           key={project._id || index}
-          className={`project-row group ${index === 0 ? "" : "border-t border-[var(--border)]"} py-12 md:py-20 lg:py-28`}
+          className={`project-row group ${index === 0 ? "" : "border-t-[3px] border-[#000000]"} py-12 md:py-20 lg:py-28`}
         >
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-center">
@@ -303,7 +303,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
 
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Project Name</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] opacity-60">Project Name</p>
                     <h3
                       className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--foreground)] leading-tight"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
@@ -313,14 +313,14 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Category</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] opacity-60">Category</p>
                     <p className="text-sm font-medium text-[var(--foreground)] opacity-70">
                       {project.category || "—"}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-60">Stack</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] opacity-60">Stack</p>
                     <p className="text-sm text-[var(--foreground)] opacity-65 leading-relaxed">{tools}</p>
                   </div>
 
@@ -357,7 +357,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
               <div
                 className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}
               >
-                <div className="relative overflow-hidden rounded-[2rem] bg-[var(--surface-2)] aspect-[16/10] border border-[var(--border)] shadow-2xl">
+                <div className="relative overflow-hidden bg-[var(--surface-2)] aspect-[16/10] border-[3px] border-[#000000] shadow-[6px_6px_0px_#000000]" style={{ borderRadius: "var(--radius-lg)" }}>
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -366,7 +366,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="project-image object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
                   />
-                  <div className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-[var(--border)]" />
+                  <div className="pointer-events-none absolute inset-0 ring-[2px] ring-[#000000]" style={{ borderRadius: "var(--radius-lg)" }} />
                 </div>
               </div>
             </div>
@@ -460,7 +460,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                       <div className="skeleton h-5 w-28 mb-2" />
                       <div className="skeleton h-4 w-full" />
                     </div>
-                    <div className="skeleton aspect-[16/10] w-full rounded-2xl" />
+                    <div className="skeleton aspect-[16/10] w-full" style={{ borderRadius: "var(--radius-lg)" }} />
                   </div>
                 ))}
               </div>
@@ -514,11 +514,12 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border transition-all duration-300 ${
+                className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest border-[3px] border-[#000000] transition-all duration-200 ${
                   activeCategory === cat
-                    ? "bg-[var(--accent)] border-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20"
-                    : "bg-[var(--nav-pill-bg)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--navbar-btn-hover-bg)] hover:text-[var(--foreground)]"
+                    ? "bg-[#000000] border-[#000000] text-[#FFFFFF] shadow-[4px_4px_0px_#000000] translate-x-[-2px] translate-y-[-2px]"
+                    : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000]"
                 }`}
+                style={{ borderRadius: "var(--radius-md)" }}
               >
                 {cat}
               </button>
@@ -544,7 +545,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
                   </div>
                 </div>
                 <div className="lg:col-span-7">
-                  <div className="skeleton aspect-[16/10] rounded-[2rem]" />
+                  <div className="skeleton aspect-[16/10]" style={{ borderRadius: "var(--radius-lg)" }} />
                 </div>
               </div>
             </div>

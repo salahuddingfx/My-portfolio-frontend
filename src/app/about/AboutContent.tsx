@@ -315,7 +315,7 @@ export default function AboutContent() {
               transition={{ duration: 0.7 }}
               className="lg:col-span-7 flex flex-col gap-6"
             >
-              <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-[var(--foreground)] uppercase" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                 Salah Uddin<br />Kader
               </h1>
               <p className="text-lg lg:text-xl text-[var(--muted)] leading-relaxed max-w-xl">
@@ -344,7 +344,7 @@ export default function AboutContent() {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="lg:col-span-5"
             >
-              <div className="relative aspect-[4/5] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--surface)] border border-[var(--border)] group">
+              <div className="relative aspect-[4/5] overflow-hidden bg-[var(--surface)] border-[4px] border-[#000000] shadow-[8px_8px_0px_#000000] group" style={{ borderRadius: "var(--radius-lg)" }}>
                 <Image
                   src="/mine-photo.png"
                   alt="Salah Uddin Kader"
@@ -353,8 +353,8 @@ export default function AboutContent() {
                   sizes="(max-width: 1024px) 100vw, 400px"
                   className="object-cover grayscale-[10%] group-hover:grayscale-0 transition-all duration-700"
                 />
-                <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-[var(--border)] rounded-tl-sm" />
-                <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-[var(--border)] rounded-br-sm" />
+                <div className="absolute top-3 left-3 w-5 h-5 border-t-[2px] border-l-[2px] border-[var(--neo-yellow)]" style={{ borderRadius: "var(--radius-sm)" }} />
+                <div className="absolute bottom-3 right-3 w-5 h-5 border-b-[2px] border-r-[2px] border-[var(--neo-yellow)]" style={{ borderRadius: "var(--radius-sm)" }} />
               </div>
             </motion.div>
           </div>
@@ -362,7 +362,7 @@ export default function AboutContent() {
       </section>
  
       {/* ── Story ── */}
-      <section className="section-shell bg-[var(--surface)] border-y border-[var(--border)]">
+      <section className="section-shell bg-[var(--surface-2)] border-y-[4px] border-[#000000]">
         <div className="container">
           <div className="grid lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4">
@@ -468,7 +468,8 @@ export default function AboutContent() {
                     <div className="flex justify-center lg:hidden">
                       <div
                         data-variant="mobile"
-                        className="timeline-badge flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface-2)] border border-[var(--border)] text-[var(--muted)] z-20"
+                        className="timeline-badge flex h-10 w-10 items-center justify-center bg-[var(--surface)] border-[3px] border-[#000000] text-[var(--muted)] z-20 shadow-[3px_3px_0px_#000000]"
+                        style={{ borderRadius: "var(--radius-md)" }}
                       >
                         <Icon size={14} className="timeline-icon" />
                       </div>
@@ -484,7 +485,7 @@ export default function AboutContent() {
                       <h3 className="text-[18px] leading-tight font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                         {item.title}
                       </h3>
-                      <span className="text-xs text-[var(--accent)] font-medium">
+                      <span className="text-xs text-[var(--foreground)] font-bold uppercase tracking-wider">
                         {item.subtitle}
                       </span>
                       <p className="text-[14px] text-[var(--muted)] leading-[1.75] mt-1">
@@ -506,7 +507,7 @@ export default function AboutContent() {
                           <h3 className="text-[22px] leading-tight font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                             {item.title}
                           </h3>
-                          <span className="text-xs text-[var(--accent)] font-medium">
+                          <span className="text-xs text-[var(--foreground)] font-bold uppercase tracking-wider">
                             {item.subtitle}
                           </span>
                           <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2">
@@ -516,7 +517,8 @@ export default function AboutContent() {
                         <div className="hidden lg:flex justify-center">
                           <div
                             data-variant="desktop"
-                            className="timeline-badge flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] text-[var(--muted)] z-20"
+                            className="timeline-badge flex h-14 w-14 items-center justify-center bg-[var(--surface)] border-[3px] border-[#000000] text-[var(--muted)] z-20 shadow-[4px_4px_0px_#000000]"
+                            style={{ borderRadius: "var(--radius-md)" }}
                           >
                             <Icon size={18} className="timeline-icon" />
                           </div>
@@ -529,7 +531,8 @@ export default function AboutContent() {
                         <div className="hidden lg:flex justify-center">
                           <div
                             data-variant="desktop"
-                            className="timeline-badge flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] text-[var(--muted)] z-20"
+                            className="timeline-badge flex h-14 w-14 items-center justify-center bg-[var(--surface)] border-[3px] border-[#000000] text-[var(--muted)] z-20 shadow-[4px_4px_0px_#000000]"
+                            style={{ borderRadius: "var(--radius-md)" }}
                           >
                             <Icon size={18} className="timeline-icon" />
                           </div>
@@ -542,10 +545,10 @@ export default function AboutContent() {
                           <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--muted-soft)]">
                             {item.year}
                           </span>
-                          <h3 className="text-[22px] leading-tight font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                          <h3 className="text-[22px] leading-tight font-extrabold text-[var(--foreground)]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                             {item.title}
                           </h3>
-                          <span className="text-xs text-[var(--accent)] font-medium">
+                          <span className="text-xs text-[var(--foreground)] font-bold uppercase tracking-wider">
                             {item.subtitle}
                           </span>
                           <p className="text-[15px] text-[var(--muted)] leading-[1.8] mt-2">
@@ -564,7 +567,7 @@ export default function AboutContent() {
       </section>
 
       {/* ── Philosophy ── */}
-      <section className="section-shell bg-[var(--surface)] border-y border-[var(--border)]">
+      <section className="section-shell bg-[var(--surface)] border-y-[4px] border-[#000000]">
         <div className="container">
           <div className="mb-12">
             <span className="section-eyebrow">Philosophy</span>
@@ -580,10 +583,10 @@ export default function AboutContent() {
                 transition={{ duration: 0.6, delay: i * 0.08 }}
                 className="card card-hover"
               >
-                <span className="text-xs font-mono text-[var(--muted-soft)] mb-4 block">
+                <span className="text-xs font-mono text-[var(--muted-soft)] mb-4 block font-bold">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="text-base font-semibold text-[var(--foreground)] mb-3" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                <h3 className="text-base font-extrabold text-[var(--foreground)] mb-3 uppercase tracking-wide" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                   {item.title}
                 </h3>
                 <p className="text-sm text-[var(--muted)] leading-relaxed">
@@ -627,7 +630,7 @@ export default function AboutContent() {
       </section>
 
       {/* ── Certificates ── */}
-      <section className="section-shell bg-[var(--surface)] border-y border-[var(--border)]">
+      <section className="section-shell bg-[var(--surface-2)] border-y-[4px] border-[#000000]">
         <div className="container">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
             <div>
@@ -647,9 +650,12 @@ export default function AboutContent() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className="relative px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-colors duration-200 focus-visible:outline-none"
+                  className="relative px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-colors duration-200 focus-visible:outline-none border-[2px] border-[#000000]"
                   style={{
-                    color: activeCategory === category ? "var(--background)" : "var(--muted)",
+                    color: activeCategory === category ? "#000000" : "var(--muted)",
+                    backgroundColor: activeCategory === category ? "var(--neo-yellow)" : "var(--surface)",
+                    borderRadius: "var(--radius-md)",
+                    boxShadow: activeCategory === category ? "3px 3px 0px #000000" : "2px 2px 0px #000000",
                   }}
                 >
                   {activeCategory === category && (
@@ -680,10 +686,11 @@ export default function AboutContent() {
               {filteredCertificates.map((cert) => (
                  <div
                   key={cert._id || `${cert.title}-${cert.issuer}`}
-                  className="group relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] transition-all duration-300 hover:border-[var(--accent)]/30 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-20px_rgba(168,85,247,0.25)]"
+                  className="group relative overflow-hidden border-[3px] border-[#000000] bg-[var(--surface)] transition-all duration-200 shadow-[4px_4px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000000]"
+                  style={{ borderRadius: "var(--radius-lg)" }}
                 >
                   {/* Top Border Glow Line */}
-                  <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center z-20" />
+                  <div className="absolute top-0 left-0 w-full h-[5px] bg-[var(--neo-yellow)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-20" />
                   <div className="relative aspect-[4/3]">
                     <Image
                       src={cert.image}

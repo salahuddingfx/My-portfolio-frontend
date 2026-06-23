@@ -254,12 +254,12 @@ const ProjectsPageClient = () => {
         style={{ paddingTop: "clamp(120px, 10vw, 170px)" }}
       >
         <div className="max-w-4xl space-y-6">
-          <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/15 text-[var(--accent)] text-[10px] font-bold uppercase tracking-widest font-mono">
-            <Sparkles size={10} />
+          <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1 bg-[var(--neo-yellow)] border-[2px] border-[#000000] text-[#000000] text-[10px] font-bold uppercase tracking-widest font-mono shadow-[2px_2px_0px_#000000]" style={{ borderRadius: "var(--radius-sm)" }}>
+            <Sparkles size={10} strokeWidth={2.5} />
             <span>Digital Archive</span>
           </div>
-          <h1 className="animate-fade-up text-5xl sm:text-7xl font-bold tracking-tight leading-[0.95] font-space-grotesk">
-            Creative <span className="text-[var(--accent)]">engineering</span><br />
+          <h1 className="animate-fade-up text-5xl sm:text-7xl font-extrabold tracking-tight leading-[0.95] font-space-grotesk uppercase">
+            Creative <span className="text-[var(--neo-yellow)]">engineering</span><br />
             & interfaces.
           </h1>
           <p className="animate-fade-up text-base sm:text-lg text-[var(--muted)] leading-relaxed max-w-2xl font-normal">
@@ -269,7 +269,7 @@ const ProjectsPageClient = () => {
 
         {/* Category Filters */}
         {!loading && categories.length > 1 && (
-          <div className="animate-fade-up flex flex-wrap gap-4 mt-16 border-b border-[var(--border)] pb-8">
+          <div className="animate-fade-up flex flex-wrap gap-4 mt-16 border-b-[3px] border-[#000000] pb-8">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -283,10 +283,11 @@ const ProjectsPageClient = () => {
                     ScrollTrigger.refresh();
                   }, 400);
                 }}
-                className={`px-6 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wider uppercase border transition-all duration-300 ${activeCategory === cat
-                  ? "bg-[var(--accent)] border-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20 scale-[1.02]"
-                  : "bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
+                className={`px-6 py-3 text-xs sm:text-sm font-bold tracking-wider uppercase border-[3px] border-[#000000] transition-all duration-200 ${activeCategory === cat
+                  ? "bg-[#000000] border-[#000000] text-[#FFFFFF] shadow-[4px_4px_0px_#000000] translate-x-[-2px] translate-y-[-2px]"
+                  : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000]"
                   }`}
+                style={{ borderRadius: "var(--radius-md)" }}
               >
                 {cat}
               </button>
@@ -347,14 +348,14 @@ const ProjectsPageClient = () => {
                     <div className="space-y-6">
                       {/* Tag */}
                       <div className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)]">
+                        <span className="h-2 w-2 bg-[var(--neo-yellow)] border-[2px] border-[#000000]" style={{ borderRadius: "var(--radius-sm)" }} />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)]">
                           {project.category || "Development"}
                         </span>
                       </div>
 
                       {/* Mockup Frame */}
-                      <div className="relative overflow-hidden rounded-2xl aspect-[16/10] bg-[var(--surface-2)] border border-[var(--border)] shadow-lg shadow-black/10">
+                      <div className="relative overflow-hidden aspect-[16/10] bg-[var(--surface-2)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]">
                         <Image
                           src={project.image}
                           alt={project.title}
@@ -363,7 +364,7 @@ const ProjectsPageClient = () => {
                           sizes="(max-width: 1024px) 100vw, 40vw"
                           className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-[1.03]"
                         />
-                        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-[var(--border)]" />
+                        <div className="pointer-events-none absolute inset-0 ring-[2px] ring-[#000000]" />
                       </div>
 
                       {/* Info */}
@@ -386,7 +387,7 @@ const ProjectsPageClient = () => {
                           {tools.map((tag) => (
                             <span
                               key={tag}
-                              className="badge bg-[var(--surface-2)] border-[var(--border)] text-[var(--muted-soft)] text-[9px] tracking-wider uppercase font-mono px-2 py-0.5"
+                              className="badge text-[9px]"
                             >
                               {tag}
                             </span>

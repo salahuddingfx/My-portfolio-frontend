@@ -61,7 +61,8 @@ const About = () => {
               {stats.map((stat) => (
                 <div 
                   key={stat.label} 
-                  className="flex flex-col items-center justify-center text-center p-6 sm:p-8 min-h-[140px] rounded-2xl bg-[var(--surface-2)]/40 border border-[var(--border)] hover:border-[var(--accent)]/30 hover:bg-[var(--surface-2)]/60 transition-all duration-300 shadow-sm"
+                  className="flex flex-col items-center justify-center text-center p-6 sm:p-8 min-h-[140px] bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000000] transition-all duration-200"
+                  style={{ borderRadius: "var(--radius-lg)" }}
                 >
                   <div className="p-2 flex flex-col items-center justify-center">
                     <span
@@ -69,7 +70,7 @@ const About = () => {
                     >
                       {stat.value}
                     </span>
-                    <span className="text-[10px] sm:text-xs uppercase tracking-widest font-semibold text-[var(--muted)] leading-normal">
+                    <span className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-[var(--muted)] leading-normal">
                       {stat.label}
                     </span>
                   </div>
@@ -78,9 +79,9 @@ const About = () => {
             </div>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Link href="/about" className="btn-primary px-10 py-5 rounded-2xl group">
+              <Link href="/about" className="btn-primary px-10 py-5 group" style={{ borderRadius: "var(--radius-md)" }}>
                 <span>Read my story</span>
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={18} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               
               {settings?.cvUrl && (
@@ -88,9 +89,10 @@ const About = () => {
                   href={settings.cvUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-10 py-5 bg-[var(--navbar-btn-bg)] border border-[var(--border)] text-[var(--foreground)] font-bold uppercase tracking-tighter rounded-2xl hover:bg-[var(--navbar-btn-hover-bg)] hover:border-[var(--accent)]/50 transition-all group"
+                  className="flex items-center gap-3 px-10 py-5 bg-[var(--surface)] border-[3px] border-[#000000] text-[var(--foreground)] font-bold uppercase tracking-wider shadow-[4px_4px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000000] hover:bg-[var(--neo-yellow)] transition-all group"
+                  style={{ borderRadius: "var(--radius-md)" }}
                 >
-                  <Download size={18} className="text-[var(--accent)] group-hover:translate-y-0.5 transition-transform" />
+                  <Download size={18} strokeWidth={2.5} className="text-[var(--foreground)] group-hover:translate-y-0.5 transition-transform" />
                   <span>Download CV</span>
                 </a>
               )}
@@ -106,7 +108,7 @@ const About = () => {
             <div className="portrait-3d">
               <div
                 ref={portraitRef}
-                className="portrait-3d-card relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[var(--surface)] border border-[var(--border)] group shadow-2xl"
+                className="portrait-3d-card relative aspect-[4/5] overflow-hidden bg-[var(--surface)] group"
                 onMouseMove={(event) => {
                   // Capture values synchronously (cheap), then batch DOM writes in rAF
                   const clientX = event.clientX;
@@ -149,8 +151,8 @@ const About = () => {
               <div className="portrait-3d-accent absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-[var(--accent)] opacity-40" />
               
               {/* Badge overlay */}
-              <div className="portrait-3d-badge absolute bottom-8 left-8 bg-[var(--surface)]/60 backdrop-blur-xl border border-[var(--border)] p-5 rounded-2xl flex items-center gap-4 shadow-2xl">
-                <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+              <div className="portrait-3d-badge absolute bottom-8 left-8 bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000] p-5 flex items-center gap-4" style={{ borderRadius: "var(--radius-md)" }}>
+                <div className="w-2 h-2 bg-[var(--neo-green)] border-[2px] border-[#000000] animate-pulse" style={{ borderRadius: "var(--radius-sm)" }} />
                 <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--foreground)]">Based in BD</span>
               </div>
               </div>

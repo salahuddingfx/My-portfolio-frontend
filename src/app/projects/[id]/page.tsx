@@ -86,14 +86,14 @@ export default async function ProjectDetailPage({
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent)] bg-[var(--accent)]/10 px-3 py-1 rounded-full border border-[var(--accent)]/20">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--foreground)] bg-[var(--neo-yellow)] px-3 py-1 border-2 border-black font-bold shadow-[2px_2px_0px_#000]">
                 {project.category}
               </span>
               <div className="flex gap-2">
                 {project.tags?.slice(0, 3).map((tag: string) => (
                   <span
                     key={tag}
-                    className="text-[10px] font-mono uppercase tracking-widest text-[var(--muted)] bg-[var(--surface-2)] px-2 py-1 rounded-full border border-[var(--border)]"
+                    className="text-[10px] font-mono uppercase tracking-widest text-[var(--foreground)] bg-[var(--surface-2)] px-2 py-1 border-2 border-[var(--border)] font-bold shadow-[2px_2px_0px_#000]"
                   >
                     {tag}
                   </span>
@@ -108,7 +108,7 @@ export default async function ProjectDetailPage({
             </h1>
           </div>
 
-          <div className="relative aspect-[16/9] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shadow-2xl">
+          <div className="relative aspect-[16/9] overflow-hidden bg-[var(--surface-2)] border-2 border-[var(--border)] shadow-[6px_6px_0px_#000]">
             <Image
               src={project.image}
               alt={project.title}

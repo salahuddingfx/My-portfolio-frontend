@@ -115,8 +115,8 @@ const Hero = () => {
           <div className="landing-intro flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12">
             {/* Status */}
             <div className="flex items-center gap-3 mb-6">
-              <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse" />
-              <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest">
+              <span className="w-2 h-2 bg-[var(--neo-green)] border-[2px] border-[#000000] animate-pulse" style={{ borderRadius: "var(--radius-sm)" }} />
+              <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest font-bold">
                 Available for work | @salahuddingfx
               </span>
             </div>

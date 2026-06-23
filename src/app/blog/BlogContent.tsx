@@ -237,7 +237,7 @@ export default function BlogContent() {
         </div>
 
         {/* Filter & Search Panel */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b border-[var(--border)]" style={{ marginBottom: '3.5rem' }}>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b-2 border-[var(--border)]" style={{ marginBottom: '3.5rem' }}>
           {!loading && categories.length > 1 && (
             <div className="flex flex-wrap gap-3">
               {categories.map((cat) => (
@@ -258,26 +258,26 @@ export default function BlogContent() {
           <div className="relative flex items-center w-full md:w-72 group">
             <Search 
               size={15} 
-              className="absolute left-4 text-[var(--muted-soft)] group-focus-within:text-[var(--accent)] transition-colors duration-200 pointer-events-none" 
+              className="absolute left-4 text-[var(--muted-soft)] group-focus-within:text-[var(--neo-yellow)] transition-colors duration-200 pointer-events-none" 
             />
             <input
               type="text"
               placeholder="Search articles... (Press '/' to focus)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[var(--navbar-btn-bg)] border border-[var(--border)] rounded-[var(--radius-lg)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-soft)] transition-all duration-300 shadow-sm"
+              className="w-full bg-[var(--surface)] border-2 border-[var(--border)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-soft)] focus:outline-none focus:border-[var(--neo-yellow)] transition-all duration-200 shadow-[3px_3px_0px_#000] focus:shadow-[4px_4px_0px_#000]"
               style={{ paddingLeft: "42px", paddingRight: "54px", paddingTop: "12px", paddingBottom: "12px" }}
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-10 p-1 rounded-full text-[var(--muted-soft)] hover:text-[var(--foreground)] hover:bg-[var(--border)] transition-colors"
+                className="absolute right-10 p-1 text-[var(--muted-soft)] hover:text-[var(--foreground)] transition-colors"
                 title="Clear search"
               >
                 <X size={10} />
               </button>
             )}
-            <span className="absolute right-4 px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--surface-2)] text-[9px] font-mono text-[var(--muted-soft)] tracking-wider pointer-events-none group-focus-within:opacity-0 transition-opacity">
+            <span className="absolute right-4 px-1.5 py-0.5 border border-[var(--border)] bg-[var(--surface-2)] text-[9px] font-mono text-[var(--muted-soft)] tracking-wider pointer-events-none group-focus-within:opacity-0 transition-opacity">
               /
             </span>
           </div>
@@ -330,7 +330,7 @@ export default function BlogContent() {
                     }
                   }}
                   disabled={currentPage === 1}
-                  className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
+                  className="px-5 py-2.5 border-2 border-[var(--border)] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[2px_2px_0px_#000] hover:shadow-[3px_3px_0px_#000] cursor-pointer"
                 >
                   Prev
                 </button>
@@ -342,10 +342,10 @@ export default function BlogContent() {
                       setCurrentPage(pNum);
                       containerRef.current?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 cursor-pointer ${
+                    className={`w-10 h-10 flex items-center justify-center text-xs font-bold transition-all duration-200 cursor-pointer border-2 border-[var(--border)] ${
                       currentPage === pNum
-                        ? "bg-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/15 scale-[1.05]"
-                        : "bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)]"
+                        ? "bg-[var(--neo-yellow)] text-black shadow-[3px_3px_0px_#000] scale-[1.05]"
+                        : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[2px_2px_0px_#000]"
                     }`}
                   >
                     {pNum}
@@ -360,7 +360,7 @@ export default function BlogContent() {
                     }
                   }}
                   disabled={currentPage === totalPages}
-                  className="px-5 py-2.5 border rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] cursor-pointer"
+                  className="px-5 py-2.5 border-2 border-[var(--border)] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[2px_2px_0px_#000] hover:shadow-[3px_3px_0px_#000] cursor-pointer"
                 >
                   Next
                 </button>
@@ -396,10 +396,11 @@ export default function BlogContent() {
                   onChange={(e) => setEmail(e.target.value)}
                   onFocus={() => setEmailFocused(true)}
                   onBlur={() => setEmailFocused(false)}
-                  className="w-full bg-[var(--navbar-btn-bg)] border rounded-[var(--radius-md)] px-4 pt-5 pb-1.5 text-sm text-[var(--foreground)] focus:outline-none transition-all duration-200"
+                  className="w-full bg-[var(--surface)] border-2 px-4 pt-5 pb-1.5 text-sm text-[var(--foreground)] focus:outline-none transition-all duration-200"
                   style={{ 
-                    borderColor: emailFocused ? 'var(--accent)' : 'var(--border)',
-                    height: '50px'
+                    borderColor: emailFocused ? 'var(--neo-yellow)' : 'var(--border)',
+                    height: '50px',
+                    boxShadow: '3px 3px 0px #000'
                   }}
                 />
                 <span
@@ -408,7 +409,7 @@ export default function BlogContent() {
                     top: (emailFocused || email) ? '6px' : '15px',
                     fontSize: (emailFocused || email) ? '10px' : '14px',
                     color: emailFocused 
-                      ? 'var(--accent)' 
+                      ? 'var(--neo-yellow)' 
                       : (email ? 'var(--muted)' : 'var(--muted-soft)'),
                     fontFamily: 'var(--font-mono)',
                     textTransform: 'uppercase',

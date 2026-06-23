@@ -95,7 +95,7 @@ export default async function BlogPostPage({
         <article className="max-w-3xl mx-auto space-y-10">
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent)] bg-[var(--accent)]/10 px-3 py-1 rounded-full border border-[var(--accent)]/20">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--foreground)] bg-[var(--neo-yellow)] px-3 py-1 border-2 border-black font-bold shadow-[2px_2px_0px_#000]">
                 {post.category}
               </span>
               <div className="flex items-center gap-4 text-[11px] text-[var(--muted-soft)] font-mono">
@@ -122,7 +122,7 @@ export default async function BlogPostPage({
             </p>
           </div>
 
-          <div className="relative aspect-[16/9] rounded-[var(--radius-lg)] overflow-hidden bg-[var(--surface-2)] border border-[var(--border)] shadow-2xl">
+          <div className="relative aspect-[16/9] overflow-hidden bg-[var(--surface-2)] border-2 border-[var(--border)] shadow-[6px_6px_0px_#000]">
             <Image
               src={post.image}
               alt={post.title}
@@ -137,7 +137,7 @@ export default async function BlogPostPage({
             {post.tags?.map((tag: string) => (
               <span
                 key={tag}
-                className="text-[10px] font-mono uppercase tracking-widest text-[var(--muted)] bg-[var(--surface-2)] px-3 py-1 rounded-full border border-[var(--border)]"
+                className="text-[10px] font-mono uppercase tracking-widest text-[var(--foreground)] bg-[var(--surface-2)] px-3 py-1 border-2 border-[var(--border)] font-bold shadow-[2px_2px_0px_#000]"
               >
                 {tag}
               </span>
