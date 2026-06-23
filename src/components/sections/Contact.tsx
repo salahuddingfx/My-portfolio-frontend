@@ -189,9 +189,9 @@ const Contact = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="border-t border-(--border) mt-12 pt-8"
+              className="border-t border-(--border) mt-10 pt-8"
             >
-              <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-6">Social Networks</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-5">Social Networks</p>
               <div className="flex flex-wrap gap-x-8 gap-y-4">
                 {['LinkedIn', 'Github', 'Twitter', 'Instagram'].map(social => (
                   <a key={social} href="#" className="text-xs font-bold hover:text-(--accent) transition-all uppercase tracking-widest text-[var(--foreground)] opacity-60">
@@ -252,8 +252,8 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-14">
-                    <div className="grid md:grid-cols-2 gap-x-12 gap-y-14">
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+                    <div className="grid md:grid-cols-2 gap-x-10 gap-y-10">
                       <div className="contact-input-group">
                         <input
                           type="text"
