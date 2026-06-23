@@ -328,11 +328,11 @@ export default function AboutContent() {
                   Get in touch
                   <ArrowRight size={15} />
                 </Link>
-                <Link href="/projects" className="btn-secondary">
+                <Link href="/projects" className="btn-outline">
                   View my work
                 </Link>
                 {cvUrl && (
-                  <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 border border-[var(--border)] rounded-[var(--radius-md)] text-xs font-medium text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--accent)]/50 transition-all">
+                  <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
                     <Download size={13} /> Resume
                   </a>
                 )}
@@ -346,7 +346,7 @@ export default function AboutContent() {
             >
               <div className="relative aspect-[4/5] overflow-hidden bg-[var(--surface)] border-[4px] border-[#000000] shadow-[8px_8px_0px_#000000] group" style={{ borderRadius: "var(--radius-lg)" }}>
                 <Image
-                  src="/mine-photo.png"
+                  src="/CV-Images.png"
                   alt="Salah Uddin Kader"
                   fill
                   priority
@@ -575,7 +575,7 @@ export default function AboutContent() {
               How I think about work.
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
             {PHILOSOPHY.map((item, i) => (
               <motion.div
                 key={i}
@@ -650,7 +650,7 @@ export default function AboutContent() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className="relative px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-colors duration-200 focus-visible:outline-none border-[2px] border-[#000000]"
+                  className="relative px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-colors duration-200 focus-visible:outline-none border-[3px] border-[#000000]"
                   style={{
                     color: activeCategory === category ? "#000000" : "var(--muted)",
                     backgroundColor: activeCategory === category ? "var(--neo-yellow)" : "var(--surface)",
@@ -682,7 +682,7 @@ export default function AboutContent() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {filteredCertificates.map((cert) => (
                  <div
                   key={cert._id || `${cert.title}-${cert.issuer}`}

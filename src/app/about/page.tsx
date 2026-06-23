@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About — Salah Uddin Kader (Saka Chowdhury)",
     description: "Learn about Saka Chowdhury (Salah Uddin Kader) — Full Stack AI Engineer, Creative Developer, and secure Database Designer based in Cox's Bazar, Bangladesh. Profile, experience, and tech stack.",
-    images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
+    images: [{ url: "/CV-Images.png", width: 1200, height: 630 }],
   },
 };
 

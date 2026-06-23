@@ -79,7 +79,7 @@ const About = () => {
             </div>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Link href="/about" className="btn-primary px-10 py-5 group" style={{ borderRadius: "var(--radius-md)" }}>
+              <Link href="/about" className="btn-primary group">
                 <span>Read my story</span>
                 <ArrowRight size={18} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -89,8 +89,7 @@ const About = () => {
                   href={settings.cvUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-10 py-5 bg-[var(--surface)] border-[3px] border-[#000000] text-[var(--foreground)] font-bold uppercase tracking-wider shadow-[4px_4px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000000] hover:bg-[var(--neo-yellow)] transition-all group"
-                  style={{ borderRadius: "var(--radius-md)" }}
+                  className="btn-outline group"
                 >
                   <Download size={18} strokeWidth={2.5} className="text-[var(--foreground)] group-hover:translate-y-0.5 transition-transform" />
                   <span>Download CV</span>
@@ -139,7 +138,7 @@ const About = () => {
                 }}
               >
               <Image
-                src="/mine-photo.png"
+                src="/CV-Images.png"
                 alt="Salah Uddin Kader"
                 fill
                 priority

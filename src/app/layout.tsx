@@ -154,7 +154,7 @@ export const metadata: Metadata = {
       "Creative portfolio of Salah Uddin Kader (Saka Chowdhury). Premium interactive web experiences built with Next.js, React, TypeScript, GSAP, and Three.js. Based in Cox's Bazar, Bangladesh.",
     url: "https://salahuddin.codes",
     siteName: "Salah Uddin Kader (Saka Chowdhury)",
-    images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
+    images: [{ url: "/CV-Images.png", width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
   },
@@ -164,7 +164,7 @@ export const metadata: Metadata = {
     title: "Salah Uddin Kader (Saka Chowdhury) — Creative Developer & Frontend Engineer",
     description:
       "Creative portfolio of Salah Uddin Kader (Saka Chowdhury). Premium interactive web experiences built with Next.js, React, TypeScript, GSAP, and Three.js.",
-    images: ["/mine-photo.png"],
+    images: ["/CV-Images.png"],
   },
 
   verification: {
@@ -274,7 +274,7 @@ export default function RootLayout({
                 description:
                   "Salah Uddin Kader (known as Saka Chowdhury / @salahuddingfx) is a Creative Developer, Frontend Engineer, and Full Stack Developer based in Cox's Bazar, Bangladesh. Specialist in Next.js, React, TypeScript, GSAP, and Three.js.",
                 url: "https://salahuddin.codes",
-                image: "https://salahuddin.codes/mine-photo.png",
+                image: "https://salahuddin.codes/CV-Images.png",
                 jobTitle: ["Creative Developer", "Frontend Engineer", "Full Stack Developer"],
                 knowsAbout: [
                   "React",
@@ -342,7 +342,7 @@ export default function RootLayout({
                 inLanguage: "en",
                 primaryImageOfPage: {
                   "@type": "ImageObject",
-                  url: "https://salahuddin.codes/mine-photo.png",
+                  url: "https://salahuddin.codes/CV-Images.png",
                 },
                 about: { "@id": "https://salahuddin.codes/#person" },
                 isPartOf: { "@id": "https://salahuddin.codes/#website" },

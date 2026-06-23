@@ -60,7 +60,7 @@ const TechStack = () => {
     <section
       ref={sectionRef}
       id="tech"
-      className="section-shell border-y border-[var(--border)]"
+      className="section-shell border-y-[3px] border-[#000000]"
       style={{
         backgroundColor: "var(--surface)",
         backgroundImage: "radial-gradient(circle at center, var(--accent-soft) 0%, var(--surface) 100%)",

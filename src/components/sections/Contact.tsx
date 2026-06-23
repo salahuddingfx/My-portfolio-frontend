@@ -97,7 +97,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="section-shell bg-(--background) relative overflow-hidden">
+    <section id="contact" className="section-shell bg-[var(--background)] relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-200 h-200 bg-(--accent)/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4" />
       <div className="absolute bottom-0 left-0 w-150 h-150 bg-(--accent)/5 blur-[120px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/4" />
@@ -152,7 +152,7 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-stretch">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-24 items-stretch">
 
           {/* Contact Details Column */}
           <div className="lg:col-span-4 flex flex-col justify-between py-6">

@@ -62,7 +62,7 @@ const Footer = () => {
   ].filter(s => s.href && s.href !== "#" && s.href !== "");
 
   return (
-    <footer className="relative overflow-hidden isolate bg-[var(--background)]">
+    <footer className="relative overflow-hidden isolate bg-[var(--background)] mt-16 md:mt-20">
       {/* Divider */}
       <div className="border-t-[4px] border-[#000000]" />
 

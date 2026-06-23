@@ -60,7 +60,7 @@ export const metadata: Metadata = {
       "Portfolio of Salah Uddin Kader (Saka Chowdhury / @salahuddingfx), a Creative Developer and Frontend Engineer based in Cox's Bazar, Bangladesh. Immersive web apps using Next.js, React, GSAP, and Three.js.",
     url: "https://salahuddin.codes",
     siteName: "Salah Uddin Kader (Saka Chowdhury)",
-    images: [{ url: "/mine-photo.png", width: 1200, height: 630 }],
+    images: [{ url: "/CV-Images.png", width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
   },
