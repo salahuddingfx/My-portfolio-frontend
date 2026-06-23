@@ -437,7 +437,7 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
         className="work-section relative overflow-hidden"
       >
         <div className="work-container section-container w-full">
-          <div className="container text-center mb-12 lg:mb-20">
+          <div className="container section-header-center mb-0">
             <span className="section-eyebrow">Portfolio</span>
             <h2 className="section-heading mt-2">
               My <span>Work</span>
