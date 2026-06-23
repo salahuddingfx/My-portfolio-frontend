@@ -156,7 +156,7 @@ const Contact = () => {
 
           {/* Contact Details Column */}
           <div className="lg:col-span-4 flex flex-col justify-between py-6">
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-6">
               {infoCards.map((card, i) => (
                 <motion.div
                   key={card.label}
