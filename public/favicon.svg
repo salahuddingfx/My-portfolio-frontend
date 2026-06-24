@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    @keyframes c {
+      0%,18%  { fill: #FFD84D }
+      20%,38% { fill: #22D3EE }
+      40%,58% { fill: #4ADE80 }
+      60%,78% { fill: #FF5C8A }
+      80%     { fill: #FFD84D }
+    }
+    .s { animation: c 3s step-end infinite }
+  </style>
+  <rect width="64" height="64" rx="14" fill="#000"/>
+  <text class="s" x="32" y="46" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="42" fill="#FFD84D">S</text>
+</svg>
