@@ -722,7 +722,7 @@ const Projects = () => {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
-                padding: "14px 32px",
+                padding: "clamp(10px, 2vw, 14px) clamp(20px, 4vw, 32px)",
                 fontSize: "13px",
                 fontFamily: "var(--font-mono)",
                 fontWeight: 700,
