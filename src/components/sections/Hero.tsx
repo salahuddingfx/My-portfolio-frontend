@@ -224,11 +224,30 @@ const Hero = () => {
       </div>
 
       {/* Bottom scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-2">
-        <span className="text-[10px] text-[var(--muted-soft)] font-mono tracking-widest uppercase">
+      <div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-3 cursor-pointer group"
+        onClick={() => {
+          const aboutSection = document.getElementById('about');
+          if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }}
+      >
+        <span className="text-[10px] text-[var(--muted-soft)] font-mono tracking-widest uppercase group-hover:text-[var(--foreground)] transition-colors">
           Scroll
         </span>
-        <div className="w-px h-10 bg-gradient-to-b from-[var(--muted-soft)] to-transparent" />
+        
+        {/* Mouse icon */}
+        <div className="relative w-6 h-10 border-2 border-[var(--muted-soft)] group-hover:border-[var(--foreground)] rounded-full transition-colors flex justify-center">
+          {/* Wheel */}
+          <div 
+            className="w-1 h-2.5 bg-[var(--muted-soft)] group-hover:bg-[var(--foreground)] rounded-full mt-2 transition-colors"
+            style={{ animation: "mouseWheel 1.5s ease-in-out infinite" }}
+          />
+        </div>
+        
+        {/* Vertical line below mouse */}
+        <div className="w-px h-8 bg-gradient-to-b from-[var(--muted-soft)] to-transparent group-hover:from-[var(--foreground)] transition-colors" />
       </div>
     </section>
   );
