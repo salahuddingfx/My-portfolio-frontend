@@ -124,7 +124,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-md lg:text-right lg:ml-auto mb-12 lg:mb-0"
+            className="max-w-md lg:text-right lg:ml-auto"
           >
             <p className="text-lg text-[var(--muted)] leading-relaxed italic border-l-2 lg:border-l-0 lg:border-r-2 border-[var(--accent)]/30 pl-8 lg:pl-0 lg:pr-8">
               {'"Design is not just what it looks like and feels like. Design is how it works."'.split(' ').map((word, i) => (
