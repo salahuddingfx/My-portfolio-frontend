@@ -923,12 +923,22 @@ html[data-theme="dark"] .skeleton {
 
 @keyframes mouseWheel {
   0% {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(4px);
   }
   100% {
-    opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes mouseScroll {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
   }
 }
 
