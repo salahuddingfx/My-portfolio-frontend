@@ -92,6 +92,7 @@ export default function Home() {
       <TechStack />
       <Services />
       <Projects />
+      <Agency />
       <Testimonials />
       <ContactCTA />
     </main>
