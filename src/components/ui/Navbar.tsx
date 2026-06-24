@@ -175,24 +175,12 @@ const Navbar = () => {
             </nav>
 
             {/* MOBILE THEME TOGGLE + HAMBURGER */}
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }} className="lg:hidden">
+            <div className="flex lg:hidden items-center gap-3">
               <button
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                style={{
-                  display: "flex",
-                  height: "44px",
-                  width: "44px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "3px solid #000000",
-                  background: "var(--surface)",
-                  color: "var(--foreground)",
-                  transition: "all 0.2s",
-                  boxShadow: "3px 3px 0px #000000",
-                  cursor: "pointer",
-                  borderRadius: "var(--radius-md)",
-                }}
+                className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--foreground)] transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#000000] shadow-[3px_3px_0px_#000000] cursor-pointer"
+                style={{ borderRadius: "var(--radius-md)" }}
               >
                 {theme === "dark" ? <Sun size={16} strokeWidth={2.5} /> : <Moon size={16} strokeWidth={2.5} />}
               </button>
@@ -202,20 +190,8 @@ const Navbar = () => {
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
                 onClick={() => setIsOpen(!isOpen)}
-                style={{
-                  display: "flex",
-                  height: "44px",
-                  width: "44px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "3px solid #000000",
-                  background: "var(--surface)",
-                  color: "var(--muted)",
-                  transition: "all 0.2s",
-                  boxShadow: "3px 3px 0px #000000",
-                  cursor: "pointer",
-                  borderRadius: "var(--radius-md)",
-                }}
+                className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--muted)] transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#000000] shadow-[3px_3px_0px_#000000] cursor-pointer"
+                style={{ borderRadius: "var(--radius-md)" }}
               >
                 <motion.div
                   animate={{ rotate: isOpen ? 90 : 0 }}
