@@ -320,7 +320,7 @@ export default function BlogContent() {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-2 mt-24">
+              <div className="flex flex-wrap justify-center items-center" style={{ gap: '12px', marginTop: '4rem', marginBottom: '4rem' }}>
                 <button
                   onClick={() => {
                     if (currentPage > 1) {
@@ -329,7 +329,7 @@ export default function BlogContent() {
                     }
                   }}
                   disabled={currentPage === 1}
-                  className="px-5 py-2.5 border-[3px] border-[#000000] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000] hover:shadow-[4px_4px_0px_#000000] cursor-pointer"
+                  className="px-4 sm:px-6 py-2.5 border-[3px] border-[#000000] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000] hover:shadow-[4px_4px_0px_#000000] cursor-pointer whitespace-nowrap"
                 >
                   Prev
                 </button>
@@ -341,7 +341,7 @@ export default function BlogContent() {
                       setCurrentPage(pNum);
                       containerRef.current?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className={`w-10 h-10 flex items-center justify-center text-xs font-bold transition-all duration-200 cursor-pointer border-[3px] border-[#000000] ${
+                    className={`w-11 h-11 flex items-center justify-center text-xs font-bold transition-all duration-200 cursor-pointer border-[3px] border-[#000000] ${
                       currentPage === pNum
                         ? "bg-[var(--neo-yellow)] text-black shadow-[3px_3px_0px_#000000] scale-[1.05]"
                         : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000]"
@@ -359,7 +359,7 @@ export default function BlogContent() {
                     }
                   }}
                   disabled={currentPage === totalPages}
-                  className="px-5 py-2.5 border-[3px] border-[#000000] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000] hover:shadow-[4px_4px_0px_#000000] cursor-pointer"
+                  className="px-4 sm:px-6 py-2.5 border-[3px] border-[#000000] text-[10px] font-bold uppercase tracking-widest transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)] shadow-[3px_3px_0px_#000000] hover:shadow-[4px_4px_0px_#000000] cursor-pointer whitespace-nowrap"
                 >
                   Next
                 </button>
