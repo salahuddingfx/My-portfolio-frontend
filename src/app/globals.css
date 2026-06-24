@@ -1659,7 +1659,14 @@ body:has(.is-404-page) footer {
 }
 @media screen and (max-width: 1024px) {
   .landing-intro p.hero-bio {
-    display: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.6;
+    margin-top: 8px;
   }
   .landing-info {
     margin-top: 2rem;
