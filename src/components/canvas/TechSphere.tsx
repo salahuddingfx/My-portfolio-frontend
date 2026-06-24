@@ -107,9 +107,10 @@ interface TechBallProps {
   targetPos: [number, number, number];
   mouseActive: boolean;
   isActive: boolean;
+  isMobile: boolean;
 }
 
-function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
+function TechBall({ icon, targetPos, mouseActive, isActive, isMobile }: TechBallProps) {
   const texture = useSafeTexture(icon);
   const { viewport } = useThree();
   const [isDragging, setIsDragging] = useState(false);
@@ -121,6 +122,13 @@ function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
 
   useFrame((state, delta) => {
     if (!api.current || !isActive) return;
+
+    // On mobile, keep balls static — no physics movement
+    if (isMobile) {
+      api.current.setTranslation({ x: targetPos[0], y: targetPos[1], z: targetPos[2] }, true);
+      api.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      return;
+    }
 
     // Constrain delta to avoid giant physics jumps
     const dt = Math.min(0.03, delta);
@@ -224,7 +232,7 @@ function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
         <sphereGeometry args={[1.15, 32, 32]} />
         {/* Creative Frosted Glass Material */}
         <meshPhysicalMaterial
-          color={hovered ? "#9333ea" : "#ffffff"}
+          color={hovered ? "#FFD84D" : "#ffffff"}
           transmission={0.95}
           thickness={0.5}
           roughness={0.08}
@@ -235,7 +243,7 @@ function TechBall({ icon, targetPos, mouseActive, isActive }: TechBallProps) {
           ior={1.5}
           attenuationColor="#ffffff"
           attenuationDistance={0.5}
-          emissive={hovered ? "#9333ea" : "#000000"}
+          emissive={hovered ? "#FFD84D" : "#000000"}
           emissiveIntensity={hovered ? 0.6 : 0}
         />
         
@@ -349,7 +357,7 @@ const TechSphere = ({ isActive }: TechSphereProps) => {
 
         <ambientLight intensity={0.5} />
         <pointLight position={[-10, 10,  12]} intensity={2} color="#ffffff" />
-        <pointLight position={[ 10, -6,  10]} intensity={1.5} color="#9333ea" />
+        <pointLight position={[ 10, -6,  10]} intensity={1.5} color="#FFD84D" />
         <spotLight position={[0, 15, 10]} angle={0.2} penumbra={1} intensity={3} castShadow />
         
         <Suspense fallback={null}>
@@ -362,6 +370,7 @@ const TechSphere = ({ isActive }: TechSphereProps) => {
                 targetPos={ballPositions[i]} 
                 mouseActive={isMouseIn}
                 isActive={isActive}
+                isMobile={isMobile}
               />
             ))}
           </Physics>

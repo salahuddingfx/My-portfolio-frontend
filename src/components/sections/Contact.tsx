@@ -253,8 +253,8 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-10">
-                    <div className="grid md:grid-cols-2 gap-x-10 gap-y-10">
+                  <form onSubmit={handleSubmit} className="flex flex-col" style={{ gap: "clamp(2rem, 4vw, 2.5rem)" }}>
+                    <div className="grid md:grid-cols-2" style={{ gap: "clamp(1.5rem, 3vw, 2.5rem)" }}>
                       <div className="contact-input-group">
                         <input
                           type="text"

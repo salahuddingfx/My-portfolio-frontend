@@ -98,8 +98,8 @@ const Agency = () => {
               {/* Owner card */}
               <div className="lg:col-span-5 flex justify-center">
                 <div
-                  className="relative w-full max-w-sm border-[3px] border-[#000000] bg-[var(--surface)] p-8 flex flex-col items-center text-center gap-4"
-                  style={{ boxShadow: "5px 5px 0px #000000", borderRadius: "var(--radius-lg)" }}
+                  className="relative w-full max-w-sm border-[3px] border-[#000000] bg-[var(--surface)] flex flex-col items-center text-center gap-4"
+                  style={{ boxShadow: "5px 5px 0px #000000", borderRadius: "var(--radius-lg)", padding: "clamp(1.5rem, 4vw, 2rem)" }}
                 >
                   <div
                     className="w-16 h-16 flex items-center justify-center bg-[var(--neo-yellow)] border-[3px] border-[#000000]"

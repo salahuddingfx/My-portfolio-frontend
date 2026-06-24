@@ -342,7 +342,7 @@ const Projects = () => {
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   style={{
-                    padding: "10px 20px",
+                    padding: "clamp(8px, 2vw, 10px) clamp(14px, 3vw, 20px)",
                     fontSize: "11px",
                     fontFamily: "var(--font-mono)",
                     fontWeight: 700,
@@ -522,7 +522,7 @@ const Projects = () => {
                                   display: "inline-flex",
                                   alignItems: "center",
                                   gap: "8px",
-                                  padding: "10px 20px",
+                                  padding: "clamp(8px, 2vw, 10px) clamp(14px, 3vw, 20px)",
                                   fontSize: "12px",
                                   fontFamily: "var(--font-mono)",
                                   fontWeight: 700,
@@ -554,7 +554,7 @@ const Projects = () => {
                                   display: "inline-flex",
                                   alignItems: "center",
                                   gap: "8px",
-                                  padding: "10px 20px",
+                                  padding: "clamp(8px, 2vw, 10px) clamp(14px, 3vw, 20px)",
                                   fontSize: "12px",
                                   fontFamily: "var(--font-mono)",
                                   fontWeight: 700,
