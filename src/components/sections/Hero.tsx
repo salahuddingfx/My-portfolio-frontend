@@ -237,13 +237,16 @@ const Hero = () => {
           Scroll
         </span>
         
-        {/* Mouse icon */}
-        <div className="relative w-6 h-10 border-2 border-[var(--muted-soft)] group-hover:border-[var(--foreground)] rounded-full transition-colors flex justify-center">
-          {/* Wheel */}
-          <div 
-            className="w-1 h-2.5 bg-[var(--muted-soft)] group-hover:bg-[var(--foreground)] rounded-full mt-2 transition-colors"
-            style={{ animation: "mouseWheel 1.5s ease-in-out infinite" }}
-          />
+        {/* Mouse body */}
+        <div className="relative w-[22px] h-[34px] border-2 border-[var(--muted-soft)] group-hover:border-[var(--foreground)] rounded-[10px] transition-colors flex justify-center overflow-hidden">
+          {/* Scroll wheel track */}
+          <div className="absolute top-[6px] w-[3px] h-[10px] border border-[var(--muted-soft)]/50 group-hover:border-[var(--foreground)]/50 rounded-full transition-colors overflow-hidden">
+            {/* Scroll wheel dot */}
+            <div 
+              className="w-full h-[3px] bg-[var(--muted-soft)] group-hover:bg-[var(--foreground)] rounded-full transition-colors"
+              style={{ animation: "mouseScroll 1.5s ease-in-out infinite" }}
+            />
+          </div>
         </div>
         
         {/* Vertical line below mouse */}
