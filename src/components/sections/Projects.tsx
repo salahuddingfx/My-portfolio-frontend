@@ -1,43 +1,9 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-
-interface WorkImageProps {
-  image: string;
-  alt: string;
-  liveLink?: string;
-  onLoad?: () => void;
-  priority?: boolean;
-}
-
-const WorkImage = ({ image, alt, liveLink, onLoad, priority }: WorkImageProps) => {
-  return (
-    <div className="work-image">
-      <div className="work-image-in">
-        <div className="relative overflow-hidden bg-[var(--surface-2)] aspect-[16/10] border-[3px] border-[#000000] shadow-[6px_6px_0px_#000000]" style={{ borderRadius: "var(--radius-lg)" }}>
-          <Image
-            src={image}
-            alt={alt}
-            fill
-            priority={priority}
-            sizes="(max-width: 1024px) 100vw, 60vw"
-            className="object-cover transition-transform duration-700 hover:scale-105"
-            onLoad={onLoad}
-          />
-        </div>
-        {liveLink && (
-          <a href={liveLink} target="_blank" rel="noopener noreferrer">
-            <div className="work-link">
-              <ArrowUpRight className="text-[var(--foreground)]" size={24} />
-            </div>
-          </a>
-        )}
-      </div>
-    </div>
-  );
-};
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ProjectItem {
   _id?: string;
@@ -60,28 +26,20 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
   { title: "Habit-OS", desc: "A next-generation AI-powered health tracking and habit management ecosystem built to optimize personal health metrics, exercise routines, and wellness targets.", image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=1200", tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Tailwind CSS"], links: { live: "https://github.com/salahuddingfx/Habit-OS", source: "https://github.com/salahuddingfx/Habit-OS" }, category: "Full Stack", featured: false, order: 6 },
 ];
 
-interface ProjectsProps {
-  layout?: "horizontal" | "stacked";
-  pageTopOffset?: boolean;
-}
+const CARD_VARIANTS = {
+  hidden: { opacity: 0, y: 60 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.12, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const },
+  }),
+};
 
-const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProps) => {
+const Projects = () => {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [isCompact, setIsCompact] = useState(false);
-  const skeletonItems = Array.from({ length: 3 }, (_, i) => i);
-
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  const handleImageLoad = useCallback(() => {
-    if (typeof window !== "undefined") {
-      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-        ScrollTrigger.refresh();
-      });
-    }
-  }, []);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -104,31 +62,9 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
         setProjects(FALLBACK_PROJECTS);
       } finally {
         setLoading(false);
-        setTimeout(() => {
-          if (typeof window !== "undefined") {
-            import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-              ScrollTrigger.refresh();
-            });
-          }
-        }, 100);
       }
     };
     fetchProjects();
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mql = window.matchMedia("(max-width: 1023px)");
-    const onChange = (event: MediaQueryListEvent) => setIsCompact(event.matches);
-
-    setIsCompact(mql.matches);
-    if (mql.addEventListener) {
-      mql.addEventListener("change", onChange);
-      return () => mql.removeEventListener("change", onChange);
-    }
-
-    mql.addListener(onChange);
-    return () => mql.removeListener(onChange);
   }, []);
 
   const categories = useMemo(() => {
@@ -136,349 +72,38 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
     return ["All", ...Array.from(new Set(list))];
   }, [projects]);
 
-  const effectiveLayout = layout;
-
   const displayProjects = useMemo(() => {
-    if (effectiveLayout === "horizontal") {
-      const featured = projects.filter((p) => p.featured);
-      return featured.length > 0 ? featured : projects;
-    }
     return activeCategory === "All"
       ? projects
       : projects.filter((p) => p.category === activeCategory);
-  }, [projects, activeCategory, effectiveLayout]);
+  }, [projects, activeCategory]);
 
-  useEffect(() => {
-    if (loading || displayProjects.length === 0) return;
-
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    const saveData = connection?.saveData ?? false;
-    if (reduceMotion || saveData) return;
-
-    let ctx: { revert: () => void } | null = null;
-    let cancelled = false;
-
-    const run = async () => {
-      const { default: gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      if (cancelled) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      ctx = gsap.context(() => {
-        if (effectiveLayout === "horizontal") {
-          const section = sectionRef.current;
-          const track = trackRef.current;
-          if (!section || !track) return;
-
-          if (isCompact) return;
-
-          const getTranslateX = () => {
-            const boxes = track.querySelectorAll(".work-box");
-            if (boxes.length === 0) return 0;
-            const trackWidth = track.scrollWidth;
-            const viewportWidth = window.innerWidth;
-            return Math.max(trackWidth - viewportWidth, 0);
-          };
-
-          // Animate project card boxes staggered reveal
-          const boxes = track.querySelectorAll(".work-box");
-          if (boxes.length > 0) {
-            gsap.fromTo(
-              boxes,
-              { y: 60, opacity: 0 },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power3.out",
-                scrollTrigger: {
-                  trigger: section,
-                  start: "top 80%",
-                  toggleActions: "play none none none",
-                }
-              }
-            );
-          }
-
-          gsap.fromTo(track,
-            { x: 0 },
-            {
-              x: () => -getTranslateX(),
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                pin: true,
-                scrub: true,
-                start: "top top",
-                end: () => `+=${getTranslateX()}`,
-                invalidateOnRefresh: true,
-                id: "work-trigger",
-                refreshPriority: 96,
-              },
-            }
-          );
-
-          return;
-        }
-
-        const rows = gsap.utils.toArray<HTMLElement>(".project-row");
-        rows.forEach((row) => {
-          const image = row.querySelector<HTMLElement>(".project-image");
-          gsap.fromTo(
-            row,
-            { y: 40, autoAlpha: 0 },
-            {
-              y: 0,
-              autoAlpha: 1,
-              duration: 0.9,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: row,
-                start: "top 85%",
-              },
-            }
-          );
-
-          if (image) {
-            gsap.fromTo(
-              image,
-              { y: 24, scale: 1.03 },
-              {
-                y: -24,
-                scale: 1,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: row,
-                  start: "top bottom",
-                  end: "bottom top",
-                  scrub: 0.4,
-                },
-              }
-            );
-          }
-        });
-      }, sectionRef);
-    };
-
-    run();
-
-    return () => {
-      cancelled = true;
-      if (ctx) ctx.revert();
-    };
-  }, [loading, displayProjects, effectiveLayout]);
-
-  const projectRows = useMemo(() => {
-    return displayProjects.map((project, index) => {
-      const number = String(index + 1).padStart(2, "0");
-      const isEven = index % 2 === 0;
-      const tools = project.tags?.length ? project.tags.join(", ") : "—";
-      const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
-
-      return (
-        <div
-          key={project._id || index}
-          className={`project-row group ${index === 0 ? "" : "border-t-[3px] border-[#000000]"} py-12 md:py-20 lg:py-28`}
-        >
-          <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-center">
-              <div
-                className={`flex flex-col gap-6 lg:col-span-5 ${
-                  isEven
-                    ? "lg:order-1 lg:items-start lg:text-left"
-                    : "lg:order-2 lg:items-end lg:text-right"
-                }`}
-              >
-                <div
-                  className={`text-6xl md:text-8xl font-pixel tracking-tight text-[var(--foreground)] opacity-80 ${
-                    isEven ? "self-start" : "self-start lg:self-end"
-                  }`}
-                  aria-hidden
-                >
-                  {number}
-                </div>
-
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] opacity-60">Project Name</p>
-                    <h3
-                      className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--foreground)] leading-tight"
-                      style={{ fontFamily: "var(--font-space-grotesk)" }}
-                    >
-                      {project.title}
-                    </h3>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] opacity-60">Category</p>
-                    <p className="text-sm font-medium text-[var(--foreground)] opacity-70">
-                      {project.category || "—"}
-                    </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)] opacity-60">Stack</p>
-                    <p className="text-sm text-[var(--foreground)] opacity-65 leading-relaxed">{tools}</p>
-                  </div>
-
-                  <p className="text-base text-[var(--muted)] leading-relaxed max-w-lg">
-                    {project.desc}
-                  </p>
-
-                  <div className="flex flex-wrap gap-4 pt-8">
-                    {liveLink && (
-                      <a
-                        href={liveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary"
-                      >
-                        <span>Live Preview</span>
-                        <ArrowUpRight size={14} />
-                      </a>
-                    )}
-                    {project.links?.source && project.links.source !== "#" && (
-                      <a
-                        href={project.links.source}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-secondary"
-                      >
-                        <span>Source Code</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}
-              >
-                <div className="relative overflow-hidden bg-[var(--surface-2)] aspect-[16/10] border-[3px] border-[#000000] shadow-[6px_6px_0px_#000000]" style={{ borderRadius: "var(--radius-lg)" }}>
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    priority={index === 0}
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="project-image object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
-                  />
-                  <div className="pointer-events-none absolute inset-0 ring-[2px] ring-[#000000]" style={{ borderRadius: "var(--radius-lg)" }} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
-  }, [displayProjects]);
-
-  const projectPanels = useMemo(() => {
-    return displayProjects.map((project, index) => {
-      const number = String(index + 1).padStart(2, "0");
-      const tools = project.tags?.length ? project.tags.join(", ") : "—";
-      const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
-
-      return (
-        <div key={project._id || index} className="work-box">
-          <div className="work-info">
-            <div className="work-title">
-              <h3>{number}</h3>
-              <div>
-                <h4 className="text-xl font-medium text-[var(--foreground)]">{project.title}</h4>
-                <p className="text-sm text-[var(--muted)]">{project.category || "—"}</p>
-              </div>
-            </div>
-            <h4 className="text-[var(--foreground)] font-semibold mb-1">Tools and features</h4>
-            <p className="text-[var(--muted)]">{tools}</p>
-            {project.desc && (
-              <p className="mt-4 text-xs text-[var(--muted)] leading-relaxed line-clamp-3 font-normal">
-                {project.desc}
-              </p>
-            )}
-            <div className="flex flex-wrap gap-3 mt-6">
-              {liveLink && (
-                <a
-                  href={liveLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary !py-2.5 !px-4 !text-[10px]"
-                >
-                  <span>Live Preview</span>
-                  <ArrowUpRight size={12} />
-                </a>
-              )}
-              {project.links?.source && project.links.source !== "#" && (
-                <a
-                  href={project.links.source}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary !py-2.5 !px-4 !text-[10px]"
-                >
-                  <span>Source Code</span>
-                </a>
-              )}
-            </div>
-          </div>
-          <WorkImage image={project.image} alt={project.title} liveLink={liveLink} onLoad={handleImageLoad} priority={index === 0} />
-        </div>
-      );
-    });
-  }, [displayProjects, handleImageLoad]);
-
-  if (effectiveLayout === "horizontal") {
+  if (loading) {
     return (
       <section
         id="projects"
-        ref={sectionRef}
-        className="work-section relative overflow-hidden"
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          padding: "clamp(4rem, 8vw, 8rem) 0",
+          background: "var(--background)",
+        }}
       >
-        <div className="work-container section-container w-full">
-          <div className="container section-header-center mb-0">
-            <span className="section-eyebrow">Portfolio</span>
-            <h2 className="section-heading mt-2">
-              My <span>Work</span>
-            </h2>
-          </div>
-
-          {loading ? (
-            <div className="work-track-wrapper">
-              <div className="work-flex" ref={trackRef} style={{ width: "max-content" }}>
-                {skeletonItems.map((i) => (
-                  <div key={i} className="work-box">
-                    <div className="work-info">
-                      <div className="work-title">
-                        <div className="skeleton h-12 w-16" />
-                        <div>
-                          <div className="skeleton h-6 w-32 mb-2" />
-                          <div className="skeleton h-4 w-24" />
-                        </div>
-                      </div>
-                      <div className="skeleton h-5 w-28 mb-2" />
-                      <div className="skeleton h-4 w-full" />
-                    </div>
-                    <div className="skeleton aspect-[16/10] w-full" style={{ borderRadius: "var(--radius-lg)" }} />
-                  </div>
-                ))}
+        <div style={{ maxWidth: "var(--container-max, 1440px)", margin: "0 auto", paddingInline: "var(--container-pad)" }}>
+          {[1, 2, 3].map((i) => (
+            <div key={i} style={{ display: "flex", flexDirection: "column", gap: "24px", padding: "48px 0", borderBottom: i < 3 ? "3px solid #000000" : "none" }}>
+              <div style={{ height: "16px", width: "120px", background: "var(--surface)", borderRadius: "var(--radius-sm)" }} />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  <div style={{ height: "12px", width: "80px", background: "var(--surface)", borderRadius: "var(--radius-sm)" }} />
+                  <div style={{ height: "36px", width: "240px", background: "var(--surface)", borderRadius: "var(--radius-sm)" }} />
+                  <div style={{ height: "12px", width: "160px", background: "var(--surface)", borderRadius: "var(--radius-sm)" }} />
+                  <div style={{ height: "60px", width: "100%", background: "var(--surface)", borderRadius: "var(--radius-sm)" }} />
+                </div>
+                <div style={{ aspectRatio: "16/10", background: "var(--surface)", borderRadius: "var(--radius-lg)" }} />
               </div>
             </div>
-          ) : (
-            <div className="work-track-wrapper">
-              <div
-                ref={trackRef}
-                className="work-flex"
-                style={{ 
-                  width: "max-content", 
-                  willChange: "transform",
-                }}
-              >
-                {projectPanels}
-              </div>
-            </div>
-          )}
+          ))}
         </div>
       </section>
     );
@@ -487,9 +112,10 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
   return (
     <section
       id="projects"
-      ref={sectionRef}
-      className="section-shell relative overflow-hidden text-[var(--foreground)]"
       style={{
+        position: "relative",
+        overflow: "hidden",
+        padding: "clamp(4rem, 8vw, 8rem) 0",
         backgroundColor: "var(--background)",
         backgroundImage:
           "linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)",
@@ -497,69 +123,284 @@ const Projects = ({ layout = "horizontal", pageTopOffset = false }: ProjectsProp
         backgroundPosition: "center",
       }}
     >
-      <div className="container">
-        <div className="max-w-2xl">
-          <span className="section-eyebrow">Selected work</span>
-          <h2 className="section-heading mt-2">
-            Recent projects
+      <div style={{ maxWidth: "var(--container-max, 1440px)", margin: "0 auto", paddingInline: "var(--container-pad)" }}>
+        {/* Header */}
+        <div style={{ maxWidth: "48rem", marginBottom: "clamp(2rem, 5vw, 4rem)" }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontSize: "10px",
+              fontFamily: "var(--font-mono)",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              color: "var(--muted)",
+              border: "2px solid var(--muted)",
+              padding: "6px 14px",
+              borderRadius: "var(--radius-sm)",
+              marginBottom: "16px",
+            }}
+          >
+            Portfolio
+          </span>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 4vw, 3.5rem)",
+              fontFamily: "var(--font-space-grotesk)",
+              fontWeight: 800,
+              color: "var(--foreground)",
+              lineHeight: 1.1,
+              margin: 0,
+            }}
+          >
+            My <span style={{ color: "var(--neo-yellow)", fontFamily: "var(--font-pixel)", fontWeight: 400, letterSpacing: "0.02em" }}>Work</span>
           </h2>
-          <p className="section-subtext mt-4">
-            Modern digital products and visual systems shaped for clarity, impact, and storytelling.
-          </p>
         </div>
 
-        {!loading && categories.length > 1 && (
-          <div className="flex flex-wrap gap-4 mt-12">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest border-[3px] border-[#000000] transition-all duration-200 ${
-                  activeCategory === cat
-                    ? "bg-[#000000] border-[#000000] text-[#FFFFFF] shadow-[4px_4px_0px_#000000] translate-x-[-2px] translate-y-[-2px]"
-                    : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000]"
-                }`}
-                style={{ borderRadius: "var(--radius-md)" }}
+        {/* Category Filters */}
+        {categories.length > 1 && (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "clamp(2rem, 4vw, 3rem)" }}>
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  style={{
+                    padding: "10px 20px",
+                    fontSize: "11px",
+                    fontFamily: "var(--font-mono)",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    border: "3px solid #000000",
+                    borderRadius: "var(--radius-md)",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                    background: isActive ? "#000000" : "var(--surface)",
+                    color: isActive ? "#FFFFFF" : "var(--muted)",
+                    boxShadow: isActive ? "4px 4px 0px #000000" : "3px 3px 0px #000000",
+                    transform: isActive ? "translate(-2px, -2px)" : "none",
+                  }}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Project List */}
+        {displayProjects.length === 0 ? (
+          <div style={{ padding: "6rem 0", textAlign: "center" }}>
+            <p style={{ fontSize: "13px", color: "var(--muted)", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              No projects in this category yet.
+            </p>
+          </div>
+        ) : (
+          <div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeCategory}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
               >
-                {cat}
-              </button>
-            ))}
+                {displayProjects.map((project, index) => {
+                  const number = String(index + 1).padStart(2, "0");
+                  const isEven = index % 2 === 0;
+                  const tools = project.tags?.length ? project.tags.join(", ") : "—";
+                  const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
+                  const sourceLink = project.links?.source && project.links.source !== "#" ? project.links.source : "";
+
+                  return (
+                    <motion.div
+                      key={project._id || index}
+                      custom={index}
+                      variants={CARD_VARIANTS}
+                      initial="hidden"
+                      animate="visible"
+                      onMouseEnter={() => setHoveredIdx(index)}
+                      onMouseLeave={() => setHoveredIdx(null)}
+                      style={{
+                        padding: "clamp(3rem, 5vw, 5rem) 0",
+                        borderBottom: index < displayProjects.length - 1 ? "3px solid #000000" : "none",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(12, 1fr)",
+                          gap: "clamp(2rem, 4vw, 5rem)",
+                          alignItems: "center",
+                        }}
+                      >
+                        {/* Text Side */}
+                        <div
+                          style={{
+                            gridColumn: isEven ? "1 / 6" : "8 / 13",
+                            order: isEven ? 1 : 2,
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "24px",
+                          }}
+                        >
+                          {/* Number */}
+                          <span
+                            style={{
+                              fontFamily: "var(--font-pixel)",
+                              fontSize: "clamp(3rem, 6vw, 5rem)",
+                              fontWeight: 400,
+                              lineHeight: 1,
+                              color: "var(--foreground)",
+                              opacity: 0.15,
+                            }}
+                          >
+                            {number}
+                          </span>
+
+                          {/* Title */}
+                          <div>
+                            <p style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--muted)", marginBottom: "6px", fontFamily: "var(--font-mono)" }}>
+                              Project Name
+                            </p>
+                            <h3
+                              style={{
+                                fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
+                                fontFamily: "var(--font-space-grotesk)",
+                                fontWeight: 800,
+                                color: "var(--foreground)",
+                                lineHeight: 1.15,
+                                margin: 0,
+                              }}
+                            >
+                              {project.title}
+                            </h3>
+                          </div>
+
+                          {/* Category + Stack */}
+                          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                            <div>
+                              <p style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--muted)", marginBottom: "4px", fontFamily: "var(--font-mono)" }}>
+                                Category
+                              </p>
+                              <p style={{ fontSize: "14px", fontWeight: 500, color: "var(--foreground)", opacity: 0.7, margin: 0 }}>
+                                {project.category || "—"}
+                              </p>
+                            </div>
+                            <div>
+                              <p style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--muted)", marginBottom: "4px", fontFamily: "var(--font-mono)" }}>
+                                Stack
+                              </p>
+                              <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.5, margin: 0 }}>
+                                {tools}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Description */}
+                          <p style={{ fontSize: "15px", color: "var(--muted)", lineHeight: 1.7, maxWidth: "28rem", margin: 0 }}>
+                            {project.desc}
+                          </p>
+
+                          {/* Buttons */}
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", paddingTop: "16px" }}>
+                            {liveLink && (
+                              <a
+                                href={liveLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn-primary"
+                              >
+                                <span>Live Preview</span>
+                                <ArrowUpRight size={14} />
+                              </a>
+                            )}
+                            {sourceLink && (
+                              <a
+                                href={sourceLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn-secondary"
+                              >
+                                <span>Source Code</span>
+                              </a>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Image Side */}
+                        <div
+                          style={{
+                            gridColumn: isEven ? "6 / 13" : "1 / 8",
+                            order: isEven ? 2 : 1,
+                            position: "relative",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "relative",
+                              overflow: "hidden",
+                              background: "var(--surface-2)",
+                              aspectRatio: "16/10",
+                              border: "3px solid #000000",
+                              boxShadow: hoveredIdx === index ? "9px 9px 0px #000000" : "6px 6px 0px #000000",
+                              borderRadius: "var(--radius-lg)",
+                              transform: hoveredIdx === index ? "translate(-3px, -3px)" : "none",
+                              transition: "transform 0.3s, box-shadow 0.3s",
+                            }}
+                          >
+                            <Image
+                              src={project.image}
+                              alt={project.title}
+                              fill
+                              priority={index === 0}
+                              sizes="(max-width: 1024px) 100vw, 60vw"
+                              style={{
+                                objectFit: "cover",
+                                transform: hoveredIdx === index ? "scale(1.05)" : "scale(1)",
+                                transition: "transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                              }}
+                            />
+                            {liveLink && (
+                              <a
+                                href={liveLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  position: "absolute",
+                                  bottom: "12px",
+                                  right: "12px",
+                                  width: "48px",
+                                  height: "48px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  background: "var(--neo-yellow)",
+                                  border: "3px solid #000000",
+                                  boxShadow: "3px 3px 0px #000000",
+                                  borderRadius: "var(--radius-md)",
+                                  opacity: hoveredIdx === index ? 1 : 0,
+                                  transform: hoveredIdx === index ? "scale(1)" : "scale(0.8)",
+                                  transition: "all 0.3s",
+                                  zIndex: 2,
+                                }}
+                              >
+                                <ArrowUpRight size={20} color="#000000" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
           </div>
         )}
       </div>
-
-      {loading ? (
-        <div className="mt-20 space-y-12">
-          {skeletonItems.map((i) => (
-            <div key={i} className="container">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center py-12">
-                <div className="flex flex-col gap-6 lg:col-span-5">
-                  <div className="skeleton h-16 w-32" />
-                  <div className="space-y-4">
-                    <div className="skeleton h-4 w-40" />
-                    <div className="skeleton h-10 w-64" />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="skeleton h-3 w-44" />
-                    <div className="skeleton h-3 w-32" />
-                  </div>
-                </div>
-                <div className="lg:col-span-7">
-                  <div className="skeleton aspect-[16/10]" style={{ borderRadius: "var(--radius-lg)" }} />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : displayProjects.length === 0 ? (
-        <div className="py-24 text-center">
-          <p className="text-sm text-[var(--muted)] font-mono uppercase tracking-widest">No projects in this category yet.</p>
-        </div>
-      ) : (
-        <div className="mt-8">
-          {projectRows}
-        </div>
-      )}
     </section>
   );
 };

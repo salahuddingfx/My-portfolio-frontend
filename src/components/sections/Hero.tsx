@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
@@ -8,105 +8,135 @@ import { Spotlight } from "@/components/ui/spotlight";
 import Magnetic from "@/components/ui/Magnetic";
 import { useSettings } from "@/context/SettingsContext";
 
-const DESIGNATIONS = [
+const ROLES = [
   "DESIGNER",
   "DEVELOPER",
   "ENGINEER",
   "CREATOR",
   "BUILDER",
-  "INNOVATOR"
+  "INNOVATOR",
 ];
 
-const RotatingRoles = () => {
-  const [index, setIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+const TYPE_SPEED = 80;
+const DELETE_SPEED = 40;
+const HOLD_AFTER_TYPE = 1800;
+const HOLD_AFTER_DELETE = 300;
 
-  const currentRole = DESIGNATIONS[index];
+const TypingRole = () => {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [chars, setChars] = useState<string[]>([]);
+  const [phase, setPhase] = useState<"typing" | "hold" | "deleting" | "paused">("typing");
+  const [isExiting, setIsExiting] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const word = ROLES[roleIndex];
 
   useEffect(() => {
-    if (isPaused) {
-      const pauseTimer = setTimeout(() => {
-        setIsPaused(false);
-        setIsDeleting(true);
-      }, 1800);
-      return () => clearTimeout(pauseTimer);
-    }
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    if (isDeleting) {
-      if (displayText === "") {
-        setIsDeleting(false);
-        setIndex((prev) => (prev + 1) % DESIGNATIONS.length);
-        return;
+    if (phase === "typing") {
+      if (chars.length < word.length) {
+        timeoutRef.current = setTimeout(() => {
+          setChars((c) => [...c, word[c.length]]);
+        }, TYPE_SPEED);
+      } else {
+        setPhase("hold");
       }
-      const deleteTimer = setTimeout(() => {
-        setDisplayText(displayText.slice(0, -1));
-      }, 35);
-      return () => clearTimeout(deleteTimer);
+    } else if (phase === "hold") {
+      timeoutRef.current = setTimeout(() => {
+        setIsExiting(true);
+        timeoutRef.current = setTimeout(() => {
+          setPhase("deleting");
+          setIsExiting(false);
+        }, 400);
+      }, HOLD_AFTER_TYPE);
+    } else if (phase === "deleting") {
+      if (chars.length > 0) {
+        timeoutRef.current = setTimeout(() => {
+          setChars((c) => c.slice(0, -1));
+        }, DELETE_SPEED);
+      } else {
+        timeoutRef.current = setTimeout(() => {
+          setPhase("paused");
+        }, HOLD_AFTER_DELETE);
+      }
+    } else if (phase === "paused") {
+      timeoutRef.current = setTimeout(() => {
+        setRoleIndex((i) => (i + 1) % ROLES.length);
+        setPhase("typing");
+      }, 200);
     }
 
-    if (displayText === currentRole) {
-      setIsPaused(true);
-      return;
-    }
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [chars, phase, roleIndex, word]);
 
-    const typeTimer = setTimeout(() => {
-      setDisplayText(currentRole.slice(0, displayText.length + 1));
-    }, 70);
-    return () => clearTimeout(typeTimer);
-  }, [displayText, isDeleting, isPaused, currentRole, index]);
+  const nextWord = ROLES[(roleIndex + 1) % ROLES.length];
 
   return (
-    <div className="flex flex-col gap-3">
-      {/* Main typed word */}
-      <div className="flex items-center gap-1">
-        {displayText.split("").map((char, i) => (
-          <span
-            key={`${index}-${i}`}
-            className="text-[var(--neo-yellow)]"
-            style={{
-              fontFamily: "var(--font-pixel), sans-serif",
-              fontSize: "clamp(32px, 5vw, 52px)",
-              fontWeight: 400,
-              lineHeight: 1,
-              letterSpacing: "0.04em",
-              display: "inline-block",
-              animation: "charReveal 0.3s ease-out forwards",
-              opacity: 0,
-              transform: "translateY(20px)",
-            }}
-          >
-            {char}
-          </span>
-        ))}
-        {/* Blinking cursor */}
-        <span
-          className="inline-block w-[3px] ml-0.5"
+    <div style={{ display: "flex", flexDirection: "column", gap: "8px", minHeight: "clamp(80px, 12vw, 130px)" }}>
+      {/* Typed text */}
+      <div style={{ display: "flex", alignItems: "center", minHeight: "clamp(40px, 6vw, 65px)" }}>
+        <div
           style={{
-            height: "clamp(32px, 5vw, 52px)",
-            background: "var(--neo-yellow)",
-            animation: "typing-cursor 1s ease-in-out infinite",
+            display: "inline-flex",
+            alignItems: "baseline",
+            gap: "0",
+            opacity: isExiting ? 0 : 1,
+            transform: isExiting ? "translateY(-30px)" : "translateY(0)",
+            transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
-        />
+        >
+          {chars.map((char, i) => (
+            <span
+              key={`${roleIndex}-${i}`}
+              style={{
+                fontFamily: "var(--font-pixel), sans-serif",
+                fontSize: "clamp(32px, 5vw, 58px)",
+                fontWeight: 400,
+                lineHeight: 1,
+                letterSpacing: "0.04em",
+                color: "var(--neo-yellow)",
+                display: "inline-block",
+                animation: "charReveal 0.25s ease-out forwards",
+                opacity: 0,
+              }}
+            >
+              {char}
+            </span>
+          ))}
+          {/* Cursor */}
+          <span
+            style={{
+              display: "inline-block",
+              width: "3px",
+              height: "clamp(28px, 4.5vw, 50px)",
+              marginLeft: "3px",
+              background: "var(--neo-yellow)",
+              animation: "typing-cursor 1s ease-in-out infinite",
+              verticalAlign: "middle",
+            }}
+          />
+        </div>
       </div>
 
-      {/* Outline preview of next word */}
-      <div className="flex items-center gap-1 overflow-hidden" style={{ height: "clamp(24px, 3vw, 36px)" }}>
+      {/* Ghost preview */}
+      <div style={{ overflow: "hidden", height: "clamp(18px, 2.5vw, 28px)" }}>
         <span
           style={{
             fontFamily: "var(--font-pixel), sans-serif",
-            fontSize: "clamp(20px, 3vw, 28px)",
+            fontSize: "clamp(16px, 2vw, 22px)",
             fontWeight: 400,
             lineHeight: 1,
             letterSpacing: "0.06em",
             color: "transparent",
-            WebkitTextStroke: "1.5px var(--foreground)",
-            opacity: 0.15,
+            WebkitTextStroke: "1px var(--foreground)",
+            opacity: 0.12,
+            textTransform: "uppercase",
           }}
         >
-          {DESIGNATIONS[(index + 1) % DESIGNATIONS.length]}
+          {nextWord}
         </span>
       </div>
     </div>
@@ -136,25 +166,17 @@ const Hero = () => {
       id="home"
       className="relative min-h-screen w-full overflow-hidden bg-[var(--background)]"
     >
-      {/* 3D Robot — background, full section */}
+      {/* 3D Robot — background */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
-        
-        {/* Acernity Spotlight - hidden on mobile for performance */}
         {!isMobile && (
           <Spotlight
             className="-top-40 left-0 md:left-[20%] md:-top-20 z-0"
             fill="var(--spotlight-color)"
           />
         )}
-
-        {/* Decorative Spots - reduced on mobile */}
         <div className={`absolute -top-[10%] -left-[10%] bg-[var(--accent)]/15 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0 ${isMobile ? 'w-[30vw] h-[30vw]' : 'w-[50vw] h-[50vw]'}`} />
         <div className={`absolute -bottom-[10%] -right-[10%] bg-[var(--accent)]/15 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0 ${isMobile ? 'w-[30vw] h-[30vw]' : 'w-[50vw] h-[50vw]'}`} />
-
-        {/* Background Glow behind the robot */}
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--accent)]/20 blur-[120px] rounded-full pointer-events-none mix-blend-screen z-0 ${isMobile ? 'w-[50vw] max-w-[300px]' : 'w-[80vw] max-w-[600px] aspect-square'}`} />
-
-        {/* 3D Spline Scene - optimized for mobile */}
         <div className={`absolute inset-0 w-full h-full pointer-events-none md:pointer-events-auto z-10 flex items-center justify-center hero-spline-container ${isMobile ? 'opacity-60' : ''}`}>
           {isLoaderFinished && (
             <SplineScene
@@ -163,40 +185,30 @@ const Hero = () => {
             />
           )}
         </div>
-
-        {/* Radial vignette so the center stays clear but edges fade to background */}
         <div className="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_20%,var(--background)_90%)]" />
-        
-        {/* Bottom grounding gradient */}
         <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-t from-[var(--background)] via-transparent to-[var(--background)]/20" />
       </div>
 
-      {/* Content layer */}
-      <div className="relative z-10 min-h-screen pointer-events-none landing-section" id="landingDiv">
-        <div className="landing-container flex flex-col justify-start md:justify-center pt-32 pb-16 md:py-0 px-8 md:px-0">
-          {/* Left Side: Name & Info */}
-          <div className="landing-intro flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12">
-            {/* Status */}
-            <div className="flex items-center gap-3 mb-6">
-              <span className="w-2 h-2 bg-[var(--neo-green)] border-[2px] border-[#000000] animate-pulse" style={{ borderRadius: "var(--radius-sm)" }} />
-              <span className="text-xs text-[var(--muted)] font-mono uppercase tracking-widest font-bold">
+      {/* Content */}
+      <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", pointerEvents: "none" }} className="landing-section" id="landingDiv">
+        <div className="landing-container">
+          {/* Left */}
+          <div className="landing-intro pointer-events-auto text-left">
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+              <span style={{ width: "8px", height: "8px", background: "var(--neo-green)", border: "2px solid #000000", borderRadius: "var(--radius-sm)" }} className="animate-pulse" />
+              <span style={{ fontSize: "12px", color: "var(--muted)", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>
                 Available for work | @salahuddingfx
               </span>
             </div>
-
             <h2>Hello! I&apos;m</h2>
-            <h1 className="uppercase font-bold tracking-tighter whitespace-nowrap">
-              Salah Uddin <span className="text-[var(--accent)] font-medium">Kader</span>
+            <h1>
+              Salah Uddin <span>Kader</span>
             </h1>
-
-            <div className="mt-8 space-y-6">
-              {/* Description */}
-              <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed max-w-sm mb-6">
+            <div style={{ marginTop: "32px", display: "flex", flexDirection: "column", gap: "24px" }}>
+              <p className="hero-bio" style={{ fontSize: "clamp(14px, 1.5vw, 16px)", color: "var(--muted)", lineHeight: 1.7, maxWidth: "24rem", margin: 0 }}>
                 {settings?.bio || "I am a Full Stack AI Engineer and Creative Developer specializing in secure full-stack architecture, relational database design (with protection against SQL Injection and other exploits), and custom LLM model integrations. Known online as Saka Chowdhury (@salahuddingfx)."}
               </p>
-
-              {/* Actions */}
-              <div className="flex flex-wrap items-center gap-4 pt-6 md:pt-4">
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px", paddingTop: "24px" }}>
                 <Magnetic>
                   <a href="#projects" className="btn-primary">
                     Selected Works
@@ -204,9 +216,9 @@ const Hero = () => {
                   </a>
                 </Magnetic>
                 <Magnetic>
-                  <Link 
-                    href="/contact" 
-                    className="group flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+                  <Link
+                    href="/contact"
+                    style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--muted)", textDecoration: "none", transition: "color 0.2s" }}
                   >
                     Let&apos;s Talk
                   </Link>
@@ -215,42 +227,30 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Side: Role */}
-          <div className="landing-info flex flex-col z-20 pointer-events-auto text-left w-full md:w-5/12 justify-center">
+          {/* Right */}
+          <div className="landing-info pointer-events-auto text-left">
             <h3>A Creative</h3>
-            <RotatingRoles />
+            <TypingRole />
           </div>
         </div>
       </div>
 
-      {/* Bottom scroll hint */}
-      <div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-3 cursor-pointer group"
+      {/* Scroll hint */}
+      <div
+        style={{ position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "none", flexDirection: "column", alignItems: "center", gap: "12px", cursor: "pointer" }}
+        className="lg:!flex"
         onClick={() => {
-          const aboutSection = document.getElementById('about');
-          if (aboutSection) {
-            aboutSection.scrollIntoView({ behavior: 'smooth' });
-          }
+          const el = document.getElementById('about');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
         }}
       >
-        <span className="text-[10px] text-[var(--muted-soft)] font-mono tracking-widest uppercase group-hover:text-[var(--foreground)] transition-colors">
-          Scroll
-        </span>
-        
-        {/* Mouse body */}
-        <div className="relative w-[22px] h-[34px] border-2 border-[var(--muted-soft)] group-hover:border-[var(--foreground)] rounded-[10px] transition-colors flex justify-center overflow-hidden">
-          {/* Scroll wheel track */}
-          <div className="absolute top-[6px] w-[3px] h-[10px] border border-[var(--muted-soft)]/50 group-hover:border-[var(--foreground)]/50 rounded-full transition-colors overflow-hidden">
-            {/* Scroll wheel dot */}
-            <div 
-              className="w-full h-[3px] bg-[var(--muted-soft)] group-hover:bg-[var(--foreground)] rounded-full transition-colors"
-              style={{ animation: "mouseScroll 1.5s ease-in-out infinite" }}
-            />
+        <span style={{ fontSize: "10px", color: "var(--muted-soft)", fontFamily: "var(--font-mono)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Scroll</span>
+        <div style={{ position: "relative", width: "22px", height: "34px", border: "2px solid var(--muted-soft)", borderRadius: "10px", display: "flex", justifyContent: "center", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: "6px", width: "3px", height: "10px", border: "1px solid var(--muted-soft)", borderRadius: "9999px", overflow: "hidden", opacity: 0.5 }}>
+            <div style={{ width: "100%", height: "3px", background: "var(--muted-soft)", borderRadius: "9999px", animation: "mouseScroll 1.5s ease-in-out infinite" }} />
           </div>
         </div>
-        
-        {/* Vertical line below mouse */}
-        <div className="w-px h-8 bg-gradient-to-b from-[var(--muted-soft)] to-transparent group-hover:from-[var(--foreground)] transition-colors" />
+        <div style={{ width: "1px", height: "2rem", background: "linear-gradient(to bottom, var(--muted-soft), transparent)" }} />
       </div>
     </section>
   );

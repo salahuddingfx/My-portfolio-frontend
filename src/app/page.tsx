@@ -90,7 +90,7 @@ export default function Home() {
       <About />
       <TechStack />
       <Services />
-      <Projects layout="horizontal" />
+      <Projects />
       <Testimonials />
       <ContactCTA />
     </main>

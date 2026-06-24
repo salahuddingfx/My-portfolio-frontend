@@ -1654,6 +1654,21 @@ body:has(.is-404-page) footer {
   flex-direction: column;
   align-items: flex-start;
 }
+.landing-intro p.hero-bio {
+  display: block;
+}
+@media screen and (max-width: 1024px) {
+  .landing-intro p.hero-bio {
+    display: none;
+  }
+  .landing-info {
+    margin-top: 2rem;
+  }
+  .landing-info h3 {
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+}
 .landing-intro h2 {
   margin: 0;
   color: var(--neo-yellow);
