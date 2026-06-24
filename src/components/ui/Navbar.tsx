@@ -175,12 +175,24 @@ const Navbar = () => {
             </nav>
 
             {/* MOBILE THEME TOGGLE + HAMBURGER */}
-            <div className="flex lg:hidden items-center gap-3">
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }} className="lg:hidden">
               <button
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--foreground)] transition-all duration-200 hover:bg-[var(--neo-yellow)] shadow-[3px_3px_0px_#000000] cursor-pointer"
-                style={{ borderRadius: "var(--radius-md)" }}
+                style={{
+                  display: "flex",
+                  height: "44px",
+                  width: "44px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "3px solid #000000",
+                  background: "var(--surface)",
+                  color: "var(--foreground)",
+                  transition: "all 0.2s",
+                  boxShadow: "3px 3px 0px #000000",
+                  cursor: "pointer",
+                  borderRadius: "var(--radius-md)",
+                }}
               >
                 {theme === "dark" ? <Sun size={16} strokeWidth={2.5} /> : <Moon size={16} strokeWidth={2.5} />}
               </button>
@@ -190,8 +202,20 @@ const Navbar = () => {
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--muted)] transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000] cursor-pointer"
-                style={{ borderRadius: "var(--radius-md)" }}
+                style={{
+                  display: "flex",
+                  height: "44px",
+                  width: "44px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "3px solid #000000",
+                  background: "var(--surface)",
+                  color: "var(--muted)",
+                  transition: "all 0.2s",
+                  boxShadow: "3px 3px 0px #000000",
+                  cursor: "pointer",
+                  borderRadius: "var(--radius-md)",
+                }}
               >
                 <motion.div
                   animate={{ rotate: isOpen ? 90 : 0 }}
@@ -220,38 +244,65 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
             />
 
-            {/* DRAWER */}
-            <motion.div
-              ref={drawerRef}
-              id="mobile-menu"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile Navigation"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="fixed inset-y-0 right-0 z-[var(--z-overlay)] flex h-full w-full max-w-[360px] flex-col border-l-[4px] border-[#000000] bg-[var(--background)] overflow-hidden lg:hidden"
-            >
+              {/* DRAWER */}
+              <motion.div
+                ref={drawerRef}
+                id="mobile-menu"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile Navigation"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
+                style={{
+                  position: "fixed",
+                  top: 0,
+                  bottom: 0,
+                  right: 0,
+                  zIndex: "var(--z-overlay)",
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                  width: "100%",
+                  maxWidth: "360px",
+                  borderLeft: "4px solid #000000",
+                  background: "var(--background)",
+                  overflow: "hidden",
+                }}
+                className="lg:hidden"
+              >
               {/* DRAWER HEADER */}
-              <div className="flex items-center justify-between border-b-[3px] border-[#000000] p-5 h-[72px] mx-2.5 shrink-0">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center bg-[#000000] border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000]">
-                    <span className="text-sm font-extrabold text-[#FFFFFF]">S</span>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "3px solid #000000", padding: "20px", height: "72px", marginLeft: "10px", marginRight: "10px", flexShrink: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div style={{ display: "flex", height: "40px", width: "40px", alignItems: "center", justifyContent: "center", background: "#000000", border: "3px solid #000000", boxShadow: "3px 3px 0px #000000" }}>
+                    <span style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF" }}>S</span>
                   </div>
-                  <span className="text-[15px] font-extrabold text-[var(--foreground)] uppercase tracking-wide" style={{ fontFamily: "var(--font-space-grotesk)" }}>Salah Uddin Kader</span>
+                  <span style={{ fontSize: "15px", fontWeight: 800, color: "var(--foreground)", textTransform: "uppercase", letterSpacing: "0.02em", fontFamily: "var(--font-space-grotesk)" }}>Salah Uddin Kader</span>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--muted)] transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000] cursor-pointer"
-                  style={{ borderRadius: "var(--radius-md)" }}
+                  style={{
+                    display: "flex",
+                    height: "40px",
+                    width: "40px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    border: "3px solid #000000",
+                    background: "var(--surface)",
+                    color: "var(--muted)",
+                    transition: "all 0.2s",
+                    boxShadow: "3px 3px 0px #000000",
+                    cursor: "pointer",
+                    borderRadius: "var(--radius-md)",
+                  }}
                 >
                   <X size={16} strokeWidth={2.5} />
                 </button>
               </div>
 
               {/* MOBILE NAV LINKS */}
-              <nav className="flex-1 overflow-y-auto flex flex-col gap-1.5 p-5">
+              <nav style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "10px", padding: "20px" }}>
                 {navLinks.map((link, index) => {
                   const active = pathname === link.href;
                   return (
@@ -260,37 +311,69 @@ const Navbar = () => {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.05 + index * 0.04 }}
-                      className="shrink-0"
+                      style={{ flexShrink: 0 }}
                     >
                       <Link
                         href={link.href}
-                        className={`mobile-nav-link border-[3px] border-[#000000] ${
-                          active
-                            ? "bg-[var(--neo-yellow)] text-[#000000] shadow-[3px_3px_0px_#000000]"
-                            : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000]"
-                        }`}
+                        className="mobile-nav-link"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          height: "54px",
+                          paddingInline: "1rem",
+                          borderRadius: "var(--radius-md)",
+                          fontSize: "15px",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.02em",
+                          border: "3px solid #000000",
+                          background: active ? "var(--neo-yellow)" : "var(--surface)",
+                          color: active ? "#000000" : "var(--muted)",
+                          boxShadow: "3px 3px 0px #000000",
+                          transition: "all 0.2s ease",
+                          textDecoration: "none",
+                        }}
                       >
                         <span>{link.name}</span>
-                        {active && <span className="h-2 w-2 bg-[#000000]" style={{ borderRadius: "var(--radius-sm)" }} />}
+                        {active && <span style={{ height: "8px", width: "8px", background: "#000000", borderRadius: "var(--radius-sm)" }} />}
                       </Link>
                     </motion.div>
                   );
                 })}
-                {/* Spacer to guarantee padding-bottom is respected in overflow scrolling */}
-                <div className="h-4 shrink-0" />
+                {/* Spacer */}
+                <div style={{ height: "16px", flexShrink: 0 }} />
               </nav>
 
               {/* FOOTER CTA */}
-              <div className="border-t-[3px] border-[#000000] p-5 shrink-0 flex flex-col gap-4">
+              <div style={{ borderTop: "3px solid #000000", padding: "20px", flexShrink: 0, display: "flex", flexDirection: "column", gap: "16px" }}>
                 <Link
                   href="/contact"
-                  className="group flex h-12 w-full items-center justify-center gap-2 border-[3px] border-[#000000] bg-[#000000] text-[14px] font-bold text-[#FFFFFF] uppercase tracking-wider transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[4px_4px_0px_#000000]"
-                  style={{ borderRadius: "var(--radius-md)" }}
+                  className="group"
+                  style={{
+                    display: "flex",
+                    height: "48px",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    border: "3px solid #000000",
+                    background: "#000000",
+                    color: "#FFFFFF",
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    borderRadius: "var(--radius-md)",
+                    boxShadow: "4px 4px 0px #000000",
+                    transition: "all 0.2s ease",
+                    textDecoration: "none",
+                  }}
                 >
                   Let&apos;s Talk
-                  <ArrowUpRight size={15} strokeWidth={2.5} className="transition-transform duration-200 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
+                  <ArrowUpRight size={15} strokeWidth={2.5} style={{ transition: "transform 0.2s" }} />
                 </Link>
-                <p className="text-center text-[11px] text-[var(--muted-soft)] font-mono uppercase tracking-widest">
+                <p style={{ textAlign: "center", fontSize: "11px", color: "var(--muted-soft)", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>
                   {settings?.email || "salauddinkaderappy@gmail.com"}
                 </p>
               </div>
