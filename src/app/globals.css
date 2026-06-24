@@ -1118,6 +1118,19 @@ html[data-theme="dark"] .skeleton {
   border-radius: var(--radius-sm);
 }
 
+/* Fix: ensure select dropdown arrow doesn't overlap text */
+.contact-input-group select.contact-input {
+  padding-right: 48px !important;
+}
+
+/* Mobile: make select easier to tap */
+@media (max-width: 640px) {
+  .contact-input-group select.contact-input {
+    min-height: 52px;
+    font-size: 16px !important;
+  }
+}
+
 #contact {
   overflow-x: clip;
 }
