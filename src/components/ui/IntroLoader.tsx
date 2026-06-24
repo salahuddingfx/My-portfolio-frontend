@@ -1,15 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Marquee from "react-fast-marquee";
+import { useEffect, useState, useRef } from "react";
 
 export default function IntroLoader() {
   const [loading, setLoading] = useState(true);
   const [percent, setPercent] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  const [phase, setPhase] = useState<"loading" | "ready" | "exiting" | "done">("loading");
   const [isClient, setIsClient] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -18,110 +16,124 @@ export default function IntroLoader() {
       return;
     }
 
-    // Simulate progress percentage loading
-    let currentPercent = 0;
+    let current = 0;
     const interval = setInterval(() => {
-      if (currentPercent < 50) {
-        currentPercent += Math.floor(Math.random() * 8) + 2;
-      } else if (currentPercent < 90) {
-        currentPercent += Math.floor(Math.random() * 3) + 1;
-      } else if (currentPercent < 100) {
-        currentPercent += 1;
+      if (current < 60) {
+        current += Math.floor(Math.random() * 10) + 4;
+      } else if (current < 90) {
+        current += Math.floor(Math.random() * 4) + 1;
+      } else if (current < 100) {
+        current += 1;
       }
-      
-      const nextPercent = Math.min(currentPercent, 100);
-      setPercent(nextPercent);
-
-      if (nextPercent >= 100) {
-        clearInterval(interval);
-      }
-    }, 80);
+      const next = Math.min(current, 100);
+      setPercent(next);
+      if (next >= 100) clearInterval(interval);
+    }, 50);
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (percent >= 100) {
-      const t1 = setTimeout(() => {
-        setLoaded(true);
-        const t2 = setTimeout(() => {
-          setIsLoaded(true);
-        }, 1000);
-        return () => clearTimeout(t2);
-      }, 600);
-      return () => clearTimeout(t1);
+    if (percent >= 100 && phase === "loading") {
+      const t = setTimeout(() => setPhase("ready"), 400);
+      return () => clearTimeout(t);
     }
-  }, [percent]);
+  }, [percent, phase]);
 
   useEffect(() => {
-    if (isLoaded) {
-      setClicked(true);
-      const timer = setTimeout(() => {
+    if (phase === "ready") {
+      const t = setTimeout(() => setPhase("exiting"), 600);
+      return () => clearTimeout(t);
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase === "exiting") {
+      const t = setTimeout(() => {
+        setPhase("done");
         setLoading(false);
         if (typeof window !== "undefined") {
           (window as any)._introLoaded = true;
         }
         window.dispatchEvent(new Event("intro-loader-finished"));
-      }, 900);
-      return () => clearTimeout(timer);
+      }, 500);
+      return () => clearTimeout(t);
     }
-  }, [isLoaded]);
-
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const { currentTarget: target } = e;
-    const rect = target.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    target.style.setProperty("--mouse-x", `${x}px`);
-    target.style.setProperty("--mouse-y", `${y}px`);
-  }
+  }, [phase]);
 
   if (!isClient || !loading) return null;
 
   return (
-    <>
-      <div className="loading-header">
-        <a href="/#" className="loader-title" data-cursor="disable">
-          Salah Uddin Kader
-        </a>
-        <div className={`loaderGame ${clicked ? "loader-out" : ""}`}>
-          <div className="loaderGame-container">
-            <div className="loaderGame-in">
-              {[...Array(27)].map((_, index) => (
-                <div className="loaderGame-line" key={index}></div>
-              ))}
-            </div>
-            <div className="loaderGame-ball"></div>
-          </div>
-        </div>
-      </div>
-      <div className="loading-screen">
-        <div className="loading-marquee">
-          <Marquee speed={80}>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
-          </Marquee>
-        </div>
-        <div
-          className={`loading-wrap ${clicked ? "loading-clicked" : ""}`}
-          onMouseMove={(e) => handleMouseMove(e)}
+    <div 
+      className="fixed inset-0 z-[999999999] flex flex-col items-center justify-center bg-[var(--background)]"
+      style={{ opacity: phase === "exiting" ? 0 : 1, transition: "opacity 0.5s ease" }}
+    >
+      {/* Top bar - name + percent */}
+      <div className="absolute top-0 left-0 right-0 flex items-center justify-between" style={{ padding: "clamp(1rem, 3vw, 2rem) clamp(1.5rem, 4vw, 3rem)" }}>
+        <span 
+          className="text-[13px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)]"
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
         >
-          <div className="loading-hover"></div>
-          <div className={`loading-button ${loaded ? "loading-complete" : ""}`}>
-            <div className="loading-container">
-              <div className="loading-content">
-                <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
-                </div>
-              </div>
-              <div className="loading-box"></div>
-            </div>
-            <div className="loading-content2">
-              <span>Welcome</span>
-            </div>
+          Salah Uddin Kader
+        </span>
+        <span className="text-[13px] font-mono font-bold text-[var(--muted)] tabular-nums">
+          {String(percent).padStart(3, "0")}%
+        </span>
+      </div>
+
+      {/* Center content */}
+      <div className="flex flex-col items-center gap-8">
+        {/* Logo mark */}
+        <div 
+          className="flex h-16 w-16 items-center justify-center bg-[#000000] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]"
+          style={{ 
+            borderRadius: "var(--radius-md)",
+            transform: phase === "ready" ? "scale(1.1)" : "scale(1)",
+            transition: "transform 0.3s ease"
+          }}
+        >
+          <span className="text-xl font-extrabold text-[#FFFFFF]" style={{ fontFamily: "var(--font-space-grotesk)" }}>S</span>
+        </div>
+
+        {/* Progress bar */}
+        <div className="w-48 flex flex-col items-center gap-3">
+          <div className="w-full h-[3px] bg-[var(--surface-2)] border border-[#000000]/10 overflow-hidden" style={{ borderRadius: "var(--radius-sm)" }}>
+            <div 
+              ref={barRef}
+              className="h-full bg-[var(--neo-yellow)]"
+              style={{ 
+                width: `${percent}%`, 
+                transition: "width 0.1s linear",
+                borderRadius: "var(--radius-sm)"
+              }}
+            />
+          </div>
+          
+          {/* Loading text */}
+          <div className="flex items-center gap-2">
+            {phase === "loading" && (
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--muted-soft)]">
+                Loading
+              </span>
+            )}
+            {phase === "ready" && (
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--neo-yellow)]">
+                Click anywhere to enter
+              </span>
+            )}
           </div>
         </div>
       </div>
-    </>
+
+      {/* Bottom - status */}
+      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between" style={{ padding: "clamp(1rem, 3vw, 2rem) clamp(1.5rem, 4vw, 3rem)" }}>
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--muted-soft)]">
+          Creative Developer
+        </span>
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--muted-soft)]">
+          {new Date().getFullYear()}
+        </span>
+      </div>
+    </div>
   );
 }

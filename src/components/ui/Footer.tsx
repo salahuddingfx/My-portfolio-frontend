@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, ArrowRight } from "lucide-react";
 import { useSettings } from "@/context/SettingsContext";
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -62,139 +62,159 @@ const Footer = () => {
   ].filter(s => s.href && s.href !== "#" && s.href !== "");
 
   return (
-    <footer className="relative overflow-hidden isolate bg-[var(--background)] mt-16 md:mt-20">
-      {/* Divider */}
-      <div className="border-t-[4px] border-[#000000]" />
+    <footer style={{ position: "relative", overflow: "hidden", background: "var(--background)", borderTop: "3px solid #000000" }}>
+      <div 
+        className="footer-inner"
+        style={{ 
+          position: "relative", 
+          zIndex: 10, 
+          margin: "0 auto", 
+          width: "100%", 
+          maxWidth: "var(--container-max)",
+          paddingTop: "clamp(2.5rem, 5vw, 4rem)", 
+          paddingBottom: "clamp(2.5rem, 5vw, 4rem)",
+          paddingLeft: "var(--container-pad)", 
+          paddingRight: "var(--container-pad)" 
+        }}
+      >
+        
+        {/* ─── HERO ROW ─── */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2rem", paddingBottom: "2rem", borderBottom: "3px solid #000000" }}>
+          
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: "36rem" }}>
+            <div style={{ display: "inline-flex", width: "fit-content", alignItems: "center", gap: "0.5rem", border: "2px solid #000000", background: "var(--neo-green)", boxShadow: "3px 3px 0px #000000", padding: "6px 10px" }}>
+              <span style={{ height: "6px", width: "6px", background: "#000000", borderRadius: "var(--radius-sm)" }} className="animate-pulse" />
+              <span style={{ fontSize: "10px", color: "#000000", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>Open to new projects</span>
+            </div>
+            
+            <h2 style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, color: "var(--foreground)", lineHeight: 1.15, letterSpacing: "-0.02em", margin: 0 }}>
+              Let&apos;s build something <span style={{ color: "var(--neo-yellow)" }}>great</span> together.
+            </h2>
+            
+            <p style={{ maxWidth: "26rem", fontSize: "13px", lineHeight: 1.7, color: "var(--muted)", margin: 0 }}>
+              {settings?.bio || "Building fast, accessible, and thoughtfully crafted digital experiences with a focus on performance, simplicity, and modern interaction."}
+            </p>
+          </div>
 
-      <div className="container relative z-10 max-w-7xl">
-        {/* Top Section */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b-[3px] border-[#000000] gap-8 py-12"
-        >
+          <Link href="/contact" style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexShrink: 0, textDecoration: "none" }}>
+            <div className="group" style={{ display: "flex", height: "2.75rem", width: "2.75rem", flexShrink: 0, alignItems: "center", justifyContent: "center", background: "#000000", border: "3px solid #000000", boxShadow: "3px 3px 0px #000000", transition: "all 0.2s" }}>
+              <ArrowUpRight size={16} style={{ color: "#FFFFFF", transition: "transform 0.2s" }} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-soft)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Start a</span>
+              <span style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "14px", fontWeight: 800, color: "var(--foreground)", textTransform: "uppercase", letterSpacing: "0.02em" }}>Project</span>
+            </div>
+          </Link>
+        </div>
 
-          {/* Brand Column */}
-          <div className="flex flex-col lg:pr-10 gap-8">
-            {/* Logo */}
-            <Link href="/" aria-label="Home" className="group flex w-fit items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#000000] border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000] transition-all duration-200 group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-[5px_5px_0px_#000000]">
-                <span className="text-base font-extrabold text-[#FFFFFF]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                  S
-                </span>
+        {/* ─── COLUMNS ROW ─── */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2rem", marginBottom: "2rem", paddingBottom: "2rem", borderBottom: "3px solid #000000" }}>
+          
+          {/* Brand */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <Link href="/" aria-label="Home" style={{ display: "flex", width: "fit-content", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
+              <div style={{ display: "flex", height: "2.75rem", width: "2.75rem", flexShrink: 0, alignItems: "center", justifyContent: "center", background: "#000000", border: "3px solid #000000", boxShadow: "3px 3px 0px #000000" }}>
+                <span style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "1rem", fontWeight: 800, color: "#FFFFFF" }}>S</span>
               </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-[16px] font-extrabold text-[var(--foreground)] uppercase tracking-wide transition-colors duration-200 group-hover:text-[var(--foreground)]/80" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+                <span style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "15px", fontWeight: 800, color: "var(--foreground)", textTransform: "uppercase", letterSpacing: "0.02em" }}>
                   Salah Uddin Kader
                 </span>
-                <span className="mt-1 text-[11px] text-[var(--muted-soft)] uppercase tracking-widest font-bold">
+                <span style={{ marginTop: "4px", fontSize: "10px", color: "var(--muted-soft)", textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 700 }}>
                   Creative Developer
                 </span>
               </div>
             </Link>
 
-            <p className="max-w-[440px] text-sm leading-relaxed text-[var(--muted)]">
-              {settings?.bio || "Building fast, accessible, and thoughtfully crafted digital experiences with a focus on performance, simplicity, and modern interaction."}
-            </p>
-
-            <div className="flex flex-col gap-3">
-              <a href={`mailto:${settings?.email || "salahuddinkaderappy@gmail.com"}`} className="group/footer inline-flex items-center gap-3 text-[13px] text-[var(--muted)] transition-colors duration-200 hover:text-[var(--foreground)]">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center border-[2px] border-[#000000] bg-[var(--surface-2)] shadow-[2px_2px_0px_#000000]">
-                  <Mail size={12} className="text-[var(--neo-yellow)]" strokeWidth={2.5} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <a 
+                href={`mailto:${settings?.email || "salahuddinkaderappy@gmail.com"}`} 
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "13px", color: "var(--muted)", transition: "color 0.2s", textDecoration: "none" }}
+              >
+                <div style={{ display: "flex", height: "2rem", width: "2rem", flexShrink: 0, alignItems: "center", justifyContent: "center", border: "2px solid #000000", background: "var(--surface-2)", boxShadow: "2px 2px 0px #000000" }}>
+                  <Mail size={13} style={{ color: "var(--neo-yellow)" }} strokeWidth={2.5} />
                 </div>
                 {settings?.email || "salahuddinkaderappy@gmail.com"}
               </a>
-              <div className="inline-flex items-center gap-3 text-[13px] text-[var(--muted)]">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center border-[2px] border-[#000000] bg-[var(--surface-2)] shadow-[2px_2px_0px_#000000]">
-                  <MapPin size={12} className="text-[var(--neo-yellow)]" strokeWidth={2.5} />
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "13px", color: "var(--muted)" }}>
+                <div style={{ display: "flex", height: "2rem", width: "2rem", flexShrink: 0, alignItems: "center", justifyContent: "center", border: "2px solid #000000", background: "var(--surface-2)", boxShadow: "2px 2px 0px #000000" }}>
+                  <MapPin size={13} style={{ color: "var(--neo-yellow)" }} strokeWidth={2.5} />
                 </div>
                 {settings?.location || "Cox's Bazar, Bangladesh"}
               </div>
             </div>
-
-            <div className="inline-flex w-fit items-center gap-2 border-[2px] border-[#000000] bg-[var(--neo-green)] px-3 py-1.5 shadow-[3px_3px_0px_#000000]" style={{ padding: "10px" }}>
-              <span className="h-2 w-2 bg-[#000000] animate-pulse" style={{ borderRadius: "var(--radius-sm)" }} />
-              <span className="text-[11px] text-[#000000] pr-4 pl-2 md:pl-4 font-bold uppercase tracking-widest">Open to new projects</span>
-            </div>
           </div>
 
-          {/* Nav Links Column */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:col-span-3 gap-12">
-            {/* Pages */}
-            <div>
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)] mb-5">
-                Pages
-              </p>
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-3 items-start">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.label}>
-                    <Link href={link.href} className="footer-link text-[13px]">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Navigation */}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <p style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--foreground)", marginBottom: "1rem" }}>
+              Navigation
+            </p>
+            <ul style={{ display: "flex", flexDirection: "column", gap: "0.625rem", listStyle: "none", padding: 0, margin: 0 }}>
+              {NAV_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="footer-link" style={{ fontSize: "13px" }}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Socials */}
-            <div>
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)] mb-5">
-                Social
-              </p>
-              <ul className="flex flex-col items-start gap-3">
-                {socials.map((social) => (
-                  <li key={social.name}>
-                    <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="footer-link text-[13px] flex items-center gap-2">
-                      <social.icon className="h-3.5 w-3.5 shrink-0" />
-                      {social.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Connect */}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <p style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--foreground)", marginBottom: "1rem" }}>
+              Connect
+            </p>
+            <ul style={{ display: "flex", flexDirection: "column", gap: "0.75rem", listStyle: "none", padding: 0, margin: 0 }}>
+              {socials.map((social) => (
+                <li key={social.name}>
+                  <a 
+                    href={social.href} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    aria-label={social.name} 
+                    className="group/social"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "13px", fontWeight: 600, color: "var(--muted)", transition: "color 0.2s", textDecoration: "none" }}
+                  >
+                    <div className="group-hover/social" style={{ display: "flex", height: "2rem", width: "2rem", flexShrink: 0, alignItems: "center", justifyContent: "center", border: "2px solid #000000", background: "var(--surface)", boxShadow: "2px 2px 0px #000000", transition: "all 0.2s" }}>
+                      <social.icon style={{ height: "14px", width: "14px" }} />
+                    </div>
+                    {social.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* CTA Card */}
-            <div className="flex flex-col">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[var(--foreground)] mb-5">
-                Hire Me
+          {/* Hire Me */}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <p style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--foreground)", marginBottom: "1rem" }}>
+              Hire Me
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", border: "3px solid #000000", background: "var(--surface)", boxShadow: "4px 4px 0px #000000", borderRadius: "var(--radius-lg)", padding: "clamp(1rem, 2vw, 1.5rem)", gap: "1rem" }}>
+              <p style={{ fontSize: "13px", lineHeight: 1.7, color: "var(--muted)", margin: 0 }}>
+                Available for freelance, collaborations & creative work.
               </p>
-              <div
-                className="flex flex-col border-[3px] border-[#000000] bg-[var(--surface)] shadow-[4px_4px_0px_#000000] p-6 gap-4"
-                style={{ borderRadius: "var(--radius-lg)" }}
+              <Link 
+                href="/contact" 
+                className="group/cta"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "12px", fontWeight: 700, color: "var(--foreground)", textTransform: "uppercase", letterSpacing: "0.05em", transition: "color 0.2s", textDecoration: "none" }}
               >
-                <p className="text-[13px] leading-relaxed text-[var(--muted)]">
-                  Available for freelance projects, collaborations, and creative web work.
-                </p>
-                <Link href="/contact" className="group/cta inline-flex items-center gap-1.5 text-[13px] font-bold text-[var(--foreground)] uppercase tracking-wider transition-colors duration-200 hover:text-[var(--neo-yellow)]" style={{ gap: '0.375rem' }}>
-                  Start a project
-                  <ArrowUpRight size={13} strokeWidth={2.5} className="transition-transform duration-200 group-hover/cta:translate-x-[1px] group-hover/cta:-translate-y-[1px]" />
-                </Link>
-              </div>
+                Let&apos;s Talk
+                <ArrowRight size={12} strokeWidth={2.5} style={{ transition: "transform 0.2s" }} />
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div
-          className="flex flex-col items-center justify-between text-center sm:flex-row sm:text-left gap-6 py-6 pb-12"
-        >
-          <p className="text-center text-[12px] text-[var(--muted-soft)] font-bold uppercase tracking-wider">
+        {/* ─── BOTTOM BAR ─── */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+          <p style={{ fontSize: "11px", color: "var(--muted-soft)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", margin: 0 }}>
             © {year} Salah Uddin Kader (@salahuddingfx) — All rights reserved.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 text-[12px] text-[var(--muted-soft)]">
-            <Link href="/privacy-policy" className="footer-link text-[12px]">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="footer-link text-[12px]">
-              Terms
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {socials.map((social) => (
-              <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="footer-social">
-                <social.icon className="h-3.5 w-3.5" />
-              </a>
-            ))}
+          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", fontSize: "11px", color: "var(--muted-soft)" }}>
+            <Link href="/privacy-policy" className="footer-link" style={{ fontSize: "11px" }}>Privacy</Link>
+            <span style={{ color: "var(--foreground)", opacity: 0.2 }}>·</span>
+            <Link href="/terms" className="footer-link" style={{ fontSize: "11px" }}>Terms</Link>
           </div>
         </div>
       </div>

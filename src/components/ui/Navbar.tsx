@@ -156,7 +156,7 @@ const Navbar = () => {
               {/* CTA BUTTON */}
               <Link
                 href="/contact"
-                className="nav-cta group inline-flex h-11 items-center justify-center gap-2.5 border-[3px] border-[#000000] bg-[#000000] px-6 text-[13px] font-bold leading-none text-[#FFFFFF] uppercase tracking-wider transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#000000] shadow-[3px_3px_0px_#000000]"
+                className="nav-cta group inline-flex h-11 items-center justify-center gap-2.5 border-[3px] border-[#000000] bg-[#000000] px-6 text-[13px] font-bold leading-none !text-[#FFFFFF] uppercase tracking-wider transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:!text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#000000] shadow-[3px_3px_0px_#000000]"
                 style={{ borderRadius: "var(--radius-md)" }}
               >
                 <span className="relative top-[0.5px]">Let&apos;s Talk</span>

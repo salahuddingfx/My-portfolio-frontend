@@ -54,12 +54,12 @@ const CustomCursor = () => {
         const target = e.target as HTMLElement;
         if (target.closest("button, a, .cursor-pointer")) {
           gsap.to(follower, {
-            scale: 1.5,
+            scale: 1.4,
             duration: 0.3,
           });
           gsap.to(".sharingan-glow", {
             opacity: 1,
-            scale: 1.8,
+            scale: 1.6,
             duration: 0.3,
           });
           // REVEAL RAYS
@@ -139,20 +139,20 @@ const CustomCursor = () => {
       {/* TINY CENTER DOT */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-1 h-1 bg-[var(--foreground)] rounded-full pointer-events-none z-[var(--z-cursor)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-[var(--foreground)] rounded-full pointer-events-none z-[var(--z-cursor)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
       />
 
       {/* SHARINGAN EYE WITH INTENSE GLOW */}
       <div
         ref={followerRef}
-        className="fixed top-0 left-0 w-12 h-12 pointer-events-none z-[calc(var(--z-cursor)-1)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[calc(var(--z-cursor)-1)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
       >
         {/* RADIATING RAYS CONTAINER */}
         <div ref={raysRef} className="absolute inset-0 flex items-center justify-center">
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={i}
-              className="ray absolute w-[1px] h-[60px] bg-gradient-to-t from-[var(--accent)] to-transparent origin-bottom opacity-0 scale-y-0"
+              className="ray absolute w-[1px] h-[40px] bg-gradient-to-t from-[var(--accent)] to-transparent origin-bottom opacity-0 scale-y-0"
               style={{
                 transform: `rotate(${i * 30}deg) translateY(-50%)`,
               }}
@@ -161,12 +161,12 @@ const CustomCursor = () => {
         </div>
 
         {/* EXTERNAL AURA GLOW */}
-        <div className="sharingan-glow absolute inset-[-25px] rounded-full bg-[var(--accent)]/20 blur-[20px] opacity-60 z-[-1]" />
+        <div className="sharingan-glow absolute inset-[-15px] rounded-full bg-[var(--accent)]/20 blur-[15px] opacity-60 z-[-1]" />
         
-        <div className="relative w-full h-full rounded-full bg-[var(--accent)] border border-black/40 overflow-hidden shadow-[inset_0_0_12px_rgba(0,0,0,0.9),0_0_20px_rgba(147,51,234,0.6)]">
+        <div className="relative w-full h-full rounded-full bg-[var(--accent)] border border-black/40 overflow-hidden shadow-[inset_0_0_8px_rgba(0,0,0,0.9),0_0_12px_rgba(147,51,234,0.4)]">
           {/* Inner Pattern (EMS) */}
           <div className="sharingan-inner absolute inset-0 flex items-center justify-center">
-            <svg viewBox="0 0 100 100" className="w-full h-full p-1 fill-black">
+            <svg viewBox="0 0 100 100" className="w-full h-full p-0.5 fill-black">
               <circle cx="50" cy="50" r="10" />
               
               <path d="M50 20 C60 20 70 30 70 45 C70 60 60 70 50 70 C40 70 30 60 30 45 C30 30 40 20 50 20 Z" fill="none" stroke="black" strokeWidth="2" opacity="0.3" />
@@ -182,7 +182,7 @@ const CustomCursor = () => {
           </div>
           
           {/* Eye Shine */}
-          <div className="absolute top-[20%] left-[25%] w-2 h-1.5 bg-white/50 rounded-full blur-[1px] rotate-[-45deg]" />
+          <div className="absolute top-[20%] left-[25%] w-1.5 h-1 bg-white/50 rounded-full blur-[0.5px] rotate-[-45deg]" />
         </div>
       </div>
     </>
