@@ -174,7 +174,7 @@ const About = () => {
               {/* Badge overlay */}
               <div className="portrait-3d-badge absolute bottom-8 left-8 bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000] p-5 flex items-center gap-4" style={{ borderRadius: "var(--radius-md)" }}>
                 <div className="w-2 h-2 bg-[var(--neo-green)] border-[2px] border-[#000000] animate-pulse" style={{ borderRadius: "var(--radius-sm)" }} />
-                <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--foreground)]" style={{ color: "padding: 5px;" }}>Based in BD</span>
+                <span style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, color: "var(--foreground)", padding: "6px 12px", border: "2px solid #000000", background: "var(--neo-yellow)", borderRadius: "var(--radius-sm)" }}>Based in BD</span>
               </div>
               </div>
             </div>
