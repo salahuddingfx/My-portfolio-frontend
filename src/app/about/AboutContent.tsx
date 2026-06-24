@@ -392,6 +392,18 @@ export default function AboutContent() {
                 I can genuinely make a difference. I&apos;m drawn to work that
                 challenges me technically — from training local models to designing secure, low-latency APIs and interactive user interfaces.
               </p>
+              <p className="text-base text-[var(--muted)] leading-relaxed">
+                I&apos;m also the founder of{" "}
+                <a
+                  href="https://nextorastudio.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-[var(--foreground)] underline decoration-[var(--neo-yellow)] decoration-2 underline-offset-4 hover:text-[var(--neo-yellow)] transition-colors"
+                >
+                  Nextora Studio
+                </a>
+                , a digital agency where we build software, websites, and provide graphic design and marketing services.
+              </p>
             </motion.div>
           </div>
         </div>
