@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Mail, MapPin, ArrowRight } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, ArrowRight, ExternalLink } from "lucide-react";
 import { useSettings } from "@/context/SettingsContext";
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -156,6 +156,18 @@ const Footer = () => {
                   <Link href={link.href} className="footer-link" style={{ fontSize: "13px" }}>{link.label}</Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href="https://nextorastudio.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                  style={{ fontSize: "13px", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}
+                >
+                  Nextora Studio
+                  <ExternalLink size={10} style={{ opacity: 0.5 }} />
+                </a>
+              </li>
             </ul>
           </div>
 
