@@ -192,6 +192,8 @@ export default function RootLayout({
           These hints fire as soon as the HTML is parsed — TCP+TLS handshake
           completes in the background so Spline loads faster when it defers. */}
       <head>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
         <script
           id="theme-loader"
           dangerouslySetInnerHTML={{

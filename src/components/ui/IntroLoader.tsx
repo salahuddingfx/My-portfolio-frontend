@@ -6,15 +6,15 @@ export default function IntroLoader() {
   const [loading, setLoading] = useState(true);
   const [percent, setPercent] = useState(0);
   const [phase, setPhase] = useState<"loading" | "ready" | "exiting" | "done">("loading");
-  const [isClient, setIsClient] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setIsClient(true);
     if (typeof window !== "undefined" && (window as any)._introLoaded) {
       setLoading(false);
       return;
     }
+
+    document.documentElement.style.overflow = "hidden";
 
     let current = 0;
     const interval = setInterval(() => {
@@ -52,6 +52,7 @@ export default function IntroLoader() {
       const t = setTimeout(() => {
         setPhase("done");
         setLoading(false);
+        document.documentElement.style.overflow = "";
         if (typeof window !== "undefined") {
           (window as any)._introLoaded = true;
         }
@@ -61,7 +62,7 @@ export default function IntroLoader() {
     }
   }, [phase]);
 
-  if (!isClient || !loading) return null;
+  if (!loading) return null;
 
   return (
     <div 

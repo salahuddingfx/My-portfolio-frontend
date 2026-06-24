@@ -156,7 +156,7 @@ const Contact = () => {
 
           {/* Contact Details Column */}
           <div className="lg:col-span-4 flex flex-col justify-between py-6">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col" style={{ gap: "clamp(1.5rem, 3vw, 2rem)" }}>
               {infoCards.map((card, i) => (
                 <motion.div
                   key={card.label}
@@ -164,7 +164,7 @@ const Contact = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="contact-info-item flex items-center gap-6 group min-w-0"
+                  className="contact-info-item flex items-center gap-5 group min-w-0"
                 >
                   <div className="contact-info-icon shrink-0">
                     <card.icon size={20} strokeWidth={2.5} />
@@ -174,11 +174,11 @@ const Contact = () => {
                       {card.label}
                     </p>
                     {card.href ? (
-                      <a href={card.href} className="text-base sm:text-lg font-bold text-[var(--foreground)] hover:text-[var(--accent)] transition-all break-words sm:truncate block">
+                      <a href={card.href} className="text-sm sm:text-base font-bold text-[var(--foreground)] hover:text-[var(--accent)] transition-all break-words block" style={{ wordBreak: "break-word" }}>
                         {card.value}
                       </a>
                     ) : (
-                      <p className="text-base sm:text-lg font-bold text-[var(--foreground)] break-words sm:truncate">{card.value}</p>
+                      <p className="text-sm sm:text-base font-bold text-[var(--foreground)] break-words" style={{ wordBreak: "break-word" }}>{card.value}</p>
                     )}
                   </div>
                 </motion.div>
@@ -189,10 +189,11 @@ const Contact = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="border-t border-(--border) mt-10 pt-8"
+              className="mt-10 pt-8"
+              style={{ borderTop: "3px solid #000000" }}
             >
               <p className="text-xs font-mono uppercase tracking-widest text-(--muted-soft) mb-5">Social Networks</p>
-              <div className="flex flex-wrap gap-x-8 gap-y-4">
+              <div className="flex flex-wrap" style={{ gap: "clamp(1rem, 2.5vw, 2rem)" }}>
                 {['LinkedIn', 'Github', 'Twitter', 'Instagram'].map(social => (
                   <a key={social} href="#" className="text-xs font-bold hover:text-(--accent) transition-all uppercase tracking-widest text-[var(--foreground)] opacity-60">
                     {social}
@@ -298,7 +299,13 @@ const Contact = () => {
                           setFormData({ ...formData, subject: e.target.value });
                           if (errors.subject) setErrors(prev => { const c = { ...prev }; delete c.subject; return c; });
                         }}
-                        className={`contact-input appearance-none cursor-pointer ${errors.subject ? '!border-red-500/50' : ''}`}
+                        className="contact-input cursor-pointer"
+                        style={{
+                          paddingRight: "48px",
+                          appearance: "none",
+                          WebkitAppearance: "none",
+                          MozAppearance: "none",
+                        }}
                       >
                         {SUBJECTS.map((s) => (
                           <option key={s} value={s} className="bg-[var(--surface)] text-[var(--foreground)] p-4">
@@ -307,7 +314,18 @@ const Contact = () => {
                         ))}
                       </select>
                       <label className="contact-label">Inquiry Subject</label>
-                      <div className="absolute right-0 bottom-2 pointer-events-none text-(--muted-soft)">
+                      <div
+                        className="pointer-events-none"
+                        style={{
+                          position: "absolute",
+                          right: "16px",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          color: "var(--muted-soft)",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
                         <ArrowRight size={16} className="rotate-90" />
                       </div>
                       {errors.subject && (

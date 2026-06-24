@@ -2,13 +2,9 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
-import { ArrowUpRight, Code, Eye, Layers, Sparkles, AlertCircle } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import Link from "next/link";
+import { ArrowUpRight, Code, Eye, ArrowLeft, Layers } from "lucide-react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 
 interface ProjectItem {
   _id?: string;
@@ -31,7 +27,7 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
     links: { live: "https://github.com/salahuddingfx/Study-Flow", source: "https://github.com/salahuddingfx/Study-Flow" },
     category: "Full Stack",
     featured: true,
-    order: 1
+    order: 1,
   },
   {
     title: "SalahUddin OS",
@@ -41,7 +37,7 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
     links: { live: "https://github.com/salahuddingfx/MY-OS", source: "https://github.com/salahuddingfx/MY-OS" },
     category: "System Sim",
     featured: true,
-    order: 2
+    order: 2,
   },
   {
     title: "Aether 3D Engine",
@@ -51,7 +47,7 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
     links: { live: "https://github.com/salahuddingfx/Gesture-System", source: "https://github.com/salahuddingfx/Gesture-System" },
     category: "Creative 3D",
     featured: true,
-    order: 3
+    order: 3,
   },
   {
     title: "NoteSphere",
@@ -61,7 +57,7 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
     links: { live: "https://github.com/salahuddingfx/NoteSphere", source: "https://github.com/salahuddingfx/NoteSphere" },
     category: "Full Stack",
     featured: false,
-    order: 4
+    order: 4,
   },
   {
     title: "Memory Master",
@@ -71,7 +67,7 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
     links: { live: "https://github.com/salahuddingfx/Memory-Master", source: "https://github.com/salahuddingfx/Memory-Master" },
     category: "Game",
     featured: false,
-    order: 5
+    order: 5,
   },
   {
     title: "Habit-OS",
@@ -81,33 +77,324 @@ const FALLBACK_PROJECTS: ProjectItem[] = [
     links: { live: "https://github.com/salahuddingfx/Habit-OS", source: "https://github.com/salahuddingfx/Habit-OS" },
     category: "Full Stack",
     featured: false,
-    order: 6
+    order: 6,
   },
 ];
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
+/* ─── Hero Card ────────────────────────────────────────────────── */
+function HeroCard({ project, index }: { project: ProjectItem; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const number = String(index + 1).padStart(2, "0");
+  const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
+  const sourceLink = project.links?.source && project.links.source !== "#" ? project.links.source : "";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 60 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30, transition: { duration: 0.25 } }}
+      transition={{ duration: 0.9, ease }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "relative",
+        display: "grid",
+        gridTemplateColumns: "1fr",
+        background: "var(--surface)",
+        border: "3px solid #000000",
+        borderRadius: "var(--radius-lg)",
+        overflow: "hidden",
+        boxShadow: hovered ? "12px 12px 0px #000000" : "6px 6px 0px #000000",
+        transform: hovered ? "translate(-4px, -4px)" : "none",
+        transition: "box-shadow 0.4s, transform 0.4s",
+        cursor: "default",
+      }}
+      className="hero-project-card"
+    >
+      {/* Image */}
+      <div style={{ position: "relative", overflow: "hidden", aspectRatio: "16/9", background: "var(--surface-2)" }}>
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          priority
+          sizes="100vw"
+          style={{
+            objectFit: "cover",
+            transform: hovered ? "scale(1.06)" : "scale(1)",
+            transition: "transform 1s cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
+        />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%)",
+          pointerEvents: "none",
+        }} />
+        {/* Number badge */}
+        <div style={{
+          position: "absolute", top: "16px", left: "16px",
+          width: "48px", height: "48px",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: "var(--neo-yellow)", border: "3px solid #000000",
+          boxShadow: "3px 3px 0px #000000", borderRadius: "var(--radius-md)",
+          fontFamily: "var(--font-pixel)", fontSize: "18px", color: "#000000", zIndex: 3,
+        }}>
+          {number}
+        </div>
+        {/* Featured badge */}
+        {project.featured && (
+          <div style={{
+            position: "absolute", top: "16px", right: "16px",
+            padding: "6px 14px", background: "var(--neo-yellow)",
+            border: "2px solid #000000", borderRadius: "var(--radius-sm)",
+            fontFamily: "var(--font-mono)", fontSize: "9px", fontWeight: 700,
+            textTransform: "uppercase", letterSpacing: "0.1em", color: "#000000", zIndex: 3,
+          }}>
+            Featured
+          </div>
+        )}
+        {/* Bottom info overlay */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0,
+          padding: "clamp(1.5rem, 3vw, 2.5rem)",
+          zIndex: 3,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+            <span style={{ width: "8px", height: "8px", background: "var(--neo-yellow)", border: "2px solid #000000", borderRadius: "var(--radius-sm)" }} />
+            <span style={{ fontSize: "10px", fontFamily: "var(--font-mono)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "#FFFFFF" }}>
+              {project.category}
+            </span>
+          </div>
+          <h2 style={{
+            fontSize: "clamp(1.8rem, 4vw, 3rem)", fontFamily: "var(--font-space-grotesk)",
+            fontWeight: 800, color: "#FFFFFF", lineHeight: 1.1, margin: 0,
+          }}>
+            {project.title}
+          </h2>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", display: "flex", flexDirection: "column", gap: "20px" }}>
+        <p style={{ fontSize: "15px", color: "var(--muted)", lineHeight: 1.7, margin: 0 }}>
+          {project.desc}
+        </p>
+
+        {/* Tags */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+          {project.tags?.map((tag, ti) => (
+            <span key={tag} style={{
+              fontSize: "11px", fontFamily: "var(--font-mono)", fontWeight: 700,
+              letterSpacing: "0.04em", color: "#000000",
+              background: ti % 3 === 0 ? "var(--neo-yellow)" : ti % 3 === 1 ? "var(--neo-cyan)" : "var(--neo-green)",
+              padding: "4px 12px", border: "2px solid #000000", borderRadius: "var(--radius-sm)",
+              boxShadow: "2px 2px 0px #000000",
+            }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "4px" }}>
+          {liveLink && (
+            <a href={liveLink} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ gap: "8px" }}>
+              <Eye size={14} />
+              <span>Live Preview</span>
+              <ArrowUpRight size={12} />
+            </a>
+          )}
+          {sourceLink && (
+            <a href={sourceLink} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ gap: "8px" }}>
+              <Code size={14} />
+              <span>Source Code</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── Grid Card ────────────────────────────────────────────────── */
+function GridCard({ project, index }: { project: ProjectItem; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const number = String(index + 1).padStart(2, "0");
+  const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
+  const sourceLink = project.links?.source && project.links.source !== "#" ? project.links.source : "";
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9, y: 20, transition: { duration: 0.25 } }}
+      transition={{ duration: 0.7, ease, delay: (index % 6) * 0.08 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "relative",
+        background: "var(--surface)",
+        border: "3px solid #000000",
+        borderRadius: "var(--radius-lg)",
+        overflow: "hidden",
+        boxShadow: hovered ? "10px 10px 0px #000000" : "5px 5px 0px #000000",
+        transform: hovered ? "translate(-3px, -3px)" : "none",
+        transition: "box-shadow 0.4s, transform 0.4s",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Image */}
+      <div style={{ position: "relative", overflow: "hidden", aspectRatio: "16/10", background: "var(--surface-2)" }}>
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          priority={index < 2}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          style={{
+            objectFit: "cover",
+            transform: hovered ? "scale(1.08)" : "scale(1)",
+            transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
+        />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: hovered
+            ? "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.5) 100%)"
+            : "linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.2) 100%)",
+          transition: "background 0.5s",
+          pointerEvents: "none",
+        }} />
+        {/* Number */}
+        <div style={{
+          position: "absolute", top: "10px", left: "10px",
+          width: "36px", height: "36px",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: "var(--neo-yellow)", border: "2px solid #000000",
+          boxShadow: "2px 2px 0px #000000", borderRadius: "var(--radius-sm)",
+          fontFamily: "var(--font-pixel)", fontSize: "14px", color: "#000000", zIndex: 3,
+        }}>
+          {number}
+        </div>
+        {/* Live link floating */}
+        {liveLink && (
+          <motion.a
+            href={liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            animate={hovered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "absolute", bottom: "10px", right: "10px",
+              width: "42px", height: "42px",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              background: "var(--neo-yellow)", border: "3px solid #000000",
+              boxShadow: "3px 3px 0px #000000", borderRadius: "var(--radius-md)",
+              zIndex: 3, cursor: "pointer",
+            }}
+          >
+            <ArrowUpRight size={18} color="#000000" />
+          </motion.a>
+        )}
+      </div>
+
+      {/* Content */}
+      <div style={{ padding: "clamp(1rem, 2vw, 1.5rem)", display: "flex", flexDirection: "column", gap: "12px", flex: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{ width: "6px", height: "6px", background: "var(--neo-yellow)", border: "1.5px solid #000000", borderRadius: "2px" }} />
+          <span style={{ fontSize: "9px", fontFamily: "var(--font-mono)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--muted)" }}>
+            {project.category}
+          </span>
+          {project.featured && (
+            <span style={{
+              fontSize: "8px", fontFamily: "var(--font-mono)", fontWeight: 700, textTransform: "uppercase",
+              letterSpacing: "0.08em", color: "#000000", background: "var(--neo-green)",
+              padding: "2px 8px", border: "1.5px solid #000000", borderRadius: "2px",
+            }}>
+              Featured
+            </span>
+          )}
+        </div>
+
+        <h3 style={{
+          fontSize: "clamp(1.2rem, 2vw, 1.5rem)", fontFamily: "var(--font-space-grotesk)",
+          fontWeight: 800, color: "var(--foreground)", lineHeight: 1.15, margin: 0,
+        }}>
+          {project.title}
+        </h3>
+
+        <p style={{
+          fontSize: "13px", color: "var(--muted)", lineHeight: 1.6,
+          display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical",
+          overflow: "hidden", margin: 0, flex: 1,
+        }}>
+          {project.desc}
+        </p>
+
+        {/* Tags */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+          {project.tags?.slice(0, 4).map((tag) => (
+            <span key={tag} style={{
+              fontSize: "9px", fontFamily: "var(--font-mono)", fontWeight: 700,
+              letterSpacing: "0.04em", color: "#000000",
+              background: "var(--surface-2)", padding: "3px 8px",
+              border: "1.5px solid #000000", borderRadius: "2px",
+            }}>
+              {tag}
+            </span>
+          ))}
+          {(project.tags?.length ?? 0) > 4 && (
+            <span style={{
+              fontSize: "9px", fontFamily: "var(--font-mono)", fontWeight: 700,
+              color: "var(--muted)", padding: "3px 6px",
+            }}>
+              +{(project.tags?.length ?? 0) - 4}
+            </span>
+          )}
+        </div>
+
+        {/* Buttons */}
+        <div style={{ display: "flex", gap: "8px", marginTop: "4px" }}>
+          {liveLink && (
+            <a href={liveLink} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "8px 14px", height: "auto", fontSize: "10px", gap: "6px" }}>
+              <Eye size={12} />
+              <span>Live</span>
+            </a>
+          )}
+          {sourceLink && (
+            <a href={sourceLink} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: "8px 14px", height: "auto", fontSize: "10px", gap: "6px" }}>
+              <Code size={12} />
+              <span>Source</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── Main Page ────────────────────────────────────────────────── */
 const ProjectsPageClient = () => {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
-
   const headerRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(headerRef, { once: true, margin: "-80px" });
 
-  // 1. Fetch projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (!apiUrl) {
-          setProjects(FALLBACK_PROJECTS);
-          setLoading(false);
-          return;
-        }
+        if (!apiUrl) { setProjects(FALLBACK_PROJECTS); setLoading(false); return; }
         const res = await fetch(`${apiUrl}/admin/projects`);
-        if (!res.ok) throw new Error("Failed to fetch projects");
+        if (!res.ok) throw new Error("Failed");
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          setProjects(data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+          setProjects(data.sort((a: ProjectItem, b: ProjectItem) => (a.order ?? 0) - (b.order ?? 0)));
         } else {
           setProjects(FALLBACK_PROJECTS);
         }
@@ -120,316 +407,239 @@ const ProjectsPageClient = () => {
     fetchProjects();
   }, []);
 
-  // 2. Derive categories
   const categories = useMemo(() => {
     const list = projects.map((p) => p.category).filter(Boolean);
     return ["All", ...Array.from(new Set(list))];
   }, [projects]);
 
-  // 3. Filtered projects
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: projects.length };
+    projects.forEach((p) => {
+      if (p.category) counts[p.category] = (counts[p.category] || 0) + 1;
+    });
+    return counts;
+  }, [projects]);
+
   const displayProjects = useMemo(() => {
     return activeCategory === "All"
       ? projects
       : projects.filter((p) => p.category === activeCategory);
   }, [projects, activeCategory]);
 
-  // 4. Staggered header text animation
-  useEffect(() => {
-    if (loading) return;
-
-    const ctx = gsap.context(() => {
-      const elements = headerRef.current?.querySelectorAll(".animate-fade-up");
-      if (!elements || elements.length === 0) return;
-
-      gsap.fromTo(
-        elements,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.15,
-          ease: "power4.out",
-        }
-      );
-    }, headerRef);
-
-    return () => ctx.revert();
-  }, [loading]);
-
-  // 5. Cinematic Scroll-Scrub Animation (Ease In from bottom, Ease Out to top)
-  useEffect(() => {
-    if (loading || displayProjects.length === 0) return;
-
-    let ctx: gsap.Context | null = null;
-    let cancelled = false;
-
-    const runAnimations = async () => {
-      // Allow DOM to settle first
-      await new Promise((resolve) => setTimeout(resolve, 80));
-      if (cancelled) return;
-
-      const { default: gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      if (cancelled) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Kill any previous card triggers to prevent layout duplicates
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.id && trigger.vars.id.startsWith("projects-page-card-")) {
-          trigger.kill();
-        }
-      });
-
-      ctx = gsap.context(() => {
-        const cards = gsap.utils.toArray<HTMLElement>(".project-card-wrapper");
-        cards.forEach((card, index) => {
-          // 1. Entrance animation (ease-in from bottom) - Trigger-based (plays once)
-          // This ensures that the cards are fully visible when they enter and stay visible
-          // even if the page scroll height is too short to scrub them.
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 80, scale: 0.95 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.6,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 92%", // triggers near bottom of screen
-                toggleActions: "play none none none",
-                id: `projects-page-card-enter-${index}`,
-              }
-            }
-          );
-
-          // 2. Exit animation (ease-out at top) - Scrub-based
-          // This provides a smooth fade-out as the card leaves the top of the viewport.
-          gsap.fromTo(
-            card,
-            { opacity: 1, y: 0, scale: 1 },
-            {
-              opacity: 0,
-              y: -80,
-              scale: 0.95,
-              ease: "power1.in",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 12%",  // starts exiting when top of card is near the top
-                end: "top -12%",  // completes when it is scrolled further up
-                scrub: 1,
-                id: `projects-page-card-exit-${index}`,
-              }
-            }
-          );
-        });
-
-        // Trigger refresh
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 150);
-      }, containerRef);
-    };
-
-    runAnimations();
-
-    return () => {
-      cancelled = true;
-      if (ctx) ctx.revert();
-    };
-  }, [loading, displayProjects]);
-
   return (
-    <section
-      ref={containerRef}
-      className="projects-page-hero min-h-screen text-[var(--foreground)]"
-    >
-      {/* Dynamic Header */}
-      <div
-        ref={headerRef}
-        className="container pb-12"
-        style={{ paddingTop: "clamp(120px, 10vw, 170px)" }}
-      >
-        <div className="max-w-4xl space-y-6">
-          <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1 bg-[var(--neo-yellow)] border-[3px] border-[#000000] text-[#000000] text-[10px] font-bold uppercase tracking-widest font-mono shadow-[3px_3px_0px_#000000]" style={{ borderRadius: "var(--radius-sm)" }}>
-            <Sparkles size={10} strokeWidth={2.5} />
-            <span>Digital Archive</span>
-          </div>
-          <h1 className="animate-fade-up text-5xl sm:text-7xl font-extrabold tracking-tight leading-[0.95] font-space-grotesk uppercase">
-            Creative <span className="text-[var(--neo-yellow)]">engineering</span><br />
-            & interfaces.
-          </h1>
-          <p className="animate-fade-up text-base sm:text-lg text-[var(--muted)] leading-relaxed max-w-2xl font-normal">
-            A comprehensive look at web systems, dynamic 3D rendering pipelines, and production tools built with custom components and optimized logic.
-          </p>
-        </div>
+    <section style={{
+      minHeight: "100vh",
+      color: "var(--foreground)",
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      {/* ═══════ HEADER ═══════ */}
+      <div ref={headerRef} style={{
+        maxWidth: "var(--container-max, 1440px)",
+        margin: "0 auto",
+        paddingInline: "var(--container-pad)",
+        paddingTop: "clamp(100px, 12vw, 180px)",
+        paddingBottom: "clamp(2rem, 4vw, 3rem)",
+      }}>
+        {/* Back link */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.5, ease }}
+          style={{ marginBottom: "clamp(1.5rem, 3vw, 2.5rem)" }}
+        >
+          <Link href="/" style={{
+            display: "inline-flex", alignItems: "center", gap: "8px",
+            fontSize: "12px", fontFamily: "var(--font-mono)", fontWeight: 700,
+            textTransform: "uppercase", letterSpacing: "0.08em",
+            color: "var(--muted)", textDecoration: "none",
+            padding: "8px 16px", border: "2px solid var(--muted)",
+            borderRadius: "var(--radius-md)",
+            transition: "all 0.2s",
+          }}>
+            <ArrowLeft size={14} />
+            Back Home
+          </Link>
+        </motion.div>
 
-        {/* Category Filters */}
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.1, ease }}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "8px",
+            padding: "6px 14px", background: "var(--neo-yellow)",
+            border: "2px solid #000000", boxShadow: "3px 3px 0px #000000",
+            borderRadius: "var(--radius-sm)", marginBottom: "20px",
+          }}
+        >
+          <Layers size={10} strokeWidth={2.5} color="#000000" />
+          <span style={{
+            fontSize: "10px", fontFamily: "var(--font-mono)", fontWeight: 700,
+            textTransform: "uppercase", letterSpacing: "0.15em", color: "#000000",
+          }}>
+            Digital Archive
+          </span>
+        </motion.div>
+
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2, ease }}
+          style={{
+            fontSize: "clamp(2.5rem, 6vw, 5rem)", fontFamily: "var(--font-space-grotesk)",
+            fontWeight: 800, lineHeight: 0.95, letterSpacing: "-0.03em",
+            color: "var(--foreground)", margin: "0 0 16px 0",
+          }}
+        >
+          Creative{" "}
+          <span style={{
+            color: "var(--neo-yellow)", fontFamily: "var(--font-pixel)",
+            fontWeight: 400, letterSpacing: "0.02em",
+          }}>
+            engineering
+          </span>
+          <br />
+          & interfaces.
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.35, ease }}
+          style={{
+            fontSize: "clamp(14px, 1.5vw, 17px)", color: "var(--muted)",
+            lineHeight: 1.7, maxWidth: "36rem", margin: 0,
+          }}
+        >
+          A comprehensive look at web systems, dynamic 3D rendering pipelines,
+          and production tools built with custom components and optimized logic.
+        </motion.p>
+
+        {/* ═══════ FILTERS ═══════ */}
         {!loading && categories.length > 1 && (
-          <div className="animate-fade-up flex flex-wrap gap-4 mt-16 border-b-[3px] border-[#000000] pb-8">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  setActiveCategory(cat);
-                  if (containerRef.current) {
-                    containerRef.current.scrollIntoView({ behavior: "smooth" });
-                  }
-                  // Quick refresh triggers to adapt offsets after scroll completes
-                  setTimeout(() => {
-                    ScrollTrigger.refresh();
-                  }, 400);
-                }}
-                className={`px-6 py-3 text-xs sm:text-sm font-bold tracking-wider uppercase border-[3px] border-[#000000] transition-all duration-200 ${activeCategory === cat
-                  ? "bg-[#000000] border-[#000000] text-[#FFFFFF] shadow-[4px_4px_0px_#000000] translate-x-[-2px] translate-y-[-2px]"
-                  : "bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000]"
-                  }`}
-                style={{ borderRadius: "var(--radius-md)" }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.5, ease }}
+            style={{
+              display: "flex", flexWrap: "wrap", gap: "8px",
+              marginTop: "clamp(2rem, 4vw, 3rem)",
+              paddingBottom: "clamp(1.5rem, 3vw, 2rem)",
+              borderBottom: "3px solid #000000",
+            }}
+          >
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat;
+              const count = categoryCounts[cat] || 0;
+              return (
+                <motion.button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: "6px",
+                    padding: "10px 18px", fontSize: "11px",
+                    fontFamily: "var(--font-mono)", fontWeight: 700,
+                    textTransform: "uppercase", letterSpacing: "0.08em",
+                    border: "3px solid #000000", borderRadius: "var(--radius-md)",
+                    cursor: "pointer",
+                    background: isActive ? "#000000" : "var(--surface)",
+                    color: isActive ? "#FFFFFF" : "var(--muted)",
+                    boxShadow: isActive ? "5px 5px 0px #000000" : "3px 3px 0px #000000",
+                    transform: isActive ? "translate(-2px, -2px)" : "none",
+                    transition: "background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s",
+                  }}
+                >
+                  {cat}
+                  <span style={{
+                    fontSize: "9px", padding: "2px 6px",
+                    background: isActive ? "rgba(255,255,255,0.15)" : "var(--surface-2)",
+                    border: "1.5px solid #000000", borderRadius: "2px",
+                    fontFamily: "var(--font-mono)", fontWeight: 700,
+                  }}>
+                    {count}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </motion.div>
         )}
       </div>
 
-      {/* Grid Display */}
-      {loading ? (
-        <div className="container pb-32">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 projects-grid-container">
-            {[0, 1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className={`project-card-wrapper ${i % 2 === 0 ? "" : "md:translate-y-16"}`}
-              >
-                <div className="project-grid-card aspect-[4/5] opacity-50">
-                  <div className="space-y-6 w-full">
-                    <div className="skeleton h-4 w-28" />
-                    <div className="skeleton aspect-[16/10] w-full rounded-2xl" />
-                    <div className="skeleton h-8 w-2/3" />
-                    <div className="skeleton h-16 w-full" />
-                  </div>
+      {/* ═══════ CONTENT ═══════ */}
+      <div style={{
+        maxWidth: "var(--container-max, 1440px)",
+        margin: "0 auto",
+        paddingInline: "var(--container-pad)",
+        paddingBottom: "clamp(4rem, 8vw, 8rem)",
+      }}>
+        {loading ? (
+          /* ─── Skeleton ─── */
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(2rem, 4vw, 3rem)" }}>
+            {/* Hero skeleton */}
+            <div className="skeleton" style={{ aspectRatio: "16/9", borderRadius: "var(--radius-lg)", width: "100%" }} />
+            {/* Grid skeleton */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))", gap: "clamp(1rem, 2vw, 1.5rem)" }}>
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="skeleton" style={{ aspectRatio: "4/5", borderRadius: "var(--radius-lg)" }} />
+              ))}
+            </div>
+          </div>
+        ) : displayProjects.length === 0 ? (
+          <div style={{ padding: "6rem 0", textAlign: "center" }}>
+            <p style={{
+              fontSize: "13px", color: "var(--muted)", fontFamily: "var(--font-mono)",
+              textTransform: "uppercase", letterSpacing: "0.1em",
+            }}>
+              No projects in this category yet.
+            </p>
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Hero Card (first project) */}
+              {displayProjects[0] && (
+                <div style={{ marginBottom: "clamp(2rem, 4vw, 3rem)" }}>
+                  <HeroCard project={displayProjects[0]} index={0} />
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : displayProjects.length === 0 ? (
-        <div className="container py-24 text-center">
-          <div className="inline-flex items-center gap-2 text-[var(--muted)] text-sm font-mono uppercase tracking-widest">
-            <AlertCircle size={16} />
-            <span>No projects found in this category.</span>
-          </div>
-        </div>
-      ) : (
-        <div className="container pb-48 projects-grid-container">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {displayProjects.map((project, index) => {
-              const number = String(index + 1).padStart(2, "0");
-              const isEven = index % 2 === 0;
-              const tools = project.tags?.length ? project.tags : [];
-              const liveLink = project.links?.live && project.links.live !== "#" ? project.links.live : "";
+              )}
 
-              return (
-                <div
-                  key={project._id || index}
-                  className={`project-card-wrapper ${isEven ? "" : "md:mt-16"}`}
-                >
-                  <div className="project-grid-card">
-
-                    {/* Background Number */}
-                    <div className="absolute right-8 top-6 text-8xl md:text-9xl font-bold font-mono text-[var(--foreground)] opacity-[0.02] pointer-events-none select-none group-hover:scale-105 group-hover:opacity-[0.04] transition-all duration-700">
-                      {number}
-                    </div>
-
-                    <div className="space-y-6">
-                      {/* Tag */}
-                      <div className="flex items-center gap-2">
-                        <span className="h-2 w-2 bg-[var(--neo-yellow)] border-[2px] border-[#000000]" style={{ borderRadius: "var(--radius-sm)" }} />
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)]">
-                          {project.category || "Development"}
-                        </span>
-                      </div>
-
-                      {/* Mockup Frame */}
-                      <div className="relative overflow-hidden aspect-[16/10] bg-[var(--surface-2)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          priority={index < 2}
-                          sizes="(max-width: 1024px) 100vw, 40vw"
-                          className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-[1.03]"
-                        />
-                        <div className="pointer-events-none absolute inset-0 ring-[2px] ring-[#000000]" />
-                      </div>
-
-                      {/* Info */}
-                      <div className="space-y-3">
-                        <h3
-                          className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] tracking-tight font-space-grotesk"
-                        >
-                          {project.title}
-                        </h3>
-                        <p className="text-sm text-[var(--muted)] leading-relaxed line-clamp-4 min-h-[5rem]">
-                          {project.desc}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 space-y-6">
-                      {/* Tech stack */}
-                      {tools.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
-                          {tools.map((tag) => (
-                            <span
-                              key={tag}
-                              className="badge text-[9px]"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Action Links */}
-                      <div className="flex flex-wrap gap-3 pt-2">
-                        {liveLink && (
-                          <a
-                            href={liveLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn-primary !py-2.5 !px-5 !text-[10px] gap-1.5 group/btn"
-                          >
-                            <Eye size={12} />
-                            <span>Live Preview</span>
-                            <ArrowUpRight size={10} className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                          </a>
-                        )}
-                        {project.links?.source && project.links.source !== "#" && (
-                          <a
-                            href={project.links.source}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn-secondary !py-2.5 !px-5 !text-[10px] gap-1.5"
-                          >
-                            <Code size={12} />
-                            <span>Source Code</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-
-                  </div>
+              {/* Grid (remaining projects) */}
+              {displayProjects.length > 1 && (
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 360px), 1fr))",
+                  gap: "clamp(1rem, 2vw, 1.5rem)",
+                }}>
+                  {displayProjects.slice(1).map((project, i) => (
+                    <GridCard key={project._id || i} project={project} index={i + 1} />
+                  ))}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+              )}
+            </motion.div>
+          </AnimatePresence>
+        )}
+      </div>
+
+      {/* ═══════ RESPONSIVE ═══════ */}
+      <style>{`
+        @media (max-width: 767px) {
+          .hero-project-card {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

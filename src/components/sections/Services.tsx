@@ -1,9 +1,45 @@
 "use client";
 
-import { ArrowUpRight, Tag } from "lucide-react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import {
+  ArrowUpRight,
+  Code2,
+  Wand2,
+  Layers,
+  Database,
+  Globe,
+  Smartphone,
+  Palette,
+  Server,
+  Shield,
+  Zap,
+  GitBranch,
+  type LucideIcon,
+} from "lucide-react";
+
+/* ─── Icon Map ─────────────────────────────────────────────────── */
+const ICON_MAP: Record<string, LucideIcon> = {
+  Code2, Wand2, Layers, Database, Globe, Smartphone,
+  Palette, Server, Shield, Zap, GitBranch,
+  Code: Code2,
+  Wand: Wand2,
+  Layer: Layers,
+  Db: Database,
+  Web: Globe,
+  Mobile: Smartphone,
+  Design: Palette,
+  ServerIcon: Server,
+  Security: Shield,
+  Speed: Zap,
+  Git: GitBranch,
+};
+
+function resolveIcon(name?: string): LucideIcon {
+  if (!name) return Code2;
+  return ICON_MAP[name] || ICON_MAP[name.replace(/\s+/g, "")] || Code2;
+}
 
 interface ServiceItem {
   _id: string;
@@ -15,134 +51,335 @@ interface ServiceItem {
   order: number;
 }
 
-const fadeUp = {
-  initial:     { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport:    { once: true, margin: "-50px" },
-};
+const FALLBACK_SERVICES: ServiceItem[] = [
+  {
+    _id: "f1",
+    title: "Full Stack Engineering",
+    description: "End-to-end development of scalable web applications using React, Next.js, and Node.js. From database design to deployment.",
+    price: "Contact for pricing",
+    icon: "Code2",
+    tags: ["React", "Next.js", "Node", "MongoDB"],
+    order: 1,
+  },
+  {
+    _id: "f2",
+    title: "Creative Development",
+    description: "Building immersive, interactive experiences with WebGL, Three.js, and GSAP. Motion design that captivates users.",
+    price: "Contact for pricing",
+    icon: "Wand2",
+    tags: ["Three.js", "GSAP", "WebGL", "Framer Motion"],
+    order: 2,
+  },
+  {
+    _id: "f3",
+    title: "Systems Architecture",
+    description: "Designing robust, high-performance system architectures for enterprise scale. Docker, microservices, and cloud infrastructure.",
+    price: "Contact for pricing",
+    icon: "Layers",
+    tags: ["AWS", "Docker", "Microservices", "Redis"],
+    order: 3,
+  },
+  {
+    _id: "f4",
+    title: "Database Design",
+    description: "Optimized database schemas, indexing strategies, and migration pipelines for MongoDB and MySQL. Secure and performant.",
+    price: "Contact for pricing",
+    icon: "Database",
+    tags: ["MongoDB", "MySQL", "Prisma", "Redis"],
+    order: 4,
+  },
+];
+
+const TAG_COLORS = ["var(--neo-yellow)", "var(--neo-cyan)", "var(--neo-green)", "var(--neo-pink)"];
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const Services = () => {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (!apiUrl) return;
+        if (!apiUrl) { setServices(FALLBACK_SERVICES); setLoading(false); return; }
         const res = await fetch(`${apiUrl}/admin/services`);
-        if (!res.ok) throw new Error("Failed to fetch");
+        if (!res.ok) throw new Error("Failed");
         const data = await res.json();
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && data.length > 0) {
           setServices(data.sort((a: ServiceItem, b: ServiceItem) => a.order - b.order));
+        } else {
+          setServices(FALLBACK_SERVICES);
         }
       } catch {
+        setServices(FALLBACK_SERVICES);
       } finally {
         setLoading(false);
-        setTimeout(() => {
-          if (typeof window !== "undefined") {
-            import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-              ScrollTrigger.refresh();
-            });
-          }
-        }, 100);
       }
     };
     fetchServices();
   }, []);
 
-  return (
-    <section id="services" className="section-shell bg-[var(--background)]">
-      <div className="container">
+  const displayServices = useMemo(() => {
+    return services.length > 0 ? services : FALLBACK_SERVICES;
+  }, [services]);
 
-        {/* Header - Centered */}
-        <div className="section-header-center">
-          <span className="section-eyebrow">Services</span>
-          <h2 className="section-heading mt-1">
-            What I do best.
-          </h2>
-          <p className="section-subtext mx-auto mt-4 text-center">
+  return (
+    <section
+      id="services"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        padding: "clamp(4rem, 8vw, 8rem) 0",
+        backgroundColor: "var(--background)",
+      }}
+    >
+      <div style={{
+        maxWidth: "var(--container-max, 1440px)",
+        margin: "0 auto",
+        paddingInline: "var(--container-pad)",
+      }}>
+        {/* ═══════ HEADER ═══════ */}
+        <div style={{
+          textAlign: "center",
+          maxWidth: "42rem",
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginBottom: "clamp(3rem, 6vw, 5rem)",
+        }}>
+          <motion.span
+            initial={{ opacity: 0, y: 15, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, ease }}
+            style={{
+              display: "inline-block",
+              fontFamily: "var(--font-pixel), monospace",
+              fontSize: "var(--text-sm)",
+              fontWeight: 400,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#000000",
+              marginBottom: "var(--space-4)",
+              padding: "6px 14px",
+              background: "var(--neo-yellow)",
+              border: "3px solid #000000",
+              boxShadow: "3px 3px 0px #000000",
+            }}
+          >
+            Services
+          </motion.span>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.7, delay: 0.1, ease }}
+            style={{
+              fontSize: "var(--text-display)",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              color: "var(--foreground)",
+              marginBottom: "var(--space-6)",
+              margin: "0 0 var(--space-6) 0",
+            }}
+          >
+            What I do{" "}
+            <span style={{
+              color: "var(--neo-yellow)",
+              fontFamily: "var(--font-pixel)",
+              fontWeight: 400,
+              letterSpacing: "0.02em",
+            }}>
+              best
+            </span>
+            .
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: 0.2, ease }}
+            style={{
+              fontSize: "var(--text-base)",
+              color: "var(--muted)",
+              lineHeight: 1.7,
+              maxWidth: "52ch",
+              margin: "0 auto",
+            }}
+          >
             Specialized in full-stack development — from idea to shipped product.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Service cards */}
-        {loading ? (
-          <div className="py-16 text-center">
-            <p className="text-xs font-mono uppercase tracking-widest text-[var(--muted)]">Loading services...</p>
+        {/* ═══════ LOADING ═══════ */}
+        {loading && (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))", gap: "clamp(1rem, 2vw, 1.5rem)" }}>
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="skeleton" style={{ height: "280px", borderRadius: "var(--radius-lg)" }} />
+            ))}
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {services.map((service, i) => (
-              <motion.div
-                key={service._id}
-                {...fadeUp}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="card card-hover group flex flex-col h-full"
-              >
-                {/* Number + Icon */}
-                <div className="flex items-center justify-between mb-6 w-full">
-                  <span className="text-xs font-mono text-[var(--muted-soft)] tracking-widest font-bold">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {service.icon && (
-                    <div className="flex h-12 w-12 items-center justify-center bg-[var(--surface-2)] border-[3px] border-[#000000] group-hover:border-[#000000] group-hover:bg-[var(--neo-yellow)] shadow-[3px_3px_0px_#000000] text-xl transition-all duration-200 group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-[5px_5px_0px_#000000]" style={{ borderRadius: "var(--radius-md)" }}>
-                      {service.icon}
+        )}
+
+        {/* ═══════ SERVICE CARDS ═══════ */}
+        {!loading && (
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
+            gap: "clamp(1rem, 2vw, 1.5rem)",
+          }}>
+            {displayServices.map((service, i) => {
+              const Icon = resolveIcon(service.icon);
+              const isHovered = hoveredIdx === i;
+              const tagColor = TAG_COLORS[i % TAG_COLORS.length];
+
+              return (
+                <motion.div
+                  key={service._id}
+                  initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.7, delay: i * 0.1, ease }}
+                  onMouseEnter={() => setHoveredIdx(i)}
+                  onMouseLeave={() => setHoveredIdx(null)}
+                  style={{
+                    position: "relative",
+                    background: "var(--surface)",
+                    border: "3px solid #000000",
+                    borderRadius: "var(--radius-lg)",
+                    overflow: "hidden",
+                    padding: "clamp(1.5rem, 3vw, 2rem)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                    boxShadow: isHovered ? "8px 8px 0px #000000" : "5px 5px 0px #000000",
+                    transform: isHovered ? "translate(-3px, -3px)" : "none",
+                    transition: "box-shadow 0.35s, transform 0.35s",
+                    cursor: "default",
+                  }}
+                >
+                  {/* Top accent line */}
+                  <div style={{
+                    position: "absolute", top: 0, left: 0, right: 0, height: "4px",
+                    background: tagColor,
+                    transform: isHovered ? "scaleX(1)" : "scaleX(0)",
+                    transformOrigin: "left",
+                    transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                  }} />
+
+                  {/* Number + Icon */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span style={{
+                      fontFamily: "var(--font-mono)", fontSize: "11px", fontWeight: 700,
+                      color: "var(--muted-soft)", letterSpacing: "0.1em",
+                    }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    <motion.div
+                      animate={isHovered ? { scale: 1.1, rotate: -5 } : { scale: 1, rotate: 0 }}
+                      transition={{ duration: 0.3, ease }}
+                      style={{
+                        width: "48px", height: "48px",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        background: isHovered ? tagColor : "var(--surface-2)",
+                        border: "3px solid #000000",
+                        boxShadow: isHovered ? "4px 4px 0px #000000" : "3px 3px 0px #000000",
+                        borderRadius: "var(--radius-md)",
+                        color: "#000000",
+                        transition: "background 0.25s, box-shadow 0.25s",
+                      }}
+                    >
+                      <Icon size={22} strokeWidth={2.5} />
+                    </motion.div>
+                  </div>
+
+                  {/* Title */}
+                  <h3 style={{
+                    fontSize: "clamp(1.1rem, 2vw, 1.35rem)",
+                    fontFamily: "var(--font-space-grotesk)",
+                    fontWeight: 800,
+                    color: "var(--foreground)",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1.2,
+                    textTransform: "uppercase",
+                    margin: 0,
+                  }}>
+                    {service.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p style={{
+                    fontSize: "14px", color: "var(--muted)", lineHeight: 1.7,
+                    flex: 1, margin: 0,
+                  }}>
+                    {service.description}
+                  </p>
+
+                  {/* Price */}
+                  {service.price && (
+                    <div style={{
+                      fontFamily: "var(--font-mono)", fontSize: "11px", fontWeight: 700,
+                      color: "var(--foreground)", textTransform: "uppercase", letterSpacing: "0.08em",
+                    }}>
+                      {service.price}
                     </div>
                   )}
-                </div>
 
-                {/* Title */}
-                <h3
-                  className="text-xl font-extrabold text-[var(--foreground)] mb-3 transition-colors duration-200 uppercase tracking-wide"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  {service.title}
-                </h3>
+                  {/* Tags */}
+                  {service.tags && service.tags.length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                      {service.tags.map((t, ti) => (
+                        <motion.span
+                          key={t}
+                          whileHover={{ scale: 1.08, y: -1 }}
+                          style={{
+                            fontSize: "10px", fontFamily: "var(--font-mono)", fontWeight: 700,
+                            letterSpacing: "0.04em", color: "#000000",
+                            background: TAG_COLORS[ti % TAG_COLORS.length],
+                            padding: "4px 10px", border: "2px solid #000000",
+                            borderRadius: "var(--radius-sm)", boxShadow: "2px 2px 0px #000000",
+                            display: "inline-block", whiteSpace: "nowrap",
+                          }}
+                        >
+                          {t}
+                        </motion.span>
+                      ))}
+                    </div>
+                  )}
 
-                {/* Description */}
-                <p className="text-sm text-[var(--muted)] leading-relaxed flex-grow mb-6">
-                  {service.description}
-                </p>
-
-                {/* Price */}
-                {service.price && (
-                  <div className="text-xs font-mono text-[var(--foreground)] mb-5 uppercase tracking-widest font-bold">
-                    {service.price}
-                  </div>
-                )}
-
-                {/* Tags */}
-                {service.tags && service.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-8">
-                    {service.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="badge group-hover:bg-[var(--neo-yellow)] group-hover:text-[#000000] transition-all duration-200"
+                  {/* Divider + Link */}
+                  <div style={{
+                    borderTop: "3px solid #000000",
+                    paddingTop: "16px", marginTop: "auto",
+                  }}>
+                    <Link
+                      href="/services"
+                      aria-label={`Learn more about ${service.title}`}
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "6px",
+                        fontSize: "11px", fontFamily: "var(--font-mono)", fontWeight: 700,
+                        textTransform: "uppercase", letterSpacing: "0.08em",
+                        color: isHovered ? "var(--foreground)" : "var(--muted)",
+                        textDecoration: "none",
+                        transition: "color 0.2s",
+                      }}
+                    >
+                      <span>Learn more</span>
+                      <motion.span
+                        animate={isHovered ? { x: 3, y: -3 } : { x: 0, y: 0 }}
+                        transition={{ duration: 0.2 }}
                       >
-                        {t}
-                      </span>
-                    ))}
+                        <ArrowUpRight size={14} strokeWidth={2.5} />
+                      </motion.span>
+                    </Link>
                   </div>
-                )}
-
-                {/* Link */}
-                <div className="border-t-[3px] border-[#000000] pt-5 mt-auto">
-                  <Link
-                    href="/services"
-                    aria-label={`Learn more about ${service.title}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors duration-200 uppercase tracking-wider group/link"
-                  >
-                    <span>Learn more about {service.title}</span>
-                    <ArrowUpRight
-                      size={14}
-                      strokeWidth={2.5}
-                      className="text-[var(--muted)] group-hover:text-[var(--neo-yellow)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
-                    />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         )}
       </div>
