@@ -172,9 +172,9 @@ const About = () => {
               <div className="portrait-3d-accent absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-[var(--accent)] opacity-40" />
               
               {/* Badge overlay */}
-              <div className="portrait-3d-badge absolute bottom-8 left-8 bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000] p-5 flex items-center gap-4" style={{ borderRadius: "var(--radius-md)" }}>
-                <div className="w-2 h-2 bg-[var(--neo-green)] border-[2px] border-[#000000] animate-pulse" style={{ borderRadius: "var(--radius-sm)" }} />
-                <span style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, color: "var(--foreground)", padding: "6px 12px", border: "2px solid #000000", background: "var(--neo-yellow)", borderRadius: "var(--radius-sm)" }}>Based in BD</span>
+              <div className="portrait-3d-badge absolute bottom-8 left-8" style={{ background: "var(--surface)", border: "3px solid #000000", boxShadow: "4px 4px 0px #000000", borderRadius: "var(--radius-md)", padding: "12px 16px", display: "flex", alignItems: "center", gap: "10px" }}>
+                <div style={{ width: "8px", height: "8px", background: "var(--neo-green)", border: "2px solid #000000", borderRadius: "var(--radius-sm)" }} className="animate-pulse" />
+                <span style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, color: "var(--foreground)" }}>Based in BD</span>
               </div>
               </div>
             </div>
