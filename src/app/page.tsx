@@ -6,6 +6,7 @@ import Services from "@/components/sections/Services";
 import Projects from "@/components/sections/Projects";
 import Testimonials from "@/components/sections/Testimonials";
 import ContactCTA from "@/components/sections/ContactCTA";
+import Agency from "@/components/sections/Agency";
 
 export const metadata: Metadata = {
   title: "Salah Uddin Kader (Saka Chowdhury) — Creative Developer & Frontend Engineer",
