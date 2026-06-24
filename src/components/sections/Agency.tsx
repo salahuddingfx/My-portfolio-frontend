@@ -44,8 +44,8 @@ const Agency = () => {
               <div className="lg:col-span-7 flex flex-col gap-6">
                 <div className="inline-flex items-center gap-2 mb-1" style={{ width: "fit-content" }}>
                   <span
-                    className="inline-flex items-center gap-2 border-[2px] border-[#000000] bg-[var(--neo-green)] px-3 py-1.5"
-                    style={{ boxShadow: "2px 2px 0px #000000", borderRadius: "var(--radius-sm)" }}
+                    className="inline-flex items-center gap-2 border-[2px] border-[#000000] bg-[var(--neo-green)]"
+                    style={{ boxShadow: "2px 2px 0px #000000", borderRadius: "var(--radius-sm)", padding: "clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 14px)" }}
                   >
                     <span className="h-1.5 w-1.5 bg-[#000000] rounded-full animate-pulse" />
                     <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#000000]">
@@ -72,8 +72,8 @@ const Agency = () => {
                   {SERVICES.map((s) => (
                     <span
                       key={s.label}
-                      className="inline-flex items-center gap-2 border-[2px] border-[#000000] bg-[var(--surface)] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[var(--foreground)]"
-                      style={{ boxShadow: "2px 2px 0px #000000", borderRadius: "var(--radius-sm)" }}
+                      className="inline-flex items-center gap-2 border-[2px] border-[#000000] bg-[var(--surface)] text-[11px] font-bold uppercase tracking-wider text-[var(--foreground)]"
+                      style={{ boxShadow: "2px 2px 0px #000000", borderRadius: "var(--radius-sm)", padding: "clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 14px)" }}
                     >
                       <s.icon size={12} className="text-[var(--neo-yellow)]" />
                       {s.label}
@@ -86,8 +86,8 @@ const Agency = () => {
                     href="https://nextorastudio.tech"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border-[3px] border-[#000000] bg-[var(--neo-yellow)] text-[#000000] px-6 py-3 text-xs font-bold uppercase tracking-widest hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000000] transition-all duration-200"
-                    style={{ boxShadow: "4px 4px 0px #000000", borderRadius: "var(--radius-md)", textDecoration: "none" }}
+                    className="inline-flex items-center gap-2 border-[3px] border-[#000000] bg-[var(--neo-yellow)] text-[#000000] text-xs font-bold uppercase tracking-widest hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#000000] transition-all duration-200"
+                    style={{ boxShadow: "4px 4px 0px #000000", borderRadius: "var(--radius-md)", textDecoration: "none", padding: "clamp(10px, 2vw, 12px) clamp(18px, 3vw, 24px)" }}
                   >
                     Visit nextorastudio.tech
                     <ArrowUpRight size={14} strokeWidth={2.5} />
@@ -124,8 +124,8 @@ const Agency = () => {
                     </p>
                   </div>
                   <div
-                    className="inline-flex items-center gap-2 border-[2px] border-[#000000] bg-[var(--surface-2)] px-4 py-2"
-                    style={{ boxShadow: "2px 2px 0px #000000", borderRadius: "var(--radius-sm)" }}
+                    className="inline-flex items-center gap-2 border-[2px] border-[#000000] bg-[var(--surface-2)]"
+                    style={{ boxShadow: "2px 2px 0px #000000", borderRadius: "var(--radius-sm)", padding: "clamp(8px, 2vw, 10px) clamp(14px, 3vw, 18px)" }}
                   >
                     <span className="h-2 w-2 bg-[var(--neo-green)] rounded-full animate-pulse" />
                     <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--foreground)]">
