@@ -78,6 +78,28 @@ const About = () => {
               ))}
             </div>
 
+            {/* Debug Quote */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]"
+              style={{ borderRadius: "var(--radius-lg)", padding: "clamp(1.25rem, 3vw, 2rem)" }}
+            >
+              <div className="flex items-start gap-4">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[var(--neo-yellow)] border-[2px] border-[#000000] shadow-[2px_2px_0px_#000000]" style={{ borderRadius: "var(--radius-sm)" }}>
+                  <span className="text-lg" role="img" aria-label="detective">🔍</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-sm sm:text-base text-[var(--foreground)] font-medium leading-relaxed italic">
+                    &ldquo;Debugging is like being the detective in a crime movie where you are also the murderer.&rdquo;
+                  </p>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--muted-soft)]">
+                    — Every developer ever
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
             <div className="flex flex-wrap gap-4 pt-2">
               <Link href="/about" className="btn-primary group">
                 <span>Read my story</span>
@@ -152,7 +174,7 @@ const About = () => {
               {/* Badge overlay */}
               <div className="portrait-3d-badge absolute bottom-8 left-8 bg-[var(--surface)] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000] p-5 flex items-center gap-4" style={{ borderRadius: "var(--radius-md)" }}>
                 <div className="w-2 h-2 bg-[var(--neo-green)] border-[2px] border-[#000000] animate-pulse" style={{ borderRadius: "var(--radius-sm)" }} />
-                <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--foreground)]">Based in BD</span>
+                <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--foreground)]" style={{ color: "padding: 5px;" }}>Based in BD</span>
               </div>
               </div>
             </div>
