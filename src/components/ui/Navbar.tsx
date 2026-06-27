@@ -245,7 +245,7 @@ const Navbar = () => {
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0.22, ease: [0.32, 0, 0.67, 0] }}
                 style={{
                   position: "fixed",
                   top: 0,
@@ -260,6 +260,7 @@ const Navbar = () => {
                   borderLeft: "4px solid #000000",
                   background: "var(--background)",
                   overflow: "hidden",
+                  willChange: "transform",
                 }}
                 className="lg:hidden"
               >
@@ -303,14 +304,11 @@ const Navbar = () => {
 
               {/* MOBILE NAV LINKS */}
               <nav style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "10px", padding: "20px" }}>
-                {navLinks.map((link, index) => {
+                {navLinks.map((link) => {
                   const active = pathname === link.href;
                   return (
-                    <motion.div
+                    <div
                       key={link.name}
-                      initial={{ opacity: 0, x: 15 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ type: "tween", ease: "easeOut", duration: 0.15, delay: index * 0.015 }}
                       style={{ flexShrink: 0 }}
                     >
                       <Link
@@ -331,14 +329,14 @@ const Navbar = () => {
                           background: active ? "var(--neo-yellow)" : "var(--surface)",
                           color: active ? "#000000" : "var(--muted)",
                           boxShadow: "3px 3px 0px #000000",
-                          transition: "all 0.2s ease",
+                          transition: "background 0.15s ease, color 0.15s ease",
                           textDecoration: "none",
                         }}
                       >
                         <span>{link.name}</span>
                         {active && <span style={{ height: "8px", width: "8px", background: "#000000", borderRadius: "var(--radius-sm)" }} />}
                       </Link>
-                    </motion.div>
+                    </div>
                   );
                 })}
                 {/* Spacer */}
