@@ -15,7 +15,7 @@ function useIsMobile() {
   
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 1024)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
@@ -40,28 +40,22 @@ function SplineLoader() {
 
 /**
  * SplineScene — performance-safe wrapper around @splinetool/react-spline.
- * Optimized for mobile devices with reduced quality and lazy loading.
+ * Disabled on mobile/tablet viewports (< 1024px) for buttery smooth performance.
  */
 export function SplineScene({ scene, className }: SplineSceneProps) {
   const isMobile = useIsMobile()
   const [shouldLoad, setShouldLoad] = useState(false)
-  const [isInView, setIsInView] = useState(false)
 
-  // Lazy load based on viewport
+  // Only load Spline on desktop screens
   useEffect(() => {
-    if (isMobile) {
-      // On mobile, delay loading and use smaller viewport
-      const timer = setTimeout(() => {
-        setShouldLoad(true)
-      }, 1000)
-      return () => clearTimeout(timer)
-    } else {
-      setShouldLoad(true)
+    const isMobileViewport = window.innerWidth < 1024
+    if (isMobileViewport) {
+      return
     }
-  }, [isMobile])
+    setShouldLoad(true)
+  }, [])
 
-  // Don't render anything on very small screens
-  if (isMobile && typeof window !== 'undefined' && window.innerWidth < 480) {
+  if (isMobile) {
     return null
   }
 
@@ -75,8 +69,8 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       style={{ 
         width: '100%', 
         height: '100%',
-        opacity: isMobile ? 0.7 : 1,
-        transform: isMobile ? 'scale(0.8)' : 'scale(1)',
+        opacity: 1,
+        transform: 'scale(1)',
         transition: 'opacity 0.5s, transform 0.5s'
       }}
     >
