@@ -205,15 +205,20 @@ const Navbar = () => {
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--muted)] transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#000000] shadow-[3px_3px_0px_#000000] cursor-pointer"
+                className="flex h-11 w-11 items-center justify-center border-[3px] border-[#000000] bg-[var(--surface)] text-[var(--muted)] transition-colors duration-150 hover:bg-[var(--neo-yellow)] hover:text-[#000000] shadow-[3px_3px_0px_#000000] cursor-pointer"
                 style={{ borderRadius: "var(--radius-md)" }}
               >
-                <motion.div
-                  animate={{ rotate: isOpen ? 90 : 0 }}
-                  transition={{ duration: 0.2 }}
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
+                    transition: "transform 0.15s ease",
+                  }}
                 >
                   {isOpen ? <X size={18} strokeWidth={2.5} /> : <Menu size={18} strokeWidth={2.5} />}
-                </motion.div>
+                </span>
               </button>
             </div>
           </div>
