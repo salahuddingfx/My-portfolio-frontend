@@ -202,7 +202,7 @@ const Projects = () => {
           background: "var(--background)",
         }}
       >
-        <div style={{ maxWidth: "var(--container-max, 1440px)", margin: "0 auto", paddingInline: "var(--container-pad)" }}>
+        <div className="container">
           {[1, 2, 3].map((i) => (
             <motion.div
               key={i}
@@ -253,7 +253,7 @@ const Projects = () => {
       <div style={{ position: "absolute", top: "2rem", left: "2rem", width: "clamp(40px, 6vw, 80px)", height: "clamp(40px, 6vw, 80px)", borderTop: "3px solid var(--neo-yellow)", borderLeft: "3px solid var(--neo-yellow)", opacity: 0.2, pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "2rem", right: "2rem", width: "clamp(40px, 6vw, 80px)", height: "clamp(40px, 6vw, 80px)", borderBottom: "3px solid var(--neo-yellow)", borderRight: "3px solid var(--neo-yellow)", opacity: 0.2, pointerEvents: "none" }} />
 
-      <div style={{ maxWidth: "var(--container-max, 1440px)", margin: "0 auto", paddingInline: "var(--container-pad)" }}>
+      <div className="container">
 
         {/* ═══════ HEADER ═══════ */}
         <motion.div

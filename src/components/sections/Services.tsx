@@ -128,26 +128,14 @@ const Services = () => {
   return (
     <section
       id="services"
+      className="section-shell"
       style={{
-        position: "relative",
-        overflow: "hidden",
-        padding: "clamp(4rem, 8vw, 8rem) 0",
         backgroundColor: "var(--background)",
       }}
     >
-      <div style={{
-        maxWidth: "var(--container-max, 1440px)",
-        margin: "0 auto",
-        paddingInline: "var(--container-pad)",
-      }}>
+      <div className="container">
         {/* ═══════ HEADER ═══════ */}
-        <div style={{
-          textAlign: "center",
-          maxWidth: "42rem",
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginBottom: "clamp(3rem, 6vw, 5rem)",
-        }}>
+        <div className="section-header-center">
           <motion.span
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -164,8 +152,8 @@ const Services = () => {
               marginBottom: "var(--space-4)",
               padding: "6px 14px",
               background: "var(--neo-yellow)",
-              border: "3px solid #000000",
-              boxShadow: "3px 3px 0px #000000",
+              border: "3px solid var(--foreground)",
+              boxShadow: "3px 3px 0px var(--foreground)",
             }}
           >
             Services
@@ -217,7 +205,7 @@ const Services = () => {
 
         {/* ═══════ LOADING ═══════ */}
         {loading && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))", gap: "clamp(1rem, 2vw, 1.5rem)" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="skeleton" style={{ height: "280px", borderRadius: "var(--radius-lg)" }} />
             ))}
@@ -226,11 +214,7 @@ const Services = () => {
 
         {/* ═══════ SERVICE CARDS ═══════ */}
         {!loading && (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
-            gap: "clamp(1rem, 2vw, 1.5rem)",
-          }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {displayServices.map((service, i) => {
               const Icon = resolveIcon(service.icon);
               const isHovered = hoveredIdx === i;
@@ -248,14 +232,14 @@ const Services = () => {
                   style={{
                     position: "relative",
                     background: "var(--surface)",
-                    border: "3px solid #000000",
+                    border: "3px solid var(--foreground)",
                     borderRadius: "var(--radius-lg)",
                     overflow: "hidden",
                     padding: "clamp(1.5rem, 3vw, 2rem)",
                     display: "flex",
                     flexDirection: "column",
                     gap: "20px",
-                    boxShadow: isHovered ? "8px 8px 0px #000000" : "5px 5px 0px #000000",
+                    boxShadow: isHovered ? "8px 8px 0px var(--foreground)" : "5px 5px 0px var(--foreground)",
                     transform: isHovered ? "translate(-3px, -3px)" : "none",
                     transition: "box-shadow 0.35s, transform 0.35s",
                     cursor: "default",
@@ -271,7 +255,7 @@ const Services = () => {
                   }} />
 
                   {/* Number + Icon */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div className="flex items-center justify-between">
                     <span style={{
                       fontFamily: "var(--font-mono)", fontSize: "11px", fontWeight: 700,
                       color: "var(--muted-soft)", letterSpacing: "0.1em",
@@ -286,10 +270,10 @@ const Services = () => {
                         width: "48px", height: "48px",
                         display: "flex", alignItems: "center", justifyContent: "center",
                         background: isHovered ? tagColor : "var(--surface-2)",
-                        border: "3px solid #000000",
-                        boxShadow: isHovered ? "4px 4px 0px #000000" : "3px 3px 0px #000000",
+                        border: "3px solid var(--foreground)",
+                        boxShadow: isHovered ? "4px 4px 0px var(--foreground)" : "3px 3px 0px var(--foreground)",
                         borderRadius: "var(--radius-md)",
-                        color: "#000000",
+                        color: "var(--foreground)",
                         transition: "background 0.25s, box-shadow 0.25s",
                       }}
                     >
@@ -340,8 +324,8 @@ const Services = () => {
                             fontSize: "10px", fontFamily: "var(--font-mono)", fontWeight: 700,
                             letterSpacing: "0.04em", color: "#000000",
                             background: TAG_COLORS[ti % TAG_COLORS.length],
-                            padding: "4px 10px", border: "2px solid #000000",
-                            borderRadius: "var(--radius-sm)", boxShadow: "2px 2px 0px #000000",
+                            padding: "4px 10px", border: "2px solid var(--foreground)",
+                            borderRadius: "var(--radius-sm)", boxShadow: "2px 2px 0px var(--foreground)",
                             display: "inline-block", whiteSpace: "nowrap",
                           }}
                         >
@@ -353,7 +337,7 @@ const Services = () => {
 
                   {/* Divider + Link */}
                   <div style={{
-                    borderTop: "3px solid #000000",
+                    borderTop: "3px solid var(--foreground)",
                     paddingTop: "16px", marginTop: "auto",
                   }}>
                     <Link

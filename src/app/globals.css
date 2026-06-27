@@ -2,7 +2,9 @@
    NEO-BRUTALISM DESIGN TOKEN SYSTEM
    ============================================================================= */
 
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   /* ── Neo-Brutalism Colors ────────────────────────────────────── */
@@ -159,20 +161,7 @@ html[data-theme="dark"] {
     color var(--duration-base) var(--ease-out);
 }
 
-@theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-surface: var(--surface);
-  --color-muted: var(--muted);
-  --font-pixel: var(--font-jersey-25);
 
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
-}
 
 .nav-cta {
   min-width: 138px;
