@@ -21,6 +21,7 @@ import EmailSidebar from "@/components/ui/EmailSidebar";
 import Footer from "@/components/ui/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import IntroLoader from "@/components/ui/IntroLoader";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 /* =============================================================================
    FONTS
@@ -355,6 +356,7 @@ export default function RootLayout({
           {/* GLOBAL EFFECTS */}
           <ScrollProgress />
           <ScrollEffects />
+          <ScrollToTop />
 
           {/* CURSOR */}
           <CustomCursor />
