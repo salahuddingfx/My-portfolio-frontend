@@ -21,12 +21,7 @@ import EmailSidebar from "@/components/ui/EmailSidebar";
 import Footer from "@/components/ui/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import IntroLoader from "@/components/ui/IntroLoader";
-import dynamic from "next/dynamic";
-
-const ScrollToTop = dynamic(
-  () => import("@/components/ui/ScrollToTop").then((mod) => mod.ScrollToTop),
-  { ssr: false }
-);
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 /* =============================================================================
    FONTS
@@ -198,8 +193,9 @@ export default function RootLayout({
           These hints fire as soon as the HTML is parsed — TCP+TLS handshake
           completes in the background so Spline loads faster when it defers. */}
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: dark)" />
         <script
           id="theme-loader"
           dangerouslySetInnerHTML={{

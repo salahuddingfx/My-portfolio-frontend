@@ -117,8 +117,17 @@ const Navbar = () => {
           <div className="flex h-full items-center justify-between">
             {/* LOGO */}
             <Link href="/" aria-label="Homepage" className="flex items-center gap-3 group shrink-0">
-              <div className="relative flex h-11 w-11 items-center justify-center bg-[#000000] text-[#FFFFFF] border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000] transition-all duration-200 group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-[5px_5px_0px_#000000]">
-                <span className="text-[17px] font-extrabold" style={{ fontFamily: "var(--font-space-grotesk)" }}>S</span>
+              <div className="relative h-11 w-11 transition-all duration-200 group-hover:translate-x-[-2px] group-hover:translate-y-[-2px]">
+                <img
+                  src="/2.png"
+                  alt="Salah Uddin Logo"
+                  className="dark:hidden h-full w-full object-contain rounded-full border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000] group-hover:shadow-[5px_5px_0px_#000000] transition-all duration-200"
+                />
+                <img
+                  src="/1.png"
+                  alt="Salah Uddin Logo"
+                  className="hidden dark:block h-full w-full object-contain rounded-full border-[3px] border-[#FFFFFF] shadow-[3px_3px_0px_#FFFFFF] group-hover:shadow-[5px_5px_0px_#FFFFFF] transition-all duration-200"
+                />
               </div>
               <div className="hidden sm:flex flex-col leading-none">
                 <span className="text-[16px] font-extrabold text-[var(--foreground)] uppercase tracking-wide" style={{ fontFamily: "var(--font-space-grotesk)" }}>Salah Uddin Kader</span>
@@ -251,8 +260,17 @@ const Navbar = () => {
               {/* DRAWER HEADER */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "3px solid #000000", padding: "20px", height: "72px", marginLeft: "10px", marginRight: "10px", flexShrink: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <div style={{ display: "flex", height: "40px", width: "40px", alignItems: "center", justifyContent: "center", background: "#000000", border: "3px solid #000000", boxShadow: "3px 3px 0px #000000" }}>
-                    <span style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF" }}>S</span>
+                  <div className="relative h-10 w-10 flex-shrink-0">
+                    <img
+                      src="/2.png"
+                      alt="Salah Uddin Logo"
+                      className="dark:hidden h-full w-full object-contain rounded-full border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000]"
+                    />
+                    <img
+                      src="/1.png"
+                      alt="Salah Uddin Logo"
+                      className="hidden dark:block h-full w-full object-contain rounded-full border-[3px] border-[#FFFFFF] shadow-[3px_3px_0px_#FFFFFF]"
+                    />
                   </div>
                   <span style={{ fontSize: "15px", fontWeight: 800, color: "var(--foreground)", textTransform: "uppercase", letterSpacing: "0.02em", fontFamily: "var(--font-space-grotesk)" }}>Salah Uddin Kader</span>
                 </div>

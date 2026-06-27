@@ -7,6 +7,7 @@ import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
 import Magnetic from "@/components/ui/Magnetic";
 import { useSettings } from "@/context/SettingsContext";
+import { MobileHeroWave } from "@/components/ui/MobileHeroWave";
 
 const ROLES = [
   "DESIGNER",
@@ -150,7 +151,7 @@ const Hero = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
       if (sessionStorage.getItem("introLoaded") === "true") {
         setIsLoaderFinished(true);
       } else {
@@ -168,6 +169,7 @@ const Hero = () => {
     >
       {/* 3D Robot — background */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+        {isMobile && <MobileHeroWave />}
         {!isMobile && (
           <Spotlight
             className="-top-40 left-0 md:left-[20%] md:-top-20 z-0"

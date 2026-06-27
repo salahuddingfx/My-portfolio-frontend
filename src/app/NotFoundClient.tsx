@@ -260,13 +260,13 @@ export default function NotFoundClient() {
       <div className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] w-full py-4 px-6 md:px-10 flex justify-between items-center bg-[#080808]/80 backdrop-blur-md border-b-2 border-white/5">
         <div className="flex items-center">
           <Link href="/" className="inline-flex items-center gap-3 group">
-            <div className="w-9 h-9 bg-[var(--surface)] border-2 border-white/10 flex items-center justify-center group-hover:border-[var(--neo-yellow)] transition-all duration-200 group-hover:scale-105 shadow-[2px_2px_0px_rgba(255,255,255,0.1)] group-hover:shadow-[3px_3px_0px_rgba(255,215,77,0.3)]">
+            <div className="w-9 h-9 bg-[var(--neo-yellow)] border-[3px] border-black flex items-center justify-center transition-all duration-200 group-hover:scale-105 group-hover:bg-white shadow-[3px_3px_0px_rgba(255,255,255,0.15)] group-hover:shadow-[3px_3px_0px_var(--neo-yellow)]">
               <ArrowRight
                 size={14}
-                className="text-white group-hover:text-[var(--neo-yellow)] rotate-180 transition-colors"
+                className="text-black rotate-180"
               />
             </div>
-            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold text-[var(--muted)] group-hover:text-white transition-colors">
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-black text-[var(--muted)] group-hover:text-white transition-colors">
               Abort & Return Home
             </span>
           </Link>
@@ -284,7 +284,7 @@ export default function NotFoundClient() {
             <div>
               <h1
                 className="text-7xl md:text-8xl lg:text-[10rem] font-black text-white tracking-tighter leading-none mb-6"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
+                style={{ fontFamily: "var(--font-pixel)" }}
               >
                 404
               </h1>
@@ -297,7 +297,7 @@ export default function NotFoundClient() {
 
             {/* Diagnostics Panel */}
             <div
-              className="flex flex-col gap-1 p-6 md:p-8 bg-[var(--surface)] border-2 border-white/10 shadow-[4px_4px_0px_rgba(255,255,255,0.05)] relative overflow-hidden"
+              className="flex flex-col gap-1 p-6 md:p-8 bg-[var(--surface)] border-[3px] border-white shadow-[6px_6px_0px_var(--neo-pink)] relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-6 opacity-[0.02]">
                 <Activity size={100} />
@@ -363,7 +363,7 @@ export default function NotFoundClient() {
                   <button
                     key={macro}
                     onClick={() => handleCommand(macro)}
-                    className="px-4 md:px-5 py-2.5 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] border-2 border-white/10 bg-white/[0.01] text-[var(--muted)] hover:bg-[var(--neo-yellow)] hover:text-black hover:border-[var(--neo-yellow)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(255,215,77,0.3)] cursor-pointer shadow-[2px_2px_0px_rgba(255,255,255,0.05)]"
+                    className="px-4 md:px-5 py-2.5 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] border-2 border-white bg-white/[0.02] text-white hover:bg-[var(--neo-yellow)] hover:text-black hover:border-black transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_var(--neo-yellow)] cursor-pointer shadow-[2px_2px_0px_rgba(255,255,255,0.15)]"
                   >
                     {macro}
                   </button>
@@ -376,7 +376,7 @@ export default function NotFoundClient() {
           <div
             className="lg:col-span-8 flex flex-col"
           >
-            <div className="w-full flex-1 bg-[var(--surface)]/50 border-2 border-white/10 shadow-[6px_6px_0px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col backdrop-blur-3xl min-h-[480px] md:min-h-[560px]">
+            <div className="w-full flex-1 bg-[var(--surface)]/50 border-[3px] border-white shadow-[8px_8px_0px_var(--neo-cyan)] overflow-hidden flex flex-col backdrop-blur-3xl min-h-[480px] md:min-h-[560px]">
               {/* Terminal Header */}
               <div className="px-6 md:px-10 py-5 md:py-6 bg-[var(--surface-2)]/50 border-b-2 border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -447,9 +447,9 @@ export default function NotFoundClient() {
                 />
                 <button
                   type="submit"
-                  className="text-white w-10 h-10 md:w-12 md:h-12 bg-[var(--neo-yellow)] shadow-[3px_3px_0px_rgba(255,215,77,0.3)] hover:shadow-[4px_4px_0px_rgba(255,215,77,0.5)] hover:scale-105 active:scale-95 transition-all shrink-0 cursor-pointer flex items-center justify-center border-2 border-black/30"
+                  className="text-black w-10 h-10 md:w-12 md:h-12 bg-[var(--neo-yellow)] shadow-[3px_3px_0px_rgba(255,255,255,0.15)] hover:bg-white hover:shadow-[4px_4px_0px_var(--neo-yellow)] hover:scale-105 active:scale-95 transition-all shrink-0 cursor-pointer flex items-center justify-center border-2 border-white"
                 >
-                  <ArrowRight size={18} strokeWidth={2.5} />
+                  <ArrowRight size={18} strokeWidth={2.5} className="text-black" />
                 </button>
               </form>
             </div>

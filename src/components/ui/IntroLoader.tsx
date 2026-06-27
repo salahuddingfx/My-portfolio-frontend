@@ -86,14 +86,22 @@ export default function IntroLoader() {
       <div className="flex flex-col items-center gap-8">
         {/* Logo mark */}
         <div 
-          className="flex h-16 w-16 items-center justify-center bg-[#000000] border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]"
+          className="relative h-16 w-16"
           style={{ 
-            borderRadius: "var(--radius-md)",
             transform: phase === "ready" ? "scale(1.1)" : "scale(1)",
             transition: "transform 0.3s ease"
           }}
         >
-          <span className="text-xl font-extrabold text-[#FFFFFF]" style={{ fontFamily: "var(--font-space-grotesk)" }}>S</span>
+          <img
+            src="/2.png"
+            alt="Salah Uddin Logo"
+            className="dark:hidden h-full w-full object-contain rounded-full border-[3px] border-[#000000] shadow-[4px_4px_0px_#000000]"
+          />
+          <img
+            src="/1.png"
+            alt="Salah Uddin Logo"
+            className="hidden dark:block h-full w-full object-contain rounded-full border-[3px] border-[#FFFFFF] shadow-[4px_4px_0px_#FFFFFF]"
+          />
         </div>
 
         {/* Progress bar */}

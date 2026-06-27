@@ -113,8 +113,17 @@ const Footer = () => {
           {/* Brand */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             <Link href="/" aria-label="Home" style={{ display: "flex", width: "fit-content", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
-              <div style={{ display: "flex", height: "2.75rem", width: "2.75rem", flexShrink: 0, alignItems: "center", justifyContent: "center", background: "#000000", border: "3px solid #000000", boxShadow: "3px 3px 0px #000000" }}>
-                <span style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "1rem", fontWeight: 800, color: "#FFFFFF" }}>S</span>
+              <div className="relative h-11 w-11 flex-shrink-0">
+                <img
+                  src="/2.png"
+                  alt="Salah Uddin Logo"
+                  className="dark:hidden h-full w-full object-contain rounded-full border-[3px] border-[#000000] shadow-[3px_3px_0px_#000000]"
+                />
+                <img
+                  src="/1.png"
+                  alt="Salah Uddin Logo"
+                  className="hidden dark:block h-full w-full object-contain rounded-full border-[3px] border-[#FFFFFF] shadow-[3px_3px_0px_#FFFFFF]"
+                />
               </div>
               <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
                 <span style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "15px", fontWeight: 800, color: "var(--foreground)", textTransform: "uppercase", letterSpacing: "0.02em" }}>
