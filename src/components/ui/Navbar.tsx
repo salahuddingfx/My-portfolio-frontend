@@ -95,8 +95,14 @@ const Navbar = () => {
   =========================================================================== */
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      const timer = setTimeout(() => {
+        document.body.style.overflow = "";
+      }, 200);
+      return () => clearTimeout(timer);
+    }
   }, [isOpen]);
 
   return (
