@@ -21,7 +21,12 @@ import EmailSidebar from "@/components/ui/EmailSidebar";
 import Footer from "@/components/ui/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import IntroLoader from "@/components/ui/IntroLoader";
-import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import dynamic from "next/dynamic";
+
+const ScrollToTop = dynamic(
+  () => import("@/components/ui/ScrollToTop").then((mod) => mod.ScrollToTop),
+  { ssr: false }
+);
 
 /* =============================================================================
    FONTS

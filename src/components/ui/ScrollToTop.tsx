@@ -6,8 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const toggleVisibility = () => {
       if (window.scrollY > 400) {
         setIsVisible(true);
@@ -26,6 +28,8 @@ export function ScrollToTop() {
       behavior: "smooth",
     });
   };
+
+  if (!mounted) return null;
 
   return (
     <AnimatePresence>
