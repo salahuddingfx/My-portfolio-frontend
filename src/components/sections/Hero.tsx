@@ -25,55 +25,71 @@ const HOLD_AFTER_DELETE = 300;
 
 const TypingRole = () => {
   const [roleIndex, setRoleIndex] = useState(0);
-  const [chars, setChars] = useState<string[]>([]);
-  const [phase, setPhase] = useState<"typing" | "hold" | "deleting" | "paused">("typing");
-  const [isExiting, setIsExiting] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [displayText, setDisplayText] = useState("");
+  const [isHolding, setIsHolding] = useState(false);
 
   const word = ROLES[roleIndex];
+  const nextWord = ROLES[(roleIndex + 1) % ROLES.length];
+  const charsPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$X?%&*";
 
   useEffect(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    let iteration = 0;
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let deleteInterval: ReturnType<typeof setInterval>;
 
-    if (phase === "typing") {
-      if (chars.length < word.length) {
-        timeoutRef.current = setTimeout(() => {
-          setChars((c) => [...c, word[c.length]]);
-        }, TYPE_SPEED);
-      } else {
-        setPhase("hold");
+    const decryptInterval = setInterval(() => {
+      setDisplayText(
+        word
+          .split("")
+          .map((letter, index) => {
+            if (index < Math.floor(iteration)) {
+              return word[index];
+            }
+            if (letter === " ") return " ";
+            return charsPool[Math.floor(Math.random() * charsPool.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= word.length) {
+        clearInterval(decryptInterval);
+        setIsHolding(true);
+
+        timeoutId = setTimeout(() => {
+          setIsHolding(false);
+          let deleteIndex = word.length;
+
+          deleteInterval = setInterval(() => {
+            setDisplayText((prev) =>
+              prev
+                .split("")
+                .map((char, index) => {
+                  if (index < deleteIndex) {
+                    if (char === " ") return " ";
+                    return charsPool[Math.floor(Math.random() * charsPool.length)];
+                  }
+                  return "";
+                })
+                .join("")
+            );
+            deleteIndex--;
+            if (deleteIndex < 0) {
+              clearInterval(deleteInterval);
+              setRoleIndex((i) => (i + 1) % ROLES.length);
+            }
+          }, 35);
+        }, HOLD_AFTER_TYPE);
       }
-    } else if (phase === "hold") {
-      timeoutRef.current = setTimeout(() => {
-        setIsExiting(true);
-        timeoutRef.current = setTimeout(() => {
-          setPhase("deleting");
-          setIsExiting(false);
-        }, 400);
-      }, HOLD_AFTER_TYPE);
-    } else if (phase === "deleting") {
-      if (chars.length > 0) {
-        timeoutRef.current = setTimeout(() => {
-          setChars((c) => c.slice(0, -1));
-        }, DELETE_SPEED);
-      } else {
-        timeoutRef.current = setTimeout(() => {
-          setPhase("paused");
-        }, HOLD_AFTER_DELETE);
-      }
-    } else if (phase === "paused") {
-      timeoutRef.current = setTimeout(() => {
-        setRoleIndex((i) => (i + 1) % ROLES.length);
-        setPhase("typing");
-      }, 200);
-    }
+
+      iteration += 1 / 3.5;
+    }, 30);
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      clearInterval(decryptInterval);
+      clearTimeout(timeoutId);
+      clearInterval(deleteInterval);
     };
-  }, [chars, phase, roleIndex, word]);
-
-  const nextWord = ROLES[(roleIndex + 1) % ROLES.length];
+  }, [roleIndex, word]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px", minHeight: "clamp(80px, 12vw, 130px)" }}>
@@ -84,38 +100,31 @@ const TypingRole = () => {
             display: "inline-flex",
             alignItems: "baseline",
             gap: "0",
-            opacity: isExiting ? 0 : 1,
-            transform: isExiting ? "translateY(-30px)" : "translateY(0)",
             transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
-          {chars.map((char, i) => (
-            <span
-              key={`${roleIndex}-${i}`}
-              style={{
-                fontFamily: "var(--font-pixel), sans-serif",
-                fontSize: "clamp(32px, 5vw, 58px)",
-                fontWeight: 400,
-                lineHeight: 1,
-                letterSpacing: "0.04em",
-                color: "var(--neo-yellow)",
-                display: "inline-block",
-                animation: "charReveal 0.25s ease-out forwards",
-                opacity: 0,
-              }}
-            >
-              {char}
-            </span>
-          ))}
+          <span
+            style={{
+              fontFamily: "var(--font-pixel), sans-serif",
+              fontSize: "clamp(32px, 5vw, 58px)",
+              fontWeight: 400,
+              lineHeight: 1,
+              letterSpacing: "0.04em",
+              color: "var(--neo-yellow)",
+              display: "inline-block",
+            }}
+          >
+            {displayText}
+          </span>
           {/* Cursor */}
           <span
             style={{
               display: "inline-block",
-              width: "3px",
-              height: "clamp(28px, 4.5vw, 50px)",
-              marginLeft: "3px",
+              width: "12px",
+              height: "clamp(24px, 4vw, 42px)",
+              marginLeft: "6px",
               background: "var(--neo-yellow)",
-              animation: "typing-cursor 1s ease-in-out infinite",
+              animation: "typing-cursor 0.8s steps(2, start) infinite",
               verticalAlign: "middle",
             }}
           />
