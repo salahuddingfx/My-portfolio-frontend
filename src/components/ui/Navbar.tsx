@@ -107,12 +107,10 @@ const Navbar = () => {
       <header
         ref={headerRef}
         role="banner"
-        className={`fixed top-0 left-0 right-0 z-[var(--z-navbar)] transition-all duration-200 ${
-          scrolled
-            ? "h-[72px] bg-[var(--navbar-bg)] border-b-[3px] border-[#000000] shadow-[0_4px_0px_#000000]"
-            : "h-[84px] bg-transparent"
-        }`}
+        className="fixed top-0 left-0 right-0 z-[var(--z-navbar)] h-[76px] bg-[var(--navbar-bg)] border-b-[3px] border-[#000000] shadow-[0_4px_0px_#000000] transition-all duration-200"
       >
+        {/* Neon top accent strip */}
+        <div className="absolute top-0 left-0 right-0 h-[4px] bg-[var(--neo-yellow)] z-50" />
         <div className="container h-full">
           <div className="flex h-full items-center justify-between">
             {/* LOGO */}
@@ -137,16 +135,18 @@ const Navbar = () => {
 
             {/* DESKTOP NAVIGATION */}
             <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-4">
-              <div className={`flex h-11 items-center border-[3px] border-[#000000] px-1.5 transition-all duration-200 ${
-                scrolled ? "bg-[var(--surface)] shadow-[3px_3px_0px_#000000]" : "border-transparent bg-transparent shadow-none"
-              }`}>
+              <div className="flex h-11 items-center border-[3px] border-[#000000] px-1.5 bg-[var(--surface)] shadow-[3px_3px_0px_#000000] transition-all duration-200 rounded-md">
                 {navLinks.map((link) => {
                   const active = pathname === link.href;
                   return (
                     <Link
                       key={link.name}
                       href={link.href}
-                      className={`relative nav-link ${active ? "text-[#000000]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}
+                      className={`relative nav-link transition-all duration-200 ${
+                        active 
+                          ? "text-black" 
+                          : "text-[var(--muted)] hover:text-[var(--foreground)] hover:-translate-y-0.5"
+                      }`}
                     >
                       {active && (
                         <motion.span

@@ -1,192 +1,115 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
-const CustomCursor = () => {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const followerRef = useRef<HTMLDivElement>(null);
-  const raysRef = useRef<HTMLDivElement>(null);
+export default function CustomCursor() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [trail, setTrail] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  const requestRef = useRef<number | null>(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    // Disable on touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const cursor = cursorRef.current;
-    const follower = followerRef.current;
-    const rays = raysRef.current;
+    setIsVisible(true);
 
-    if (!cursor || !follower || !rays) return;
-
-    let cancelled = false;
-    let cleanup = () => {};
-
-    const setup = async () => {
-      const { default: gsap } = await import("gsap");
-      if (cancelled) return;
-
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      // Use quickSetter for high-frequency updates
-      const setCursorX = gsap.quickSetter(cursor, "x", "px");
-      const setCursorY = gsap.quickSetter(cursor, "y", "px");
-      const setFollowerX = gsap.quickSetter(follower, "x", "px");
-      const setFollowerY = gsap.quickSetter(follower, "y", "px");
-
-      const moveCursor = (e: MouseEvent) => {
-        setCursorX(e.clientX);
-        setCursorY(e.clientY);
-        
-        if (reduceMotion) {
-          setFollowerX(e.clientX);
-          setFollowerY(e.clientY);
-        } else {
-          gsap.to(follower, {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0.2,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
-        }
-      };
-
-      const handlePointerOver = (e: MouseEvent) => {
-        if (reduceMotion) return;
-        const target = e.target as HTMLElement;
-        if (target.closest("button, a, .cursor-pointer")) {
-          gsap.to(follower, {
-            scale: 1.4,
-            duration: 0.3,
-          });
-          gsap.to(".sharingan-glow", {
-            opacity: 1,
-            scale: 1.6,
-            duration: 0.3,
-          });
-          // REVEAL RAYS
-          gsap.to(".ray", {
-            scaleY: 1,
-            opacity: 0.6,
-            stagger: 0.02,
-            duration: 0.4,
-            ease: "back.out(2)",
-          });
-        } else {
-          gsap.to(follower, {
-            scale: 1,
-            duration: 0.3,
-          });
-          gsap.to(".sharingan-glow", {
-            opacity: 0.6,
-            scale: 1,
-            duration: 0.3,
-          });
-          // HIDE RAYS
-          gsap.to(".ray", {
-            scaleY: 0,
-            opacity: 0,
-            duration: 0.3,
-          });
-        }
-      };
-
-      window.addEventListener("mousemove", moveCursor);
-      window.addEventListener("mouseover", handlePointerOver);
-
-      if (!reduceMotion) {
-        // Subtle rotation for the eye
-        gsap.to(".sharingan-inner", {
-          rotation: 360,
-          duration: 8,
-          repeat: -1,
-          ease: "none",
-        });
-
-        // Pulsating glow animation
-        gsap.to(".sharingan-glow", {
-          opacity: 0.4,
-          scale: 1.2,
-          duration: 1.5,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-
-        // Constantly rotate the rays slowly
-        gsap.to(rays, {
-          rotation: -360,
-          duration: 15,
-          repeat: -1,
-          ease: "none",
-        });
-      }
-
-      cleanup = () => {
-        window.removeEventListener("mousemove", moveCursor);
-        window.removeEventListener("mouseover", handlePointerOver);
-      };
+    const onMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+      setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    setup();
+    const onMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isClickable = !!target.closest("button, a, .cursor-pointer");
+      setIsHovered(isClickable);
+    };
+
+    const onMouseLeave = () => {
+      setIsVisible(false);
+    };
+
+    const onMouseEnter = () => {
+      setIsVisible(true);
+    };
+
+    // Lightweight smooth interpolation trailing animation
+    const updateTrail = () => {
+      setTrail((prev) => {
+        const dx = mouseRef.current.x - prev.x;
+        const dy = mouseRef.current.y - prev.y;
+        return {
+          x: prev.x + dx * 0.15,
+          y: prev.y + dy * 0.15
+        };
+      });
+      requestRef.current = requestAnimationFrame(updateTrail);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseover", onMouseOver);
+    document.addEventListener("mouseleave", onMouseLeave);
+    document.addEventListener("mouseenter", onMouseEnter);
+    
+    requestRef.current = requestAnimationFrame(updateTrail);
 
     return () => {
-      cancelled = true;
-      cleanup();
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseover", onMouseOver);
+      document.removeEventListener("mouseleave", onMouseLeave);
+      document.removeEventListener("mouseenter", onMouseEnter);
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
   }, []);
 
+  if (!isVisible) return null;
+
   return (
     <>
-      {/* TINY CENTER DOT */}
+      {/* 1. Instant Center Dot */}
       <div
-        ref={cursorRef}
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-[var(--foreground)] rounded-full pointer-events-none z-[var(--z-cursor)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "8px",
+          height: "8px",
+          backgroundColor: "var(--foreground)",
+          borderRadius: "50%",
+          pointerEvents: "none",
+          zIndex: 99999,
+          transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%) ${
+            isHovered ? "scale(0)" : "scale(1)"
+          }`,
+          transition: "transform 0.15s ease",
+        }}
+        className="hidden md:block"
       />
 
-      {/* SHARINGAN EYE WITH INTENSE GLOW */}
+      {/* 2. Trailing Follower Capsule (Morphs to Yellow Diamond on Hover) */}
       <div
-        ref={followerRef}
-        className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[calc(var(--z-cursor)-1)] -translate-x-1/2 -translate-y-1/2 hidden md:block"
-      >
-        {/* RADIATING RAYS CONTAINER */}
-        <div ref={raysRef} className="absolute inset-0 flex items-center justify-center">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div
-              key={i}
-              className="ray absolute w-[1px] h-[40px] bg-gradient-to-t from-[var(--accent)] to-transparent origin-bottom opacity-0 scale-y-0"
-              style={{
-                transform: `rotate(${i * 30}deg) translateY(-50%)`,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* EXTERNAL AURA GLOW */}
-        <div className="sharingan-glow absolute inset-[-15px] rounded-full bg-[var(--accent)]/20 blur-[15px] opacity-60 z-[-1]" />
-        
-        <div className="relative w-full h-full rounded-full bg-[var(--accent)] border border-black/40 overflow-hidden shadow-[inset_0_0_8px_rgba(0,0,0,0.9),0_0_12px_rgba(147,51,234,0.4)]">
-          {/* Inner Pattern (EMS) */}
-          <div className="sharingan-inner absolute inset-0 flex items-center justify-center">
-            <svg viewBox="0 0 100 100" className="w-full h-full p-0.5 fill-black">
-              <circle cx="50" cy="50" r="10" />
-              
-              <path d="M50 20 C60 20 70 30 70 45 C70 60 60 70 50 70 C40 70 30 60 30 45 C30 30 40 20 50 20 Z" fill="none" stroke="black" strokeWidth="2" opacity="0.3" />
-              
-              <g className="tomoe">
-                <path d="M50 25 C55 25 60 30 60 35 C60 40 55 45 50 45 C45 45 40 40 40 35 C40 30 45 25 50 25 M50 25 C40 15 25 25 35 45" />
-                <path transform="rotate(120 50 50)" d="M50 25 C55 25 60 30 60 35 C60 40 55 45 50 45 C45 45 40 40 40 35 C40 30 45 25 50 25 M50 25 C40 15 25 25 35 45" />
-                <path transform="rotate(240 50 50)" d="M50 25 C55 25 60 30 60 35 C60 40 55 45 50 45 C45 45 40 40 40 35 C40 30 45 25 50 25 M50 25 C40 15 25 25 35 45" />
-              </g>
-
-              <circle cx="50" cy="50" r="32" fill="none" stroke="black" strokeWidth="1.5" />
-            </svg>
-          </div>
-          
-          {/* Eye Shine */}
-          <div className="absolute top-[20%] left-[25%] w-1.5 h-1 bg-white/50 rounded-full blur-[0.5px] rotate-[-45deg]" />
-        </div>
-      </div>
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "36px",
+          height: "36px",
+          border: "2px solid var(--foreground)",
+          borderRadius: isHovered ? "var(--radius-md)" : "50%",
+          backgroundColor: isHovered ? "var(--neo-yellow)" : "transparent",
+          boxShadow: isHovered ? "3px 3px 0px var(--foreground)" : "none",
+          pointerEvents: "none",
+          zIndex: 99998,
+          transform: `translate3d(${trail.x}px, ${trail.y}px, 0) translate(-50%, -50%) ${
+            isHovered ? "scale(1.2) rotate(45deg)" : "scale(1) rotate(0deg)"
+          }`,
+          transition: "transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s ease, border-radius 0.2s ease, box-shadow 0.2s ease",
+        }}
+        className="hidden md:block"
+      />
     </>
   );
-};
-
-export default CustomCursor;
+}

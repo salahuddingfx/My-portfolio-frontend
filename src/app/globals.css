@@ -138,8 +138,8 @@ html[data-theme="dark"] {
 /* NAVBAR HEIGHT SYSTEM */
 
 :root {
-  --navbar-height: 84px;
-  --navbar-height-scrolled: 72px;
+  --navbar-height: 76px;
+  --navbar-height-scrolled: 76px;
 }
 
 .nav-link {
