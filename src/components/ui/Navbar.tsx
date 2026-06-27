@@ -224,8 +224,8 @@ const Navbar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm lg:hidden"
+              transition={{ duration: 0.15 }}
+              className="fixed inset-0 z-[var(--z-overlay)] bg-black/60 lg:hidden"
               onClick={() => setIsOpen(false)}
             />
 
@@ -239,7 +239,7 @@ const Navbar = () => {
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
-                transition={{ duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
                 style={{
                   position: "fixed",
                   top: 0,
@@ -302,9 +302,9 @@ const Navbar = () => {
                   return (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, x: 15 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.05 + index * 0.04 }}
+                      transition={{ type: "tween", ease: "easeOut", duration: 0.15, delay: index * 0.015 }}
                       style={{ flexShrink: 0 }}
                     >
                       <Link
