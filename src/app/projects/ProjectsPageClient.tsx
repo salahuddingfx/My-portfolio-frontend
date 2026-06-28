@@ -11,6 +11,7 @@ interface ProjectItem {
   title: string;
   desc: string;
   image: string;
+  mobileImage?: string;
   category: string;
   tags: string[];
   links: { live: string; source: string };
@@ -19,66 +20,12 @@ interface ProjectItem {
 }
 
 const FALLBACK_PROJECTS: ProjectItem[] = [
-  {
-    title: "StudyFlow",
-    desc: "A full-stack productivity and study-management application designed to help self-learners track progress, use Pomodoro timers, and build consistent study habits.",
-    image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=1200",
-    tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Socket.io"],
-    links: { live: "https://github.com/salahuddingfx/Study-Flow", source: "https://github.com/salahuddingfx/Study-Flow" },
-    category: "Full Stack",
-    featured: true,
-    order: 1,
-  },
-  {
-    title: "SalahUddin OS",
-    desc: "A hyper-interactive, cinematic Operating System simulation running entirely in the browser, featuring custom terminal utilities, window management, desktop widgets, and live tool pipelines.",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
-    tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vite"],
-    links: { live: "https://github.com/salahuddingfx/MY-OS", source: "https://github.com/salahuddingfx/MY-OS" },
-    category: "System Sim",
-    featured: true,
-    order: 2,
-  },
-  {
-    title: "Aether 3D Engine",
-    desc: "A browser-based, mobile-first 3D interactive system built with Three.js that allows users to sculpt and manipulate digital matter using motion controls.",
-    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=1200",
-    tags: ["HTML5", "Three.js", "JavaScript", "WebGL", "CSS3"],
-    links: { live: "https://github.com/salahuddingfx/Gesture-System", source: "https://github.com/salahuddingfx/Gesture-System" },
-    category: "Creative 3D",
-    featured: true,
-    order: 3,
-  },
-  {
-    title: "NoteSphere",
-    desc: "A high-performance Academic Intelligence platform and note-sharing system designed for student resource indexing, search optimization, and academic collaboration.",
-    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200",
-    tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-    links: { live: "https://github.com/salahuddingfx/NoteSphere", source: "https://github.com/salahuddingfx/NoteSphere" },
-    category: "Full Stack",
-    featured: false,
-    order: 4,
-  },
-  {
-    title: "Memory Master",
-    desc: "A real-time multiplayer memory-matching game built with React and Socket.io, featuring a high-fidelity glassmorphism design and state synchronization.",
-    image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=1200",
-    tags: ["React", "Node.js", "Express", "Socket.io", "Tailwind CSS"],
-    links: { live: "https://github.com/salahuddingfx/Memory-Master", source: "https://github.com/salahuddingfx/Memory-Master" },
-    category: "Game",
-    featured: false,
-    order: 5,
-  },
-  {
-    title: "Habit-OS",
-    desc: "A next-generation AI-powered health tracking and habit management ecosystem built to optimize personal health metrics, exercise routines, and wellness targets.",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=1200",
-    tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-    links: { live: "https://github.com/salahuddingfx/Habit-OS", source: "https://github.com/salahuddingfx/Habit-OS" },
-    category: "Full Stack",
-    featured: false,
-    order: 6,
-  },
+  { title: "CoxIan TechForce", desc: "Developer community, technical workshop index, and open-source collaboration hub tailored for tech students and enthusiasts in Cox's Bazar.", image: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649982/portfolio/screenshots/techforge_desktop.png", mobileImage: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649988/portfolio/screenshots/techforge_mobile.png", tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"], links: { live: "https://cmpitechforge.dev", source: "https://github.com/salahuddingfx/TechForge" }, category: "Community", featured: true, order: 1 },
+  { title: "StudyFlow", desc: "A full-stack productivity and study-management application designed to help self-learners track progress, use Pomodoro timers, and build consistent study habits.", image: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649913/portfolio/screenshots/studyflow_desktop.png", mobileImage: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649916/portfolio/screenshots/studyflow_mobile.png", tags: ["Vue.js", "Node.js", "Express", "MongoDB", "Socket.io"], links: { live: "https://studyflow.salahuddin.codes", source: "https://github.com/salahuddingfx/Study-Flow" }, category: "Productivity", featured: true, order: 2 },
+  { title: "NoteSphere", desc: "A high-performance Academic Intelligence platform and note-sharing system designed for student resource indexing, search optimization, and academic collaboration.", image: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649812/portfolio/screenshots/notespher_desktop.png", mobileImage: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649820/portfolio/screenshots/notespher_mobile.png", tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"], links: { live: "https://notesphere.salahuddin.codes", source: "https://github.com/salahuddingfx/NoteSphere" }, category: "Education", featured: true, order: 3 },
+  { title: "Acharu", desc: "Premium e-commerce platform for Cox's Bazar specialty foods - chocolate, achar, nuts, and authentic Burmese items.", image: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649682/portfolio/screenshots/acharu_desktop.png", mobileImage: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649697/portfolio/screenshots/acharu_mobile.png", tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"], links: { live: "https://acharu.com", source: "https://github.com/salahuddingfx/acharu" }, category: "E-Commerce", featured: true, order: 4 },
+  { title: "Taja Shutki", desc: "Seafood distribution and premium dry-fish e-commerce marketplace connecting local fishermen of Cox's Bazar directly with consumers.", image: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649949/portfolio/screenshots/tajashutki_desktop.png", mobileImage: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649965/portfolio/screenshots/tajashutki_mobile.png", tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"], links: { live: "https://tajashutki.com", source: "https://github.com/salahuddingfx/tajashutki" }, category: "E-Commerce", featured: true, order: 5 },
+  { title: "DPIAN Alumni", desc: "Official alumni connectivity portal and student network hub built for Cox's Bazar Model Polytechnic Institute graduates.", image: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649745/portfolio/screenshots/alumni_desktop.png", mobileImage: "https://res.cloudinary.com/dytwxf6ip/image/upload/v1782649756/portfolio/screenshots/alumni_mobile.png", tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"], links: { live: "https://alumni.salahuddin.codes", source: "https://github.com/salahuddingfx/alumni" }, category: "Web Platform", featured: true, order: 6 },
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -132,6 +79,62 @@ function HeroCard({ project, index }: { project: ProjectItem; index: number }) {
           background: "linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%)",
           pointerEvents: "none",
         }} />
+        
+        {/* Floating Mobile mockup overlay */}
+        {(project.mobileImage || project.image) && (
+          <motion.div
+            animate={hovered ? {
+              y: -8,
+              rotate: -3,
+              scale: 1.05,
+            } : {
+              y: 0,
+              rotate: -1,
+              scale: 1,
+            }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: "absolute",
+              bottom: "20px",
+              right: "40px",
+              width: "14%",
+              minWidth: "75px",
+              maxWidth: "120px",
+              aspectRatio: "9/19.5",
+              background: "#000000",
+              border: "3px solid #000000",
+              borderRadius: "14px",
+              overflow: "hidden",
+              boxShadow: hovered ? "5px 10px 20px rgba(0,0,0,0.4)" : "3px 3px 0px #000000",
+              zIndex: 5,
+              transition: "box-shadow 0.4s",
+            }}
+          >
+            {/* Notch */}
+            <div style={{
+              position: "absolute",
+              top: "0",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "40%",
+              height: "8px",
+              background: "#000000",
+              borderBottomLeftRadius: "4px",
+              borderBottomRightRadius: "4px",
+              zIndex: 12,
+            }} />
+            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+              <Image
+                src={project.mobileImage || project.image}
+                alt={`${project.title} Mobile`}
+                fill
+                sizes="15vw"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+          </motion.div>
+        )}
+
         {/* Number badge */}
         <div style={{
           position: "absolute", top: "16px", left: "16px",
@@ -269,6 +272,62 @@ function GridCard({ project, index }: { project: ProjectItem; index: number }) {
           transition: "background 0.5s",
           pointerEvents: "none",
         }} />
+
+        {/* Floating Mobile mockup overlay */}
+        {(project.mobileImage || project.image) && (
+          <motion.div
+            animate={hovered ? {
+              y: -5,
+              rotate: 3,
+              scale: 1.05,
+            } : {
+              y: 0,
+              rotate: 1,
+              scale: 1,
+            }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: "absolute",
+              bottom: "10px",
+              left: "15px",
+              width: "18%",
+              minWidth: "55px",
+              maxWidth: "85px",
+              aspectRatio: "9/19.5",
+              background: "#000000",
+              border: "2px solid #000000",
+              borderRadius: "10px",
+              overflow: "hidden",
+              boxShadow: hovered ? "4px 8px 15px rgba(0,0,0,0.3)" : "2px 2px 0px #000000",
+              zIndex: 5,
+              transition: "box-shadow 0.4s",
+            }}
+          >
+            {/* Notch */}
+            <div style={{
+              position: "absolute",
+              top: "0",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "40%",
+              height: "6px",
+              background: "#000000",
+              borderBottomLeftRadius: "3px",
+              borderBottomRightRadius: "3px",
+              zIndex: 12,
+            }} />
+            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+              <Image
+                src={project.mobileImage || project.image}
+                alt={`${project.title} Mobile`}
+                fill
+                sizes="10vw"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+          </motion.div>
+        )}
+
         {/* Number */}
         <div style={{
           position: "absolute", top: "10px", left: "10px",
