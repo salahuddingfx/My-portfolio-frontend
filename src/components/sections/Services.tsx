@@ -16,13 +16,14 @@ import {
   Shield,
   Zap,
   GitBranch,
+  Brain,
   type LucideIcon,
 } from "lucide-react";
 
 /* ─── Icon Map ─────────────────────────────────────────────────── */
 const ICON_MAP: Record<string, LucideIcon> = {
   Code2, Wand2, Layers, Database, Globe, Smartphone,
-  Palette, Server, Shield, Zap, GitBranch,
+  Palette, Server, Shield, Zap, GitBranch, Brain,
   Code: Code2,
   Wand: Wand2,
   Layer: Layers,
@@ -34,6 +35,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Security: Shield,
   Speed: Zap,
   Git: GitBranch,
+  BrainIcon: Brain,
 };
 
 function resolveIcon(name?: string): LucideIcon {
@@ -81,12 +83,30 @@ const FALLBACK_SERVICES: ServiceItem[] = [
   },
   {
     _id: "f4",
-    title: "Database Design",
-    description: "Optimized database schemas, indexing strategies, and migration pipelines for MongoDB and MySQL. Secure and performant.",
+    title: "Database Optimization",
+    description: "Designing high-performance, secure database schemas with optimized indexing, caching, and security hardening.",
     price: "Contact for pricing",
     icon: "Database",
-    tags: ["MongoDB", "MySQL", "Prisma", "Redis"],
+    tags: ["PostgreSQL", "Mongoose", "Redis", "Security"],
     order: 4,
+  },
+  {
+    _id: "f5",
+    title: "AI & ML Integrations",
+    description: "Integrating LLMs, training custom machine learning models, and building agentic AI workflows.",
+    price: "Contact for pricing",
+    icon: "BrainIcon",
+    tags: ["OpenAI", "TensorFlow", "NLP", "LangChain"],
+    order: 5,
+  },
+  {
+    _id: "f6",
+    title: "UI/UX & Prototyping",
+    description: "Crafting beautiful, high-fidelity design systems and interactive interfaces focused on user engagement.",
+    price: "Contact for pricing",
+    icon: "Design",
+    tags: ["Figma", "Design Systems", "Prototyping", "Aesthetics"],
+    order: 6,
   },
 ];
 
