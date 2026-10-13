@@ -27,7 +27,7 @@ interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
   vertical?: boolean;
   /**
    * Number of times to repeat the content
-   * @default 4
+   * @default 3
    */
   repeat?: number;
   /**
@@ -35,6 +35,11 @@ interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
    * @default "normal"
    */
   speed?: "slow" | "normal" | "fast";
+  /**
+   * Gap between items
+   * @default "1.5rem"
+   */
+  gap?: string;
 }
 
 export function Marquee({
@@ -43,21 +48,26 @@ export function Marquee({
   pauseOnHover = false,
   children,
   vertical = false,
-  repeat = 5,
+  repeat = 3,
   speed = "normal",
+  gap = "1.5rem",
   ...props
 }: MarqueeProps) {
   const speedVariants = {
-    slow: "[--duration:120s]",
-    normal: "[--duration:40s]",
-    fast: "[--duration:10s]",
+    slow: "[--duration:80s]",
+    normal: "[--duration:45s]",
+    fast: "[--duration:20s]",
   };
 
   return (
     <div
       {...props}
+      style={{
+        ["--gap" as any]: gap,
+        ...props.style,
+      }}
       className={cn(
-        "group flex overflow-hidden p-1 [--gap:6px] [gap:var(--gap)]",
+        "group flex overflow-hidden p-1 [gap:var(--gap)]",
         speedVariants[speed],
         {
           "flex-row": !vertical,

@@ -2,66 +2,71 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Star, Sparkles, MessageSquareQuote } from "lucide-react";
+import { ArrowRight, Star, MessageSquareQuote } from "lucide-react";
 import { motion } from "framer-motion";
 import { MarqueeCard, type TestimonialItem } from "@/components/ui/marquee-card";
-import { CursorProvider, Cursor, CursorFollow } from "@/components/ui/cursor";
 
 const FALLBACK_REVIEWS: TestimonialItem[] = [
   {
     name: "Alex Rivera",
-    role: "CTO at TechFlow",
-    text: "Salah didn't just build our platform — he genuinely understood the problem. The attention to interaction detail was extraordinary, boosting our conversion by 40%.",
+    role: "CTO @ TechFlow",
+    content:
+      "Salah is a visionary developer. He didn't just build our platform — he genuinely understood the architecture. The interaction detail boosted our conversion by 40%.",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
     rating: 5,
-    tag: "Next.js & Architecture",
+    tag: "Next.js & 3D",
   },
   {
     name: "Sarah Chen",
-    role: "Product Manager at Nexus",
-    text: "The level of craft Salah brings to his work is rare. Delivers code that actually exceeds expectations. I'd work with him again without hesitation.",
+    role: "Product Manager @ Nexus",
+    content:
+      "The level of craft Salah puts into his code and 3D interactions is simply unmatched. A true 'Digital Architect' in every sense of the word. I'd work with him again without hesitation.",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
     rating: 5,
     tag: "Creative Frontend",
   },
   {
     name: "Marcus Thorne",
-    role: "Founder at S-Corp",
-    text: "Reliable, strategic, and technically brilliant. Salah's ability to simplify complex problems while keeping the UI clean and premium is genuinely rare.",
+    role: "Founder @ S-Corp",
+    content:
+      "Reliable, strategic, and technically brilliant. Salah's ability to simplify complex engineering problems while keeping the UI absolutely premium is rare. An invaluable partner.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
     rating: 5,
-    tag: "Full Stack Systems",
+    tag: "Full Stack",
   },
   {
     name: "Elena Rostova",
-    role: "Design Director at Studio A",
-    text: "Working with Salah felt effortless. He converted complex Figma designs and 3D scenes into silky smooth 60fps code without skipping a beat.",
+    role: "Design Director @ Studio A",
+    content:
+      "Working with Salah felt effortless. He converted complex Figma designs and custom Three.js shaders into silky smooth 60fps code without skipping a single detail.",
     avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80",
     rating: 5,
-    tag: "UI/UX & GSAP",
+    tag: "GSAP & WebGL",
   },
   {
     name: "David Kim",
-    role: "Head of Engineering at Velo",
-    text: "High velocity, immaculate code cleanliness, and top-tier communication throughout our sprint. A true 10x frontend engineer.",
+    role: "Head of Engineering @ Velo",
+    content:
+      "High velocity, immaculate code cleanliness, and top-tier communication throughout our sprint. Salah delivers like an entire frontend team in one person.",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
     rating: 5,
-    tag: "React & TypeScript",
+    tag: "TypeScript Architecture",
   },
   {
     name: "Sophia Martinez",
-    role: "VP of Product at Horizon Labs",
-    text: "Salah transformed our rough MVP into a production-grade interface. Responsive, communicative, and exceptionally sharp.",
+    role: "VP of Product @ Horizon",
+    content:
+      "Salah transformed our rough MVP into a production-grade interface that wowed our investors. Responsive, communicative, and exceptionally sharp.",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
     rating: 5,
-    tag: "Frontend Architecture",
+    tag: "UI/UX & Systems",
   },
 ];
 
 const fadeUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 15 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-50px" },
+  viewport: { once: true, margin: "-40px" },
 };
 
 const Testimonials = () => {
@@ -80,11 +85,10 @@ const Testimonials = () => {
         if (!res.ok) throw new Error();
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          // Merge API reviews with fallback tags/avatars if missing
           const formatted = data.map((item: any, idx: number) => ({
             _id: item._id,
             name: item.name || "Client",
-            role: item.role || "Partner",
+            role: item.role || item.company ? `${item.role} @ ${item.company}` : "Partner",
             content: item.text || item.content || "",
             avatar:
               item.avatar ||
@@ -95,7 +99,7 @@ const Testimonials = () => {
           setReviews(formatted);
         }
       } catch {
-        /* use fallback */
+        /* fallback */
       } finally {
         setLoading(false);
         if (typeof window !== "undefined") {
@@ -106,87 +110,49 @@ const Testimonials = () => {
     fetchReviews();
   }, []);
 
-  // Split reviews into two distinct rows for visual richness
-  const half = Math.ceil(reviews.length / 2);
-  const firstRow = reviews.slice(0, half);
-  const secondRow = reviews.length > 2 ? reviews.slice(half) : reviews;
-
   return (
     <section
       id="reviews"
-      className="section-shell bg-[var(--background)] border-t-[4px] border-[#000000] shadow-[0_-12px_0px_#000000] overflow-hidden text-[var(--foreground)] py-20 min-h-[85vh] lg:min-h-screen flex flex-col justify-center relative"
+      className="relative bg-[var(--background)] border-t-[4px] border-[#000000] shadow-[0_-12px_0px_#000000] text-[var(--foreground)] pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24 z-[var(--z-base)] overflow-hidden"
     >
-      <div className="container relative z-10 mb-8 sm:mb-12">
-        {/* Header */}
+      {/* ═══════ HEADER ═══════ */}
+      <div className="container relative z-10 mb-8 sm:mb-10">
         <div className="section-header-center">
           <span className="section-eyebrow">
             <MessageSquareQuote size={13} className="inline mr-1 -mt-0.5" /> Kind Words
           </span>
-          <h2 className="section-heading mt-1">
+          <h2 className="section-heading mt-2">
             What clients say.
           </h2>
-          <p className="section-subtext mx-auto mt-4 text-center">
+          <p className="section-subtext mx-auto mt-3 text-center">
             Real feedback from engineering leads, founders, and designers I&apos;ve had the pleasure of partnering with.
           </p>
         </div>
       </div>
 
-      {/* Marquee with Interactive Cursor Follower */}
-      <div className="relative w-full overflow-hidden">
-        {/* Gradient edge masks for seamless endless fade */}
+      {/* ═══════ MARQUEE CARDS ═══════ */}
+      <div className="relative w-full overflow-hidden my-2 py-3">
+        {/* Gradient edge masks for clean, seamless fade */}
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[var(--background)] to-transparent z-20" />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[var(--background)] to-transparent z-20" />
 
-        <CursorProvider className="relative cursor-default select-none">
-          {/* Custom Cursor Ring */}
-          <Cursor className="hidden md:flex items-center justify-center">
-            <div className="w-5 h-5 rounded-full border-2 border-[var(--neo-yellow)] bg-black/60 backdrop-blur-sm" />
-          </Cursor>
-
-          {/* Spring Floating Follower Tooltip */}
-          <CursorFollow
-            sideOffset={18}
-            align="bottom-right"
-            className="hidden md:flex"
-            transition={{ stiffness: 450, damping: 35, bounce: 0 }}
-          >
-            <div className="bg-black text-[var(--neo-yellow)] dark:bg-[var(--neo-yellow)] dark:text-black font-mono font-bold text-[11px] px-3 py-1.5 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] flex items-center gap-1.5 whitespace-nowrap">
-              <Sparkles size={12} className="animate-spin" />
-              <span>Hover to Pause</span>
-            </div>
-          </CursorFollow>
-
-          {/* Row 1 - Leftward Marquee */}
-          <div className="py-2">
-            <MarqueeCard
-              testimonials={firstRow.length ? firstRow : reviews}
-              speed="normal"
-              pauseOnHover={true}
-            />
-          </div>
-
-          {/* Row 2 - Rightward (Reverse) Marquee */}
-          <div className="py-2">
-            <MarqueeCard
-              testimonials={secondRow.length ? secondRow : reviews}
-              speed="slow"
-              reverse={true}
-              pauseOnHover={true}
-            />
-          </div>
-        </CursorProvider>
+        <MarqueeCard
+          testimonials={reviews}
+          speed="normal"
+          pauseOnHover={true}
+        />
       </div>
 
-      {/* Bottom CTA */}
+      {/* ═══════ BOTTOM CTA ═══════ */}
       <div className="container relative z-10">
         <motion.div
           {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mt-12 text-center flex flex-col sm:flex-row items-center justify-center gap-4"
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mt-8 sm:mt-10 text-center flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Link
             href="/reviews"
-            className="btn-primary group inline-flex items-center gap-2"
+            className="btn-primary group inline-flex items-center gap-2 cursor-pointer"
           >
             <span>Read All Client Reviews</span>
             <ArrowRight
@@ -195,10 +161,10 @@ const Testimonials = () => {
               className="transition-transform duration-200 group-hover:translate-x-1"
             />
           </Link>
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)]">
-            <div className="flex -space-x-1">
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--muted)]">
+            <div className="flex -space-x-0.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={14} className="fill-[var(--neo-yellow)] text-[var(--neo-yellow)]" />
+                <Star key={i} size={14} className="fill-[var(--neo-yellow)] text-[#000000]" />
               ))}
             </div>
             <span>5.0 / 5.0 Rating from 20+ projects</span>
