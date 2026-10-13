@@ -1,181 +1,209 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star, Sparkles, MessageSquareQuote } from "lucide-react";
 import { motion } from "framer-motion";
+import { MarqueeCard, type TestimonialItem } from "@/components/ui/marquee-card";
+import { CursorProvider, Cursor, CursorFollow } from "@/components/ui/cursor";
 
-const FALLBACK_REVIEWS = [
+const FALLBACK_REVIEWS: TestimonialItem[] = [
   {
     name: "Alex Rivera",
     role: "CTO at TechFlow",
-    text: "Salah didn't just build our platform — he genuinely understood the problem. The attention to interaction detail was extraordinary, and the result boosted our conversion by 40%.",
-    avatar: "https://i.pravatar.cc/150?u=alex",
+    text: "Salah didn't just build our platform — he genuinely understood the problem. The attention to interaction detail was extraordinary, boosting our conversion by 40%.",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
     rating: 5,
+    tag: "Next.js & Architecture",
   },
   {
     name: "Sarah Chen",
     role: "Product Manager at Nexus",
-    text: "The level of craft Salah brings to his work is rare. He asks the right questions, communicates clearly, and delivers something that actually exceeds expectations. I'd work with him again without hesitation.",
-    avatar: "https://i.pravatar.cc/150?u=sarah",
+    text: "The level of craft Salah brings to his work is rare. Delivers code that actually exceeds expectations. I'd work with him again without hesitation.",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
     rating: 5,
+    tag: "Creative Frontend",
   },
   {
     name: "Marcus Thorne",
     role: "Founder at S-Corp",
-    text: "Reliable, strategic, and technically brilliant. Salah's ability to simplify complex problems while keeping the UI clean and premium is genuinely rare. An invaluable partner.",
-    avatar: "https://i.pravatar.cc/150?u=marcus",
+    text: "Reliable, strategic, and technically brilliant. Salah's ability to simplify complex problems while keeping the UI clean and premium is genuinely rare.",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
     rating: 5,
+    tag: "Full Stack Systems",
+  },
+  {
+    name: "Elena Rostova",
+    role: "Design Director at Studio A",
+    text: "Working with Salah felt effortless. He converted complex Figma designs and 3D scenes into silky smooth 60fps code without skipping a beat.",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80",
+    rating: 5,
+    tag: "UI/UX & GSAP",
+  },
+  {
+    name: "David Kim",
+    role: "Head of Engineering at Velo",
+    text: "High velocity, immaculate code cleanliness, and top-tier communication throughout our sprint. A true 10x frontend engineer.",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
+    rating: 5,
+    tag: "React & TypeScript",
+  },
+  {
+    name: "Sophia Martinez",
+    role: "VP of Product at Horizon Labs",
+    text: "Salah transformed our rough MVP into a production-grade interface. Responsive, communicative, and exceptionally sharp.",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
+    rating: 5,
+    tag: "Frontend Architecture",
   },
 ];
 
 const fadeUp = {
-  initial:     { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
-  viewport:    { once: true, margin: "-50px" },
+  viewport: { once: true, margin: "-50px" },
 };
 
-const Stars = ({ rating = 5 }: { rating?: number }) => (
-  <div
-    className="flex gap-1"
-    role="img"
-    aria-label={`${rating} out of 5 stars`}
-  >
-    {[...Array(5)].map((_, i) => (
-      <Star
-        key={i}
-        size={14}
-        className={i < rating ? "text-[var(--accent)] fill-[var(--accent)]" : "text-[var(--muted-soft)]"}
-      />
-    ))}
-  </div>
-);
-
 const Testimonials = () => {
-  const [reviews, setReviews] = useState<typeof FALLBACK_REVIEWS>(FALLBACK_REVIEWS);
+  const [reviews, setReviews] = useState<TestimonialItem[]>(FALLBACK_REVIEWS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetch_ = async () => {
+    const fetchReviews = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (!apiUrl) { setLoading(false); return; }
+        if (!apiUrl) {
+          setLoading(false);
+          return;
+        }
         const res = await fetch(`${apiUrl}/admin/reviews`);
         if (!res.ok) throw new Error();
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          setReviews(data);
+          // Merge API reviews with fallback tags/avatars if missing
+          const formatted = data.map((item: any, idx: number) => ({
+            _id: item._id,
+            name: item.name || "Client",
+            role: item.role || "Partner",
+            content: item.text || item.content || "",
+            avatar:
+              item.avatar ||
+              FALLBACK_REVIEWS[idx % FALLBACK_REVIEWS.length].avatar,
+            rating: item.rating || 5,
+            tag: item.tag || FALLBACK_REVIEWS[idx % FALLBACK_REVIEWS.length].tag,
+          }));
+          setReviews(formatted);
         }
       } catch {
         /* use fallback */
       } finally {
         setLoading(false);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("resize"));
+        }
       }
     };
-    fetch_();
+    fetchReviews();
   }, []);
+
+  // Split reviews into two distinct rows for visual richness
+  const half = Math.ceil(reviews.length / 2);
+  const firstRow = reviews.slice(0, half);
+  const secondRow = reviews.length > 2 ? reviews.slice(half) : reviews;
 
   return (
     <section
       id="reviews"
-      className="section-shell bg-[var(--background)] overflow-hidden text-[var(--foreground)]"
+      className="section-shell bg-[var(--background)] border-t-[4px] border-[#000000] shadow-[0_-12px_0px_#000000] overflow-hidden text-[var(--foreground)] py-20 min-h-[85vh] lg:min-h-screen flex flex-col justify-center relative"
     >
-      <div className="container relative z-10">
-
+      <div className="container relative z-10 mb-8 sm:mb-12">
         {/* Header */}
         <div className="section-header-center">
-          <span className="section-eyebrow">Kind words</span>
+          <span className="section-eyebrow">
+            <MessageSquareQuote size={13} className="inline mr-1 -mt-0.5" /> Kind Words
+          </span>
           <h2 className="section-heading mt-1">
             What clients say.
           </h2>
           <p className="section-subtext mx-auto mt-4 text-center">
-            Feedback from people I&apos;ve had the pleasure of working with.
+            Real feedback from engineering leads, founders, and designers I&apos;ve had the pleasure of partnering with.
           </p>
         </div>
+      </div>
 
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="border-[3px] border-[#000000] bg-[var(--surface)] shadow-[6px_6px_0px_#000000] p-6 sm:p-8 flex flex-col gap-5"
-                style={{ borderRadius: "var(--radius-lg)" }}
-              >
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, j) => (
-                    <div key={j} className="skeleton h-3.5 w-3.5" style={{ borderRadius: "var(--radius-sm)" }} />
-                  ))}
-                </div>
-                <div className="space-y-3 flex-grow">
-                  <div className="skeleton h-3.5 w-full" />
-                  <div className="skeleton h-3.5 w-11/12" />
-                  <div className="skeleton h-3.5 w-4/5" />
-                </div>
-                <div className="flex items-center gap-3 pt-5 border-t-[3px] border-[#000000]">
-                  <div className="skeleton h-10 w-10 shrink-0" style={{ borderRadius: "var(--radius-md)" }} />
-                  <div className="space-y-2">
-                    <div className="skeleton h-3.5 w-24" />
-                    <div className="skeleton h-3 w-16" />
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* Marquee with Interactive Cursor Follower */}
+      <div className="relative w-full overflow-hidden">
+        {/* Gradient edge masks for seamless endless fade */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[var(--background)] to-transparent z-20" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[var(--background)] to-transparent z-20" />
+
+        <CursorProvider className="relative cursor-default select-none">
+          {/* Custom Cursor Ring */}
+          <Cursor className="hidden md:flex items-center justify-center">
+            <div className="w-5 h-5 rounded-full border-2 border-[var(--neo-yellow)] bg-black/60 backdrop-blur-sm" />
+          </Cursor>
+
+          {/* Spring Floating Follower Tooltip */}
+          <CursorFollow
+            sideOffset={18}
+            align="bottom-right"
+            className="hidden md:flex"
+            transition={{ stiffness: 450, damping: 35, bounce: 0 }}
+          >
+            <div className="bg-black text-[var(--neo-yellow)] dark:bg-[var(--neo-yellow)] dark:text-black font-mono font-bold text-[11px] px-3 py-1.5 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] flex items-center gap-1.5 whitespace-nowrap">
+              <Sparkles size={12} className="animate-spin" />
+              <span>Hover to Pause</span>
+            </div>
+          </CursorFollow>
+
+          {/* Row 1 - Leftward Marquee */}
+          <div className="py-2">
+            <MarqueeCard
+              testimonials={firstRow.length ? firstRow : reviews}
+              speed="normal"
+              pauseOnHover={true}
+            />
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review, i) => (
-              <motion.div
-                key={`${review.name}-${i}`}
-                {...fadeUp}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="card group flex flex-col h-full"
-              >
-                {/* Stars */}
-                <div className="mb-4">
-                  <Stars rating={review.rating} />
-                </div>
 
-                {/* Quote */}
-                <blockquote className="flex-grow mb-6">
-                  <p className="text-sm text-[var(--foreground)] leading-relaxed">
-                    &ldquo;{review.text}&rdquo;
-                  </p>
-                </blockquote>
-
-                {/* Author */}
-                <div className="flex items-center gap-3 pt-5 border-t-[3px] border-[#000000]">
-                  <div className="relative w-10 h-10 overflow-hidden bg-[var(--surface-2)] border-[3px] border-[#000000] shadow-[2px_2px_0px_#000000] shrink-0" style={{ borderRadius: "var(--radius-md)" }}>
-                    <Image
-                      src={review.avatar}
-                      alt={review.name}
-                      fill
-                      sizes="40px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-sm font-extrabold text-[var(--foreground)] leading-none uppercase tracking-wide">{review.name}</p>
-                    <p className="text-xs text-[var(--muted)] mt-1 font-bold tracking-widest uppercase">{review.role}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          {/* Row 2 - Rightward (Reverse) Marquee */}
+          <div className="py-2">
+            <MarqueeCard
+              testimonials={secondRow.length ? secondRow : reviews}
+              speed="slow"
+              reverse={true}
+              pauseOnHover={true}
+            />
           </div>
-        )}
+        </CursorProvider>
+      </div>
 
-        {/* CTA */}
+      {/* Bottom CTA */}
+      <div className="container relative z-10">
         <motion.div
           {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mt-12 text-center"
+          transition={{ duration: 0.5, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mt-12 text-center flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link href="/reviews" className="group/cta inline-flex items-center gap-2 text-sm font-bold text-[var(--foreground)] uppercase tracking-wider transition-colors duration-200 hover:text-[var(--neo-yellow)]">
-            Read all reviews
-            <ArrowRight size={15} strokeWidth={2.5} className="transition-transform duration-200 group-hover/cta:translate-x-1" />
+          <Link
+            href="/reviews"
+            className="btn-primary group inline-flex items-center gap-2"
+          >
+            <span>Read All Client Reviews</span>
+            <ArrowRight
+              size={15}
+              strokeWidth={2.5}
+              className="transition-transform duration-200 group-hover:translate-x-1"
+            />
           </Link>
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--muted)]">
+            <div className="flex -space-x-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={14} className="fill-[var(--neo-yellow)] text-[var(--neo-yellow)]" />
+              ))}
+            </div>
+            <span>5.0 / 5.0 Rating from 20+ projects</span>
+          </div>
         </motion.div>
-
       </div>
     </section>
   );

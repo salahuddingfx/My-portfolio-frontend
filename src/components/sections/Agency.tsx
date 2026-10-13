@@ -18,7 +18,7 @@ const SERVICES = [
 
 const Agency = () => {
   return (
-    <section className="section-shell bg-[var(--surface)] border-y-[4px] border-[#000000]">
+    <section id="agency" className="section-shell bg-[var(--surface)] border-y-[4px] border-[#000000]">
       <div className="container">
         <motion.div {...fadeUp} transition={{ duration: 0.7 }}>
           <div

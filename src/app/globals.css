@@ -317,7 +317,7 @@ html,
 body {
   background-color: var(--background);
   color: var(--foreground);
-  overflow-x: hidden;
+  overflow-x: clip;
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: var(--text-base);
   line-height: 1.6;
@@ -431,9 +431,9 @@ video {
 
 .section-shell {
   position: relative;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  overflow: hidden;
+  padding-top: clamp(3.5rem, 5vh, 4.5rem);
+  padding-bottom: clamp(3.5rem, 5vh, 4.5rem);
+  overflow: visible;
   z-index: var(--z-base);
 }
 
@@ -478,8 +478,8 @@ html[data-theme="dark"] .section-shell::after {
 
 @media (min-width: 1024px) {
   .section-shell {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
+    padding-top: clamp(4.5rem, 7vh, 6rem);
+    padding-bottom: clamp(4.5rem, 7vh, 6rem);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -489,8 +489,8 @@ html[data-theme="dark"] .section-shell::after {
 
 @media (max-width: 767px) {
   .section-shell {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
   }
 }
 
@@ -2528,5 +2528,27 @@ header {
   .hero-spline-container {
     opacity: 0.85 !important;
     transition: opacity 0.3s ease;
+  }
+}
+
+/* =============================================================================
+   MARQUEE KEYFRAMES
+   ============================================================================= */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 6px)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap, 6px)));
   }
 }

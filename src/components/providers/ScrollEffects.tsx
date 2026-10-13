@@ -64,19 +64,21 @@ export function ScrollEffects() {
             section.id !== "contact-cta";
 
           if (shouldPin) {
+            const isNextContact = nextSection.id === "contact-cta";
+
             ScrollTrigger.create({
               trigger: section,
               start: () => {
                 const viewportHeight = window.innerHeight;
                 const sectionHeight = section.offsetHeight;
-                // If a section is taller than the viewport, pin it at bottom bottom
-                // so the user can scroll through the entire content before it gets covered.
-                return sectionHeight <= viewportHeight ? "top top" : "bottom bottom";
+                // If section is taller than viewport, only pin when user scrolls to the bottom
+                // so the user can see and read 100% of the content first!
+                return sectionHeight > viewportHeight ? "bottom bottom" : "top top";
               },
-              endTrigger: nextSection,
-              end: "top top",
+              endTrigger: isNextContact && footer ? footer : nextSection,
+              end: isNextContact ? "bottom bottom" : "top top",
               pin: true,
-              pinSpacing: false,
+              pinSpacing: isNextContact ? true : false,
               invalidateOnRefresh: true,
               refreshPriority: 100 - i,
             });

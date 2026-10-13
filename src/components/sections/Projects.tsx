@@ -78,12 +78,13 @@ function AnimatedNumber({ value }: { value: string }) {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       style={{
         fontFamily: "var(--font-pixel)",
-        fontSize: "clamp(3.5rem, 8vw, 7rem)",
+        fontSize: "clamp(2rem, 3.5vw, 3.2rem)",
         fontWeight: 400,
         lineHeight: 1,
         color: "var(--foreground)",
         display: "block",
         userSelect: "none",
+        marginBottom: "-4px",
       }}
     >
       {value}
@@ -191,6 +192,62 @@ const Projects = () => {
       : pool.filter((p) => p.category === activeCategory);
   }, [projects, activeCategory]);
 
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (loading || displayProjects.length <= 1) return;
+    if (typeof window === "undefined") return;
+
+    let ctx: any;
+    let timeoutId: number;
+
+    const initScroll = async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      timeoutId = window.setTimeout(() => {
+        ctx = gsap.context(() => {
+          const cards = gsap.utils.toArray<HTMLElement>(".project-stack-card");
+          if (cards.length <= 1) return;
+
+          cards.forEach((card, i) => {
+            if (i < cards.length - 1) {
+              const nextCard = cards[i + 1];
+
+              ScrollTrigger.create({
+                trigger: card,
+                start: "top 86px",
+                endTrigger: nextCard,
+                end: "top 86px",
+                pin: true,
+                pinSpacing: false,
+                invalidateOnRefresh: true,
+                onUpdate: (self) => {
+                  const p = self.progress;
+                  gsap.set(card, {
+                    scale: 1 - p * 0.05,
+                    opacity: 1 - p * 0.3,
+                    transformOrigin: "center top",
+                  });
+                },
+              });
+            }
+          });
+
+          ScrollTrigger.refresh();
+        }, cardsContainerRef);
+      }, 60);
+    };
+
+    initScroll();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (ctx) ctx.revert();
+    };
+  }, [loading, displayProjects, activeCategory]);
+
   /* ─── Loading Skeleton ─────────────────────────────────────── */
   if (loading) {
     return (
@@ -241,7 +298,7 @@ const Projects = () => {
       id="projects"
       style={{
         position: "relative",
-        overflow: "hidden",
+        overflow: "visible",
         padding: "clamp(4rem, 8vw, 8rem) 0",
         backgroundColor: "var(--background)",
         backgroundImage:
@@ -391,6 +448,7 @@ const Projects = () => {
         ) : (
           <AnimatePresence mode="wait">
             <motion.div
+              ref={cardsContainerRef}
               key={activeCategory}
               variants={staggerContainer}
               initial="hidden"
@@ -405,27 +463,102 @@ const Projects = () => {
                 const sourceLink = project.links?.source && project.links.source !== "#" ? project.links.source : "";
                 const isHovered = hoveredIdx === index;
 
+                const cardTabOffset = index * 8;
+
                 return (
-                  <MagneticCard key={project._id || index} index={index}>
-                    <motion.div
-                      variants={isEven ? cardFromLeft : cardFromRight}
-                      onMouseEnter={() => setHoveredIdx(index)}
-                      onMouseLeave={() => setHoveredIdx(null)}
-                      style={{
-                        padding: "clamp(2rem, 4vw, 4rem) 0",
-                        borderBottom: index < displayProjects.length - 1 ? "3px solid #000000" : "none",
-                      }}
-                    >
-                      {/* ── Desktop Layout (≥768px): alternating sides ── */}
-                      <div
+                  <div
+                    key={project._id || index}
+                    className="project-stack-card project-sticky-wrapper"
+                    style={{
+                      position: "sticky",
+                      top: `calc(clamp(76px, 10vh, 88px) + ${cardTabOffset}px)`,
+                      zIndex: index + 1,
+                      marginBottom: index === displayProjects.length - 1 ? "3rem" : "clamp(35vh, 50vh, 65vh)",
+                    }}
+                  >
+                    <MagneticCard index={index}>
+                      <motion.div
+                        variants={isEven ? cardFromLeft : cardFromRight}
+                        onMouseEnter={() => setHoveredIdx(index)}
+                        onMouseLeave={() => setHoveredIdx(null)}
                         style={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(12, 1fr)",
-                          gap: "clamp(1.5rem, 3vw, 4rem)",
-                          alignItems: "center",
+                          background: "var(--surface)",
+                          border: "3px solid #000000",
+                          borderRadius: "var(--radius-lg)",
+                          boxShadow: "6px 6px 0px #000000",
+                          padding: "clamp(1.25rem, 2.5vw, 2rem)",
+                          position: "relative",
+                          overflow: "hidden",
                         }}
-                        className="projects-grid"
                       >
+                        {/* Top Card Header Strip */}
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            borderBottom: "2px solid #000000",
+                            paddingBottom: "12px",
+                            marginBottom: "clamp(1.25rem, 2.5vw, 1.75rem)",
+                          }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span
+                              style={{
+                                fontFamily: "var(--font-mono)",
+                                fontSize: "11px",
+                                fontWeight: 800,
+                                color: "#000000",
+                                background: "var(--neo-yellow)",
+                                padding: "3px 8px",
+                                border: "2px solid #000000",
+                                boxShadow: "2px 2px 0px #000000",
+                                borderRadius: "var(--radius-sm)",
+                              }}
+                            >
+                              PROJECT {number}
+                            </span>
+                            <span
+                              style={{
+                                fontFamily: "var(--font-mono)",
+                                fontSize: "11px",
+                                fontWeight: 700,
+                                textTransform: "uppercase",
+                                letterSpacing: "0.08em",
+                                color: "var(--muted)",
+                              }}
+                            >
+                              {project.category}
+                            </span>
+                          </div>
+
+                          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                            <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "var(--neo-green)", display: "inline-block", boxShadow: "0 0 8px var(--neo-green)" }} />
+                            <span
+                              style={{
+                                fontFamily: "var(--font-mono)",
+                                fontSize: "10px",
+                                fontWeight: 700,
+                                letterSpacing: "0.1em",
+                                textTransform: "uppercase",
+                                color: "var(--foreground)",
+                              }}
+                            >
+                              FEATURED
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* ── Desktop Layout (≥768px): alternating sides ── */}
+                        <div
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(12, 1fr)",
+                            gap: "clamp(1.5rem, 3vw, 4rem)",
+                            alignItems: "center",
+                          }}
+                          className="projects-grid"
+                        >
                         {/* TEXT SIDE */}
                         <motion.div
                           variants={textStagger}
@@ -437,7 +570,7 @@ const Projects = () => {
                             order: isEven ? 1 : 2,
                             display: "flex",
                             flexDirection: "column",
-                            gap: "20px",
+                            gap: "clamp(10px, 1.5vw, 14px)",
                           }}
                           className="projects-text-side"
                         >
@@ -756,8 +889,9 @@ const Projects = () => {
                       </div>
                     </motion.div>
                   </MagneticCard>
-                );
-              })}
+                </div>
+              );
+            })}
             </motion.div>
           </AnimatePresence>
         )}
