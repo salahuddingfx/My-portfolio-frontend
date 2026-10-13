@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Menu, X, Sun, Moon } from "lucide-react";
 import { useSettings } from "@/context/SettingsContext";
+import { RandomLetterSwap } from "@/components/ui/random-letter-swap";
 
 /* =============================================================================
    NAVIGATION LINKS
@@ -162,7 +163,13 @@ const Navbar = () => {
                           style={{ borderRadius: "var(--radius-md)" }}
                         />
                       )}
-                      <span className="relative z-10">{link.name}</span>
+                      <span className="relative z-10">
+                        <RandomLetterSwap
+                          label={link.name}
+                          staggerDuration={0.025}
+                          transition={{ duration: 0.6, type: "spring" }}
+                        />
+                      </span>
                     </Link>
                   );
                 })}
@@ -174,7 +181,13 @@ const Navbar = () => {
                 className="nav-cta group inline-flex h-11 items-center justify-center gap-2.5 border-[3px] border-[#000000] bg-[#000000] px-6 text-[13px] font-bold leading-none !text-[#FFFFFF] uppercase tracking-wider transition-all duration-200 hover:bg-[var(--neo-yellow)] hover:!text-[#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#000000] shadow-[3px_3px_0px_#000000]"
                 style={{ borderRadius: "var(--radius-md)" }}
               >
-                <span className="relative top-[0.5px]">Let&apos;s Talk</span>
+                <span className="relative top-[0.5px]">
+                  <RandomLetterSwap
+                    label="Let's Talk"
+                    staggerDuration={0.025}
+                    transition={{ duration: 0.6, type: "spring" }}
+                  />
+                </span>
                 <ArrowUpRight size={15} strokeWidth={2.5} className="shrink-0 transition-transform duration-200 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
               </Link>
 
@@ -338,7 +351,11 @@ const Navbar = () => {
                           textDecoration: "none",
                         }}
                       >
-                        <span>{link.name}</span>
+                        <RandomLetterSwap
+                          label={link.name}
+                          staggerDuration={0.025}
+                          transition={{ duration: 0.6, type: "spring" }}
+                        />
                         {active && <span style={{ height: "8px", width: "8px", background: "#000000", borderRadius: "var(--radius-sm)" }} />}
                       </Link>
                     </div>
